@@ -1,6 +1,14 @@
 {
   "extends": "../tslint.json",
   "rules": {
+	"indent": [true, "tabs", 4],
+    "variable-name": [
+      true,
+      "ban-keywords",
+      "check-format",
+      "allow-leading-underscore",
+      "allow-snake-case"
+    ],
     "directive-selector": [
       true,
       "attribute",
