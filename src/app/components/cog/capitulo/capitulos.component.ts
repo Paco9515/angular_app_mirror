@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
-import { Capitulos } from 'src/app/interfaces/cog/capitulos';
 import { CapituloService } from 'src/app/services/cog/capitulo.service';
+import { Capitulos } from 'src/app/interfaces/cog/capitulos';
+
 
 @Component({
 	selector: 'app-capitulos',
