@@ -10,14 +10,17 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { AdminModule } from './components/admin.module';
 import { AppComponent } from './app.component';
+
 import { LoginComponent } from './components/login/login.component';
 // import { IncrementadorComponent } from './reusable/incrementador/incrementador.component';
+
 
 @NgModule({
 	declarations: [
 		AppComponent,
 		LoginComponent,
 		// IncrementadorComponent,
+
 	],
 	imports: [
 		AdminModule,

@@ -61,7 +61,6 @@ export class ProgramaComponent implements OnInit {
 
 	guardar() {
 		// this.toastrService.success('Programa creado correctamente.', '¡Éxito!');
-
 		this.programaService.createPrograma(this.forma.value)
 		.subscribe((response: any) => {
 			if (response.message === 'creada') {
