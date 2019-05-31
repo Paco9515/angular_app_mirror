@@ -1,0 +1,97 @@
+<div class="content-wrapper">
+        <div class="row">
+            <div class="col-12">
+                <div class="panels shadow">
+    
+                    <section class="content-header">
+                        <h2>
+                            Listado de los Capítulos
+                        </h2>
+                        <ol class="breadcrumb">
+                            <li>
+                                <a>
+                                    <i class="fa fa-folder-open"></i>
+                                    Clasificación por objeto de gasto
+                                </a>
+                            </li>
+                            <li>
+                                <a>
+                                    Capítulos
+                                </a>
+                            </li>
+                        </ol>
+                    </section>
+    
+                    <section class="content container-fluid">
+                        <button type="button" class="btn btn-success btn-sm mb-2 pull-right"
+                            [routerLink]="['/panel-adm/capitulo', 'nuevo']"
+                        >
+                            <i class="fas fa-plus-circle"></i>
+                            Agregar nuevo capítulos
+                        </button>
+                        <div class="table-responsive">
+                            <table class="table table-striped">
+                                <thead class="thead-dark">
+                                    <tr>
+                                        <th scope="col">#</th>
+                                        <th scope="col">Codigo</th>
+                                        <th scope="col">Nombre</th>
+                                        <th scope="col">Estado</th>
+                                        <th class="text-center" scope="col">Opciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngIf="capitulos.length==0; else tableBlock">
+                                        <td colspan="4" class="text-center">
+                                            <span class="badge badge-info">
+                                                <h5>
+                                                    <i class="far fa-frown"></i>
+                                                    No hay elementos para mostrar.
+                                                </h5>
+                                            </span>
+                                        </td>
+                                    </tr>
+                                    <ng-template #tableBlock>
+                                        <tr *ngFor="let capitulo of capitulos; let i = index">
+                                            <td>{{ i+1 }}</td>
+                                            <td>{{ capitulo.codigo }}</td>
+                                            <td>{{ capitulo.nombre }}</td>
+                                            <td>
+                                                <span *ngIf="capitulo.status; else inactiveBlock"
+                                                    class="badge badge-success">
+                                                    Activo
+                                                </span>
+                                                <ng-template #inactiveBlock>
+                                                    <span class="badge badge-secondary">Inactivo</span>
+                                                </ng-template>
+                                            </td>
+                                            <td class="text-right">
+                                                <button type="button" class="btn btn-primary btn-sm"
+                                                    [routerLink]="['/panel-adm/capitulo', capitulo.id]"
+                                                    [disabled]="!capitulo.status"
+                                                >
+                                                    <i class="fas fa-edit"></i>
+                                                    Editar
+                                                </button>
+                                                <button *ngIf="capitulo.status" type="button" class="btn btn-danger btn-sm ml-3"
+                                                    (click)="eliminar(capitulo.id, i)">
+                                                    <i class="fas fa-trash"></i>
+                                                    Eliminar
+                                                </button>
+                                                <button *ngIf="!capitulo.status" type="button" class="btn btn-success btn-sm ml-3"
+                                                    (click)="activar(capitulo, i)">
+                                                    <i class="fas fa-arrow-circle-up"></i>
+                                                    Activar
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    </ng-template>
+                                </tbody>
+                            </table>
+                        </div>
+                    </section>
+    
+                </div>
+            </div>
+        </div>
+    </div>
