@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { ProgramaService } from 'src/app/services/cp/programa.service';
-import { Programas } from 'src/app/interfaces/cp/programas';
+import { Programas } from 'src/app/interfaces/cp.interface';
 
 @Component({
 	selector: 'app-programas',

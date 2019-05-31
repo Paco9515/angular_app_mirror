@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ProgramaService } from 'src/app/services/cp/programa.service';
 import { Router, ActivatedRoute } from '@angular/router';
-import { Programas } from 'src/app/interfaces/cp/programas';
+import { Programas } from 'src/app/interfaces/cp.interface';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { ToastrService } from 'ngx-toastr';
+// import { ToastrService } from 'ngx-toastr';
 
 @Component({
 	selector: 'app-programa',
@@ -19,7 +19,7 @@ export class ProgramaComponent implements OnInit {
 		private programaService: ProgramaService,
 		private router: Router,
 		private activatedRoute: ActivatedRoute,
-		private toastrService: ToastrService
+		// private toastrService: ToastrService
 	) {
 		this.forma = new FormGroup({
 			nombre: new FormControl('', Validators.required)

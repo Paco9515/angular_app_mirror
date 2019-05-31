@@ -19,11 +19,14 @@
 				</section>
 
 				<section class="content container-fluid">
-
-					<h1>
-						Escritorio c:
-					</h1>
-
+					<div style="display: block">
+						<canvas baseChart
+							[datasets]="barChartData"
+							[labels]="barChartLabels"
+							[legend]="barChartLegend"
+							[chartType]="barChartType">
+						</canvas>
+					</div>
 				</section>
 			</div>
 		</div>

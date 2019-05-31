@@ -1,2 +1,6 @@
-
 @import "../node_modules/ngx-toastr/toastr.css";
+
+a:hover {
+	cursor: pointer;
+	text-decoration: none;
+}

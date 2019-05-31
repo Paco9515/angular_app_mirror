@@ -1,0 +1,48 @@
+<div class="content-wrapper">
+	<div class="row">
+		<div class="col-12">
+			<div class="panels shadow">
+				<section class="content-header">
+					<h4>Barra de progreso</h4>
+				</section>
+				<section class="content container-fluid">
+					<div class="progress mb-3">
+						<div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar"
+							[attr.ariaValuenow]="progreso_azul" aria-valuemin="0" aria-valuemax="100"
+							[style.width]="progreso_azul+'%'">
+						</div>
+					</div>
+					<div class="progress">
+							<div class="progress-bar progress-bar-striped progress-bar-animated bg-success" role="progressbar"
+								[attr.ariaValuenow]="progreso_verde" aria-valuemin="0" aria-valuemax="100"
+								[style.width]="progreso_verde+'%'">
+							</div>
+						</div>
+				</section>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="content-wrapper">
+	<div class="row">
+		<div class="col-6">
+			<div class="panels shadow">
+				<app-incrementador
+					legend="Progress Azul"
+					[progreso]="progreso_azul"
+					(cambioValor)="progreso_azul=$event"
+				></app-incrementador>
+			</div>
+		</div>
+		<div class="col-6">
+			<div class="panels shadow">
+					<app-incrementador
+						legend="Progress Verde"
+						[progreso]="progreso_verde"
+						(cambioValor)="progreso_verde=$event"
+					></app-incrementador>
+			</div>
+		</div>
+	</div>
+</div>

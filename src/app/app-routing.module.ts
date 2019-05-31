@@ -1,19 +1,17 @@
-import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { EscritorioComponent } from './components/escritorio/escritorio.component';
-import { ProgramasComponent } from './components/cp/programa/programas.component';
-import { ProgramaComponent } from './components/cp/programa/programa.component';
+import { NgModule } from '@angular/core';
+
+import { NopagefoundComponent } from './shared/nopagefound/nopagefound.component';
+import { LoginComponent } from './components/login/login.component';
 
 const routes: Routes = [
-	{ path: 'panel-adm', component: EscritorioComponent },
-	{ path: 'panel-adm/programas', component: ProgramasComponent },
-	{ path: 'panel-adm/programa/:id', component: ProgramaComponent },
-	{ path: '', pathMatch: 'full', redirectTo: 'panel-adm' },
-	{ path: '**', pathMatch: 'full', redirectTo: 'panel-adm' }
+	{ path: 'login', component: LoginComponent },
+	{ path: '', pathMatch: 'full', redirectTo: 'login' },
+	{ path: '**', component: NopagefoundComponent }
 ];
 
 @NgModule({
-	imports: [RouterModule.forRoot(routes)],
+	imports: [RouterModule.forRoot(routes, {useHash: true})],
 	exports: [RouterModule]
 })
 export class AppRoutingModule { }
