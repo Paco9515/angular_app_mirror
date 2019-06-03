@@ -1,0 +1,86 @@
+<div class="content-wrapper">
+    <div class="row">
+        <div class="col-12">
+            <div class="panels shadow">
+
+                <section class="content-header">
+                    <h2>
+                        Listado de los Centros de Costo
+                    </h2>
+                    <ol class="breadcrumb">
+                        <li>
+                            <a>
+                                <i class="fa fa-folder-open"></i> Unidades Internas
+                            </a>
+                        </li>
+                        <li>
+                            <a>
+                                Centros de Costo
+                            </a>
+                        </li>
+                    </ol>
+                </section>
+
+                <section class="content container-fluid">
+                    <button type="button" class="btn btn-success btn-sm mb-2 pull-right" [routerLink]="['/panel-adm/ccosto', 'nuevo']">
+                      <i class="fas fa-plus-circle"></i>
+                      Agregar nueva centro
+                    </button>
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead class="thead-dark">
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">U. Administrativa</th>
+                                    <th scope="col">Codigo</th>
+                                    <th scope="col">Nombre</th>
+                                    <th scope="col">Estado</th>
+                                    <th class="text-center" scope="col">Opciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngIf="ccostos.length==0; else tableBlock">
+                                    <td colspan="4" class="text-center">
+                                        <span class="badge badge-info">
+                                          <h5>
+                                            <i class="far fa-frown"></i>
+                                            No hay elementos para mostrar.
+                                          </h5>
+                                        </span>
+                                    </td>
+                                </tr>
+                                <ng-template #tableBlock>
+                                    <tr *ngFor="let ccosto of ccostos; let i = index">
+                                        <td>{{ i+1 }}</td>
+                                        <td>{{ ccosto.id_unidad_adm }}</td>
+                                        <td>{{ ccosto.codigo }}</td>
+                                        <td>{{ ccosto.nombre }}</td>
+                                        <td>
+                                            <span *ngIf="ccosto.status; else inactiveBlock" class="badge badge-success">
+                                              Activo
+                                            </span>
+                                            <ng-template #inactiveBlock>
+                                                <span class="badge badge-secondary">Inactivo</span>
+                                            </ng-template>
+                                        </td>
+                                        <td class="text-center">
+                                            <button type="button" class="btn btn-primary btn-sm" [routerLink]="['/panel-adm/ccosto', ccosto.id]" [disabled]="!ccosto.status">
+                                              <i class="fas fa-edit"></i>
+                                              Editar
+                                            </button>
+                                            <button *ngIf="ccosto.status" type="button" class="btn btn-danger btn-sm ml-3">
+                                              <i class="fas fa-trash"></i>
+                                              Eliminar
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </ng-template>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+
+            </div>
+        </div>
+    </div>
+</div>
