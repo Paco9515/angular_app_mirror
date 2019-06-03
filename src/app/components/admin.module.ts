@@ -47,6 +47,24 @@ import { ClasAdministrativaComponent } from './ca/clas-administrativas/clas-admi
 import { SubeconomiaComponent } from './ca/subeconomia/subeconomia.component';
 import { SubeconomiasComponent } from './ca/subeconomia/subeconomias.component';
 
+import { CcostoComponent } from './ui/ccosto/ccosto.component';
+import { CcostosComponent } from './ui/ccosto/ccostos.component';
+import { EmpresaComponent } from './ui/empresa/empresa.component';
+import { EmpresasComponent } from './ui/empresa/empresas.component';
+import { UnidadesAdminComponent } from './ui/unidadesAdmin/unidadesAdmin.component';
+import { UnidadAdminComponent } from './ui/unidadesAdmin/unidadAdmin.component';
+import { CtrabajosComponent } from './ui/ctrabajo/ctrabajos.component';
+import { CtrabajoComponent } from './ui/ctrabajo/ctrabajo.component';
+import { FinalidadesComponent } from './cfg/finalidad/finalidades.component';
+import { FinalidadComponent } from './cfg/finalidad/finalidad.component';
+import { FuncionComponent } from './cfg/funcion/funcion.component';
+import { FuncionesComponent } from './cfg/funcion/funciones.component';
+import { SubfuncionComponent } from './cfg/subfuncion/subfuncion.component';
+import { SubfuncionesComponent } from './cfg/subfuncion/subfunciones.component';
+import { FuentesComponent } from './cff/fuente/fuentes.component';
+import { SubfuentesComponent } from './cff/subfuente/subfuentes.component';
+import { TiposComponent } from './cff/tipo/tipos.component';
+
 @NgModule({
 	declarations: [
 		ProgramasComponent,
@@ -81,7 +99,25 @@ import { SubeconomiasComponent } from './ca/subeconomia/subeconomias.component';
 		ClasAdministrativasComponent,
 		ClasAdministrativaComponent,
 		SubeconomiaComponent,
-		SubeconomiasComponent
+		SubeconomiasComponent,
+
+		EmpresaComponent,
+		EmpresasComponent,
+		UnidadesAdminComponent,
+		UnidadAdminComponent,
+		CcostoComponent,
+		CcostosComponent,
+		CtrabajosComponent,
+		CtrabajoComponent,
+		FinalidadesComponent,
+		FinalidadComponent,
+		FuncionComponent,
+		FuncionesComponent,
+		SubfuncionComponent,
+		SubfuncionesComponent,
+		FuentesComponent,
+		SubfuentesComponent,
+		TiposComponent
 	],
 	exports: [
 		ProgramasComponent,
@@ -115,7 +151,25 @@ import { SubeconomiasComponent } from './ca/subeconomia/subeconomias.component';
 		ClasAdministrativasComponent,
 		ClasAdministrativaComponent,
 		SubeconomiaComponent,
-		SubeconomiasComponent
+		SubeconomiasComponent,
+
+		EmpresaComponent,
+		EmpresasComponent,
+		UnidadesAdminComponent,
+		UnidadAdminComponent,
+		CcostoComponent,
+		CcostosComponent,
+		CtrabajosComponent,
+		CtrabajoComponent,
+		FinalidadesComponent,
+		FinalidadComponent,
+		FuncionComponent,
+		FuncionesComponent,
+		SubfuncionComponent,
+		SubfuncionesComponent,
+		FuentesComponent,
+		SubfuentesComponent,
+		TiposComponent
 	],
 	imports: [
 		ChartsModule,

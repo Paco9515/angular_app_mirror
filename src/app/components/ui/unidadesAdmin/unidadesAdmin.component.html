@@ -1,0 +1,86 @@
+<div class="content-wrapper">
+    <div class="row">
+        <div class="col-12">
+            <div class="panels shadow">
+
+                <section class="content-header">
+                    <h2>
+                        Listado de las Unidades Administrativas
+                    </h2>
+                    <ol class="breadcrumb">
+                        <li>
+                            <a>
+                                <i class="fa fa-folder-open"></i> Unidades Internas
+                            </a>
+                        </li>
+                        <li>
+                            <a>
+                              Unidades Administrativas
+                            </a>
+                        </li>
+                    </ol>
+                </section>
+
+                <section class="content container-fluid">
+                    <button type="button" class="btn btn-success btn-sm mb-2 pull-right" [routerLink]="['/panel-adm/unidadAdmin', 'nuevo']">
+                      <i class="fas fa-plus-circle"></i>
+                      Agregar nueva unidad
+                    </button>
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead class="thead-dark">
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Codigo</th>
+                                    <th scope="col">Nombre</th>
+                                    <th scope="col">Descripcion</th>
+                                    <th scope="col">Estado</th>
+                                    <th class="text-center" scope="col">Opciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngIf="unidades.length==0; else tableBlock">
+                                    <td colspan="4" class="text-center">
+                                        <span class="badge badge-info">
+                                          <h5>
+                                            <i class="far fa-frown"></i>
+                                            No hay elementos para mostrar.
+                                          </h5>
+                                        </span>
+                                    </td>
+                                </tr>
+                                <ng-template #tableBlock>
+                                    <tr *ngFor="let unidad of unidades; let i = index">
+                                        <td>{{ i+1 }}</td>
+                                        <td>{{ unidad.codigo }}</td>
+                                        <td>{{ unidad.nombre }}</td>
+                                        <td>{{ unidad.desc }}</td>
+                                        <td>
+                                            <span *ngIf="unidad.status; else inactiveBlock" class="badge badge-success">
+                                              Activo
+                                            </span>
+                                            <ng-template #inactiveBlock>
+                                                <span class="badge badge-secondary">Inactivo</span>
+                                            </ng-template>
+                                        </td>
+                                        <td class="text-center">
+                                            <button type="button" class="btn btn-primary btn-sm" [routerLink]="['/panel-adm/unidadAdmin', unidad.id]" [disabled]="!unidad.status">
+                                              <i class="fas fa-edit"></i>
+                                              Editar
+                                            </button>
+                                            <button *ngIf="unidad.status" type="button" class="btn btn-danger btn-sm ml-3">
+                                              <i class="fas fa-trash"></i>
+                                              Eliminar
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </ng-template>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+
+            </div>
+        </div>
+    </div>
+</div>
