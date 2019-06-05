@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { ClasAdministrativaService } from './../../../services/ca/clas-administrativa.service';
-import { Clas_administrativa } from './../../../interfaces/ca/clas_administrativa';
+import { Clas_administrativa } from './../../../interfaces/ca.interface';
 
 @Component({
   selector: 'app-clas-administrativas',

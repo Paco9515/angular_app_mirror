@@ -45,7 +45,7 @@ export class CapituloService {
 			id: capitulo.id,
 			nombre: capitulo.nombre
 		};
-		return this.http.put(`${ this.url }/activarte_capitulo`, body);
+		return this.http.put(`${ this.url }/activar_capitulo`, body);
 	}
 
 }

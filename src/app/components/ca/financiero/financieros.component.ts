@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { FinancieroService } from './../../../services/ca/financiero.service';
-import { Financieros } from './../../../interfaces/ca/financiero';
+import { Financieros } from './../../../interfaces/ca.interface';
 
 @Component({
   selector: 'app-financieros',
