@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CtrabajoService } from "src/app/services/ui/ctrabajo.service";
-import { Ctrabajo } from "src/app/interfaces/ui/ctrabajo";
+import { Ctrabajo } from "src/app/interfaces/ui.interface";
 
 @Component({
   selector: 'app-ctrabajos',
