@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { CapituloService } from 'src/app/services/cog/capitulo.service';
-import { Capitulos } from 'src/app/interfaces/cog/capitulos';
+import { Capitulos } from 'src/app/interfaces/cog.interface';
 
 
 @Component({

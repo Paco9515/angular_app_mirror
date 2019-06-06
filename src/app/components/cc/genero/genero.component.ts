@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
@@ -6,14 +6,13 @@ import { Router, ActivatedRoute } from '@angular/router';
   templateUrl: './genero.component.html',
   styles: []
 })
-export class GeneroComponent implements OnInit {
+export class GeneroComponent {
 
     constructor(
         private router: Router,
 		private activitedRoute: ActivatedRoute
     ) { }
 
-  ngOnInit() {
-  }
+
 
 }

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { EmpresaService } from "src/app/services/ui/empresa.service";
-import { Empresas } from "src/app/interfaces/ui/empresas";
+import { Empresas } from "src/app/interfaces/ui.interface";
 
 @Component({
   selector: 'app-empresas',

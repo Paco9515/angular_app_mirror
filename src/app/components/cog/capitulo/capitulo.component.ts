@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { CapituloService } from 'src/app/services/cog/capitulo.service';
-import { Capitulos } from 'src/app/interfaces/cog/capitulos';
+import { Capitulos } from 'src/app/interfaces/cog.interface';
 import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({

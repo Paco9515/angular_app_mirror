@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ConstantsService } from '../shared/constants.service';
+import { Ccosto } from '../../interfaces/ui.interface';
 
 
 @Injectable({
@@ -29,22 +30,19 @@ export class CcostoService {
 		return this.http.put(`${this.url}/activate_programa`, body);
 	} */
 
-	createCcosto(programa: any) {
-		const body = {
-			id: programa.id,
-			nombre: programa.nombre
-		};
+	createCcosto(ccosto: Ccosto) {
 
-		if (programa.id === '') {
-			return this.http.post(`${this.url}/create_ccosto`, body);
+
+		if (ccosto.id === '') {
+			return this.http.post(`${this.url}/create_ccosto`, ccosto);
 		} else {
-			return this.http.put(`${this.url}/update_ccosto`, body);
+			return this.http.put(`${this.url}/update_ccosto`, ccosto);
 		}
 
 	}
 
 	getCcosto(id: string) {
-		return this.http.get(`${this.url}/get_ccosto?id=${id}`);
+		return this.http.get(`${this.url}/get_ccosto/${id}`);
 	}
 
 	getCcostos() {
@@ -52,6 +50,19 @@ export class CcostoService {
 		return this.http.get(`${this.url}/get_ccostos`);
 		// return `${this.url}/get_programas`;
 	}
+
+	getUnidades() {
+
+		return this.http.get(`${this.url}/get_unidades`);
+		// return `${this.url}/get_programas`;
+	}
+
+	getSubfuncion() {
+
+		return this.http.get(`${this.url}/get_subfunciones`);
+		// return `${this.url}/get_programas`;
+	}
+
 
 	eliminarCcosto(id: string) {
 		return this.http.delete(`${this.url}/delete_ccosto/${id}`);
