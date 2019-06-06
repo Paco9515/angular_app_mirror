@@ -1,15 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
-  selector: 'app-clas-administrativa',
-  templateUrl: './clas-administrativa.component.html',
-  styles: []
+	selector: 'app-clas-administrativa',
+	templateUrl: './clas-administrativa.component.html',
+	styles: []
 })
-export class ClasAdministrativaComponent implements OnInit {
+export class ClasAdministrativaComponent{
 
-  constructor() { }
-
-  ngOnInit() {
-  }
+	constructor() { }
+	
+	guardar(){}
 
 }

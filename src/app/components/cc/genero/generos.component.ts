@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { GeneroService } from './../../../services/cc/genero.service';
-import { Generos } from '../../../interfaces/cc/generos';
+import { Generos } from '../../../interfaces/cc.interface';
 
 
 @Component({
@@ -14,7 +14,7 @@ export class GenerosComponent {
 
 	constructor(
 		private genero_service: GeneroService
-	){
+	) {
 		this.generos = [];
 		this.getGeneros();
 	}
@@ -26,7 +26,25 @@ export class GenerosComponent {
 			});
 	}
 
+	eliminar(id: string, index: string) {
+		this.genero_service.eliminarGenero(id)
+			.subscribe((data: any) => {
+				this.getGeneros();
+			}, error => {
+				console.log('ERROR', error.error.message);
+			});
+			console.log('Eliminado con exito.');
+	}
 
+	activar(genero: Generos, index: string) {
+		this.genero_service.activarGenero(genero)
+			.subscribe((data: any) => {
+				this.getGeneros();
+			}, error => {
+				console.log('ERROR: ', error.error.message);
+			});
+		console.log('Activado con exito.');
+	}
 
 
 

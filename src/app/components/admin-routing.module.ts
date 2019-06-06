@@ -15,16 +15,25 @@ import { PartidasComponent } from './cog/partida/partidas.component';
 import { ConceptosComponent } from './cog/concepto/conceptos.component';
 import { ConceptoComponent } from './cog/concepto/concepto.component';
 import { GenerosComponent } from './cc/genero/generos.component';
+import { GeneroComponent } from './cc/genero/genero.component';
 import { GruposComponent } from './cc/grupo/grupos.component';
+import { GrupoComponent } from './cc/grupo/grupo.component';
 import { RubrosComponent } from './cc/rubro/rubros.component';
+import { RubroComponent } from './cc/rubro/rubro.component';
 import { CuentasComponent } from './cc/cuenta/cuentas.component';
+import { CuentaComponent } from './cc/cuenta/cuenta.component';
 import { SubcuentasComponent } from './cc/subcuenta/subcuentas.component';
+import { SubcuentaComponent } from './cc/subcuenta/subcuenta.component';
 import { ClasAdministrativasComponent } from './ca/clas-administrativas/clas-administrativas.component';
 import { ClasAdministrativaComponent } from './ca/clas-administrativas/clas-administrativa.component';
 import { EconomiasComponent } from './ca/economia/economias.component';
+import { EconomiaComponent } from './ca/economia/economia.component';
 import { FinancierosComponent } from './ca/financiero/financieros.component';
+import { FinancieroComponent } from './ca/financiero/financiero.component';
 import { SectoresComponent } from './ca/sector/sectores.component';
+import { SectorComponent } from './ca/sector/sector.component';
 import { SubeconomiasComponent } from './ca/subeconomia/subeconomias.component';
+import { SubeconomiaComponent } from './ca/subeconomia/subeconomia.component';
 
 import { EmpresaComponent } from './ui/empresa/empresa.component';
 import { EmpresasComponent } from './ui/empresa/empresas.component';
@@ -61,21 +70,25 @@ const admin_routes: Routes = [
 			{ path: 'partidas', component: PartidasComponent },
 			{ path: 'partida/:id', component: PartidaComponent },
 			{ path: 'generos', component: GenerosComponent },
-			{ path: 'generos/:id', component: PartidaComponent },
+			{ path: 'generos/:id', component: GeneroComponent },
 			{ path: 'grupos', component: GruposComponent },
-			{ path: 'grupos/:id', component: PartidaComponent },
+			{ path: 'grupos/:id', component: GrupoComponent },
 			{ path: 'rubros', component: RubrosComponent },
-			{ path: 'rubros/:id', component: PartidaComponent },
+			{ path: 'rubros/:id', component: RubroComponent },
 			{ path: 'cuentas', component: CuentasComponent },
-			{ path: 'cuentas/:id', component: PartidaComponent },
+			{ path: 'cuentas/:id', component: CuentaComponent },
 			{ path: 'subcuentas', component: SubcuentasComponent },
-			{ path: 'subcuentas/:id', component: PartidaComponent },
+			{ path: 'subcuentas/:id', component: SubcuentaComponent },
 			{ path: 'administrativas', component: ClasAdministrativasComponent },
 			{ path: 'administrativas/:id', component: ClasAdministrativaComponent },
 			{ path: 'economias', component: EconomiasComponent },
+			{ path: 'economias/:id', component: EconomiaComponent },
 			{ path: 'financieros', component: FinancierosComponent },
+			{ path: 'financieros/:id', component: FinancieroComponent },
 			{ path: 'sectores', component: SectoresComponent },
+			{ path: 'sectores/:id', component: SectorComponent },
 			{ path: 'subeconomias', component: SubeconomiasComponent },
+			{ path: 'subeconomias/:id', component: SubeconomiaComponent },
 			{ path: '', pathMatch: 'full', redirectTo: 'escritorio' },
 
 			{ path: 'empresas', component: EmpresasComponent },

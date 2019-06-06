@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Rubros } from './../../../interfaces/cc/rubros';
+import { Rubros } from './../../../interfaces/cc.interface';
 import { RubroService } from './../../../services/cc/rubro.service';
 
 @Component({
@@ -23,5 +23,28 @@ export class RubrosComponent {
 			.subscribe((data: any) => {
 				this.rubros = data;
 			});
+	}
+
+	eliminar(id: string, index: string) {
+		this.rubros_service.eliminarRubro(id)
+			.subscribe((response: any) => {
+				this.getRubros();
+			}, error => {
+				console.log('ERROR: ', error.error.message);
+			});
+		console.log('Eliminado con exito.');
+	}
+
+	activar(rubro: Rubros) {
+		this.rubros_service.activarRubro({
+			id: rubro.id,
+			nombre: rubro.nombre,
+			status: !rubro.status
+		}).subscribe((data: any) => {
+				this.getRubros();
+			}, error => {
+				console.log('ERROR: ', error.error.message);
+			});
+		console.log('Activado con exito.');
 	}
 }

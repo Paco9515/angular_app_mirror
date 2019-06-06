@@ -74,11 +74,15 @@
                                                 <i class="fas fa-edit"></i>
                                                 Editar
                                             </button>
-                                            <button *ngIf="genero.status" type="button" class="btn btn-danger btn-sm ml-3">
+                                            <button *ngIf="genero.status"
+                                            (click)="eliminar(genero.id, i)"
+                                            type="button" class="btn btn-danger btn-sm ml-3">
                                                 <i class="fas fa-trash"></i>
                                                 Eliminar
                                             </button>
-                                            <button *ngIf="!genero.status" type="button" class="btn btn-success btn-sm ml-3">
+                                            <button *ngIf="!genero.status" 
+                                                (click)="activar(genero, i)"
+                                                type="button" class="btn btn-success btn-sm ml-3">
                                                 <i class="fas fa-arrow-circle-up"></i>
                                                 Activar
                                             </button>

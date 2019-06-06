@@ -37,6 +37,7 @@
 								<th scope="col">#</th>
 								<th scope="col">Codigo</th>
 								<th scope="col">Nombre</th>
+								<th scope="col">Estado</th>
 								<th class="text-center" scope="col">Opciones</th>
 							</tr>
 						</thead>
@@ -56,20 +57,35 @@
 									<td>{{ i+1 }}</td>
 									<td>{{ subeconomia.codigo }}</td>
 									<td>{{ subeconomia.nombre }}</td>
+									<td>
+										<span *ngIf="subeconomia.status; else inactiveBlock"
+											class="badge badge-success">
+											Activo
+										</span>
+										<ng-template #inactiveBlock>
+											<span class="badge badge-secondary">Inactivo</span>
+										</ng-template>
+									</td>
 									<td class="text-right">
 										<button type="button" class="btn btn-primary btn-sm"
 										[routerLink]="['/panel-adm/cuentas', subeconomia.id]">
 										<i class="fas fa-edit"></i>
 										Editar
 										</button>
-										<button type="button" class="btn btn-danger btn-sm ml-3">
-										<i class="fas fa-trash"></i>
-										Eliminar
+										<button *ngIf="subeconomia.status" type="button" class="btn btn-danger btn-sm ml-3"
+										(click)="eliminar(subeconomia.id)">
+											<i class="fas fa-trash"></i>
+											Eliminar
 										</button>
-										<button type="button" class="btn btn-success btn-sm ml-3">
+										<button *ngIf="!subeconomia.status" type="button" class="btn btn-success btn-sm ml-3"
+											(click)="activar(subeconomia)">
+											<i class="fas fa-arrow-circle-up"></i>
+											Activar
+										</button>
+										<button type="button" class="btn btn-info btn-sm ml-3">
 												<i class="fas fa-info-circle"></i>
 												Detalles
-											</button>
+										</button>
 									</td>
 								</tr>
 							</ng-template>

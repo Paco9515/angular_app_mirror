@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { EconomiaService } from './../../../services/ca/economia.service';
-import { Economicas } from './../../../interfaces/ca/economia';
+import { Economicas } from './../../../interfaces/ca.interface';
 
 @Component({
 	selector: 'app-economias',

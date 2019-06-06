@@ -18,7 +18,36 @@ export class CuentaService {
 		this.url = this.constants.url;
   }
 
-  	 getCuentas( ){
+  	 getCuentas() {
 		return this.http.get(`${ this.url }/get_cuentas`);
+	}
+
+	activarCuenta(cuenta: any) {
+		const body = {
+			id: cuenta.id,
+			nombre: cuenta.nombre
+		};
+		return this.http.put(`${this.url}/activar_cuenta`, body);
+	}
+
+	createCuenta(cuenta: any) {
+		const body = {
+			id: cuenta.id,
+			codigo: cuenta.codigo,
+			nombre: cuenta.nombre
+		};
+		if (cuenta.id === '') {
+			return this.http.post(`${ this.url }/create_cuenta`, body);
+		} else {
+			return this.http.put(`${ this.url }/update_cuenta`, body);
+		}
+	}
+
+	getCuenta(id: string) {
+		return this.http.get(`${ this.url }/get_cuenta/${id}`);
+	}
+
+	eliminarCuenta(id: string) {
+		return this.http.delete(`${this.url}/delete_cuenta/${id}`);
 	}
 }
