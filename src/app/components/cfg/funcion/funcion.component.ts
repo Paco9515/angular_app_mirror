@@ -6,13 +6,13 @@ import { FuncionService } from '../../../services/cfg/funcion.service';
 import { Funciones } from '../../../interfaces/cfg/funcion';
 
 @Component({
-  selector: 'app-funcion',
-  templateUrl: './funcion.component.html',
-  styles: []
+	selector: 'app-funcion',
+	templateUrl: './funcion.component.html',
+	styles: []
 })
 export class FuncionComponent implements OnInit {
 
-  id: string;
+	id: string;
 	forma: FormGroup;
 	// programa: Programas;
 
@@ -38,35 +38,35 @@ export class FuncionComponent implements OnInit {
 					});
 			} else {
 				this.createForma({
-          id: '',
-          id_finaliddad:null,
-          codigo:'',
-        	nombre: '',
-        	status: true
-        });
+					id: '',
+					id_finaliddad: null,
+					codigo: '',
+					nombre: '',
+					status: true
+				});
 				// this.programa = {nombre: '', status: true};
 			}
 		});
-    // console.log('1');
-  }
+		// console.log('1');
+	}
 
-  ngOnInit() {
-  }
+	ngOnInit() {
+	}
 
-  createForma(obj: Funciones) {
+	createForma(obj: Funciones) {
 	}
 
 	guardar() {
 		// this.toastrService.success('Programa creado correctamente.', '¡Éxito!');
 
 		this.funcionService.createFuncion(this.forma.value)
-		.subscribe((response: any) => {
-			if (response.message === 'creada') {
-				console.log('Funcion creada con exito.');
-			} else {
-				console.log('Funcion editada con exito.');
-			}
-		});
+			.subscribe((response: any) => {
+				if (response.message === 'creada') {
+					console.log('Funcion creada con exito.');
+				} else {
+					console.log('Funcion editada con exito.');
+				}
+			});
 
 	}
 

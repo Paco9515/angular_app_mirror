@@ -5,6 +5,7 @@ import { FooterComponent } from './footer/footer.component';
 import { NopagefoundComponent } from './nopagefound/nopagefound.component';
 import { AdminRoutingModule } from '../components/admin-routing.module';
 import { BreadcrumbsComponent } from './breadcrumbs/breadcrumbs.component';
+import { RouterModule } from '@angular/router';
 
 
 @NgModule({
@@ -23,7 +24,8 @@ import { BreadcrumbsComponent } from './breadcrumbs/breadcrumbs.component';
 		BreadcrumbsComponent
 	],
 	imports: [
-		AdminRoutingModule
+		// AdminRoutingModule
+		RouterModule
 	]
 })
 export class SharedModule { }

@@ -1,0 +1,47 @@
+import { Component } from '@angular/core';
+import { Subprograma } from 'src/app/interfaces/cp.interface';
+import { SubprogramaService } from 'src/app/services/cp/subprograma.service';
+
+@Component({
+  selector: 'app-subprogramas',
+  templateUrl: './subprogramas.component.html',
+  styles: []
+})
+export class SubprogramasComponent {
+
+	subprogramas: Subprograma[];
+	detalle: Subprograma;
+
+	constructor(
+		private subprograma_service: SubprogramaService
+	) {
+		this.detalle = {
+			id: '',
+			id_programa: '',
+			nombre_programa: '',
+			codigo: '',
+			nombre: '',
+			status: true
+		};
+		this.subprogramas = [];
+		this.getSubprogramas();
+	}
+
+	getSubprogramas() {
+		this.subprograma_service.getSubprogramas()
+			.subscribe((data: any) => {
+				// console.log(data);
+				this.subprogramas = data;
+			});
+	}
+
+	eliminarActivar(id: string, type: boolean) {
+		this.subprograma_service.activarEliminarSubprograma(id, type)
+			.subscribe((response: any) => {
+				console.log(response.message);
+				this.getSubprogramas();
+			}, error => {
+				console.log('ERROR: ', error);
+			});
+	}
+}

@@ -14,7 +14,7 @@ export class ClasAdministrativaService {
 		private constants: ConstantsService
 	) {
 
-		this.url = this.constants.url;
+		this.url = this.constants._url;
 	 }
 
 	getAdministrativas() {

@@ -5,10 +5,10 @@ import { Capitulos } from 'src/app/interfaces/cog/capitulos';
 import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
-  selector: 'app-capitulo',
-  templateUrl: './capitulo.component.html'
+	selector: 'app-capitulo',
+	templateUrl: './capitulo.component.html'
 })
-export class CapituloComponent{
+export class CapituloComponent {
 
 	id: string;
 	forma: FormGroup;
@@ -29,9 +29,9 @@ export class CapituloComponent{
 				this.capituloService.getCapitulo(this.id)
 					.subscribe((obj: Capitulos) => {
 						this.createForma(obj);
-				});
+					});
 			} else {
-				this.createForma({id: '', codigo: '', nombre: '', status: true});
+				this.createForma({ id: '', codigo: '', nombre: '', status: true });
 			}
 		});
 	}
@@ -47,13 +47,13 @@ export class CapituloComponent{
 
 	guardar() {
 		this.capituloService.createCapitulo(this.forma.value)
-		.subscribe((response: any) => {
-			if (response.message === 'creada') {
-				console.log('Capitulo creado con exito.');
-			} else {
-				console.log('Capitulo editado con exito.');
-			}
-		});
+			.subscribe((response: any) => {
+				if (response.message === 'creada') {
+					console.log('Capitulo creado con exito.');
+				} else {
+					console.log('Capitulo editado con exito.');
+				}
+			});
 
 	}
 

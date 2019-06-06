@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ConstantsService } from '../shared/constants.service';
+import { Programas } from 'src/app/interfaces/cp.interface';
 
 
 @Injectable({
@@ -30,15 +31,17 @@ export class EmpresaService {
 	} */
 
 	createEmpresa(programa: any) {
-		const body = {
-			id: programa.id,
-			nombre: programa.nombre
-		};
+
+		// const body: Programas = programa;
+		// const body = {
+		// 	id: programa.id,
+		// 	nombre: programa.nombre
+		// };
 
 		if (programa.id === '') {
-			return this.http.post(`${this.url}/create_programa`, body);
+			return this.http.post(`${this.url}/create_programa`, programa);
 		} else {
-			return this.http.put(`${this.url}/update_programa`, body);
+			return this.http.put(`${this.url}/update_programa`, programa);
 		}
 
 	}

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ConstantsService } from '../shared/constants.service';
+import { Programas } from '../../interfaces/cp.interface';
 
 
 @Injectable({
@@ -8,61 +8,33 @@ import { ConstantsService } from '../shared/constants.service';
 })
 export class ProgramaService {
 
-	url: string;
-	// headers: HttpHeaders;
 	constructor(
-		private http: HttpClient,
 		private constants: ConstantsService
-	) {
-		this.url = this.constants.url;
-		// this.headers = new HttpHeaders({
-		// 	'Content-Type': 'application/json'
-		// });
-	}
+	) { }
 
-	activarPrograma(programa: any) {
-		const body = {
-			id: programa.id,
-			nombre: programa.nombre
-		};
-
-		return this.http.put(`${this.url}/activate_programa`, body);
-	}
-
-	createPrograma(programa: any) {
-		const body = {
-			id: programa.id,
-			nombre: programa.nombre
-		};
+	createUpdatePrograma(programa: Programas) {
 
 		if (programa.id === '') {
-			return this.http.post(`${this.url}/create_programa`, body);
+			return this.constants.getRequest(`/create_programa`, 'post', programa);
 		} else {
-			return this.http.put(`${this.url}/update_programa`, body);
+			return this.constants.getRequest(`/update_programa`, 'put', programa);
 		}
 
 	}
 
 	getPrograma(id: string) {
-		return this.http.get(`${this.url}/get_programa/${id}`);
+		return this.constants.getRequest(`/get_programa/${id}`, 'get', false);
 	}
 
 	getProgramas() {
-
-		return this.http.get(`${this.url}/get_programas`);
-		// return `${this.url}/get_programas`;
+		return this.constants.getRequest(`/get_programas`, 'get', false);
 	}
 
-	eliminarPrograma(id: string) {
-		return this.http.delete(`${this.url}/delete_programa/${id}`);
+	activarEliminarPrograma(id: string, opcion: boolean) {
+		if (opcion) {
+			return this.constants.getRequest(`/activate_programa/${id}`, 'get', false);
+		} else {
+			return this.constants.getRequest(`/delete_programa/${id}`, 'delete', false);
+		}
 	}
-
-	// activarPrograma(id: string) {
-	// 	const body = {
-	// 		id
-	// 	};
-	// 	return this.http.put(`${this.url}/activate_programa`);
-	// }
-
-
 }

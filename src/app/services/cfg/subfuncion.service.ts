@@ -51,7 +51,6 @@ export class SubfuncionService {
 
 		return this.http.get(`${this.url}/get_subfunciones`);
 		// return `${this.url}/get_programas`;
-		
 	}
 
 	eliminarSubfuncion(id: string) {

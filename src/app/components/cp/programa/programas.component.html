@@ -72,12 +72,12 @@
 												Editar
 											</button>
 											<button *ngIf="programa.status" type="button" class="btn btn-danger btn-sm ml-3"
-												(click)="eliminar(programa.id, i)">
+												(click)="eliminarActivar(programa.id, false)">
 												<i class="fas fa-trash"></i>
 												Eliminar
 											</button>
 											<button *ngIf="!programa.status" type="button" class="btn btn-success btn-sm ml-3"
-												(click)="activar(programa, i)">
+												(click)="eliminarActivar(programa.id, true)">
 												<i class="fas fa-arrow-circle-up"></i>
 												Activar
 											</button>

@@ -19,40 +19,16 @@ export class ProgramasComponent {
 
 	getProgramas() {
 		this.programa_service.getProgramas()
-			.subscribe((data: any) => {
-				this.programas = data;
-				// console.log('Constructor: ', this.programas);
-			});
+			.subscribe((data: any) => this.programas = data);
 	}
 
-	eliminar(id: string, index: string) {
-
-		// this.programas = (this.programas.filter(data => data.id === id));
-
-		this.programa_service.eliminarPrograma(id)
+	eliminarActivar(id: string, type: boolean) {
+		this.programa_service.activarEliminarPrograma(id, type)
 			.subscribe((response: any) => {
+				console.log(response.message);
 				this.getProgramas();
 			}, error => {
 				console.log('ERROR: ', error.error.message);
 			});
-		console.log('Eliminado con exito.');
 	}
-
-	activar(programa: Programas, index: string) {
-
-		this.programa_service.activarPrograma({
-			id: programa.id,
-			nombre: programa.nombre,
-			status: !programa.status
-		}).subscribe((response: any) => {
-				// console.log(response.message);
-				this.getProgramas();
-				// this.programas = this.programas.filter(student => student.id !== id);
-				// console.log('Funcion: ', this.programas);
-			}, error => {
-				console.log('ERROR: ', error.error.message);
-			});
-		console.log('Activado con exito.');
-	}
-
 }

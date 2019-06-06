@@ -4,3 +4,9 @@ a:hover {
 	cursor: pointer;
 	text-decoration: none;
 }
+
+.modal_class {
+	/* width: 180% !important;
+	margin-left: 20px !important; */
+	max-width: 800px !important;
+}

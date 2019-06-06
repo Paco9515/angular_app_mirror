@@ -43,6 +43,9 @@ import { SubfuncionesComponent } from './cfg/subfuncion/subfunciones.component';
 import { FuentesComponent } from './cff/fuente/fuentes.component';
 import { SubfuentesComponent } from './cff/subfuente/subfuentes.component';
 import { TiposComponent } from './cff/tipo/tipos.component';
+import { PromesasComponent } from './promesas/promesas.component';
+import { SubprogramasComponent } from './cp/subprograma/subprogramas.component';
+import { SubprogramaComponent } from './cp/subprograma/subprograma.component';
 
 const admin_routes: Routes = [
 	{
@@ -52,7 +55,10 @@ const admin_routes: Routes = [
 			{ path: 'programas', component: ProgramasComponent },
 			{ path: 'progress', component: ProgressComponent },
 			{ path: 'escritorio', component: EscritorioComponent },
+			{ path: 'promesas', component: PromesasComponent },
 			{ path: 'programa/:id', component: ProgramaComponent },
+			{ path: 'subprogramas', component: SubprogramasComponent },
+			{ path: 'subprograma/:id', component: SubprogramaComponent },
 
 			{ path: 'capitulos', component: CapitulosComponent },
 			{ path: 'capitulos/:id', component: CapituloComponent },
@@ -76,7 +82,6 @@ const admin_routes: Routes = [
 			{ path: 'financieros', component: FinancierosComponent },
 			{ path: 'sectores', component: SectoresComponent },
 			{ path: 'subeconomias', component: SubeconomiasComponent },
-			{ path: '', pathMatch: 'full', redirectTo: 'escritorio' },
 
 			{ path: 'empresas', component: EmpresasComponent },
 			{ path: 'empresa/:id', component: EmpresaComponent },
@@ -89,7 +94,7 @@ const admin_routes: Routes = [
 			{ path: 'fuentes', component: FuentesComponent },
 			{ path: 'subfuentes', component: SubfuentesComponent },
 			{ path: 'tipos', component: TiposComponent },
-
+			{ path: '', pathMatch: 'full', redirectTo: 'escritorio' }
 		]
 	}
 ];

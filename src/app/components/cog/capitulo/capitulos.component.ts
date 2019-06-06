@@ -21,18 +21,18 @@ export class CapitulosComponent {
 
 	getCapitulos() {
 		this.capitulo_service.getCapitulos()
-		.subscribe( (data: any) => {
+			.subscribe((data: any) => {
 				this.capitulos = data;
 			});
 	}
 
-	eliminar(id: string, index: string){
+	eliminar(id: string, index: string) {
 		this.capitulo_service.deleteCapitulo(id)
-		.subscribe((response: any) => {
-			this.getCapitulos();
-		}, error => {
-			console.log('ERROR: ', error.error.message);
-		});
+			.subscribe((response: any) => {
+				this.getCapitulos();
+			}, error => {
+				console.log('ERROR: ', error.error.message);
+			});
 		console.log('Eliminado con exito.');
 	}
 
@@ -43,10 +43,10 @@ export class CapitulosComponent {
 			nombre: capitulo.nombre,
 			status: !capitulo.status
 		}).subscribe((response: any) => {
-				this.getCapitulos();
-			}, error => {
-				console.log('ERROR: ', error.error.message);
-			});
+			this.getCapitulos();
+		}, error => {
+			console.log('ERROR: ', error.error.message);
+		});
 		console.log('Activado con exito.');
 	}
 

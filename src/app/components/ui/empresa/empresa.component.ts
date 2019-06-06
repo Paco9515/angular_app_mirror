@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
-import { Empresas } from "src/app/interfaces/ui/empresas";
-import { EmpresaService } from "src/app/services/ui/empresa.service";
+import { Empresas } from 'src/app/interfaces/ui/empresas';
+import { EmpresaService } from 'src/app/services/ui/empresa.service';
 
 @Component({
   selector: 'app-empresa',

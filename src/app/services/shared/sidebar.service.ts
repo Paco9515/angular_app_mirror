@@ -1,9 +1,19 @@
 import { Injectable } from '@angular/core';
 
 @Injectable({
-  providedIn: 'root'
+	providedIn: 'root'
 })
 export class SidebarService {
 
-  constructor() { }
+	menu: any;
+
+	constructor() {
+		this.menu =  {
+			titulo: 'Escritorio',
+			icono: 'fa fa-dashboard',
+			submenu: {
+				titulo: ''
+			}
+		};
+	}
 }
