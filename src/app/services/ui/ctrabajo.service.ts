@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ConstantsService } from '../shared/constants.service';
+import { Ctrabajo } from '../../interfaces/ui.interface';
 
 
 @Injectable({
@@ -29,28 +30,26 @@ export class CtrabajoService {
 		return this.http.put(`${this.url}/activate_programa`, body);
 	} */
 
-	createCtrabajo(programa: any) {
-		const body = {
-			id: programa.id,
-			nombre: programa.nombre
-		};
-
-		if (programa.id === '') {
-			return this.http.post(`${this.url}/create_ctrabajo`, body);
+	createCtrabajo(ctrabajo: Ctrabajo) {
+		
+		if (ctrabajo.id === '') {
+			return this.http.post(`${this.url}/create_ctrabajo`, ctrabajo);
 		} else {
-			return this.http.put(`${this.url}/update_ctrabajo`, body);
+			return this.http.put(`${this.url}/update_ctrabajo`, ctrabajo);
 		}
 
 	}
 
 	getCtrabajo(id: string) {
-		return this.http.get(`${this.url}/get_ctrabajo?id=${id}`);
+		return this.http.get(`${this.url}/get_ctrabajo/${id}`);
 	}
 
 	getCtrabajos() {
-
 		return this.http.get(`${this.url}/get_ctrabajos`);
-		// return `${this.url}/get_programas`;
+	}
+
+	getCentros() {
+		return this.http.get(`${this.url}/get_ccostos`);
 	}
 
 	eliminarCtrabajo(id: string) {

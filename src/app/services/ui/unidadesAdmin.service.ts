@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ConstantsService } from '../shared/constants.service';
+import { UnidadesAdmin } from '../../interfaces/ui.interface';
 
 
 @Injectable({
@@ -29,26 +30,31 @@ export class UnidadesAdminService {
 		return this.http.put(`${this.url}/activate_programa`, body);
 	} */
 
-	createUnidad(programa: any) {
-		const body = {
-			id: programa.id,
-			nombre: programa.nombre
-		};
+	createUnidad(unidad: UnidadesAdmin) {
 
-		if (programa.id === '') {
-			return this.http.post(`${this.url}/create_programa`, body);
+		
+		console.log('servicio', unidad);
+
+		if (unidad.id === '') {
+			return this.http.post(`${this.url}/create_unidad`, unidad);
 		} else {
-			return this.http.put(`${this.url}/update_programa`, body);
+			return this.http.put(`${this.url}/update_unidad`, unidad);
 		}
 
 	}
 
 	getUnidadAdmin(id: string) {
-		return this.http.get(`${this.url}/get_unidad?id=${id}`);
+		return this.http.get(`${this.url}/get_unidad/${id}`);
 	}
 
 	getUnidadesAdmin() {
 		return this.http.get(`${this.url}/get_unidades`);
+		// return `${this.url}/get_programas`;
+	}
+
+	getEmpresas() {
+		//console.log('id para traer las empresas',id);
+		return this.http.get(`${this.url}/get_empresas`);
 		// return `${this.url}/get_programas`;
 	}
 

@@ -31,12 +31,26 @@
                 </section>
 
                 <section class="content container-fluid">
-                    <form [formGroup]="forma" (ngSubmit)="guardar()">
+                    <form #forma="ngForm" (ngSubmit)="guardar()">
                         <div class="form-group row">
+                            <div class="col-sm-12">
+                                <label for="staticEmail" class="col-sm-12 col-form-label">Empresa</label>
+                                <div class="col-sm-12">
+                                    <select [(ngModel)]="unidad.id_empresa" name="id_empresa" class="form-control">
+                                        <option *ngFor="let empresa of emps_unidades;" [value]="empresa.id">{{empresa.nombre}}</option>
+                                    </select>
+                                </div>
+                            </div>
                             <div class="col-sm-12">
                                 <label for="staticEmail" class="col-sm-12 col-form-label">Nombre</label>
                                 <div class="col-sm-12">
-                                    <input type="text" class="form-control" placeholder="Ingresa el nombre" formControlName="nombre">
+                                    <input type="text" class="form-control" placeholder="Ingresa el nombre" [(ngModel)]="unidad.nombre" name="nombre">
+                                </div>
+                            </div>
+                            <div class="col-sm-12">
+                                <label for="staticEmail" class="col-sm-12 col-form-label">Descripcion</label>
+                                <div class="col-sm-12">
+                                    <textarea type="text" class="form-control" placeholder="Ingresa una descripcion" [(ngModel)]="unidad.desc" name="desc"></textarea>
                                 </div>
                             </div>
                         </div>
