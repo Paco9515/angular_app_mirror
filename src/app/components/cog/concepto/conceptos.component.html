@@ -24,7 +24,7 @@
   
 				<section class="content container-fluid">
 					<button type="button" class="btn btn-success btn-sm mb-2 pull-right"
-						[routerLink]="['/panel-adm/concepto', 'nuevo']"
+						[routerLink]="['/panel-adm/conceptos', 'nuevo']"
 					>
 						<i class="fas fa-plus-circle"></i>
 						Agregar nuevo conceptos
@@ -65,23 +65,28 @@
 												<span class="badge badge-secondary">Inactivo</span>
 											</ng-template>
 										</td>
-										<td class="text-right">
-											<button type="button" class="btn btn-primary btn-sm"
-												[routerLink]="['/panel-adm/concepto', concepto.id]"
-												[disabled]="!concepto.status"
-											>
+										<td class="uk-text-center">
+											<button type="button" class="btn btn-info btn-sm w-auto mb-1 ml-1"
+												data-toggle="modal" data-target="#conceptoModal"
+												(click)="detalle=concepto">
+												<i class="fas fa-eye"></i>
+												Ver detalle
+											</button>
+											<button type="button" class="btn btn-primary btn-sm w-auto mb-1 ml-1"
+												[routerLink]="['/panel-adm/conceptos', concepto.id]"
+												[disabled]="!concepto.status">
 												<i class="fas fa-edit"></i>
 												Editar
 											</button>
 											<button 
-											(click)="eliminar(concepto.id)"
-											*ngIf="concepto.status" type="button" class="btn btn-danger btn-sm ml-3">
+											(click)="eliminarActivar(concepto.id, false)"
+											*ngIf="concepto.status" type="button" class="btn btn-danger btn-sm w-auto mb-1 ml-1">
 												<i class="fas fa-trash"></i>
 												Eliminar
 											</button>
 											<button 
-											(click)="activar(concepto)"
-											*ngIf="!concepto.status" type="button" class="btn btn-success btn-sm ml-3">
+											(click)="eliminarActivar(concepto.id, true)"
+											*ngIf="!concepto.status" type="button" class="btn btn-success btn-sm w-auto mb-1 ml-1">
 												<i class="fas fa-arrow-circle-up"></i>
 												Activar
 											</button>
@@ -89,7 +94,76 @@
 									</tr>
 								</ng-template>
 							</tbody>
-						</table>			
+						</table>
+									
+					</div>
+
+					<div class="modal fade" id="conceptoModal" tabindex="-1" role="dialog"
+						aria-labelledby="" aria-hidden="true">
+						<div class="modal-dialog modal_class" role="document">
+							<div class="modal-content ">
+								<div class="modal-header">
+									<h5 class="modal-title" id="">
+										Información detallada del concepto
+									</h5>
+									<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+										<span aria-hidden="true">&times;</span>
+									</button>
+								</div>
+								<div class="modal-body">
+									<div class="row">
+										<div class="col-12">
+											<div class="form-group row">
+												<label for="staticEmail" class="col-sm-2 col-form-label">
+													Código:
+												</label>
+												<div class="col-10">
+													<input type="text" readonly class="form-control-plaintext"
+														[(ngModel)]="detalle.codigo">
+												</div>
+											</div>
+											<div class="form-group row">
+												<label for="staticEmail" class="col-sm-2 col-form-label">
+													Nombre:
+												</label>
+												<div class="col-10">
+													<input type="text" readonly class="form-control-plaintext"
+														[(ngModel)]="detalle.nombre">
+												</div>
+											</div>
+											<div class="form-group row">
+												<label for="staticEmail" class="col-sm-2 col-form-label">
+													Nombre del capitulo:
+												</label>
+												<div class="col-10">
+													<input type="text" readonly class="form-control-plaintext"
+														[(ngModel)]="detalle.nombre_capitulo">
+												</div>
+											</div>
+											<div class="form-group row">
+												<label for="staticEmail" class="col-sm-2 col-form-label">
+													Estado
+												</label>
+												<div class="col-10">
+													<span *ngIf="detalle.status; else inactiveBlock"
+														class="badge badge-success">
+														Activo
+													</span>
+													<ng-template #inactiveBlock>
+														<span class="badge badge-secondary">Inactivo</span>
+													</ng-template>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="modal-footer">
+									<button type="button" class="btn btn-secondary" data-dismiss="modal">
+										Cerrar
+									</button>
+								</div>
+							</div>
+						</div>
 					</div>
 				</section>
 			</div>

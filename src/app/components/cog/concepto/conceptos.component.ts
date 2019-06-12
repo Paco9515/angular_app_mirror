@@ -10,10 +10,19 @@ import { ConceptoService } from './../../../services/cog/concepto.service';
 export class ConceptosComponent {
 
     conceptos: Conceptos[];
+	detalle: Conceptos;
 
     constructor(
         private concepto_service: ConceptoService
     ) {
+        this.detalle = {
+            id: '',
+			codigo: '',
+			nombre: '',
+			status: true,
+			id_capitulo: '',
+			nombre_capitulo: ''
+		};
         this.conceptos = [];
         this.getConceptos();
     }
@@ -25,27 +34,14 @@ export class ConceptosComponent {
             });
     }
 
-    eliminar(id: string) {
-		this.concepto_service.eliminarConcepto(id)
+	eliminarActivar(id: string, type: boolean) {
+		this.concepto_service.activarEliminarConcepto(id, type)
 			.subscribe((response: any) => {
+				console.log(response.message);
 				this.getConceptos();
 			}, error => {
-				console.log('ERROR: ', error.error.message);
+				console.log('ERROR: ', error);
 			});
-		console.log('Eliminado con exito.');
-	}
-
-	activar(concepto: Conceptos) {
-		this.concepto_service.activarConcepto({
-			id: concepto.id,
-			nombre: concepto.nombre,
-			status: !concepto.status
-		}).subscribe((data: any) => {
-				this.getConceptos();
-			}, error => {
-				console.log('ERROR: ', error.error.message);
-			});
-		console.log('Activado con exito.');
 	}
 
 

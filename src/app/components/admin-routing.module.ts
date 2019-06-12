@@ -72,7 +72,7 @@ const admin_routes: Routes = [
 			{ path: 'capitulos', component: CapitulosComponent },
 			{ path: 'capitulos/:id', component: CapituloComponent },
 			{ path: 'conceptos', component: ConceptosComponent },
-			{ path: 'conceptos/id', component: ConceptoComponent },
+			{ path: 'conceptos/:id', component: ConceptoComponent },
 			{ path: 'partidas', component: PartidasComponent },
 			{ path: 'partida/:id', component: PartidaComponent },
 			{ path: 'generos', component: GenerosComponent },
