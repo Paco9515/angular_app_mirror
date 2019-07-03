@@ -28,8 +28,13 @@ export class EmpresaService {
 		};
 
 		return this.http.put(`${this.url}/activate_programa`, body);
+
 	} 
 		
+
+	}
+
+
 	*/
 
 	createEmpresa(empresa: Empresas) {
@@ -38,6 +43,7 @@ export class EmpresaService {
 			return this.http.post(`${this.url}/create_empresa`, empresa);
 		} else {
 			return this.http.put(`${this.url}/update_empresa`, empresa);
+
 		}    
 
 	}
