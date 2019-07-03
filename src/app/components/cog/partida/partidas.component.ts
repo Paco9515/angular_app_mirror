@@ -21,6 +21,8 @@ export class PartidasComponent {
 			codigo: '',
 			nombre: '',
 			status: true,
+			id_capitulo: '',
+			nombre_capitulo: '',
 			id_concepto: '',
 			nombre_concepto: ''
 		};
@@ -28,7 +30,7 @@ export class PartidasComponent {
         this.getPartidas();
     }
 
-	getPartidas(){
+	getPartidas() {
         this.partida_service.getPartidas()
             .subscribe((data: any) => {
                 this.partidas = data;

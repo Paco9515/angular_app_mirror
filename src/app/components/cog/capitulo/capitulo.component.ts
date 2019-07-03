@@ -25,7 +25,6 @@ export class CapituloComponent {
 
 		this.activitedRoute.params.subscribe((data: any) => {
 			if (data.id !== 'nuevo') {
-				console.log(data.id);
 				this.cargarCapitulos(data.id);
 			}
 		});

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { Generos } from 'src/app/interfaces/cc.interface';
 import { ConstantsService } from '../shared/constants.service';
 
 @Injectable({
@@ -10,45 +10,32 @@ export class GeneroService {
 	url: string;
 
 	constructor(
-			private http: HttpClient,
-			private constants: ConstantsService
+		private constants: ConstantsService
 		) {
-
-		this.url = this.constants.url;
-
 	}
 
 	 getGeneros() {
-		return this.http.get(`${ this.url }/get_generos`);
+		return this.constants.getRequest(`/get_generos`, 'get', false);
 	}
 
-	activarGenero(sector: any) {
-		const body = {
-			id: sector.id,
-			nombre: sector.nombre
-		};
-		return this.http.put(`${this.url}/activar_genero`, body);
-	}
+	createUpdateGenero(genero: Generos) {
 
-	createGenero(sector: any) {
-		const body = {
-			id: sector.id,
-			codigo: sector.codigo,
-			nombre: sector.nombre
-		};
-		if (sector.id === '') {
-			return this.http.post(`${ this.url }/create_genero`, body);
+		if (genero.id === '') {
+			return this.constants.getRequest(`/create_genero`, 'post', genero);
 		} else {
-			return this.http.put(`${ this.url }/update_genero`, body);
+			return this.constants.getRequest(`/update_genero`, 'put', genero);
+		}
+	}
+
+	activarEliminarGenero(id: string, opcion: boolean) {
+		if (opcion) {
+			return this.constants.getRequest(`/activate_genero/${id}`, 'put', false);
+		} else {
+			return this.constants.getRequest(`/delete_genero/${id}`, 'delete', false);
 		}
 	}
 
 	getGenero(id: string) {
-		return this.http.get(`${ this.url }/get_genero/${id}`);
+		return this.constants.getRequest(`/get_genero/${id}`, 'get', false);
 	}
-
-	eliminarGenero(id: string) {
-		return this.http.delete(`${this.url}/delete_genero/${id}`);
-	}
-
 }

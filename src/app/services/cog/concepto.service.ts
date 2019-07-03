@@ -19,7 +19,6 @@ export class ConceptoService {
 		} else {
 			return this.constants.getRequest(`/update_concepto`, 'put', concepto);
 		}
-
 	}
 
 	getCapitulos() {

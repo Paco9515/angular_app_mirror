@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { GeneroService } from './../../../services/cc/genero.service';
 import { Generos } from '../../../interfaces/cc.interface';
 
-
 @Component({
 	selector: 'app-generos',
 	templateUrl: './generos.component.html',
@@ -11,10 +10,17 @@ import { Generos } from '../../../interfaces/cc.interface';
 export class GenerosComponent {
 
 	generos: Generos[];
+	detalle: Generos;
 
 	constructor(
 		private genero_service: GeneroService
 	) {
+		this.detalle = {
+			id: '',
+			codigo: '',
+			nombre: '',
+			status: true
+		};
 		this.generos = [];
 		this.getGeneros();
 	}
@@ -26,27 +32,14 @@ export class GenerosComponent {
 			});
 	}
 
-	eliminar(id: string, index: string) {
-		this.genero_service.eliminarGenero(id)
-			.subscribe((data: any) => {
+	eliminarActivar(id: string, type: boolean) {
+		this.genero_service.activarEliminarGenero(id, type)
+			.subscribe((response: any) => {
+				console.log(response.message);
 				this.getGeneros();
 			}, error => {
-				console.log('ERROR', error.error.message);
+				console.log('ERROR: ', error);
 			});
-			console.log('Eliminado con exito.');
 	}
-
-	activar(genero: Generos, index: string) {
-		this.genero_service.activarGenero(genero)
-			.subscribe((data: any) => {
-				this.getGeneros();
-			}, error => {
-				console.log('ERROR: ', error.error.message);
-			});
-		console.log('Activado con exito.');
-	}
-
-
-
 
 }

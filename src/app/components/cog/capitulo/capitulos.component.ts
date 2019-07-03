@@ -10,10 +10,19 @@ import { CapituloService } from 'src/app/services/cog/capitulo.service';
 export class CapitulosComponent {
 
 	capitulos: Capitulos[];
+	detalle: Capitulos;
 
 	constructor(
 		private capitulo_service: CapituloService
 	) {
+
+		this.detalle = {
+            id: '',
+			codigo: '',
+			nombre: '',
+			status: true
+		};
+
 		this.capitulos = [];
 		this.getCapitulos();
 	}
@@ -24,7 +33,6 @@ export class CapitulosComponent {
 				this.capitulos = data;
 			});
 	}
-
 
 	eliminarActivar(id: string, type: boolean) {
 		this.capitulo_service.activarEliminarCapitulo(id, type)

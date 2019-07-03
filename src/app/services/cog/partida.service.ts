@@ -7,8 +7,6 @@ import { ConstantsService } from '../shared/constants.service';
 })
 export class PartidaService {
 
-url: string;
-
 	constructor(
 		private constants: ConstantsService
 		) { }
@@ -20,6 +18,17 @@ url: string;
 		} else {
 			return this.constants.getRequest(`/update_partida`, 'put', partida);
 		}
+	}
+	activarEliminarPartida(id: string, opcion: boolean) {
+		if (opcion) {
+			return this.constants.getRequest(`/activate_partida/${id}`, 'put', false);
+		} else {
+			return this.constants.getRequest(`/delete_partida/${id}`, 'delete', false);
+		}
+	}
+
+	getCapitulos() {
+		return this.constants.getRequest(`/get_capitulos`, 'get', false);
 	}
 
 	getConceptos() {
@@ -33,13 +42,4 @@ url: string;
 	getPartida(id: string) {
 		return this.constants.getRequest(`/get_partida/${id}`, 'get', false);
 	}
-
-	activarEliminarPartida(id: string, opcion: boolean) {
-		if (opcion) {
-			return this.constants.getRequest(`/activate_partida/${id}`, 'put', false);
-		} else {
-			return this.constants.getRequest(`/delete_partida/${id}`, 'delete', false);
-		}
-	}
-
 }

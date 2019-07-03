@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { Financieros } from 'src/app/interfaces/ca.interface';
 import { ConstantsService } from '../shared/constants.service';
 
 @Injectable({
@@ -7,18 +7,36 @@ import { ConstantsService } from '../shared/constants.service';
 })
 export class FinancieroService {
 
-	url: string;
-
   	constructor(
-		private http: HttpClient,
 		private constants: ConstantsService
-	) {
+	) {}
 
-		this.url = this.constants.url;
+	createUpdateFinanciero(financiero: Financieros) {
+		if (financiero.id === '') {
+			return this.constants.getRequest(`/create_financiero`, 'post', financiero);
+		} else {
+			return this.constants.getRequest(`/update_financiero`, 'put', financiero);
+		}
+	}
+
+	activarEliminarFinanciero(id: string, opcion: boolean) {
+		if (opcion) {
+			return this.constants.getRequest(`/activate_financiero/${id}`, 'put', false);
+		} else {
+			return this.constants.getRequest(`/delete_financiero/${id}`, 'delete', false);
+		}
 	}
 
 	getFinancieros() {
-		return this.http.get(`${ this.url }/get_financieros`);
+		return this.constants.getRequest(`/get_financieros`, 'get', false);
+	}
+
+	getFinanciero(id: string) {
+		return this.constants.getRequest(`/get_financieros/${id}`, 'get', false);
+	}
+
+	getSectores() {
+		return this.constants.getRequest(`/get_sectores`, 'get', false);
 	}
 
 }
