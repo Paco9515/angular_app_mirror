@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
-import { CapituloService } from 'src/app/services/cog/capitulo.service';
 import { Capitulos } from 'src/app/interfaces/cog.interface';
-
+import { CapituloService } from 'src/app/services/cog/capitulo.service';
 
 @Component({
 	selector: 'app-capitulos',
@@ -11,10 +10,19 @@ import { Capitulos } from 'src/app/interfaces/cog.interface';
 export class CapitulosComponent {
 
 	capitulos: Capitulos[];
+	detalle: Capitulos;
 
 	constructor(
 		private capitulo_service: CapituloService
 	) {
+
+		this.detalle = {
+            id: '',
+			codigo: '',
+			nombre: '',
+			status: true
+		};
+
 		this.capitulos = [];
 		this.getCapitulos();
 	}
@@ -26,28 +34,14 @@ export class CapitulosComponent {
 			});
 	}
 
-	eliminar(id: string, index: string) {
-		this.capitulo_service.deleteCapitulo(id)
+	eliminarActivar(id: string, type: boolean) {
+		this.capitulo_service.activarEliminarCapitulo(id, type)
 			.subscribe((response: any) => {
+				console.log(response.message);
 				this.getCapitulos();
 			}, error => {
-				console.log('ERROR: ', error.error.message);
+				console.log('ERROR: ', error);
 			});
-		console.log('Eliminado con exito.');
-	}
-
-	activar(capitulo: Capitulos, index: string) {
-
-		this.capitulo_service.activarCapitulo({
-			id: capitulo.id,
-			nombre: capitulo.nombre,
-			status: !capitulo.status
-		}).subscribe((response: any) => {
-			this.getCapitulos();
-		}, error => {
-			console.log('ERROR: ', error.error.message);
-		});
-		console.log('Activado con exito.');
 	}
 
 }

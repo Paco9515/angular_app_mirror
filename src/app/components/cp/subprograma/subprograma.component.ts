@@ -45,7 +45,11 @@ export class SubprogramaComponent {
 
 	cargarSubprogramas(id: string) {
 		this.subprogramaService.getSubprograma(id)
-			.subscribe((obj: Subprograma) => this.subprograma = obj);
+			.subscribe((obj: Subprograma) => {
+				
+				this.subprograma = obj
+				console.log(this.subprograma);
+			});
 	}
 
 	guardar(f: NgForm) {

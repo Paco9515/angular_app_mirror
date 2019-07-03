@@ -12,7 +12,7 @@
 							<li>
 								<a>
 									<i class="fa fa-folder-open"></i>
-									Clasificación por objeto de gasto
+									Clasificación contable
 								</a>
 							</li>
 							<li>
@@ -66,21 +66,26 @@
 													<span class="badge badge-secondary">Inactivo</span>
 												</ng-template>
 											</td>
-											<td class="text-right">
-												<button type="button" class="btn btn-primary btn-sm"
+											<td class="text-center">
+												<button type="button" class="btn btn-info btn-sm w-auto mb-1 ml-1"
+													data-toggle="modal" data-target="#subcuentaModal"
+													(click)="detalle=subcuenta">
+													<i class="fas fa-eye"></i>
+													Ver detalle
+												</button>
+												<button type="button" class="btn btn-primary btn-sm w-auto mb-1 ml-1"
 													[routerLink]="['/panel-adm/subcuentas', subcuenta.id]"
-													[disabled]="!subcuenta.status"
-												>
+													[disabled]="!subcuenta.status">
 													<i class="fas fa-edit"></i>
 													Editar
 												</button>
-												<button *ngIf="subcuenta.status" type="button" class="btn btn-danger btn-sm ml-3"
-												(click)="eliminar(subcuenta.id)">
+												<button *ngIf="subcuenta.status" type="button" class="btn btn-danger btn-sm w-auto mb-1 ml-1"
+												(click)="eliminarActivar(subcuenta.id, false)">
 													<i class="fas fa-trash"></i>
 													Eliminar
 												</button>
-												<button *ngIf="!subcuenta.status" type="button" class="btn btn-success btn-sm ml-3"
-													(click)="activar(subcuenta)">
+												<button *ngIf="!subcuenta.status" type="button" class="btn btn-success btn-sm w-auto mb-1 ml-1"
+													(click)="eliminarActivar(subcuenta.id, true)">
 													<i class="fas fa-arrow-circle-up"></i>
 													Activar
 												</button>
@@ -89,6 +94,105 @@
 									</ng-template>
 								</tbody>
 							</table>
+						</div>
+
+						<div class="modal fade" id="subcuentaModal" tabindex="-1" role="dialog"
+						aria-labelledby="" aria-hidden="true">
+							<div class="modal-dialog modal_class" role="document">
+								<div class="modal-content ">
+									<div class="modal-header">
+										<h5 class="modal-title" id="">
+											Información detallada de la partida
+										</h5>
+										<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+											<span aria-hidden="true">&times;</span>
+										</button>
+									</div>
+									<div class="modal-body">
+										<div class="row">
+											<div class="col-12">
+												<div class="form-group row">
+													<label for="" class="col-sm-2 col-form-label">
+														Código:
+													</label>
+													<div class="col-10">
+														<input type="text" readonly class="form-control-plaintext"
+															[(ngModel)]="detalle.codigo">
+													</div>
+												</div>
+												<div class="form-group row">
+													<label for="" class="col-sm-2 col-form-label">
+														Nombre:
+													</label>
+													<div class="col-10">
+														<input type="text" readonly class="form-control-plaintext"
+															[(ngModel)]="detalle.nombre">
+													</div>
+												</div>
+												<div class="form-group row">
+													<label for="" class="col-sm-2 col-form-label">
+														Nombre del genero:
+													</label>
+													<div class="col-10">
+														<input type="text" readonly class="form-control-plaintext"
+															name="nombre_genero"
+															[(ngModel)]="detalle.nombre_genero">
+													</div>
+												</div>
+												<div class="form-group row">
+													<label for="" class="col-sm-2 col-form-label">
+														Nombre del grupo:
+													</label>
+													<div class="col-10">
+														<input type="text" readonly class="form-control-plaintext"
+															name="nombre_grupo"
+															[(ngModel)]="detalle.nombre_grupo">
+													</div>
+												</div>
+												<div class="form-group row">
+													<label for="" class="col-sm-2 col-form-label">
+														Nombre del rubro:
+													</label>
+													<div class="col-10">
+														<input type="text" readonly class="form-control-plaintext"
+															name="nombre_rubro"
+															[(ngModel)]="detalle.nombre_rubro">
+													</div>
+												</div>
+												<div class="form-group row">
+													<label for="" class="col-sm-2 col-form-label">
+														Nombre del cuenta:
+													</label>
+													<div class="col-10">
+														<input type="text" readonly class="form-control-plaintext"
+															name="nombre_cuenta"
+															[(ngModel)]="detalle.nombre_cuenta">
+													</div>
+												</div>
+												<div class="form-group row">
+													<label for="" class="col-sm-2 col-form-label">
+														Estado
+													</label>
+													<div class="col-10">
+														<span *ngIf="detalle.status; else inactiveBlock"
+															class="badge badge-success">
+															Activo
+														</span>
+														<ng-template #inactiveBlock>
+															<span class="badge badge-secondary">Inactivo</span>
+														</ng-template>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="modal-footer">
+										<button type="button" class="btn btn-secondary" data-dismiss="modal">
+											Cerrar
+										</button>
+									</div>
+								</div>
+							</div>
 						</div>
 					</section>
 				</div>

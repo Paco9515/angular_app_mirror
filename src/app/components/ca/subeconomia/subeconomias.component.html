@@ -4,95 +4,182 @@
 		<div class="col-12">
 			<div class="panels shadow">
 	
-			<section class="content-header">
-				<h2>
-				Listado de las Subeconomias
-				</h2>
-				<ol class="breadcrumb">
-					<li>
-						<a>
-							<i class="fa fa-folder-open"></i>
-							Clasificación administrativa
-						</a>
-					</li>
-					<li>
-						<a>
-							Subeconomias
-						</a>
-					</li>
-				</ol>
-			</section>
-	
-			<section class="content container-fluid">
-				<button type="button" class="btn btn-success btn-sm mb-2 pull-right"
-				[routerLink]="['/panel-adm/subeconomias', 'nuevo']"
-				>
-					<i class="fas fa-plus-circle"></i>
-					Agregar nuevo subeconomia
-				</button>
-				<div class="table-responsive">
-					<table class="table table-striped">
-						<thead class="thead-dark">
-							<tr>
-								<th scope="col">#</th>
-								<th scope="col">Codigo</th>
-								<th scope="col">Nombre</th>
-								<th scope="col">Estado</th>
-								<th class="text-center" scope="col">Opciones</th>
-							</tr>
-						</thead>
-						<tbody>
-							<tr *ngIf="subeconomias.length==0; else tableBlock">
-								<td colspan="4" class="text-center">
-								<span class="badge badge-info">
-									<h5>
-									<i class="far fa-frown"></i>
-									No hay elementos para mostrar.
-									</h5>
-								</span>
-								</td>
-							</tr>
-							<ng-template #tableBlock>
-								<tr *ngFor="let subeconomia of subeconomias; let i = index">
-									<td>{{ i+1 }}</td>
-									<td>{{ subeconomia.codigo }}</td>
-									<td>{{ subeconomia.nombre }}</td>
-									<td>
-										<span *ngIf="subeconomia.status; else inactiveBlock"
-											class="badge badge-success">
-											Activo
-										</span>
-										<ng-template #inactiveBlock>
-											<span class="badge badge-secondary">Inactivo</span>
-										</ng-template>
-									</td>
-									<td class="text-right">
-										<button type="button" class="btn btn-primary btn-sm"
-										[routerLink]="['/panel-adm/cuentas', subeconomia.id]">
-										<i class="fas fa-edit"></i>
-										Editar
-										</button>
-										<button *ngIf="subeconomia.status" type="button" class="btn btn-danger btn-sm ml-3"
-										(click)="eliminar(subeconomia.id)">
-											<i class="fas fa-trash"></i>
-											Eliminar
-										</button>
-										<button *ngIf="!subeconomia.status" type="button" class="btn btn-success btn-sm ml-3"
-											(click)="activar(subeconomia)">
-											<i class="fas fa-arrow-circle-up"></i>
-											Activar
-										</button>
-										<button type="button" class="btn btn-info btn-sm ml-3">
-												<i class="fas fa-info-circle"></i>
-												Detalles
-										</button>
+				<section class="content-header">
+					<h2>
+					Listado de las Subeconomias
+					</h2>
+					<ol class="breadcrumb">
+						<li>
+							<a>
+								<i class="fa fa-folder-open"></i>
+								Clasificación administrativa
+							</a>
+						</li>
+						<li>
+							<a>
+								Subeconomias
+							</a>
+						</li>
+					</ol>
+				</section>
+		
+				<section class="content container-fluid">
+					<button type="button" class="btn btn-success btn-sm mb-2 pull-right"
+					[routerLink]="['/panel-adm/subeconomias', 'nuevo']">
+						<i class="fas fa-plus-circle"></i>
+						Agregar nuevo subeconomia
+					</button>
+					<div class="table-responsive">
+						<table class="table table-striped">
+							<thead class="thead-dark">
+								<tr>
+									<th scope="col">#</th>
+									<th scope="col">Codigo</th>
+									<th scope="col">Nombre</th>
+									<th scope="col">Estado</th>
+									<th class="text-center" scope="col">Opciones</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr *ngIf="subeconomias.length==0; else tableBlock">
+									<td colspan="4" class="text-center">
+									<span class="badge badge-info">
+										<h5>
+										<i class="far fa-frown"></i>
+										No hay elementos para mostrar.
+										</h5>
+									</span>
 									</td>
 								</tr>
-							</ng-template>
-						</tbody>
-					</table>
-				</div>
-			</section>
+								<ng-template #tableBlock>
+									<tr *ngFor="let subeconomia of subeconomias; let i = index">
+										<td>{{ i+1 }}</td>
+										<td>{{ subeconomia.codigo }}</td>
+										<td>{{ subeconomia.nombre }}</td>
+										<td>
+											<span *ngIf="subeconomia.status; else inactiveBlock"
+												class="badge badge-success">
+												Activo
+											</span>
+											<ng-template #inactiveBlock>
+												<span class="badge badge-secondary">Inactivo</span>
+											</ng-template>
+										</td>
+										<td class="text-center">
+											<button type="button" class="btn btn-info btn-sm w-auto mb-1 ml-1"
+												data-toggle="modal" data-target="#subeconomiaModal"
+												(click)="detalle=subeconomia">
+												<i class="fas fa-eye"></i>
+												Ver detalle
+											</button>
+											<button type="button" class="btn btn-primary btn-sm  w-auto mb-1 ml-1"
+											[routerLink]="['/panel-adm/subeconomias', subeconomia.id]"[disabled]="!subeconomia.status">
+												<i class="fas fa-edit"></i>
+												Editar
+											</button>
+											<button *ngIf="subeconomia.status" type="button" class="btn btn-danger btn-sm w-auto mb-1 ml-1"
+											(click)="eliminarActivar(subeconomia.id, false)">
+												<i class="fas fa-trash"></i>
+												Eliminar
+											</button>
+											<button *ngIf="!subeconomia.status" type="button" class="btn btn-success btn-sm w-auto mb-1 ml-1"
+												(click)="eliminarActivar(subeconomia.id, true)">
+												<i class="fas fa-arrow-circle-up"></i>
+												Activar
+											</button>
+										</td>
+									</tr>
+								</ng-template>
+							</tbody>
+						</table>
+					</div>
+
+					<div class="modal fade" id="subeconomiaModal" tabindex="-1" role="dialog"
+						aria-labelledby="" aria-hidden="true">
+						<div class="modal-dialog modal_class" role="document">
+							<div class="modal-content ">
+								<div class="modal-header">
+									<h5 class="modal-title" id="">
+										Información detallada de la subeconomia
+									</h5>
+									<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+										<span aria-hidden="true">&times;</span>
+									</button>
+								</div>
+								<div class="modal-body">
+									<div class="row">
+										<div class="col-12">
+											<div class="form-group row">
+												<label for="" class="col-sm-2 col-form-label">
+													Código:
+												</label>
+												<div class="col-10">
+													<input type="text" readonly class="form-control-plaintext"
+														[(ngModel)]="detalle.codigo">
+												</div>
+											</div>
+											<div class="form-group row">
+												<label for="" class="col-sm-2 col-form-label">
+													Nombre:
+												</label>
+												<div class="col-10">
+													<input type="text" readonly class="form-control-plaintext"
+														[(ngModel)]="detalle.nombre">
+												</div>
+											</div>
+											<div class="form-group row">
+												<label for="" class="col-sm-2 col-form-label">
+													Sector:
+												</label>
+												<div class="col-10">
+													<input type="text" readonly class="form-control-plaintext"
+														[(ngModel)]="detalle.nombre_sector">
+												</div>
+											</div>
+											<div class="form-group row">
+												<label for="" class="col-sm-2 col-form-label">
+													Financiero:
+												</label>
+												<div class="col-10">
+													<input type="text" readonly class="form-control-plaintext"
+														[(ngModel)]="detalle.nombre_financiero">
+												</div>
+											</div>
+											<div class="form-group row">
+												<label for="" class="col-sm-2 col-form-label">
+													Economia:
+												</label>
+												<div class="col-10">
+													<input type="text" readonly class="form-control-plaintext"
+														[(ngModel)]="detalle.nombre_economia">
+												</div>
+											</div>
+											<div class="form-group row">
+												<label for="" class="col-sm-2 col-form-label">
+													Estado
+												</label>
+												<div class="col-10">
+													<span *ngIf="detalle.status; else inactiveBlock"
+														class="badge badge-success">
+														Activo
+													</span>
+													<ng-template #inactiveBlock>
+														<span class="badge badge-secondary">Inactivo</span>
+													</ng-template>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="modal-footer">
+									<button type="button" class="btn btn-secondary" data-dismiss="modal">
+										Cerrar
+									</button>
+								</div>
+							</div>
+						</div>
+					</div>
+				</section>
 			</div>
 		</div>
 	</div>

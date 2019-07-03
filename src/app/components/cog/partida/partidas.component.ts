@@ -10,42 +10,41 @@ import { PartidaService } from './../../../services/cog/partida.service';
 export class PartidasComponent {
 
     partidas: Partidas[];
+	detalle: Partidas;
 
     constructor(
         private partida_service: PartidaService
     ) {
+
+        this.detalle = {
+            id: '',
+			codigo: '',
+			nombre: '',
+			status: true,
+			id_capitulo: '',
+			nombre_capitulo: '',
+			id_concepto: '',
+			nombre_concepto: ''
+		};
         this.partidas = [];
         this.getPartidas();
     }
 
-    getPartidas() {
+	getPartidas() {
         this.partida_service.getPartidas()
             .subscribe((data: any) => {
                 this.partidas = data;
             });
     }
 
-
-	eliminar(id: string) {
-		this.partida_service.eliminarSector(id)
+	eliminarActivar(id: string, type: boolean) {
+		this.partida_service.activarEliminarPartida(id, type)
 			.subscribe((response: any) => {
+				console.log(response.message);
 				this.getPartidas();
 			}, error => {
-				console.log('ERROR: ', error.error.message);
+				console.log('ERROR: ', error);
 			});
-		console.log('Eliminado con exito.');
 	}
 
-	activar(sector: Partidas) {
-		this.partida_service.activarPartida({
-			id: sector.id,
-			nombre: sector.nombre,
-			status: !sector.status
-		}).subscribe((data: any) => {
-				this.getPartidas();
-			}, error => {
-				console.log('ERROR: ', error.error.message);
-			});
-		console.log('Activado con exito.');
-	}
 }

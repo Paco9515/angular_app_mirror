@@ -1,53 +1,48 @@
 import { Injectable } from '@angular/core';
-
-import { HttpClient } from '@angular/common/http';
 import { ConstantsService } from '../shared/constants.service';
-
+import { Cuentas } from 'src/app/interfaces/cc.interface';
 @Injectable({
   providedIn: 'root'
 })
 export class CuentaService {
 
-	url: string;
-
   constructor(
-	private http: HttpClient,
 	private constants: ConstantsService
-	) {
+	) {}
 
-		this.url = this.constants.url;
-  }
-
-  	 getCuentas() {
-		return this.http.get(`${ this.url }/get_cuentas`);
-	}
-
-	activarCuenta(cuenta: any) {
-		const body = {
-			id: cuenta.id,
-			nombre: cuenta.nombre
-		};
-		return this.http.put(`${this.url}/activar_cuenta`, body);
-	}
-
-	createCuenta(cuenta: any) {
-		const body = {
-			id: cuenta.id,
-			codigo: cuenta.codigo,
-			nombre: cuenta.nombre
-		};
-		if (cuenta.id === '') {
-			return this.http.post(`${ this.url }/create_cuenta`, body);
+	createUpdateCuenta(cuneta: Cuentas) {
+		if (cuneta.id === '') {
+			return this.constants.getRequest(`/create_cuenta`, 'post', cuneta);
 		} else {
-			return this.http.put(`${ this.url }/update_cuenta`, body);
+			return this.constants.getRequest(`/update_cuenta`, 'put', cuneta);
 		}
 	}
 
-	getCuenta(id: string) {
-		return this.http.get(`${ this.url }/get_cuenta/${id}`);
+	activarEliminarCuenta(id: string, opcion: boolean) {
+		if (opcion) {
+			return this.constants.getRequest(`/activate_cuenta/${id}`, 'put', false);
+		} else {
+			return this.constants.getRequest(`/delete_cuenta/${id}`, 'delete', false);
+		}
 	}
 
-	eliminarCuenta(id: string) {
-		return this.http.delete(`${this.url}/delete_cuenta/${id}`);
+	getGeneros() {
+		return this.constants.getRequest(`/get_generos`, 'get', false);
+	}
+
+	getGrupos() {
+		return this.constants.getRequest(`/get_grupos`, 'get', false);
+	}
+
+	getRubros() {
+		return this.constants.getRequest(`/get_rubros`, 'get', false);
+	}
+
+	getCuentas() {
+		return this.constants.getRequest(`/get_cuentas`, 'get', false);
+	}
+
+	getCuenta(id: string) {
+		return this.constants.getRequest(`/get_cuenta/${id}`, 'get', false);
 	}
 }

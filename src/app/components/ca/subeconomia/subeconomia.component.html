@@ -1,3 +1,123 @@
-<p>
-  subeconomia works!
-</p>
+<div class="content-wrapper">
+	<div class="row">
+		<div class="col-12">
+			<div class="panels shadow">
+
+				<section class="content-header">
+					<div class="row">
+						<div class="col-8">
+							<h2 *ngIf="subeconomia.id!=''">
+								Editar una clase subeconomia
+							</h2>
+							<h2 *ngIf="subeconomia.id==''">
+								Crear una clase subeconomia
+							</h2>
+						</div>
+						<div class="col-4">
+							<button class="btn btn-outline-primary mt-2 btn-sm pull-right" type="button"
+								[routerLink]="['/panel-adm/subeconomias']">
+								<i class="fas fa-arrow-circle-left"></i>
+								Regresar
+							</button>
+						</div>
+					</div>
+
+					<ol class="breadcrumb">
+						<li>
+							<i class="fa fa-folder-open"></i>
+							Clasificación administrativa
+						</li>
+						<li>
+							Subeconomia
+						</li>
+					</ol>
+				</section>
+
+				<section class="content container-fluid">
+					<form (ngSubmit)="guardar(f)" #f="ngForm">
+						<div class="form-group row">
+								<label for="codigo" class="col-sm-2 col-form-label">
+									Codigo
+								</label>
+								<div class="col-sm-10">
+									<input type="text" class="form-control" placeholder="Ingresa el codigo"
+									name="codigo" [(ngModel)]="subeconomia.codigo">
+								</div>
+							</div>
+						<div class="form-group row">
+							<label for="nombre" class="col-sm-2 col-form-label">
+								Nombre
+							</label>
+							<div class="col-sm-10">
+								<input type="text" class="form-control" placeholder="Ingresa el nombre"
+								name="nombre" [(ngModel)]="subeconomia.nombre">
+							</div>
+						</div>
+						<div class="form-group row">
+							<label for="sector" class="col-sm-2 col-form-label">
+								Sector
+							</label>
+							<div class="col-sm-10">
+								<select class="form-control"  name="sector" 
+								[(ngModel)]="subeconomia.id_sector"
+								#sector>
+									<option value="">Seleccione un sector</option>
+									<option *ngFor="let sector of sectores" [value]="sector.id">
+										{{ sector.nombre }}
+									</option>
+								</select>
+							</div>
+						</div>
+						<div class="form-group row">
+							<label for="financiero" class="col-sm-2 col-form-label">
+								Financiero
+							</label>
+							<div class="col-sm-10">
+								<select class="form-control"  name="financiero" 
+								[(ngModel)]="subeconomia.id_financiero"
+								#financiero>
+									<option value="">Seleccione un subeconomia</option>
+									<option *ngFor="let financiero of financieros| filter: sector.value:'id_sector'" [value]="financiero.id">
+										{{ financiero.nombre }}
+									</option>
+								</select>
+							</div>
+						</div>
+						<div class="form-group row">
+							<label for="economias" class="col-sm-2 col-form-label">
+								Economia
+							</label>
+							<div class="col-sm-10">
+								<select class="form-control"  name="economia" 
+								[(ngModel)]="subeconomia.id_economia">
+									<option value="">Seleccione una economia</option>
+									<option *ngFor="let economia of economias | filter: financiero.value:'id_financiero'" [value]="economia.id">
+										{{ economia.nombre }}
+									</option>
+								</select>
+							</div>
+						</div>
+						<div class="form-group row">
+							<label for="inputPassword" class="col-sm-2 col-form-label">
+								Estado
+							</label>
+							<div class="col-sm-10">
+								<span class="badge badge-success">
+									Activo
+								</span>
+							</div>
+						</div>
+						<div class="form-group row">
+							<div class="col-12">
+								<button class="btn btn-primary pull-right" type="submit" [disabled]="f.invalid || !f.dirty">
+									<i class="fas fa-save"></i>
+									Guardar
+								</button>
+							</div>
+						</div>
+					</form>
+				</section>
+			</div>
+		</div>
+	</div>
+</div>

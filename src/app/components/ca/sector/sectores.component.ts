@@ -10,10 +10,18 @@ import { Sectores } from './../../../interfaces/ca.interface';
 export class SectoresComponent {
 
 	sectores: Sectores[];
+	detalle: Sectores;
 
 	constructor(
 		private sectores_service: SectorService
 	) {
+		this.detalle = {
+			id: '',
+			codigo: '',
+			nombre: '',
+			status: true
+		};
+
 		this.sectores = [];
 		this.getSectores();
 	 }
@@ -25,27 +33,13 @@ export class SectoresComponent {
 			});
 		}
 
-	eliminar(id: string) {
-		this.sectores_service.eliminarSector(id)
+	eliminarActivar(id: string, type: boolean) {
+		this.sectores_service.activarEliminarSector(id, type)
 			.subscribe((response: any) => {
+				console.log(response.message);
 				this.getSectores();
 			}, error => {
-				console.log('ERROR: ', error.error.message);
+				console.log('ERROR: ', error);
 			});
-		console.log('Eliminado con exito.');
 	}
-
-	activar(sector: Sectores) {
-		this.sectores_service.activarSector({
-			id: sector.id,
-			nombre: sector.nombre,
-			status: !sector.status
-		}).subscribe((data: any) => {
-				this.getSectores();
-			}, error => {
-				console.log('ERROR: ', error.error.message);
-			});
-		console.log('Activado con exito.');
-	}
-
 }

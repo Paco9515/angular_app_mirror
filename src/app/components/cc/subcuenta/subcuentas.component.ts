@@ -10,10 +10,25 @@ import { SubcuentaService } from './../../../services/cc/subcuenta.service';
 export class SubcuentasComponent{
 
 	subcuentas: Subcuentas[];
+	detalle: Subcuentas;
 
 	constructor(
 		private subcuentas_service: SubcuentaService
 	) {
+		this.detalle = {
+			id: '',
+			codigo: '',
+			nombre: '',
+			status: true,
+			id_genero: '',
+			nombre_genero: '',
+			id_grupo: '',
+			nombre_grupo: '',
+			id_rubro: '',
+			nombre_rubro: '',
+			id_cuenta: '',
+			nombre_cuenta: ''
+		};
 		this.subcuentas = [];
 		this.getSubcuentas();
 	 }
@@ -25,27 +40,14 @@ export class SubcuentasComponent{
 			});
 	}
 
-	eliminar(id: string) {
-		this.subcuentas_service.eliminarSubcuenta(id)
+	eliminarActivar(id: string, type: boolean) {
+		this.subcuentas_service.activarEliminarSubcuenta(id, type)
 			.subscribe((response: any) => {
+				console.log(response.message);
 				this.getSubcuentas();
 			}, error => {
-				console.log('ERROR: ', error.error.message);
+				console.log('ERROR: ', error);
 			});
-		console.log('Eliminado con exito.');
-	}
-
-	activar(sector: Subcuentas) {
-		this.subcuentas_service.activarSubcuenta({
-			id: sector.id,
-			nombre: sector.nombre,
-			status: !sector.status
-		}).subscribe((data: any) => {
-				this.getSubcuentas();
-			}, error => {
-				console.log('ERROR: ', error.error.message);
-			});
-		console.log('Activado con exito.');
 	}
 
 }
