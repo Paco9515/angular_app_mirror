@@ -1,11 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ConstantsService } from '../shared/constants.service';
-<<<<<<< HEAD
-import { Programas } from 'src/app/interfaces/cp.interface';
-=======
 import { Empresas } from '../../interfaces/ui.interface';
->>>>>>> c4d54a84c3aee2ca0d3a8d117873165326d6a074
 
 
 @Injectable({
@@ -32,33 +28,17 @@ export class EmpresaService {
 		};
 
 		return this.http.put(`${this.url}/activate_programa`, body);
-	} 
-		
+	}
+
 	*/
 
-<<<<<<< HEAD
-	createEmpresa(programa: any) {
-
-		// const body: Programas = programa;
-		// const body = {
-		// 	id: programa.id,
-		// 	nombre: programa.nombre
-		// };
-
-		if (programa.id === '') {
-			return this.http.post(`${this.url}/create_programa`, programa);
-		} else {
-			return this.http.put(`${this.url}/update_programa`, programa);
-		}
-=======
 	createEmpresa(empresa: Empresas) {
 		console.log(empresa);
 		  if (empresa.id === '') {
 			return this.http.post(`${this.url}/create_empresa`, empresa);
 		} else {
 			return this.http.put(`${this.url}/update_empresa`, empresa);
-		}    
->>>>>>> c4d54a84c3aee2ca0d3a8d117873165326d6a074
+		}
 
 	}
 
