@@ -10,11 +10,21 @@ import { UnidadesAdmin } from "src/app/interfaces/ui.interface";
 export class UnidadesAdminComponent {
 
   unidades: UnidadesAdmin[];
+  detalle:any;
 
   constructor(
 		private unidad_service: UnidadesAdminService
 	) {
 		this.unidades = [];
+		this.detalle = {
+			id:'',  
+			id_empresa: '', 
+			nom_emp: '',
+		    codigo: '',
+			nombre: '',		    
+			desc: '',		    
+		    status: true
+		};
 		this.getUnidades();
 	}
 
@@ -22,21 +32,31 @@ export class UnidadesAdminComponent {
 		this.unidad_service.getUnidadesAdmin()
 			.subscribe((data: any) => {
 				this.unidades = data;
-				console.log('Constructor: ', data);
+				//console.log('Constructor: ', data);
 			});
 	}
 
-	eliminar(id: string, index: string) {
+	info(unidad:any){
+		this.detalle=unidad;
+		this.unidad_service.getEmpresa(unidad.id_empresa).subscribe((data: any) => {
+			this.detalle.nom_emp = data[0].nom_comercial;
+		})
+	}
+
+	eliminarActivar(id: string, bandera: boolean) {
 
 		// this.programas = (this.programas.filter(data => data.id === id));
 
-		this.unidad_service.eliminarUnidad(id)
+		this.unidad_service.activarEliminarUnidad(id,bandera)
 			.subscribe((response: any) => {
-				this.getUnidades();
-			}, error => {
-				console.log('ERROR: ', error.error.message);
+				if(response.mensaje === 'eliminado'){
+					console.log('Unidad Eliminada');
+					this.getUnidades();
+				}else{
+					console.log('Unidad Activada');
+					this.getUnidades();
+				}
 			});
-		console.log('Eliminado con exito.');
 	}
   
 

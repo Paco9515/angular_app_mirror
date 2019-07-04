@@ -33,16 +33,30 @@
                 <section class="content container-fluid">
                     <form (ngSubmit)="guardar()">
                         <div class="form-group row">
-                            <div class="col-sm-8">
+                            <div class="col-sm-4" *ngIf="bandera">
                                 <label class="col-sm-12 col-form-label">Nombre</label>
                                 <div class="col-sm-12">
                                     <input type="text" class="form-control" placeholder="Ingresa el nombre" name="nombre" [(ngModel)]="ctrabajo.nombre">
                                 </div>
                             </div>
+                            <div class="col-sm-8" *ngIf="!bandera">
+                                <label class="col-sm-12 col-form-label">Nombre</label>
+                                <div class="col-sm-12">
+                                    <input type="text" class="form-control" placeholder="Ingresa el nombre" name="nombre" [(ngModel)]="ctrabajo.nombre">
+                                </div>
+                            </div>
+                            <div class="col-sm-4" *ngIf="bandera">
+                                <label class="col-sm-12 col-form-label">Unidad Administrativo</label>
+                                <div class="col-sm-12">
+                                    <select class="form-control" name="unidadAdm" [(ngModel)]="unidadAdm" (change)="inicio();">
+                                        <option *ngFor="let unidad of unidades" [value]="unidad.id"> {{ unidad.nombre }} </option>
+                                    </select>
+                                </div>
+                            </div>
                             <div class="col-sm-4">
                                 <label class="col-sm-12 col-form-label">Centro de Costo</label>
                                 <div class="col-sm-12">
-                                    <select class="form-control" name="id_centro_costo" [(ngModel)]="ctrabajo.id_centro_costo">
+                                    <select class="form-control" name="id_centro_costo" [(ngModel)]="ctrabajo.id_centro_costo" [(disabled)]="bandera2">
                                         <option *ngFor="let centro of centros" [value]="centro.id"> {{ centro.nombre }} </option>
                                     </select>
                                 </div>

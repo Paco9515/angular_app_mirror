@@ -1,3 +1,77 @@
-<p>
-  funcion works!
-</p>
+<div class="content-wrapper">
+    <div class="row">
+        <div class="col-12">
+            <div class="panels shadow">
+                <section class="content-header">
+                    <div class="row">
+                        <div class="col-8">
+                            <h2 *ngIf="id!='nuevo'">
+                                Editar una Función
+                            </h2>
+                            <h2 *ngIf="id=='nuevo'">
+                                Crear una Función
+                            </h2>
+                        </div>
+                        <div class="col-4">
+                            <button class="btn btn-outline-primary mt-2 btn-sm pull-right" type="button" [routerLink]="['/panel-adm/funciones']">
+                          <i class="fas fa-arrow-circle-left"></i>
+                          Regresar
+                        </button>
+                        </div>
+                    </div>
+
+                    <ol class="breadcrumb">
+                        <li>
+                            <i class="fa fa-folder-open"></i> Clas Funcional
+                        </li>
+                        <li>
+                            Funciones
+                        </li>
+                    </ol>
+                </section>
+
+                <section class="content container-fluid">
+                    <form #f="ngForm" (ngSubmit)="guardar()">
+                        <div class="form-group row">
+                            <div class="col-sm-12">
+                                <label for="staticEmail" class="col-sm-12 col-form-label">Finalidad</label>
+                                <div class="col-sm-12">
+                                    <select type="text" class="form-control" [(ngModel)]="funcion.id_finalidad" name="id_finalidad">
+                                      <option *ngFor="let finalidad of finalidades" [value]="finalidad.id"> {{ finalidad.nombre }} </option>
+                                  </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-sm-12">
+                                <label for="staticEmail" class="col-sm-12 col-form-label">Codigo</label>
+                                <div class="col-sm-12">
+                                    <input type="text" class="form-control" placeholder="Ingresa el nombre" [(ngModel)]="funcion.codigo" name="codigo">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-sm-12">
+                                <label for="staticEmail" class="col-sm-12 col-form-label">Nombre</label>
+                                <div class="col-sm-12">
+                                    <input type="text" class="form-control" placeholder="Ingresa el nombre" [(ngModel)]="funcion.nombre" name="nombre">
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                        <div class="form-group row">
+                            <div class="col-12">
+                                <button class="btn btn-primary pull-right" type="submit" [disabled]="f.invalid || !f.dirty">
+                              <i class="fas fa-save"></i>
+                              Guardar
+                            </button>
+                            </div>
+                        </div>
+                    </form>
+                </section>
+            </div>
+        </div>
+    </div>
+</div>

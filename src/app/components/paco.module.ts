@@ -26,6 +26,9 @@ import { SubfuncionesComponent } from './cfg/subfuncion/subfunciones.component';
 import { FuentesComponent } from './cff/fuente/fuentes.component';
 import { SubfuentesComponent } from './cff/subfuente/subfuentes.component';
 import { TiposComponent } from './cff/tipo/tipos.component';
+import { FuenteComponent } from './cff/fuente/fuente.component';
+import { SubfuenteComponent } from './cff/subfuente/subfuente.component';
+import { TipoComponent } from './cff/tipo/tipo.component';
 
 @NgModule({
 	declarations: [
@@ -44,8 +47,11 @@ import { TiposComponent } from './cff/tipo/tipos.component';
 		SubfuncionComponent,
 		SubfuncionesComponent,
 		FuentesComponent,
+		FuenteComponent,
 		SubfuentesComponent,
-		TiposComponent
+		SubfuenteComponent,
+		TiposComponent,
+		TipoComponent
 	],
 	exports: [
 		EmpresaComponent,
@@ -63,8 +69,11 @@ import { TiposComponent } from './cff/tipo/tipos.component';
 		SubfuncionComponent,
 		SubfuncionesComponent,
 		FuentesComponent,
+		FuenteComponent,
 		SubfuentesComponent,
-		TiposComponent
+		SubfuenteComponent,
+		TiposComponent,
+		TipoComponent
 	],
 	imports: [
 		CommonModule,

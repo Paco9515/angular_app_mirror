@@ -30,6 +30,10 @@ export class CtrabajoComponent {
 		status:true,
 	};
 	centros = [];
+	unidades=[];
+	unidadAdm;
+	bandera:boolean=false;
+	bandera2:boolean=true;
 	
 	constructor(
 		private ctrabajoService: CtrabajoService,
@@ -40,48 +44,64 @@ export class CtrabajoComponent {
 		this.activatedRoute.params.subscribe((data: any) => {
 		this.id = data.id;
 		if (this.id !== 'nuevo') {
+			this.bandera2=false;
 			this.ctrabajoService.getCtrabajo(this.id)
 				.subscribe((obj: Ctrabajo) => {
 					this.createForma(obj);
-					// this.programa = obj;
-
-					//console.log(obj);
-
 				});
 		} else {
-			this.createForma({
-				id: '',
-				id_centro_costo: 1,
-				codigo: '',
-				nombre: '',
-				estado: '',
-				municipio: '',
-				localidad: '',
-				cp: '',
-				colonia: '',
-				calle: '',
-				num_exterior: '',
-				dom_interior: '',
-				num_interior: '',
-				status:true,
-			});
-				// this.programa = {nombre: '', status: true};
+			this.bandera=true;
+			this.ctrabajoService.getUnidades().subscribe((obj: any) => {
+					this.unidades = obj;
+					//console.log(this.unidades);
+				});
+				
+				this.createForma({				
+					id: '',
+					id_centro_costo: null,
+					codigo: '',
+					nombre: '',
+					estado: '',
+					municipio: '',
+					localidad: '',
+					cp: '',
+					colonia: '',
+					calle: '',
+					num_exterior: '',
+					dom_interior: '',
+					num_interior: '',
+					status:true,
+				});		
 			}
 		});
-		// console.log('1');
 	}
 
-	createForma(obj: Ctrabajo) {
-
-		this.ctrabajoService.getCentros().subscribe((centros: any) => {
-			this.centros = centros;			
+	inicio(){		
+		this.bandera2=false;
+		this.ctrabajoService.getCentros(this.unidadAdm).subscribe((centros: any) => {	
+			this.centros=centros;		
 		});
+		
+				
+	}
+	
+	createForma(obj: Ctrabajo) {
+		if(this.id != 'nuevo'){
+			var id_emp:number = 0;
+			this.ctrabajoService.getCentro(obj.id_centro_costo).subscribe((centros: any) => {
+				id_emp = centros.id_unidad_adm;		
+				console.log('centros de costo',centros);
+				this.ctrabajoService.getCentros(id_emp).subscribe((centros2: any) => {
+					this.centros=centros2;		
+				});
+			});
+		}		
 		this.ctrabajo = obj;
 	}
 	
 	guardar() {
 		// this.toastrService.success('Programa creado correctamente.', '¡Éxito!');
-	
+		//console.log('info ctrabajo',this.ctrabajo);
 		this.ctrabajoService.createCtrabajo(this.ctrabajo)
 		.subscribe((response: any) => {
 			if (response.mensaje === 'creada') {

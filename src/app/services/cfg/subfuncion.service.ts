@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ConstantsService } from '../shared/constants.service';
+import { Subfunciones } from '../../interfaces/cfg.interface';
 
 
 @Injectable({
@@ -9,60 +10,53 @@ import { ConstantsService } from '../shared/constants.service';
 export class SubfuncionService {
 
 	url: string;
-	// headers: HttpHeaders;
 	constructor(
 		private http: HttpClient,
 		private constants: ConstantsService
 	) {
 		this.url = this.constants.url;
-		// this.headers = new HttpHeaders({
-		// 	'Content-Type': 'application/json'
-		// });
 	}
 
-	/* activarPrograma(programa: any) {
-		const body = {
-			id: programa.id,
-			nombre: programa.nombre
-		};
-
-		return this.http.put(`${this.url}/activate_programa`, body);
-	} */
-
-	createSubfuncion(programa: any) {
-		const body = {
-			id: programa.id,
-			nombre: programa.nombre
-		};
-
-		if (programa.id === '') {
-			return this.http.post(`${this.url}/create_subfuncion`, body);
+	createSubfuncion(subfuncion: Subfunciones) {
+		if (subfuncion.id === '') {
+			return this.constants.getRequest(`/create_subfuncion`, 'post', subfuncion);
 		} else {
-			return this.http.put(`${this.url}/update_subfuncion`, body);
+			return this.constants.getRequest(`/update_subfuncion`, 'put', subfuncion);
 		}
 
 	}
 
 	getSubfuncion(id: string) {
-		return this.http.get(`${this.url}/get_subfuncion?id=${id}`);
+		return this.constants.getRequest(`/get_subfuncion/${id}`, 'get', false);
 	}
 
 	getSubfunciones() {
-
-		return this.http.get(`${this.url}/get_subfunciones`);
-		// return `${this.url}/get_programas`;
+		return this.constants.getRequest(`/get_subfunciones`, 'get', false);
 	}
 
-	eliminarSubfuncion(id: string) {
-		return this.http.delete(`${this.url}/delete_subfuncion/${id}`);
+	getFunciones(id:number) {
+		return this.constants.getRequest(`/get_funcion_finalidad/${id}`, 'get', false);
 	}
 
-	// activarPrograma(id: string) {
-	// 	const body = {
-	// 		id
-	// 	};
-	// 	return this.http.put(`${this.url}/activate_programa`);
-	// }
+	getFuncion(id:number) {
+		return this.constants.getRequest(`/get_funcion/${id}`, 'get', false);
+	}
+
+	getFinalidades(){
+		return this.constants.getRequest(`/get_finalidades`, 'get', false);
+	}
+
+	getFunciones2() {
+		return this.constants.getRequest(`/get_ccostos/`, 'get', false);
+	}
+
+	eliminarSubfuncion(id: string, bandera:boolean) {
+		if (bandera == true) {
+			return this.constants.getRequest(`/activate_subfuncion/${id}`, 'put', false);
+		} else {
+			return this.constants.getRequest(`/delete_subfuncion/${id}`, 'put', false);
+		}
+	}
 
 
 }

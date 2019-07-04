@@ -3,28 +3,30 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { FinalidadService } from '../../../services/cfg/finalidad.service';
-import { Finalidad } from '../../../interfaces/cfg/finalidad';
+import { Finalidad } from '../../../interfaces/cfg.interface';
 
 @Component({
   selector: 'app-finalidad',
   templateUrl: './finalidad.component.html',
   styles: []
 })
-export class FinalidadComponent implements OnInit {
+export class FinalidadComponent {
 
-  id: string;
-	forma: FormGroup;
+  	id: string;
+	finalidad:Finalidad = {
+		id: '',
+		codigo: '',
+		nombre: '',
+		status:true
+	};
 	// programa: Programas;
 
 	constructor(
 		private finalidadService: FinalidadService,
 		private router: Router,
 		private activatedRoute: ActivatedRoute,
-		private toastrService: ToastrService
+		//private toastrService: ToastrService
 	) {
-		this.forma = new FormGroup({
-			nombre: new FormControl('', Validators.required)
-		});
 		this.activatedRoute.params.subscribe((data: any) => {
 			this.id = data.id;
 			if (this.id !== 'nuevo') {
@@ -49,16 +51,14 @@ export class FinalidadComponent implements OnInit {
     // console.log('1');
   }
 
-  ngOnInit() {
-  }
-
   createForma(obj: Finalidad) {
+	  this.finalidad = obj;
 	}
 
 	guardar() {
 		// this.toastrService.success('Programa creado correctamente.', '¡Éxito!');
-
-		this.finalidadService.createFinalidad(this.forma.value)
+		//console.log(this.finalidad);
+		this.finalidadService.createFinalidad(this.finalidad)
 		.subscribe((response: any) => {
 			if (response.message === 'creada') {
 				console.log('Finalidad creada con exito.');

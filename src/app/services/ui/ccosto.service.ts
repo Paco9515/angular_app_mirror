@@ -10,70 +10,59 @@ import { Ccosto } from '../../interfaces/ui.interface';
 export class CcostoService {
 
 	url: string;
-	// headers: HttpHeaders;
 	constructor(
 		private http: HttpClient,
 		private constants: ConstantsService
 	) {
 		this.url = this.constants.url;
-		// this.headers = new HttpHeaders({
-		// 	'Content-Type': 'application/json'
-		// });
 	}
 
-	/* activarPrograma(programa: any) {
-		const body = {
-			id: programa.id,
-			nombre: programa.nombre
-		};
-
-		return this.http.put(`${this.url}/activate_programa`, body);
-	} */
-
 	createCcosto(ccosto: Ccosto) {
-
-
 		if (ccosto.id === '') {
-			return this.http.post(`${this.url}/create_ccosto`, ccosto);
+			return this.constants.getRequest(`/create_ccosto`, 'post', ccosto);
 		} else {
-			return this.http.put(`${this.url}/update_ccosto`, ccosto);
+			return this.constants.getRequest(`/update_ccosto`, 'put', ccosto);
 		}
-
 	}
 
 	getCcosto(id: string) {
-		return this.http.get(`${this.url}/get_ccosto/${id}`);
+		return this.constants.getRequest(`/get_ccosto/${id}`, 'get', false);
 	}
 
 	getCcostos() {
-
-		return this.http.get(`${this.url}/get_ccostos`);
-		// return `${this.url}/get_programas`;
+		return this.constants.getRequest(`/get_ccostos`, 'get', false);
 	}
 
-	getUnidades() {
-
-		return this.http.get(`${this.url}/get_unidades`);
-		// return `${this.url}/get_programas`;
+	getUnidades(id:number) {
+		return this.constants.getRequest(`/get_unidades_empresa/${id}`, 'get', false);
 	}
 
-	getSubfuncion() {
+	getUnidad(id:number) {
+		return this.constants.getRequest(`/get_unidad/${id}`, 'get', false);
+	}
 
-		return this.http.get(`${this.url}/get_subfunciones`);
-		// return `${this.url}/get_programas`;
+	getEmpresas(){
+		return this.constants.getRequest(`/get_empresas`, 'get', false);
+	}
+
+	getSubfunciones() {
+		return this.constants.getRequest(`/get_subfunciones`, 'get', false);
+	}
+
+	getSubfuncion(id:string) {
+		return this.constants.getRequest(`/get_subfuncion/${id}`, 'get', false);
 	}
 
 
-	eliminarCcosto(id: string) {
-		return this.http.delete(`${this.url}/delete_ccosto/${id}`);
+	eliminarCcosto(id: string, bandera:boolean) {
+		if (bandera == true) {
+			return this.constants.getRequest(`/activate_ccosto/${id}`, 'put', false);
+		} else {
+			return this.constants.getRequest(`/delete_ccosto/${id}`, 'put', false);
+		}
 	}
 
-	// activarPrograma(id: string) {
-	// 	const body = {
-	// 		id
-	// 	};
-	// 	return this.http.put(`${this.url}/activate_programa`);
-	// }
+	
 
 
 }
