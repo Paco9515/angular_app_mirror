@@ -30,8 +30,6 @@ export class EmpresaComponent  {
 	info:Infos={
 		id: '',
 		nombre: '',
-		url_image :'',
-		status: true,
 		//id_info_gene:0,
 		estado:'',
 		municipio: '',
