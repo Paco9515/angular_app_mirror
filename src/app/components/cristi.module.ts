@@ -35,6 +35,8 @@ import { ClasAdministrativasComponent } from './ca/clas-administrativas/clas-adm
 import { ClasAdministrativaComponent } from './ca/clas-administrativas/clas-administrativa.component';
 import { SubeconomiaComponent } from './ca/subeconomia/subeconomia.component';
 import { SubeconomiasComponent } from './ca/subeconomia/subeconomias.component';
+import { FilterPipe } from '../pipes/filter.pipe';
+
 
 @NgModule({
 	declarations: [
@@ -63,7 +65,8 @@ import { SubeconomiasComponent } from './ca/subeconomia/subeconomias.component';
 		ClasAdministrativasComponent,
 		ClasAdministrativaComponent,
 		SubeconomiaComponent,
-		SubeconomiasComponent
+		SubeconomiasComponent,
+		FilterPipe,
 	],
 	exports: [
 		CapitulosComponent,

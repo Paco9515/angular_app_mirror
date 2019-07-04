@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { NgForm } from '@angular/forms';
 import { CapituloService } from 'src/app/services/cog/capitulo.service';
 import { Capitulos } from 'src/app/interfaces/cog.interface';
-import { Router, ActivatedRoute } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
 	selector: 'app-capitulo',
@@ -10,51 +10,40 @@ import { Router, ActivatedRoute } from '@angular/router';
 })
 export class CapituloComponent {
 
-	id: string;
-	forma: FormGroup;
+	capitulo: Capitulos;
 
 	constructor(
 		private capituloService: CapituloService,
-		private router: Router,
 		private activitedRoute: ActivatedRoute
 	) {
-		this.forma = new FormGroup({
-			codigo: new FormControl('', Validators.required),
-			nombre: new FormControl('', Validators.required)
-		});
+		this.capitulo = {
+			id: '',
+			codigo: '',
+			nombre: '',
+			status: true
+		};
 
 		this.activitedRoute.params.subscribe((data: any) => {
-			this.id = data.id;
-			if (this.id !== 'nuevo') {
-				this.capituloService.getCapitulo(this.id)
-					.subscribe((obj: Capitulos) => {
-						this.createForma(obj);
-					});
-			} else {
-				this.createForma({ id: '', codigo: '', nombre: '', status: true });
+			if (data.id !== 'nuevo') {
+				this.cargarCapitulos(data.id);
 			}
 		});
 	}
 
-	createForma(obj: Capitulos) {
-		this.forma = new FormGroup({
-			id: new FormControl(obj.id),
-			codigo: new FormControl(obj.codigo, Validators.required),
-			nombre: new FormControl(obj.nombre, Validators.required),
-			status: new FormControl(obj.status),
-		});
+	cargarCapitulos(id: string) {
+		this.capituloService.getCapitulo(id)
+			.subscribe((obj: Capitulos) => this.capitulo = obj);
 	}
 
-	guardar() {
-		this.capituloService.createCapitulo(this.forma.value)
-			.subscribe((response: any) => {
-				if (response.message === 'creada') {
-					console.log('Capitulo creado con exito.');
-				} else {
-					console.log('Capitulo editado con exito.');
-				}
+	guardar(f: NgForm) {
+		if (f.valid) {
+			this.capituloService.createUpdateCapitulo(this.capitulo)
+				.subscribe((response: any) => {
+					console.log(response);
+				}, error => {
+					console.log(error.error);
 			});
-
+		}
 	}
 
 }

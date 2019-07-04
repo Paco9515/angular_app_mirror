@@ -10,7 +10,8 @@ export class Grupos {
     codigo: string;
     nombre: string;
     status: true;
-    id_genero: string
+    id_genero: string;
+    nombre_genero: string;
 }
 
 export class Rubros {
@@ -18,7 +19,10 @@ export class Rubros {
     codigo: string;
     nombre: string;
     status: true;
-    id_grupo: string
+    id_genero?: string;
+    nombre_genero?: string;
+    id_grupo?: string;
+    nombre_grupo?: string;
 }
 
 export class Cuentas {
@@ -26,7 +30,12 @@ export class Cuentas {
     codigo: string;
     nombre: string;
     status: true;
-    id_rubro: string
+    id_genero?: string;
+    nombre_genero?: string;
+    id_grupo?: string;
+    nombre_grupo?: string;
+    id_rubro: string;
+    nombre_rubro?: string;
 }
 
 export class Subcuentas {
@@ -34,5 +43,12 @@ export class Subcuentas {
     codigo: string;
     nombre: string;
     status: true;
-    id_cuenta: string
+    id_genero?: string;
+    nombre_genero?: string;
+    id_grupo?: string;
+    nombre_grupo?: string;
+    id_rubro: string;
+    nombre_rubro?: string;
+    id_cuenta : string;
+    nombre_cuenta?: string;
 }

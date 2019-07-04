@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { GrupoService } from './../../../services/cc/grupo.service';
-import { Grupos } from './../../../interfaces/cc.interface';
-
+import { Grupos, Generos } from './../../../interfaces/cc.interface';
 
 @Component({
 	selector: 'app-grupos',
@@ -11,10 +10,21 @@ import { Grupos } from './../../../interfaces/cc.interface';
 export class GruposComponent{
 
 	grupos: Grupos[];
+	generos: Generos[];
+	detalle: Grupos;
 
 	constructor(
 		private grupo_service: GrupoService
 	) {
+		this.detalle = {
+            id: '',
+			codigo: '',
+			nombre: '',
+			status: true,
+			id_genero: '',
+			nombre_genero: ''
+		};
+
 		this.grupos = [];
 		this.getGrupos();
 	 }
@@ -25,29 +35,22 @@ export class GruposComponent{
 				this.grupos = data;
 			});
 	}
-	
-	eliminar(id: string, index: string){
-		this.grupo_service.eliminarGrupo(id)
+
+	getGeneros() {
+		this.grupo_service.getGeneros()
+			.subscribe((data: any) => {
+				this.generos = data;
+			});
+	}
+
+	eliminarActivar(id: string, type: boolean) {
+		this.grupo_service.activarEliminarGrupo(id, type)
 			.subscribe((response: any) => {
+				console.log(response.message);
 				this.getGrupos();
 			}, error => {
-				console.log('ERROR: ', error.error.message);
+				console.log('ERROR: ', error);
 			});
-		console.log('Eliminado con exito.');
 	}
-
-	activar(grupo: Grupos) {
-		this.grupo_service.activarGrupo({
-			id: grupo.id,
-			nombre: grupo.nombre,
-			status: !grupo.status
-		}).subscribe((data: any) => {
-				this.getGrupos();
-			}, error => {
-				console.log('ERROR: ', error.error.message);
-			});
-		console.log('Activado con exito.');
-	}
-
 
 }

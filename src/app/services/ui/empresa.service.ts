@@ -4,7 +4,6 @@ import { ConstantsService } from '../shared/constants.service';
 import { Empresas, Infos } from '../../interfaces/ui.interface';
 
 
-
 @Injectable({
 	providedIn: 'root'
 })
@@ -29,13 +28,12 @@ export class EmpresaService {
 		};
 
 		return this.http.put(`${this.url}/activate_programa`, body);
-	} 
-		
+
+	}
+
 	*/
-
-
-
-	createEmpresa(empresa: Empresas, id: number) {		
+  
+  createEmpresa(empresa: Empresas, id: number) {		
 		empresa.id_info_gene = id;
 		//console.log(empresa);
 		 if (empresa.id === '') {
@@ -45,6 +43,11 @@ export class EmpresaService {
 			return this.constants.getRequest(`/update_empresa`, 'put', empresa);
 		}  
 	}
+
+	
+
+	
+
 
 	createInfo(info: Infos) {
 		//console.log(info);

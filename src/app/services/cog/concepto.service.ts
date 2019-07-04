@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Conceptos } from 'src/app/interfaces/cog.interface';
 import { ConstantsService } from '../shared/constants.service';
 
 @Injectable({
@@ -7,46 +7,38 @@ import { ConstantsService } from '../shared/constants.service';
 })
 export class ConceptoService {
 
-url: String;
-
     constructor(
-        private http: HttpClient,
+
     private constants: ConstantsService
-    ) {
-        this.url = this.constants.url;
-    }
+    ) {}
 
-    getConceptos(){
-        return this.http.get(`${this.url}/get_conceptos`);
-    }
+	createUpdateConcepto(concepto: Conceptos) {
 
-    activarConcepto(concepto: any) {
-		const body = {
-			id: concepto.id,
-			nombre: concepto.nombre
-		};
-		return this.http.put(`${this.url}/activar_concepto`, body);
-	}
-
-	createConcepto(concepto: any) {
-		const body = {
-			id: concepto.id,
-			codigo: concepto.codigo,
-			nombre: concepto.nombre
-		};
 		if (concepto.id === '') {
-			return this.http.post(`${ this.url }/create_concepto`, body);
+			return this.constants.getRequest(`/create_concepto`, 'post', concepto);
 		} else {
-			return this.http.put(`${ this.url }/update_concepto`, body);
+			return this.constants.getRequest(`/update_concepto`, 'put', concepto);
 		}
 	}
 
-	getConcepto(id: string) {
-		return this.http.get(`${ this.url }/get_concepto/${id}`);
+	getCapitulos() {
+		return this.constants.getRequest(`/get_capitulos`, 'get', false);
 	}
 
-	eliminarConcepto(id: string) {
-		return this.http.delete(`${this.url}/delete_concepto/${id}`);
+	getConceptos() {
+		return this.constants.getRequest(`/get_conceptos`, 'get', false);
+	}
+
+	getConcepto(id: string) {
+		return this.constants.getRequest(`/get_concepto/${id}`, 'get', false);
+	}
+
+	activarEliminarConcepto(id: string, opcion: boolean) {
+		if (opcion) {
+			return this.constants.getRequest(`/activate_concepto/${id}`, 'put', false);
+		} else {
+			return this.constants.getRequest(`/delete_concepto/${id}`, 'delete', false);
+		}
 	}
 
 }

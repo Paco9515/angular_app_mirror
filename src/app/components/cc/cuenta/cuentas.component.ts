@@ -9,14 +9,27 @@ import { Cuentas } from './../../../interfaces/cc.interface';
 })
 export class CuentasComponent {
 
-
 	cuentas: Cuentas[];
+	detalle: Cuentas;
 
 	constructor(
 		private cuentas_service: CuentaService
 	) {
+		this.detalle = {
+			id: '',
+			codigo: '',
+			nombre: '',
+			status: true,
+			id_genero: '',
+			nombre_genero: '',
+			id_grupo: '',
+			nombre_grupo: '',
+			id_rubro: '',
+			nombre_rubro: ''
+		};
 		this.cuentas = [];
 		this.getCuentas();
+
 	 }
 
 	getCuentas() {
@@ -26,28 +39,14 @@ export class CuentasComponent {
 			});
 	}
 
-	eliminar(id: string) {
-		this.cuentas_service.eliminarCuenta(id)
+	eliminarActivar(id: string, type: boolean) {
+		this.cuentas_service.activarEliminarCuenta(id, type)
 			.subscribe((response: any) => {
+				console.log(response.message);
 				this.getCuentas();
 			}, error => {
-				console.log('ERROR: ', error.error.message);
+				console.log('ERROR: ', error);
 			});
-		console.log('Eliminado con exito.');
 	}
-
-	activar(sector: Cuentas) {
-		this.cuentas_service.activarCuenta({
-			id: sector.id,
-			nombre: sector.nombre,
-			status: !sector.status
-		}).subscribe((data: any) => {
-				this.getCuentas();
-			}, error => {
-				console.log('ERROR: ', error.error.message);
-			});
-		console.log('Activado con exito.');
-	}
-
 
 }

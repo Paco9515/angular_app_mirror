@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
+import { NgForm } from '@angular/forms';
 import { SectorService } from 'src/app/services/ca/sector.service';
 import { Sectores } from './../../../interfaces/ca.interface';
 
@@ -10,47 +10,42 @@ import { Sectores } from './../../../interfaces/ca.interface';
 	styles: []
 })
 export class SectorComponent {
-
-	id: string;
-	forma: FormGroup;
+	sector: Sectores;
 
 	constructor(
 		private sectorservice: SectorService,
-		private router: Router,
-		private activatedRoute: ActivatedRoute
-	) {
+		private activitedRoute: ActivatedRoute) {
 
-		this.forma = new FormGroup({
-			codigo: new FormControl('', Validators.required),
-			nombre: new FormControl('', Validators.required)
-		});
+			this.sector = {
+				id: '',
+				codigo: '',
+				nombre: '',
+				status: true
+			};
 
-		this.activatedRoute.params.subscribe((data: any) => {
-			this.id = data.id;
-			if (this.id !== 'nuevo') {
-				this.sectorservice.getSector(this.id)
-					.subscribe((obj: Sectores) => {
-						this.createForma(obj);
-					});
-			} else {
-				this.createForma({id: '', codigo: '', nombre: '', status: ''});
-			}
+			this.activitedRoute.params.subscribe(( data: any) => {
+				if (data.id !== 'nuevo') {
+					this.cargarSector(data.id);
+				}
+			});
+	}
+
+	cargarSector(id: string) {
+		this.sectorservice.getSector(id).subscribe((obj: any) => {
+			this.sector = obj;
 		});
 	}
 
-	createForma(obj: any) {
-		this.forma = new FormGroup({
-			id: new FormControl(obj.id),
-			codigo: new FormControl(obj.codigo, Validators.required),
-			nombre: new FormControl(obj.nombre, Validators.required),
-			status: new FormControl(obj.status)
-		});
-	}
-
-	guardar() {
-		this.sectorservice.createSector(this.forma.value)
-			.subscribe((response: any) => {
-		});
+	guardar(f: NgForm) {
+		if (f.valid) {
+			this.sectorservice.createUpdateSector(this.sector)
+				.subscribe((response: any) => {
+					console.log(response);
+				},
+				error => {
+					console.log(error.error);
+				});
+		}
 	}
 
 }

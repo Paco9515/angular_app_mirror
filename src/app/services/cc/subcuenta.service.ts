@@ -1,53 +1,53 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 import { ConstantsService } from '../shared/constants.service';
+import { Subcuentas } from 'src/app/interfaces/cc.interface';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SubcuentaService {
 
-  url: string;
-
 	constructor(
-		private http: HttpClient,
 		private constants: ConstantsService
-	) {
-		this.url = this.constants.url;
-	}
+	) {}
 
-	getSubcuentas() {
-		return this.http.get(`${ this.url }/get_subcuentas`);
-  }
-
-	activarSubcuenta(sector: any) {
-		const body = {
-			id: sector.id,
-			nombre: sector.nombre
-		};
-		return this.http.put(`${this.url}/activar_subcuenta`, body);
-	}
-
-	createSubcuenta(sector: any) {
-		const body = {
-			id: sector.id,
-			codigo: sector.codigo,
-			nombre: sector.nombre
-		};
-		if (sector.id === '') {
-			return this.http.post(`${ this.url }/create_subcuenta`, body);
+	createUpdateSubcuenta(subcuenta: Subcuentas) {
+		if (subcuenta.id === '') {
+			return this.constants.getRequest(`/create_subcuenta`, 'post', subcuenta);
 		} else {
-			return this.http.put(`${ this.url }/update_subcuenta`, body);
+			return this.constants.getRequest(`/update_subcuenta`, 'put', subcuenta);
 		}
 	}
 
+	activarEliminarSubcuenta(id: string, opcion: boolean) {
+		if (opcion) {
+			return this.constants.getRequest(`/activate_subcuenta/${id}`, 'put', false);
+		} else {
+			return this.constants.getRequest(`/delete_subcuenta/${id}`, 'delete', false);
+		}
+	}
+
+	getGeneros() {
+		return this.constants.getRequest(`/get_generos`, 'get', false);
+	}
+
+	getGrupos() {
+		return this.constants.getRequest(`/get_grupos`, 'get', false);
+	}
+
+	getRubros() {
+		return this.constants.getRequest(`/get_rubros`, 'get', false);
+	}
+
+	getCuentas() {
+		return this.constants.getRequest(`/get_cuentas`, 'get', false);
+	}
+
+	getSubcuentas() {
+		return this.constants.getRequest(`/get_subcuentas`, 'get', false);
+	}
+
 	getSubcuenta(id: string) {
-		return this.http.get(`${ this.url }/get_subcuenta/${id}`);
+		return this.constants.getRequest(`/get_subcuenta/${id}`, 'get', false);
 	}
-
-
-	eliminarSubcuenta(id: string) {
-		return this.http.delete(`${this.url}/delete_subcuenta/${id}`);
-	}
-
 }

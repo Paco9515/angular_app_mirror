@@ -10,10 +10,22 @@ import { RubroService } from './../../../services/cc/rubro.service';
 export class RubrosComponent {
 
 	rubros: Rubros[];
+	detalle: Rubros;
+
 
 	constructor(
 		private rubros_service: RubroService
 	) {
+        this.detalle = {
+            id: '',
+			codigo: '',
+			nombre: '',
+			status: true,
+			id_genero: '',
+			nombre_genero: '',
+			id_grupo: '',
+			nombre_grupo: ''
+		};
 		this.rubros = [];
 		this.getRubros();
 	 }
@@ -25,26 +37,15 @@ export class RubrosComponent {
 			});
 	}
 
-	eliminar(id: string, index: string) {
-		this.rubros_service.eliminarRubro(id)
+
+	eliminarActivar(id: string, type: boolean) {
+		this.rubros_service.activarEliminarRubro(id, type)
 			.subscribe((response: any) => {
+				console.log(response.message);
 				this.getRubros();
 			}, error => {
-				console.log('ERROR: ', error.error.message);
+				console.log('ERROR: ', error);
 			});
-		console.log('Eliminado con exito.');
 	}
 
-	activar(rubro: Rubros) {
-		this.rubros_service.activarRubro({
-			id: rubro.id,
-			nombre: rubro.nombre,
-			status: !rubro.status
-		}).subscribe((data: any) => {
-				this.getRubros();
-			}, error => {
-				console.log('ERROR: ', error.error.message);
-			});
-		console.log('Activado con exito.');
-	}
 }
