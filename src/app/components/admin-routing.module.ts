@@ -50,11 +50,17 @@ import { FuncionesComponent } from './cfg/funcion/funciones.component';
 import { SubfuncionComponent } from './cfg/subfuncion/subfuncion.component';
 import { SubfuncionesComponent } from './cfg/subfuncion/subfunciones.component';
 import { FuentesComponent } from './cff/fuente/fuentes.component';
+import { FuenteComponent } from './cff/fuente/fuente.component';
 import { SubfuentesComponent } from './cff/subfuente/subfuentes.component';
+import { SubfuenteComponent } from './cff/subfuente/subfuente.component';
 import { TiposComponent } from './cff/tipo/tipos.component';
+import { TipoComponent } from './cff/tipo/tipo.component';
 import { PromesasComponent } from './promesas/promesas.component';
 import { SubprogramasComponent } from './cp/subprograma/subprogramas.component';
 import { SubprogramaComponent } from './cp/subprograma/subprograma.component';
+
+
+
 
 const admin_routes: Routes = [
 	{
@@ -111,9 +117,11 @@ const admin_routes: Routes = [
 			{ path: 'subfunciones', component: SubfuncionesComponent },
 			{ path: 'subfuncion/:id', component: SubfuncionComponent },
 			{ path: 'fuentes', component: FuentesComponent },
-			{ path: 'fuente/:id', component: FuentesComponent },
+			{ path: 'fuente/:id', component: FuenteComponent },
 			{ path: 'subfuentes', component: SubfuentesComponent },
+			{ path: 'subfuente/:id', component: SubfuenteComponent },
 			{ path: 'tipos', component: TiposComponent },
+			{ path: 'tipo/:id', component: TipoComponent },
 			{ path: '', pathMatch: 'full', redirectTo: 'escritorio' }
 		]
 	}

@@ -10,58 +10,50 @@ import { Ctrabajo } from '../../interfaces/ui.interface';
 export class CtrabajoService {
 
 	url: string;
-	// headers: HttpHeaders;
 	constructor(
 		private http: HttpClient,
 		private constants: ConstantsService
 	) {
 		this.url = this.constants.url;
-		// this.headers = new HttpHeaders({
-		// 	'Content-Type': 'application/json'
-		// });
 	}
-
-	/* activarPrograma(programa: any) {
-		const body = {
-			id: programa.id,
-			nombre: programa.nombre
-		};
-
-		return this.http.put(`${this.url}/activate_programa`, body);
-	} */
 
 	createCtrabajo(ctrabajo: Ctrabajo) {
 		
 		if (ctrabajo.id === '') {
-			return this.http.post(`${this.url}/create_ctrabajo`, ctrabajo);
+			return this.constants.getRequest(`/create_ctrabajo`, 'post', ctrabajo);
 		} else {
-			return this.http.put(`${this.url}/update_ctrabajo`, ctrabajo);
+			return this.constants.getRequest(`/update_ctrabajo`, 'put', ctrabajo);
 		}
 
 	}
 
 	getCtrabajo(id: string) {
-		return this.http.get(`${this.url}/get_ctrabajo/${id}`);
+		return this.constants.getRequest(`/get_ctrabajo/${id}`, 'get', false);
 	}
 
 	getCtrabajos() {
-		return this.http.get(`${this.url}/get_ctrabajos`);
+		return this.constants.getRequest(`/get_ctrabajos`, 'get', false);
 	}
 
-	getCentros() {
-		return this.http.get(`${this.url}/get_ccostos`);
+	getCentros(id:number) {
+		return this.constants.getRequest(`/get_ccostosXuni/${id}`, 'get', false);
 	}
 
-	eliminarCtrabajo(id: string) {
-		return this.http.delete(`${this.url}/delete_ctrabajo/${id}`);
+	getUnidades() {
+		return this.constants.getRequest(`/get_unidades/`, 'get', false);
 	}
 
-	// activarPrograma(id: string) {
-	// 	const body = {
-	// 		id
-	// 	};
-	// 	return this.http.put(`${this.url}/activate_programa`);
-	// }
+	getCentro(id:number) {
+		return this.constants.getRequest(`/get_ccosto/${id}`, 'get', false);
+	}
+
+	eliminarCtrabajo(id: string, bandera:boolean) {
+		if (bandera == true) {
+			return this.constants.getRequest(`/activate_ctrabajo/${id}`, 'put', false);
+		} else {
+			return this.constants.getRequest(`/delete_ctrabajo/${id}`, 'put', false);
+		}
+	}
 
 
 }

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Funciones } from '../../../interfaces/cfg/funcion';
+import { Funciones } from '../../../interfaces/cfg.interface';
 import { FuncionService } from '../../../services/cfg/funcion.service';
 
 @Component({
@@ -10,11 +10,20 @@ import { FuncionService } from '../../../services/cfg/funcion.service';
 export class FuncionesComponent {
 
   funciones: Funciones[];
+  detalle:any;
 
   constructor(
 		private funcion_service: FuncionService
 	) {
 		this.funciones = [];
+		this.detalle = {
+			id:'',  
+			id_finalidad:'',
+			nom_finalidad:'',
+		    codigo: '',
+			nombre: '',		    
+		    status: true
+		};
 		this.getFunciones();
 	}
 
@@ -22,7 +31,31 @@ export class FuncionesComponent {
 		this.funcion_service.getFunciones()
 			.subscribe((data: any) => {
 				this.funciones = data;
-				console.log('Constructor: ', this.funciones);
+				
+			});
+	}
+
+	info(funcion:any){
+		this.detalle=funcion;
+		this.funcion_service.getFinalidad(this.detalle.id_finalidad)
+			.subscribe((data: any) => {
+				this.detalle.nom_finalidad = data.nombre;
+			});
+	}
+
+	eliminarActivar(id: string, bandera: boolean) {
+
+		// this.programas = (this.programas.filter(data => data.id === id));
+
+		this.funcion_service.eliminarFuncion(id,bandera)
+			.subscribe((response: any) => {
+				if(response.mensaje === 'eliminado'){
+					console.log('Funcion Eliminada');
+					this.getFunciones();
+				}else{
+					console.log('Funcion Activada');
+					this.getFunciones();
+				}
 			});
 	}
 

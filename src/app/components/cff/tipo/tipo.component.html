@@ -1,0 +1,95 @@
+<div class="content-wrapper">
+    <div class="row">
+        <div class="col-12">
+            <div class="panels shadow">
+                <section class="content-header">
+                    <div class="row">
+                        <div class="col-8">
+                            <h2 *ngIf="id!='nuevo'">
+                                Editar un Tipo
+                            </h2>
+                            <h2 *ngIf="id=='nuevo'">
+                                Crear un Tipo
+                            </h2>
+                        </div>
+                        <div class="col-4">
+                            <button class="btn btn-outline-primary mt-2 btn-sm pull-right" type="button" [routerLink]="['/panel-adm/tipos']">
+                        <i class="fas fa-arrow-circle-left"></i>
+                        Regresar
+                      </button>
+                        </div>
+                    </div>
+
+                    <ol class="breadcrumb">
+                        <li>
+                            <i class="fa fa-folder-open"></i> Fuente Financiamiento
+                        </li>
+                        <li>
+                            Tipos
+                        </li>
+                    </ol>
+                </section>
+
+                <section class="content container-fluid">
+                    <form #f="ngForm" (ngSubmit)="guardar(f)">
+                        <div class="form-group row" *ngIf="bandera">
+                            <div class="col-sm-12">
+                                <label for="staticEmail" class="col-sm-12 col-form-label">Fuente</label>
+                                <div class="col-sm-12">
+                                    <select type="text" class="form-control" [(ngModel)]="fuen" name="fuen" (change)="inicio();">
+                                    <option *ngFor="let fuente of fuentes" [value]="fuente.id"> {{ fuente.nombre }} </option>
+                                </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-sm-12">
+                                <label for="staticEmail" class="col-sm-12 col-form-label">Sub Fuente</label>
+                                <div class="col-sm-12">
+                                    <select type="text" class="form-control" [(ngModel)]="tipo.id_subfuente" name="id_subfuncion" [(disabled)]="bandera2">
+                                    <option *ngFor="let sub of subfuentes" [value]="sub.id"> {{ sub.nombre }} </option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-sm-12">
+                                <label for="staticEmail" class="col-sm-12 col-form-label">Codigo</label>
+                                <div class="col-sm-12">
+                                    <input type="text" class="form-control" placeholder="Ingresa el codigo" [(ngModel)]="tipo.codigo" name="codigo" required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-sm-12">
+                                <label for="staticEmail" class="col-sm-12 col-form-label">Nombre</label>
+                                <div class="col-sm-12">
+                                    <input type="text" class="form-control" placeholder="Ingresa el nombre" [(ngModel)]="tipo.nombre" name="nombre" required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-sm-12">
+                                <label for="staticEmail" class="col-sm-12 col-form-label">Año</label>
+                                <div class="col-sm-12">
+                                    <input type="number" class="form-control" [(ngModel)]="tipo.anio" name="anio" maxlength="4" minlength="4">
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                        <div class="form-group row">
+                            <div class="col-12">
+                                <button class="btn btn-primary pull-right" type="submit" [disabled]="f.invalid || !f.dirty">
+                            <i class="fas fa-save"></i>
+                            Guardar
+                          </button>
+                            </div>
+                        </div>
+                    </form>
+                </section>
+            </div>
+        </div>
+    </div>
+</div>

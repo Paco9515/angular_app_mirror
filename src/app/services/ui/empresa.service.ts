@@ -1,11 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ConstantsService } from '../shared/constants.service';
-<<<<<<< HEAD
-import { Programas } from 'src/app/interfaces/cp.interface';
-=======
-import { Empresas } from '../../interfaces/ui.interface';
->>>>>>> c4d54a84c3aee2ca0d3a8d117873165326d6a074
+import { Empresas, Infos } from '../../interfaces/ui.interface';
+
 
 
 @Injectable({
@@ -36,56 +33,59 @@ export class EmpresaService {
 		
 	*/
 
-<<<<<<< HEAD
-	createEmpresa(programa: any) {
 
-		// const body: Programas = programa;
-		// const body = {
-		// 	id: programa.id,
-		// 	nombre: programa.nombre
-		// };
 
-		if (programa.id === '') {
-			return this.http.post(`${this.url}/create_programa`, programa);
+	createEmpresa(empresa: Empresas, id: number) {		
+		empresa.id_info_gene = id;
+		//console.log(empresa);
+		 if (empresa.id === '') {
+			return this.constants.getRequest(`/create_empresa`, 'post', empresa);
 		} else {
-			return this.http.put(`${this.url}/update_programa`, programa);
-		}
-=======
-	createEmpresa(empresa: Empresas) {
-		console.log(empresa);
-		  if (empresa.id === '') {
-			return this.http.post(`${this.url}/create_empresa`, empresa);
-		} else {
-			return this.http.put(`${this.url}/update_empresa`, empresa);
-		}    
->>>>>>> c4d54a84c3aee2ca0d3a8d117873165326d6a074
+			console.log('empresa service',empresa);
+			return this.constants.getRequest(`/update_empresa`, 'put', empresa);
+		}  
+	}
 
+	createInfo(info: Infos) {
+		//console.log(info);
+		 if (info.id === '') {
+			return this.constants.getRequest(`/create_info`, 'post', info);
+		} else {
+			console.log('info service',info);
+			return this.constants.getRequest(`/update_info`, 'put', info);
+		} 
 	}
 
 	getEmpresa(id: string) {
-		return this.http.get(`${this.url}/get_empresa/${id}`);
+		return this.constants.getRequest(`/get_empresa/${id}`, 'get', null);
+	}
+	getInfo(id: number) {
+		return this.constants.getRequest(`/get_infoGene/${id}`, 'get', null);
+	}
+	getTipo(id: number) {
+		return this.constants.getRequest(`/get_tiposEmpresa/${id}`, 'get', null);
 	}
 
 	getEmpresas() {
-		return this.http.get(`${this.url}/get_empresas`);
-		// return `${this.url}/get_programas`;
+		return this.constants.getRequest(`/get_empresas`, 'get', null);		
 	}
 
 	getClasAdmis() {
-		return this.http.get(`${this.url}/get_administrativas`);
-		// return `${this.url}/get_programas`;
+		return this.constants.getRequest(`/get_administrativas`, 'get', null);
 	}
 
-	eliminarEmpresa(id: string) {
-		return this.http.delete(`${this.url}/delete_programa/${id}`);
+	getClasAdmin(id: number) {
+		return this.constants.getRequest(`/get_administrativa/${id}`, 'get', null);
 	}
 
-	// activarPrograma(id: string) {
-	// 	const body = {
-	// 		id
-	// 	};
-	// 	return this.http.put(`${this.url}/activate_programa`);
-	// }
+	activarEliminarEmpresa(id: string, bandera: boolean) {
+		console.log('bandera',bandera);
+		if (bandera == true) {
+			return this.constants.getRequest(`/activate_empresa/${id}`, 'put', false);
+		} else {
+			return this.constants.getRequest(`/delete_empresa/${id}`, 'put', false);
+		}
+	}
 
 
 }

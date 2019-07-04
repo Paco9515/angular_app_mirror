@@ -32,11 +32,21 @@
 
                 <section class="content container-fluid">
                     <form (ngSubmit)="guardar()">
+                        <div class="form-group row" *ngIf="bandera">
+                            <div class="col-sm-12">
+                                <label for="staticEmail" class="col-sm-12 col-form-label">Empresa</label>
+                                <div class="col-sm-12">
+                                    <select type="text" class="form-control" [(ngModel)]="emp" name="emp" (change)="inicio();">
+                                        <option *ngFor="let empresa of empresas;let i = index" [value]="empresa.id" >{{i}} {{ empresa.nombre }} </option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
                         <div class="form-group row">
                             <div class="col-sm-12">
                                 <label for="staticEmail" class="col-sm-12 col-form-label">Unidad Administrativa</label>
                                 <div class="col-sm-12">
-                                    <select type="text" class="form-control" [(ngModel)]="ccostos.id_unidad_adm" name="id_unidad_adm">
+                                    <select type="text" class="form-control" [(ngModel)]="ccostos.id_unidad_adm" name="id_unidad_adm" [(disabled)]="bandera2">
                                         <option *ngFor="let unidad of unidades" [value]="unidad.id"> {{ unidad.nombre }} </option>
                                     </select>
                                 </div>

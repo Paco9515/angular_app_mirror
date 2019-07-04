@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ConstantsService } from '../shared/constants.service';
+import { Subfuente } from '../../interfaces/cff.interface';
 
 
 @Injectable({
@@ -9,60 +10,43 @@ import { ConstantsService } from '../shared/constants.service';
 export class SubfuenteService {
 
 	url: string;
-	// headers: HttpHeaders;
 	constructor(
 		private http: HttpClient,
 		private constants: ConstantsService
 	) {
 		this.url = this.constants.url;
-		// this.headers = new HttpHeaders({
-		// 	'Content-Type': 'application/json'
-		// });
 	}
 
-	/* activarPrograma(programa: any) {
-		const body = {
-			id: programa.id,
-			nombre: programa.nombre
-		};
-
-		return this.http.put(`${this.url}/activate_programa`, body);
-	} */
-
-	createSubfuente(programa: any) {
-		const body = {
-			id: programa.id,
-			nombre: programa.nombre
-		};
-
-		if (programa.id === '') {
-			return this.http.post(`${this.url}/create_subfuente`, body);
+	createSubfuente(subfuente: Subfuente) {
+		if (subfuente.id === '') {
+			return this.constants.getRequest(`/create_subfuente`, 'post' ,subfuente);
 		} else {
-			return this.http.put(`${this.url}/update_subfuente`, body);
+			return this.constants.getRequest(`/update_subfuente`, 'put', subfuente);
 		}
 
 	}
 
 	getSubfuente(id: string) {
-		return this.http.get(`${this.url}/get_subfuente?id=${id}`);
+		return this.constants.getRequest(`/get_subfuente/${id}`, 'get', false);
 	}
 
 	getSubfuentes() {
-
-		return this.http.get(`${this.url}/get_subfuentes`);
-		// return `${this.url}/get_programas`;
+		return this.constants.getRequest(`/get_subfuentes`, 'get', false);
 	}
 
-	eliminarSubfuente(id: string) {
-		return this.http.delete(`${this.url}/delete_subfuente/${id}`);
+	getFuentes() {
+		return this.constants.getRequest(`/get_fuentes`, 'get', false);
+	}
+	getFuente(id:number) {
+		return this.constants.getRequest(`/get_fuente/${id}`, 'get', false);
 	}
 
-	// activarPrograma(id: string) {
-	// 	const body = {
-	// 		id
-	// 	};
-	// 	return this.http.put(`${this.url}/activate_programa`);
-	// }
-
+	eliminarSubfuente(id: string, bandera:boolean) {
+		if (bandera == true) {
+			return this.constants.getRequest(`/activate_subfuente/${id}`, 'put', false);
+		} else {
+			return this.constants.getRequest(`/delete_subfuente/${id}`, 'put', false);
+		}
+	}
 
 }
