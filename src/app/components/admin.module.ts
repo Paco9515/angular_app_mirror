@@ -18,6 +18,7 @@ import { PromesasComponent } from './promesas/promesas.component';
 import { RichardModule } from './richard.module';
 import { CristiModule } from './cristi.module';
 import { PacoModule } from './paco.module';
+import { EgresosComponent } from './egresos/egresos.component';
 
 @NgModule({
 	declarations: [
@@ -25,7 +26,8 @@ import { PacoModule } from './paco.module';
 		AdminComponent,
 		ProgressComponent,
 		IncrementadorComponent,
-		PromesasComponent
+		PromesasComponent,
+		EgresosComponent
 	],
 	exports: [
 		EscritorioComponent,
