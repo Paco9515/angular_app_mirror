@@ -24,4 +24,15 @@ export interface Partidas {
 	nombre_capitulo?: string;
 	id_concepto?: string;
 	nombre_concepto?: string;
+
+	id_genero?: string;
+	nombre_genero?: string;
+	id_grupo?: string;
+	nombre_grupo?: string;
+	id_rubro?: string;
+	nombre_rubro?: string;
+	id_cuenta?: string;
+	nombre_cuenta?: string;
+	id_subcuenta?: string;
+	nombre_subcuenta?: string;
 }
