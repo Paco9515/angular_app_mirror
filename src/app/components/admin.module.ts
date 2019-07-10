@@ -27,7 +27,7 @@ import { EgresosComponent } from './egresos/egresos.component';
 		ProgressComponent,
 		IncrementadorComponent,
 		PromesasComponent,
-		EgresosComponent
+		// EgresosComponent
 	],
 	exports: [
 		EscritorioComponent,
