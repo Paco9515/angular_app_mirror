@@ -11,13 +11,17 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { SubprogramaComponent } from './cp/subprograma/subprograma.component';
 import { SubprogramasComponent } from './cp/subprograma/subprogramas.component';
+import { EgresosComponent } from './egresos/egresos.component';
+import { CogComponent } from './cog/cog/cog.component';
 
 @NgModule({
 	declarations: [
 		ProgramasComponent,
 		ProgramaComponent,
 		SubprogramaComponent,
-		SubprogramasComponent
+		SubprogramasComponent,
+		CogComponent,
+		EgresosComponent
 	],
 	exports: [
 		ProgramasComponent,
