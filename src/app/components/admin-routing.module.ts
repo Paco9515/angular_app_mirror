@@ -7,7 +7,6 @@ import { EscritorioComponent } from './escritorio/escritorio.component';
 import { ProgramaComponent } from './cp/programa/programa.component';
 import { ProgressComponent } from './progress/progress.component';
 
-
 import { CapitulosComponent } from './cog/capitulo/capitulos.component';
 import { CapituloComponent } from './cog/capitulo/capitulo.component';
 import { PartidaComponent } from './cog/partida/partida.component';
@@ -58,8 +57,7 @@ import { TipoComponent } from './cff/tipo/tipo.component';
 import { PromesasComponent } from './promesas/promesas.component';
 import { SubprogramasComponent } from './cp/subprograma/subprogramas.component';
 import { SubprogramaComponent } from './cp/subprograma/subprograma.component';
-
-
+import { EgresosComponent } from './egresos/egresos.component';
 
 
 const admin_routes: Routes = [
@@ -74,6 +72,7 @@ const admin_routes: Routes = [
 			{ path: 'programa/:id', component: ProgramaComponent },
 			{ path: 'subprogramas', component: SubprogramasComponent },
 			{ path: 'subprograma/:id', component: SubprogramaComponent },
+			{ path: 'pres_egresos', component: EgresosComponent },
 
 			{ path: 'capitulos', component: CapitulosComponent },
 			{ path: 'capitulos/:id', component: CapituloComponent },

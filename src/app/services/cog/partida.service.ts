@@ -9,7 +9,7 @@ export class PartidaService {
 
 	constructor(
 		private constants: ConstantsService
-		) { }
+	) { }
 
 	createUpdatePartida(partida: Partidas) {
 
