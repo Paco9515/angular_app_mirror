@@ -38,6 +38,7 @@ import { SubeconomiasComponent } from './ca/subeconomia/subeconomias.component';
 import { FilterPipe } from '../pipes/filter.pipe';
 
 
+
 @NgModule({
 	declarations: [
 		CapitulosComponent,

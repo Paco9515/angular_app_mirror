@@ -1,0 +1,78 @@
+<div>
+	<div>
+		<label for="sector" class="col-sm-2 col-form-label">
+			Sector
+		</label>
+		<div class="col-sm-10">
+			<select class="form-control"  name="sector"
+			[(ngModel)]="data.id_sector"
+			(change)="onChangeSectores($event.target.value)">
+				<option value="">Seleccione un sector</option>
+				<option *ngFor="let sector of sectores" [value]="sector.id">
+					{{ sector.nombre }}
+				</option>
+			</select>
+		</div>
+	</div>
+	<div>
+		<label for="financiero" class="col-sm-2 col-form-label">
+			Financiero
+		</label>
+		<div class="col-sm-10">
+			<select class="form-control"  name="financiero"
+			[(ngModel)]="data.id_financiero"
+			(change)="onChangeFinancieros($event.target.value)">
+				<option value="">Seleccione un financiero</option>
+				<option *ngFor="let financiero of financieros" [value]="financiero.id">
+					{{ financiero.nombre }}
+				</option>
+			</select>
+		</div>
+	</div>
+	<div>
+		<label for="economias" class="col-sm-2 col-form-label">
+			Economia
+		</label>
+		<div class="col-sm-10">
+			<select class="form-control" name="economia"
+			[(ngModel)]="data.id_economia"
+			(change)="onChangeEconomia($event.target.value)">
+				<option value="">Seleccione un rubro</option>
+				<option *ngFor="let economia of economias" [value]="economia.id">
+					{{ economia.nombre }}
+				</option>
+			</select>
+		</div>
+	</div>
+	<div>
+		<label for="subeconomia" class="col-sm-2 col-form-label">
+			Subeconomia
+		</label>
+		<div class="col-sm-10">
+			<select class="form-control"  name="subeconomia" 
+			[(ngModel)]="data.id_subeconomia"
+			(change)="onChangeSubeconomia($event.target.value)">
+				<option value="">Seleccione una subeconomia</option>
+				<option *ngFor="let subeconomia of subeconomias" [value]="subeconomia.id">
+					{{ subeconomia.nombre }}
+				</option>
+			</select>
+		</div>
+	</div>
+
+	<div>
+		<label for="administrativa" class="col-sm-2 col-form-label">
+			Administrativa
+		</label>
+		<div class="col-sm-10">
+			<select class="form-control"  name="administrativa" 
+			[(ngModel)]="data.id_administrativa"
+			(change)="onChangeAdministrativas($event.target.value)">
+				<option value="">Seleccione una administrativa</option>
+				<option *ngFor="let admin of administrativas" [value]="admin.id">
+					{{ admin.nombre }}
+				</option>
+			</select>
+		</div>
+	</div>
+</div>
