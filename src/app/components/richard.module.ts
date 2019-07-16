@@ -13,6 +13,8 @@ import { SubprogramaComponent } from './cp/subprograma/subprograma.component';
 import { SubprogramasComponent } from './cp/subprograma/subprogramas.component';
 import { EgresosComponent } from './egresos/egresos.component';
 import { CogComponent } from './cog/cog/cog.component';
+import { CcComponent } from './cc/cc/cc.component';
+import { CaComponent } from './ca/ca/ca.component';
 
 @NgModule({
 	declarations: [
@@ -21,6 +23,8 @@ import { CogComponent } from './cog/cog/cog.component';
 		SubprogramaComponent,
 		SubprogramasComponent,
 		CogComponent,
+		CcComponent,
+		CaComponent,
 		EgresosComponent
 	],
 	exports: [

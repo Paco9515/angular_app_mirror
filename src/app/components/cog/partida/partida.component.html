@@ -91,6 +91,68 @@
 							</div>
 						</div>
 						<div class="form-group row">
+							<label for=status class="col-sm-2 col-form-label">
+								Cuenta o Subcuenta
+							</label>
+						</div>
+						<div class="form-group row">
+							<label for="genero" class="col-sm-2 col-form-label">
+								Generos
+							</label>
+							<div class="col-sm-10">
+								<select class="form-control"  name="genero" 
+								[(ngModel)]="partida.id_genero"
+								#genero>
+									<option value="">Seleccione un genero</option>
+									<option *ngFor="let genero of generos" [value]="genero.id">
+										{{ genero.nombre }}
+									</option>
+								</select>
+							</div>
+						</div>
+						<div class="form-group row">
+							<label for="grupo" class="col-sm-2 col-form-label">
+								Grupo
+							</label>
+							<div class="col-sm-10">
+								<select class="form-control"  name="grupo" 
+								[(ngModel)]="partida.id_grupo" #grupo>
+									<option value="">Seleccione un grupo</option>
+									<option *ngFor="let grupo of grupos | filter: genero.value:'id_genero'" [value]="grupo.id">
+										{{ grupo.nombre }}
+									</option>
+								</select>
+							</div>
+						</div>
+						<div class="form-group row">
+							<label for="rubro" class="col-sm-2 col-form-label">
+								Rubro
+							</label>
+							<div class="col-sm-10">
+								<select class="form-control"  name="rubro" 
+								[(ngModel)]="partida.id_rubro" #rubro>
+									<option value="">Seleccione un rubro</option>
+									<option *ngFor="let rubro of rubros | filter: grupo.value:'id_grupo'" [value]="rubro.id">
+										{{ rubro.nombre }}
+									</option>
+								</select>
+							</div>
+						</div>
+						<div class="form-group row">
+							<label for="cuenta" class="col-sm-2 col-form-label">
+								Cuenta
+							</label>
+							<div class="col-sm-10">
+								<select class="form-control"  name="cuenta" 
+								[(ngModel)]="partida.id_cuenta">
+									<option value="">Seleccione un cuenta</option>
+									<option *ngFor="let cuenta of cuentas | filter: rubro.value:'id_rubro'" [value]="cuenta.id">
+										{{ cuenta.nombre }}
+									</option>
+								</select>
+							</div>
+						</div>
+						<div class="form-group row">
 							<div class="col-12">
 								<button class="btn btn-primary pull-right" type="submit" [disabled]="f.invalid || !f.dirty">
 								<i class="fas fa-save"></i>

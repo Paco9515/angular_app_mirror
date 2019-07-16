@@ -24,7 +24,7 @@ export class PartidasComponent {
 			id_capitulo: '',
 			nombre_capitulo: '',
 			id_concepto: '',
-			nombre_concepto: ''
+			nombre_concepto: '',
 		};
         this.partidas = [];
         this.getPartidas();

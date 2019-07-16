@@ -11,18 +11,30 @@
 				<section class="content container-fluid">
 
 					<!-- ******** INICIO RICARDO ********* -->
+					<div class="col-sm-6">
+						<app-cog
+							[primary_keys]="keys"
+							(out)="onData($event)"
+						></app-cog>
+					</div>
+	
 
-					<app-cog
-						[primary_keys]="keys"
-						(out)="onData($event)"
-					></app-cog>
-
-					<!-- ******** FIN RICARDO ********* -->
+					<!-- ******** FIN RICARDO ********* -->	
 
 					<!-- ******** INICIO CRISTY ********* -->
+					<div class="col-sm-6">
+						<app-cc
+							[primary_keys_cc]="cc"
+							(cc)="onDataCc($event)"
+						></app-cc>
+					</div>
 
-
-
+					<div class="col-sm-6">
+						<app-ca
+							[primary_keys_ca]="ca"
+							(ca)="onDataCa($event)"
+						></app-ca>
+					</div>
 
 					<!-- ******** FIN CRISTY ********* -->
 
