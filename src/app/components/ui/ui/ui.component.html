@@ -1,0 +1,69 @@
+<div>
+    <label for="empresa" class="col-sm-2 col-form-label">
+		Empresas
+	</label>
+    <div class="col-sm-10">
+        <select class="form-control" name="empresa" [ngModel]="data.id_empresa" (change)="onChangeEmpresa($event.target.value)">
+			<option value="">
+				Seleccione una empresa
+			</option>
+			<option *ngFor="let empresa of empresas"
+				[value]="empresa.id"
+			>
+				{{ empresa.nom_comercial }}
+			</option>
+		</select>
+    </div>
+</div>
+<div>
+    <label for="unidad" class="col-sm-2 col-form-label">
+		Unidades
+	</label>
+    <div class="col-sm-10">
+        <select class="form-control" name="unidad" [ngModel]="data.id_unidad" (change)="onChangeUnidad($event.target.value)">
+			<option value="">
+				Seleccione una unidad
+			</option>
+			<option *ngFor="let unidad of unidades"
+				[value]="unidad.id"
+			>
+				{{ unidad.nombre }}
+			</option>
+		</select>
+    </div>
+</div>
+<div>
+    <label for="ccosto" class="col-sm-12 col-form-label">
+		Centros de Costo
+	</label>
+    <div class="col-sm-10">
+        <select class="form-control" name="ccosto" [ngModel]="data.id_ccosto" (change)="onChangeCcosto($event.target.value)">
+			<option value="">
+				Seleccione una ccosto
+			</option>
+			<option *ngFor="let ccosto of ccostos"
+				[value]="ccosto.id"
+			>
+				{{ ccosto.nombre }}
+			</option>
+		</select>
+    </div>
+</div>
+
+<div>
+    <label for="ctrabajo" class="col-sm-12 col-form-label">
+		Centros de trabajo
+	</label>
+    <div class="col-sm-10">
+        <select class="form-control" name="ctrabajo" [ngModel]="data.id_ctrabajo" (change)="onChangeCtrabajo($event.target.value)">
+			<option value="">
+				Seleccione un ctrabajo
+			</option>
+			<option *ngFor="let ctrabajo of ctrabajos"
+				[value]="ctrabajo.id"
+			>
+				{{ ctrabajo.nombre }}
+			</option>
+		</select>
+    </div>
+</div>

@@ -15,6 +15,9 @@ import { EgresosComponent } from './egresos/egresos.component';
 import { CogComponent } from './cog/cog/cog.component';
 import { CcComponent } from './cc/cc/cc.component';
 import { CaComponent } from './ca/ca/ca.component';
+import { CffComponent } from './cff/cff/cff.component';
+import { CfgComponent } from './cfg/cfg/cfg.component';
+import { UiComponent } from './ui/ui/ui.component';
 
 @NgModule({
 	declarations: [
@@ -25,6 +28,9 @@ import { CaComponent } from './ca/ca/ca.component';
 		CogComponent,
 		CcComponent,
 		CaComponent,
+		CffComponent,
+		CfgComponent,
+		UiComponent,
 		EgresosComponent
 	],
 	exports: [

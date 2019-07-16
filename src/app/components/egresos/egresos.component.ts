@@ -23,4 +23,19 @@ export class EgresosComponent {
 		console.log('Desde el padre ', dataCa);
 	}
 
+	uikeys = [0, 0, 0];
+	onUI(dataUI: any) {
+		console.log('UI desde el padre ', dataUI);
+	}
+
+	cfgkeys = [0, 0, 0];
+	onCFF(dataCFG: any) {
+		console.log('CFG desde el padre ', dataCFG);
+	}
+
+	cffkeys = [0, 0, 0];
+	onCFG(dataCFF: any) {
+		console.log('CFF desde el padre ', dataCFF);
+	}
+
 }
