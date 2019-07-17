@@ -1,0 +1,52 @@
+<div>
+    <label for="finalidad" class="col-sm-2 col-form-label">
+		Finalidades
+	</label>
+    <div class="col-sm-10">
+        <select class="form-control" name="finalidad" [ngModel]="data.id_finalidad" (change)="onChangeFinalidad($event.target.value)">
+			<option value="">
+				Seleccione una finalidad
+			</option>
+			<option *ngFor="let finalidad of finalidades"
+				[value]="finalidad.id"
+			>
+				{{ finalidad.nombre }}
+			</option>
+		</select>
+    </div>
+</div>
+<div>
+    <label for="funcion" class="col-sm-2 col-form-label">
+		Funciones
+	</label>
+    <div class="col-sm-10">
+        <select class="form-control" name="funcion" [ngModel]="data.id_funcion" (change)="onChangeFuncion($event.target.value)">
+			<option value="">
+				Seleccione una funcion
+			</option>
+			<option *ngFor="let funcion of funciones"
+				[value]="funcion.id"
+			>
+				{{ funcion.nombre }}
+			</option>
+		</select>
+    </div>
+</div>
+
+<div>
+    <label for="subfuncion" class="col-sm-2 col-form-label">
+		Subfunciones
+	</label>
+    <div class="col-sm-10">
+        <select class="form-control" name="subfuncion" [ngModel]="data.id_subfuncion" (change)="onChangeSubfuncion($event.target.value)">
+			<option value="">
+				Seleccione un subfuncion
+			</option>
+			<option *ngFor="let subfuncion of subfunciones"
+				[value]="subfuncion.id"
+			>
+				{{ subfuncion.nombre }}
+			</option>
+		</select>
+    </div>
+</div>
