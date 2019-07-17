@@ -12,7 +12,10 @@
 
                     <!-- ******** INICIO RICARDO ********* -->
                     <div class="col-sm-6">
-                        <app-cog [primary_keys]="keys" (out)="onData($event)"></app-cog>
+                      <app-ca
+                        [primary_keys_ca]="ca"
+                        (ca)="onDataCa($event)"
+                      ></app-ca>
                     </div>
 
 
