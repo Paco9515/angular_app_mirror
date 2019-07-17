@@ -23,7 +23,8 @@ export class CogComponent implements OnInit {
 		this.data = {
 			id_capitulo: '',
 			id_concepto: '',
-			id_partida: ''
+			id_partida: '',
+			codigo_cc: ''
 		};
 		this.out.emit(this.data);
 	}
@@ -37,7 +38,7 @@ export class CogComponent implements OnInit {
 		if (this.primary_keys[0] !== 0) {
 			this.onChangeCapitulo(this.primary_keys[0]);
 			this.onChangeConcepto(this.primary_keys[1]);
-			this.onChangePartida(this.primary_keys[2]);
+			this.onChangePartida(this.primary_keys[2], this.primary_keys[3]);
 		}
 	}
 
@@ -67,8 +68,12 @@ export class CogComponent implements OnInit {
 		}
 	}
 
-	onChangePartida(id_partida) {
+	onChangePartida(id_partida, cc) {
 		this.data.id_partida = id_partida;
+		this.cog_service.getPartida(id_partida, cc)
+			.subscribe((data: any) => {
+				this.data.codigo_cc = data;
+			});
 		this.out.emit(this.data);
 	}
 }
