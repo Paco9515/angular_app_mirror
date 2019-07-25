@@ -1,41 +1,39 @@
-<div class="content-wrapper">
-	<div class="row">
-		<div class="col-12">
-			<div class="panels shadow">
+<!-- Breadcrumb-->
+<div class="d-none d-sm-block">
+	<ol class="breadcrumb">
+		<li class="breadcrumb-item"><i class="fa fa-folder-open"></i> Clasificación Administrativa</li>
+		<li class="breadcrumb-item"><a [routerLink]="['/panel-adm/subeconomias']"> Subeconomias</a></li>
+		<li class="breadcrumb-item active"> Subeconomia</li>
+	</ol>
+</div>
 
-				<section class="content-header">
-					<div class="row">
-						<div class="col-8">
-							<h2 *ngIf="subeconomia.id!=''">
-								Editar una clase subeconomia
-							</h2>
-							<h2 *ngIf="subeconomia.id==''">
-								Crear una clase subeconomia
-							</h2>
+<div class="container-fluid p-3">
+	<div class="animated fadeIn">
+		<div class="row justify-content-center">
+			<div class="col-md-12">
+				<div class="card shadow">
+					<form #f="ngForm" (ngSubmit)="guardar(f)">
+						<div class="card-header">
+							<div class="row text-center">
+								<div class="col-12 col-md-8 text-md-left h5 font-weight-bold">
+									<span *ngIf="subeconomia.id!=''">
+										<i class="fa fa-edit"></i><strong> Editar una subeconomia</strong>
+									</span>
+									<span *ngIf="subeconomia.id==''">
+										<i class="fa fa-plus-circle"></i><strong> Crear una subeconomia</strong>
+									</span>
+								</div>
+								<div class="col-12 col-md-4 text-center text-sm-right">
+									<button class="btn btn-outline-primary mt-2 btn-sm" type="button"
+										[routerLink]="['/panel-adm/subeconomias']">
+										<i class="fa fa-arrow-circle-left"></i>
+										Regresar
+									</button>
+								</div>
+							</div>
 						</div>
-						<div class="col-4">
-							<button class="btn btn-outline-primary mt-2 btn-sm pull-right" type="button"
-								[routerLink]="['/panel-adm/subeconomias']">
-								<i class="fas fa-arrow-circle-left"></i>
-								Regresar
-							</button>
-						</div>
-					</div>
-
-					<ol class="breadcrumb">
-						<li>
-							<i class="fa fa-folder-open"></i>
-							Clasificación administrativa
-						</li>
-						<li>
-							Subeconomia
-						</li>
-					</ol>
-				</section>
-
-				<section class="content container-fluid">
-					<form (ngSubmit)="guardar(f)" #f="ngForm">
-						<div class="form-group row">
+						<div class="card-body">
+							<div class="form-group row">
 								<label for="codigo" class="col-sm-2 col-form-label">
 									Codigo
 								</label>
@@ -106,18 +104,21 @@
 									Activo
 								</span>
 							</div>
+								</div>
 						</div>
-						<div class="form-group row">
-							<div class="col-12">
-								<button class="btn btn-primary pull-right" type="submit" [disabled]="f.invalid || !f.dirty">
-									<i class="fas fa-save"></i>
-									Guardar
-								</button>
+						<div class="card-footer">
+							<div class="form-group row">
+								<div class="col-12">
+									<button class="btn btn-primary  btn-sm pull-right" type="submit" [disabled]="f.invalid || !f.dirty">
+										<i class="fa fa-save"></i>
+											Guardar
+									</button>
+								</div>
 							</div>
 						</div>
 					</form>
-				</section>
-			</div>
-		</div>
+				</div>
+			</div><!-- /.col-->
+		</div><!-- /.row-->
 	</div>
 </div>

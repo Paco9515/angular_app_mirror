@@ -1,0 +1,41 @@
+/** Submenu de la carpeta **/
+.sidebar.nav-dropdown.open -> 12908
+
+/*Se activa al seleccionar*/
+.sidebar .nav-link.active -> 12710
+
+/** Seleccionada **/
+.nav-tabs .nav-link.active, .nav-tabs .nav-item.show .nav-link -> 4121
+
+
+/** Color de letra en el menu **/
+.sidebar .nav-dropdown.open .nav-link -> 12916
+
+/** Modal **/
+modal-content -> 5844
+modal-header -> 5869
+modal-footer -> 5899
+
+/** MAIN **/
+
+/** DROPDOWN-MENU cuerpo**/
+3067
+
+/** DROPDOWN-HEADER header**/
+3285
+
+/** FOOTER **/
+12164
+
+/** HEADER **/
+12192
+
+/** SIDERBAR **/
+12581
+
+/** SIDERBAR nav-link desactivado **/
+12700
+
+/** SIDERBAR nav-link **/
+12728-12728
+
