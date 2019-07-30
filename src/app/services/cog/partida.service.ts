@@ -43,6 +43,10 @@ export class PartidaService {
 		return this.constants.getRequest(`/get_partida/${id}`, 'get', false);
 	}
 
+	getPartidaId(id: string) {
+		return this.constants.getRequest(`/get_partida_id/${id}`, 'get', false);
+	}
+
 
 	// Clasificacion contable
 	getGeneros() {
@@ -67,5 +71,17 @@ export class PartidaService {
 
 	getSubcuenta() {
 		return this.constants.getRequest(`/get_subcuentas`, 'get', false);
+	}
+
+	getConcepto(id: string) {
+		return this.constants.getRequest(`/get_concepto/${id}`, 'get', false);
+	}
+
+	get_conceptos_capitulo(id: string) {
+		return this.constants.getRequest(`/get_conceptos_capitulo/${id}`, 'get', false);
+	}
+
+	get_partidas_concepto(id: string) {
+		return this.constants.getRequest(`/get_partidas_concepto/${id}`, 'get', false);
 	}
 }

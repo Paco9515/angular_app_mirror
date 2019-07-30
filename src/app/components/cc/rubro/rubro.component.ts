@@ -11,8 +11,8 @@ import { Grupos, Generos, Rubros } from '../../../interfaces/cc.interface';
 })
 export class RubroComponent implements OnInit {
 	rubro: Rubros;
-	grupos: Grupos;
-	generos: Generos;
+	grupos: Grupos[];
+	generos: Generos[];
 
 	constructor(
 		private rubroService: RubroService,
@@ -28,18 +28,13 @@ export class RubroComponent implements OnInit {
 			id_grupo: '',
 			nombre_grupo: ''
 		};
-
-		this.rubroService.getGeneros().subscribe((data: any) => {
-			this.generos = data;
-		});
-
-		this.rubroService.getGrupos().subscribe((data: any) => {
-			this.grupos = data;
-		});
-
 	}
 
 	ngOnInit() {
+		this.rubroService.getGeneros()
+			.subscribe((data: any) => {
+				this.generos = data;
+			});
 
 		this.activitedRoute.params.subscribe((data: any) => {
 			if (data.id !== 'nuevo') {
@@ -49,18 +44,28 @@ export class RubroComponent implements OnInit {
 	}
 
 	cargarRubro(id: string) {
-		this.rubroService.getRubro(id).subscribe((obj: any) => {
-			this.rubro = obj;
-			console.log(this.rubro);
-		});
+		this.rubroService.getRubro(id)
+			.subscribe((obj: Rubros) => {
+				this.rubro = obj;
+				const GRUPO = this.rubro.id_grupo;
+				this.onChangeGenero(this.rubro.id_genero);
+				this.onChangeGrupo(GRUPO);
+			});
 	}
 
-	getGrupos() {
-		this.rubroService.getGrupos()
-			.subscribe((obj: Grupos) => {
-                this.grupos = obj;
-                console.log(this.grupos);
-        });
+	onChangeGenero(id_genero) {
+		this.rubro.id_grupo = '';
+		this.grupos = [];
+		if (id_genero !== '') {
+			this.rubro.id_genero = id_genero;
+			this.rubroService.getGruposGenero(id_genero)
+				.subscribe((obj: any) => {
+	                this.grupos = obj;
+	        	});
+		}
+	}
+	onChangeGrupo(id_grupo) {
+		this.rubro.id_grupo = id_grupo;
 	}
 
 	guardar(f: NgForm) {

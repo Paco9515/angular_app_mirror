@@ -35,11 +35,11 @@
 						<div class="card-body">
                             <div class="form-group row">
 								<label for="codigo" class="col-sm-2 col-form-label">
-									Codigo
+									Código
 								</label>
 								<div class="col-sm-10">
 									<input type="text" class="form-control" placeholder="Ingresa el codigo" name="codigo"
-									[(ngModel)]="rubro.codigo">
+									[(ngModel)]="rubro.codigo" required>
 								</div>
 							</div>
 							<div class="form-group row">
@@ -48,7 +48,7 @@
 								</label>
 								<div class="col-sm-10">
 									<input type="text" class="form-control" placeholder="Ingresa el nombre" name="nombre"
-									[(ngModel)]="rubro.nombre">
+									[(ngModel)]="rubro.nombre" required>
 								</div>
 							</div>
 							<div class="form-group row">
@@ -56,10 +56,10 @@
 									Genero
 								</label>
 								<div class="col-sm-10">
-									<select class="form-control" name="id_genero"
+									<select class="form-control" name="genero"
 										[(ngModel)]="rubro.id_genero"
-										(change)="getGrupos(genero.value)"
-										#genero>
+										(change)="onChangeGenero($event.target.value)"
+										required>
 										<option value="">Seleccione un genero</option>
 										<option *ngFor="let genero of generos" [value]="genero.id">
 											{{ genero.nombre }}
@@ -73,9 +73,11 @@
 								</label>
 								<div class="col-sm-10">
 									<select class="form-control" name="grupo"
-										[(ngModel)]="rubro.id_grupo">
+										[(ngModel)]="rubro.id_grupo"
+										(change)="onChangeGrupo($event.target.value)"
+										required>
 										<option value="">Seleccione un grupo</option>
-										<option *ngFor="let grupo of grupos | filter: genero.value:'id_genero'" [value]="grupo.id">
+										<option *ngFor="let grupo of grupos" [value]="grupo.id">
 											{{ grupo.nombre }}
 										</option>
 									</select>

@@ -1,8 +1,8 @@
 <!-- Breadcrumb-->
 <div class="d-none d-sm-block">
     <ol class="breadcrumb">
-        <li class="breadcrumb-item"><i class="fa fa-folder-open"></i> Unidades Internas</li>
-        <li class="breadcrumb-item active"> Centros de Costos</li>
+        <li class="breadcrumb-item"><i class="fa fa-folder-open"></i> Unidades internas</li>
+        <li class="breadcrumb-item active"> Centros de costos</li>
     </ol>
 </div>
     
@@ -14,7 +14,7 @@
                     <div class="card-header">
                         <div class="row">
                             <div class="col-12 col-md-8 text-center text-sm-left h5 font-weight-bold">
-                                <i class="fa fa-list"></i> Listado de Centros de Costos
+                                <i class="fa fa-list"></i> Listado de centros de costos
                             </div>
                             <div class="col-12 col-md-4 text-center text-sm-right">
                                 <button type="button" class="btn btn-success btn-sm mb-2" [routerLink]="['/panel-adm/ccosto', 'nuevo']">
@@ -30,7 +30,7 @@
                                 <thead class="thead-dark">
                                     <tr>
                                         <th scope="col">#</th>
-                                        <th scope="col">Codigo</th>
+                                        <th scope="col">Código</th>
                                         <th scope="col">Nombre</th>
                                         <th scope="col">Estado</th>
                                         <th class="text-center" scope="col">Opciones</th>
@@ -97,7 +97,7 @@
                                                     <div class="col-12">
                                                         <div class="form-group row">
                                                             <label for="staticEmail" class="col-sm-3 col-form-label">
-                                                                    Unidad Administrativa:
+                                                                    Unidad administrativa:
                                                                 </label>
                                                             <div class="col-9">
                                                                 <input type="text" readonly class="form-control-plaintext" [(ngModel)]="detalle.nom_unidad">
@@ -105,7 +105,7 @@
                                                         </div>
                                                         <div class="form-group row">
                                                             <label for="staticEmail" class="col-sm-3 col-form-label">
-                                                                        Subfuncion:
+                                                                        Subfunción:
                                                                     </label>
                                                             <div class="col-9">
                                                                 <input type="text" readonly class="form-control-plaintext" [(ngModel)]="detalle.nom_subfuncion">
@@ -113,7 +113,7 @@
                                                         </div>
                                                         <div class="form-group row">
                                                             <label for="staticEmail" class="col-sm-3 col-form-label">
-                                                                        Codigo:
+                                                                        Código:
                                                                     </label>
                                                             <div class="col-9">
                                                                 <input type="text" readonly class="form-control-plaintext" [(ngModel)]="detalle.codigo">
@@ -121,7 +121,7 @@
                                                         </div>
                                                         <div class="form-group row">
                                                             <label for="staticEmail" class="col-sm-3 col-form-label">
-                                                                        Nombre del Centro:
+                                                                        Centro:
                                                                     </label>
                                                             <div class="col-9">
                                                                 <input type="text" readonly class="form-control-plaintext" [(ngModel)]="detalle.nombre">
@@ -129,7 +129,7 @@
                                                         </div>
                                                         <div class="form-group row">
                                                             <label for="staticEmail" class="col-sm-3 col-form-label">
-                                                                    Estado
+                                                                    Estado:
                                                                 </label>
                                                             <div class="col-9">
                                                                 <span *ngIf="detalle.status; else inactiveBlock" class="badge badge-success">

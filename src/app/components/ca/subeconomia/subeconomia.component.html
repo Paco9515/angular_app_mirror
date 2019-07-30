@@ -1,9 +1,9 @@
 <!-- Breadcrumb-->
 <div class="d-none d-sm-block">
 	<ol class="breadcrumb">
-		<li class="breadcrumb-item"><i class="fa fa-folder-open"></i> Clasificación Administrativa</li>
-		<li class="breadcrumb-item"><a [routerLink]="['/panel-adm/subeconomias']"> Subeconomias</a></li>
-		<li class="breadcrumb-item active"> Subeconomia</li>
+		<li class="breadcrumb-item"><i class="fa fa-folder-open"></i> Clasificación administrativa</li>
+		<li class="breadcrumb-item"><a [routerLink]="['/panel-adm/subeconomias']"> Subeconomías</a></li>
+		<li class="breadcrumb-item active"> Subeconomía</li>
 	</ol>
 </div>
 
@@ -17,10 +17,10 @@
 							<div class="row text-center">
 								<div class="col-12 col-md-8 text-md-left h5 font-weight-bold">
 									<span *ngIf="subeconomia.id!=''">
-										<i class="fa fa-edit"></i><strong> Editar una subeconomia</strong>
+										<i class="fa fa-edit"></i><strong> Editar una subeconomía</strong>
 									</span>
 									<span *ngIf="subeconomia.id==''">
-										<i class="fa fa-plus-circle"></i><strong> Crear una subeconomia</strong>
+										<i class="fa fa-plus-circle"></i><strong> Crear una subeconomía</strong>
 									</span>
 								</div>
 								<div class="col-12 col-md-4 text-center text-sm-right">
@@ -35,11 +35,11 @@
 						<div class="card-body">
 							<div class="form-group row">
 								<label for="codigo" class="col-sm-2 col-form-label">
-									Codigo
+									Código
 								</label>
 								<div class="col-sm-10">
 									<input type="text" class="form-control" placeholder="Ingresa el codigo"
-									name="codigo" [(ngModel)]="subeconomia.codigo">
+									name="codigo" [(ngModel)]="subeconomia.codigo" required>
 								</div>
 							</div>
 						<div class="form-group row">
@@ -48,7 +48,7 @@
 							</label>
 							<div class="col-sm-10">
 								<input type="text" class="form-control" placeholder="Ingresa el nombre"
-								name="nombre" [(ngModel)]="subeconomia.nombre">
+								name="nombre" [(ngModel)]="subeconomia.nombre" required>
 							</div>
 						</div>
 						<div class="form-group row">
@@ -58,7 +58,8 @@
 							<div class="col-sm-10">
 								<select class="form-control"  name="sector" 
 								[(ngModel)]="subeconomia.id_sector"
-								#sector>
+								(change)="onChangeSector($event.target.value)"
+								required>
 									<option value="">Seleccione un sector</option>
 									<option *ngFor="let sector of sectores" [value]="sector.id">
 										{{ sector.nombre }}
@@ -73,9 +74,10 @@
 							<div class="col-sm-10">
 								<select class="form-control"  name="financiero" 
 								[(ngModel)]="subeconomia.id_financiero"
-								#financiero>
+								(change)="onChangeFinanciero($event.target.value)"
+								required>
 									<option value="">Seleccione un subeconomia</option>
-									<option *ngFor="let financiero of financieros| filter: sector.value:'id_sector'" [value]="financiero.id">
+									<option *ngFor="let financiero of financieros" [value]="financiero.id">
 										{{ financiero.nombre }}
 									</option>
 								</select>
@@ -83,13 +85,15 @@
 						</div>
 						<div class="form-group row">
 							<label for="economias" class="col-sm-2 col-form-label">
-								Economia
+								Economía
 							</label>
 							<div class="col-sm-10">
 								<select class="form-control"  name="economia" 
-								[(ngModel)]="subeconomia.id_economia">
-									<option value="">Seleccione una economia</option>
-									<option *ngFor="let economia of economias | filter: financiero.value:'id_financiero'" [value]="economia.id">
+								[(ngModel)]="subeconomia.id_economia"
+								(change)="onChangeEconomia($event.target.value)"
+									required>
+									<option value="">Seleccione una economía</option>
+									<option *ngFor="let economia of economias" [value]="economia.id">
 										{{ economia.nombre }}
 									</option>
 								</select>

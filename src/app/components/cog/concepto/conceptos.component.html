@@ -1,7 +1,7 @@
 <!-- Breadcrumb-->
 <div class="d-none d-sm-block">
 	<ol class="breadcrumb">
-		<li class="breadcrumb-item"><i class="fa fa-folder-open"></i> Clasificación  por objeto de gasto</li>
+		<li class="breadcrumb-item"><i class="fa fa-folder-open"></i> Clasificación por objeto de gasto</li>
 		<li class="breadcrumb-item active"> Conceptos</li>
 	</ol>
 </div>
@@ -14,7 +14,7 @@
 					<div class="card-header">
 						<div class="row">
 							<div class="col-12 col-md-8 text-center text-sm-left  h5 font-weight-bold">
-								<i class="fa fa-list"></i> Listado de Conceptos
+								<i class="fa fa-list"></i> Listado de conceptos
 							</div>
 							<div class="col-12 col-md-4 text-center text-sm-right">
 								<button type="button" class="btn btn-success btn-sm mb-2"
@@ -31,7 +31,7 @@
 								<thead class="thead-dark">
 									<tr>
 										<th scope="col">#</th>
-										<th scope="col">Codigo</th>
+										<th scope="col">Código</th>
 										<th scope="col">Nombre</th>
 										<th scope="col">Estado</th>
 										<th class="text-center" scope="col">Opciones</th>
@@ -62,7 +62,7 @@
 													<span class="badge badge-secondary">Inactivo</span>
 												</ng-template>
 											</td>
-											<td class="uk-text-center">
+											<td class="text-center">
 												<button type="button" class="btn btn-info text-white btn-sm w-auto mb-1 ml-1"
 													data-toggle="modal" data-target="#conceptoModal"
 													(click)="detalle=concepto">
@@ -108,7 +108,7 @@
 											<div class="row">
 												<div class="col-12">
 													<div class="form-group row">
-														<label for="staticEmail" class="col-sm-2 col-form-label">
+														<label for="codigo" class="col-sm-2 col-form-label">
 															Código:
 														</label>
 														<div class="col-10">
@@ -117,7 +117,7 @@
 														</div>
 													</div>
 													<div class="form-group row">
-														<label for="staticEmail" class="col-sm-2 col-form-label">
+														<label for="nombre" class="col-sm-2 col-form-label">
 															Nombre:
 														</label>
 														<div class="col-10">
@@ -126,8 +126,8 @@
 														</div>
 													</div>
 													<div class="form-group row">
-														<label for="staticEmail" class="col-sm-2 col-form-label">
-															Nombre del capitulo:
+														<label for="capitulo" class="col-sm-2 col-form-label">
+															Nombre del capítulo:
 														</label>
 														<div class="col-10">
 															<input type="text" readonly class="form-control-plaintext"
@@ -135,8 +135,8 @@
 														</div>
 													</div>
 													<div class="form-group row">
-														<label for="staticEmail" class="col-sm-2 col-form-label">
-															Estado
+														<label for="estado" class="col-sm-2 col-form-label">
+															Estado:
 														</label>
 														<div class="col-10">
 															<span *ngIf="detalle.status; else inactiveBlock"

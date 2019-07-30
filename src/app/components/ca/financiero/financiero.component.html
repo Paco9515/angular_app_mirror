@@ -35,11 +35,11 @@
 						<div class="card-body">
 							<div class="form-group row">
 								<label for="codigo" class="col-sm-2 col-form-label">
-									Codigo
+									Código
 								</label>
 								<div class="col-sm-10">
 									<input type="text" class="form-control" placeholder="Ingresa el codigo"
-									name="codigo" [(ngModel)]="financiero.codigo">
+									name="codigo" [(ngModel)]="financiero.codigo" required>
 								</div>
 							</div>
 							<div class="form-group row">
@@ -48,7 +48,7 @@
 								</label>
 								<div class="col-sm-10">
 									<input type="text" class="form-control" placeholder="Ingresa el nombre"
-									name="nombre" [(ngModel)]="financiero.nombre">
+									name="nombre" [(ngModel)]="financiero.nombre" required>
 								</div>
 							</div>
 							<div class="form-group row">
@@ -57,7 +57,7 @@
 								</label>
 								<div class="col-sm-10">
 									<select class="form-control"  name="sector" 
-									[(ngModel)]="financiero.id_sector" #sector>
+									[(ngModel)]="financiero.id_sector" required>
 										<option value="">Seleccione un sector</option>
 										<option *ngFor="let sector of sectores" [value]="sector.id">
 											{{ sector.nombre }}

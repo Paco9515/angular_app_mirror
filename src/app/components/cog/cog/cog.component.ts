@@ -12,10 +12,12 @@ export class CogComponent implements OnInit {
 	@Input() primary_keys: any;
 	capitulos: Capitulos[];
 	conceptos: Conceptos[];
-	partidas: Partidas[];
+	partidas: any;
 	data: any;
 
 	@Output() out = new EventEmitter<any>();
+
+	cc;
 
 	constructor(
 		private cog_service: CogService
@@ -24,7 +26,8 @@ export class CogComponent implements OnInit {
 			id_capitulo: '',
 			id_concepto: '',
 			id_partida: '',
-			codigo_cc: ''
+			codigo_cc: '',
+			codigo_cuenta:''
 		};
 		this.out.emit(this.data);
 	}
@@ -34,11 +37,13 @@ export class CogComponent implements OnInit {
 			.subscribe((data: any) => {
 				this.capitulos = data;
 			});
+		console.log(this.primary_keys);
+		this.cc = this.primary_keys[3];
 
 		if (this.primary_keys[0] !== 0) {
 			this.onChangeCapitulo(this.primary_keys[0]);
 			this.onChangeConcepto(this.primary_keys[1]);
-			this.onChangePartida(this.primary_keys[2], this.primary_keys[3]);
+			this.onChangePartida(this.primary_keys[2]);
 		}
 	}
 
@@ -68,12 +73,13 @@ export class CogComponent implements OnInit {
 		}
 	}
 
-	onChangePartida(id_partida, cc) {
+	onChangePartida(id_partida) {
 		this.data.id_partida = id_partida;
-		this.cog_service.getPartida(id_partida, cc)
-			.subscribe((data: any) => {
-				this.data.codigo_cc = data;
-			});
+		if(this.cc == true) {
+			this.data.codigo_cc = this.partidas[id_partida].codigo_cuenta;
+		} else {
+			this.data.codigo_cc = this.partidas[id_partida].codigo_subcuenta;
+		}
 		this.out.emit(this.data);
 	}
 }

@@ -14,7 +14,7 @@
 					<div class="card-header">
 						<div class="row">
 							<div class="col-12 col-md-8 text-center text-sm-left  h5 font-weight-bold">
-								<i class="fa fa-list"></i> Listado de Partidas
+								<i class="fa fa-list"></i> Listado de partidas
 							</div>
 							<div class="col-12 col-md-4 text-center text-sm-right">
 								<button type="button" class="btn btn-success btn-sm mb-2"
@@ -31,7 +31,7 @@
 								<thead class="thead-dark">
 									<tr>
 										<th scope="col">#</th>
-										<th scope="col">Codigo</th>
+										<th scope="col">Código</th>
 										<th scope="col">Nombre</th>
 										<th scope="col">Estado</th>
 										<th class="text-center" scope="col">Opciones</th>
@@ -108,7 +108,7 @@
 											<div class="row">
 												<div class="col-12">
 													<div class="form-group row">
-														<label for="" class="col-sm-2 col-form-label">
+														<label for="codigo" class="col-sm-2 col-form-label">
 															Código:
 														</label>
 														<div class="col-10">
@@ -117,7 +117,7 @@
 														</div>
 													</div>
 													<div class="form-group row">
-														<label for="" class="col-sm-2 col-form-label">
+														<label for="nombre" class="col-sm-2 col-form-label">
 															Nombre:
 														</label>
 														<div class="col-10">
@@ -126,8 +126,8 @@
 														</div>
 													</div>
 													<div class="form-group row">
-														<label for="" class="col-sm-2 col-form-label">
-															Nombre del capitulo:
+														<label for="capitulo" class="col-sm-2 col-form-label">
+															Nombre del capítulo:
 														</label>
 														<div class="col-10">
 															<input type="text" readonly class="form-control-plaintext"
@@ -135,7 +135,7 @@
 														</div>
 													</div>
 													<div class="form-group row">
-														<label for="" class="col-sm-2 col-form-label">
+														<label for="concepto" class="col-sm-2 col-form-label">
 															Nombre del concepto:
 														</label>
 														<div class="col-10">
@@ -144,8 +144,8 @@
 														</div>
 													</div>
 													<div class="form-group row">
-														<label for="" class="col-sm-2 col-form-label">
-															Estado
+														<label for="status" class="col-sm-2 col-form-label">
+															Estado:
 														</label>
 														<div class="col-10">
 															<span *ngIf="detalle.status; else inactiveBlock"

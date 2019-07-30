@@ -1,9 +1,9 @@
 <!-- Breadcrumb-->
 <div class="d-none d-sm-block">
 	<ol class="breadcrumb">
-		<li class="breadcrumb-item"><i class="fa fa-folder-open"></i> Clasificación </li>
-		<li class="breadcrumb-item"><a [routerLink]="['']"> </a></li>
-		<li class="breadcrumb-item active"> </li>
+		<li class="breadcrumb-item"><i class="fa fa-folder-open"></i> Clasificación cuenta</li>
+		<li class="breadcrumb-item"><a [routerLink]="['/panel-adm/cuentas']"> Cuentas</a></li>
+		<li class="breadcrumb-item active"> Cuenta</li>
 	</ol>
 </div>
 
@@ -35,11 +35,11 @@
 						<div class="card-body">
 							<div class="form-group row">
 								<label for="codigo" class="col-sm-2 col-form-label">
-									Codigo
+									Código
 								</label>
 								<div class="col-sm-10">
-									<input type="text" class="form-control" placeholder="Ingresa el codigo"
-									name="codigo" [(ngModel)]="cuenta.codigo">
+									<input type="text" class="form-control" placeholder="Ingresa el código"
+									name="codigo" [(ngModel)]="cuenta.codigo" required>
 								</div>
 							</div>
 							<div class="form-group row">
@@ -48,7 +48,7 @@
 								</label>
 								<div class="col-sm-10">
 									<input type="text" class="form-control" placeholder="Ingresa el nombre"
-									name="nombre" [(ngModel)]="cuenta.nombre">
+									name="nombre" [(ngModel)]="cuenta.nombre" required>
 								</div>
 							</div>
 							<div class="form-group row">
@@ -57,7 +57,9 @@
 								</label>
 								<div class="col-sm-10">
 									<select class="form-control" name="genero"
-										[(ngModel)]="cuenta.id_genero" #genero>
+										[(ngModel)]="cuenta.id_genero"
+										(change)="onChangeGenero($event.target.value)"
+										required>
 										<option value="">Seleccione un genero</option>
 										<option *ngFor="let genero of generos" [value]="genero.id">
 											{{ genero.nombre }}
@@ -71,9 +73,11 @@
 								</label>
 								<div class="col-sm-10">
 									<select class="form-control" name="grupo" 
-										[(ngModel)]="cuenta.id_grupo" #grupo>
+										[(ngModel)]="cuenta.id_grupo"
+										(change)="onChangeGrupo($event.target.value)"
+										required>
 										<option value="">Seleccione un grupo</option>
-										<option *ngFor="let grupo of grupos | filter: genero.value:'id_genero'" [value]="grupo.id">
+										<option *ngFor="let grupo of grupos" [value]="grupo.id">
 											{{ grupo.nombre }}
 										</option>
 									</select>
@@ -85,9 +89,11 @@
 								</label>
 								<div class="col-sm-10">
 									<select class="form-control" name="rubro" 
-										[(ngModel)]="cuenta.id_rubro">
+										[(ngModel)]="cuenta.id_rubro"
+										(change)="onChangeRubro($event.target.value)"
+										required>
 										<option value="">Seleccione un rubro</option>
-										<option *ngFor="let rubro of rubros | filter: grupo.value:'id_grupo'" [value]="rubro.id">
+										<option *ngFor="let rubro of rubros" [value]="rubro.id">
 											{{ rubro.nombre }}
 										</option>
 									</select>

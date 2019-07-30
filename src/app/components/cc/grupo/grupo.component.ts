@@ -12,43 +12,42 @@ import { GrupoService } from 'src/app/services/cc/grupo.service';
 })
 export class GrupoComponent {
 
-    grupo: Grupos;
-    generos: Generos;
+	grupo: Grupos;
+	generos: Generos;
 
-    constructor(
-        private activitedRoute: ActivatedRoute,
-        private grupoService: GrupoService
-    ) {
-        this.grupo = {
-            id: '',
-            codigo: '',
-            nombre: '',
-            status: true,
-            id_genero: '',
-            nombre_genero: ''
-        };
+	constructor(
+		private activitedRoute: ActivatedRoute,
+		private grupoService: GrupoService) {
+		this.grupo = {
+			id: '',
+			codigo: '',
+			nombre: '',
+			status: true,
+			id_genero: '',
+			nombre_genero: ''
+		};
 
-        this.activitedRoute.params.subscribe((data: any) => {
-            if (data.id !== 'nuevo') {
-                this.cargarGrupo(data.id);
-            }
-        });
-
-	    this.grupoService.getGeneros()
-			.subscribe((data: Generos) => {
-				this.generos = data;
+		this.activitedRoute.params.subscribe((data: any) => {
+			if (data.id !== 'nuevo') {
+				this.cargarGrupo(data.id);
+			}
 		});
-    }
 
-    cargarGrupo(id: string) {
-        this.grupoService.getGrupo(id)
-            .subscribe((obj: Grupos) => {
-                this.grupo = obj
-                console.log(this.grupo);
-            });
-    }
+		this.grupoService.getGeneros()
+			.subscribe((data: Generos) => {
+			this.generos = data;
+		});
+	}
 
-    guardar(f: NgForm) {
+	cargarGrupo(id: string) {
+		this.grupoService.getGrupo(id)
+			.subscribe((obj: Grupos) => {
+				this.grupo = obj
+				console.log(this.grupo);
+			});
+	}
+
+	guardar(f: NgForm) {
 		console.log(f);
 		if (f.valid) {
 			this.grupoService.createUpdateGrupo(this.grupo)
