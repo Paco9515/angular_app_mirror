@@ -17,7 +17,11 @@ export class UiService {
 
   	getEmpresa(id: string) {
 		return this.constants.getRequest(`/get_empresa/${id}`, 'get', null);
-  	}
+	}
+
+	getEmpresa_class(id: any) {
+		return this.constants.getRequest(`/get_empresa_class/${id}`, 'get', null);
+	}
 
 	getEmpresas() {
 		return this.constants.getRequest(`/get_soloempresas`, 'get', null);
