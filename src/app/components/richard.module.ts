@@ -18,6 +18,7 @@ import { CaComponent } from './ca/ca/ca.component';
 import { CffComponent } from './cff/cff/cff.component';
 import { CfgComponent } from './cfg/cfg/cfg.component';
 import { UiComponent } from './ui/ui/ui.component';
+import { ProyectoComponent } from './proyecto/proyecto.component';
 
 @NgModule({
 	declarations: [
@@ -31,7 +32,8 @@ import { UiComponent } from './ui/ui/ui.component';
 		CffComponent,
 		CfgComponent,
 		UiComponent,
-		EgresosComponent
+		EgresosComponent,
+		ProyectoComponent
 	],
 	exports: [
 		ProgramasComponent,

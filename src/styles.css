@@ -1,12 +1,17 @@
 @import "../node_modules/ngx-toastr/toastr.css";
-
 a:hover {
-	cursor: pointer;
-	text-decoration: none;
+    cursor: pointer;
+    text-decoration: none;
 }
 
 .modal_class {
-	/* width: 180% !important;
+    /* width: 180% !important;
 	margin-left: 20px !important; */
-	max-width: 800px !important;
+    max-width: 800px !important;
+}
+
+.modal2_class {
+    /* width: 180% !important;
+	margin-left: 20px !important; */
+    max-width: 95% !important;
 }

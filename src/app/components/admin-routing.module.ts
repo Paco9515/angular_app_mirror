@@ -58,6 +58,7 @@ import { PromesasComponent } from './promesas/promesas.component';
 import { SubprogramasComponent } from './cp/subprograma/subprogramas.component';
 import { SubprogramaComponent } from './cp/subprograma/subprograma.component';
 import { EgresosComponent } from './egresos/egresos.component';
+import { ProyectoComponent } from './proyecto/proyecto.component';
 
 
 const admin_routes: Routes = [
@@ -73,6 +74,7 @@ const admin_routes: Routes = [
 			{ path: 'subprogramas', component: SubprogramasComponent },
 			{ path: 'subprograma/:id', component: SubprogramaComponent },
 			{ path: 'pres_egresos', component: EgresosComponent },
+			{ path: 'proyectos', component: ProyectoComponent },
 
 			{ path: 'capitulos', component: CapitulosComponent },
 			{ path: 'capitulos/:id', component: CapituloComponent },
