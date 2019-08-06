@@ -23,7 +23,9 @@ export class CogComponent implements OnInit {
 		this.data = {
 			id_capitulo: '',
 			id_concepto: '',
-			id_partida: ''
+			id_partida: '',
+			nombre: '',
+			codigo: ''
 		};
 		this.out.emit(this.data);
 	}
@@ -42,6 +44,7 @@ export class CogComponent implements OnInit {
 	}
 
 	onChangeCapitulo(id_capitulo) {
+		this.data.id_capitulo = id_capitulo;
 		this.data.id_concepto = '';
 		this.data.id_partida = '';
 		this.conceptos = [];
@@ -69,6 +72,8 @@ export class CogComponent implements OnInit {
 
 	onChangePartida(id_partida) {
 		this.data.id_partida = id_partida;
+		this.data.codigo = this.partidas[id_partida].codigo;
+		this.data.nombre = this.partidas[id_partida].nombre;
 		this.out.emit(this.data);
 	}
 }

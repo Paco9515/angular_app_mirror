@@ -11,11 +11,68 @@
 				<section class="content container-fluid">
 
 					<!-- ******** INICIO RICARDO ********* -->
+					<div class="form-group row">
+						<div class="col-8">
+							<app-cog
+								[primary_keys]="keys"
+								(out)="onData($event)"
+							></app-cog>
+						</div>
+						<div class="col-4">
+							<div class="form-group row">
+								<div class="col-12 mb-3">
+									<label for="cantidad">
+										Cantidad
+									</label>
+									<input class="form-control" type="number" placeholder="Ingresa la cantidad"
+										minlength="0"
+										[(ngModel)]="cantidad"
+									>
+								</div>
+								<div class="col-12">
+									<button class="btn btn-success"
+										(click)="agregarPartida()"
+										[disabled]="cog_data.id_partida===''"
+									>
+										Agregar partida
+									</button>
+								</div>
+							</div>
+						</div>
+					</div>
 
-					<app-cog
-						[primary_keys]="keys"
-						(out)="onData($event)"
-					></app-cog>
+					<div class="table-responsive mt-2">
+						<table class="table table-striped">
+							<thead class="thead-dark">
+								<tr>
+									<th scope="col">#</th>
+									<th scope="col">Cod. Partida</th>
+									<th scope="col">Nombre partida</th>
+									<th scope="col">Importe</th>
+									<th class="text-center" scope="col">Eliminar</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr *ngFor="let item of partidas; let i = index">
+									<td>{{ item.id }}</td>
+									<td>{{ item.codigo }}</td>
+									<td>{{ item.nombre }}</td>
+									<td>{{ item.importe }}</td>
+									<td>
+										<button type="button" class="btn btn-danger btn-sm w-auto mb-1 ml-1"
+											(click)="eliminar(i)">
+											<i class="fas fa-trash"></i>
+											Eliminar
+										</button>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+						<pre>
+							{{ partidas | json }}
+							{{ cog_data | json }}
+						</pre>
+					</div>
 
 					<!-- ******** FIN RICARDO ********* -->
 
