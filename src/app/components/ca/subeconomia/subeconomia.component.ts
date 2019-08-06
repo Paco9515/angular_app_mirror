@@ -33,20 +33,9 @@ export class SubeconomiaComponent  implements OnInit{
 			nombre_sector: ''
 		};
 
-
 		this.subeconomiaService.getSectores().subscribe((data: any) => {
 			this.sectores = data;
 		});
-
-		this.subeconomiaService.getFinancieros().subscribe((obj: Financieros[]) => {
-			this.financieros = obj;
-
-		});
-
-		this.subeconomiaService.getEconomias().subscribe((obj: Economias[]) => {
-			this.economias = obj;
-		});
-
 	}
 
 	ngOnInit() {
@@ -57,9 +46,46 @@ export class SubeconomiaComponent  implements OnInit{
 		});
 	}
 
+
+	onChangeSector(id_sector) {
+		this.subeconomia.id_financiero = '';
+		this.financieros = [];
+		this.subeconomia.id_economia = '';
+		this.economias = [];
+		if (id_sector !== '') {
+			this.subeconomia.id_sector = id_sector;
+			this.subeconomiaService.getFinancierosSector(id_sector)
+			.subscribe((obj: any) => {
+				this.financieros = obj;
+			});
+		}
+	}
+
+	onChangeFinanciero(id_financiero) {
+		this.subeconomia.id_economia = '';
+		this.economias = [];
+		if (id_financiero !== '') {
+			this.subeconomia.id_financiero = id_financiero;
+			this.subeconomiaService.getEconomiasFinanciero(id_financiero)
+			.subscribe((obj: any) => {
+				this.economias = obj;
+			});
+		}
+	}
+
+	onChangeEconomia(id_economia) {
+		this.subeconomia.id_economia = id_economia;
+	}
+
+
 	cargarSubeconomia(id: string) {
 		this.subeconomiaService.getSubeconomia(id).subscribe((obj: any) => {
 			this.subeconomia = obj;
+			const FINANCIERO = this.subeconomia.id_financiero;
+			const ECONOMIA = this.subeconomia.id_economia;
+			this.onChangeSector(this.subeconomia.id_sector);
+			this.onChangeFinanciero(FINANCIERO);
+			this.onChangeEconomia(ECONOMIA);
 		});
 	}
 

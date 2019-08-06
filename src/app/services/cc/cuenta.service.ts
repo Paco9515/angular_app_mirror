@@ -30,12 +30,12 @@ export class CuentaService {
 		return this.constants.getRequest(`/get_generos`, 'get', false);
 	}
 
-	getGrupos() {
-		return this.constants.getRequest(`/get_grupos`, 'get', false);
+	getGruposGenero(id) {
+		return this.constants.getRequest(`/get_grupos_genero/${id}`, 'get', false);
 	}
 
-	getRubros() {
-		return this.constants.getRequest(`/get_rubros`, 'get', false);
+	getRubrosGrupo(id) {
+		return this.constants.getRequest(`/get_rubros_grupo/${id}`, 'get', false);
 	}
 
 	getCuentas() {

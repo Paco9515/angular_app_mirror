@@ -47,8 +47,8 @@ export class Subcuentas {
     nombre_genero?: string;
     id_grupo?: string;
     nombre_grupo?: string;
-    id_rubro: string;
+    id_rubro?: string;
     nombre_rubro?: string;
-    id_cuenta : string;
+    id_cuenta? : string;
     nombre_cuenta?: string;
 }

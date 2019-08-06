@@ -5,72 +5,100 @@ import { Grupos, Generos, Rubros, Cuentas } from '../../../interfaces/cc.interfa
 import { CuentaService } from 'src/app/services/cc/cuenta.service';
 
 @Component({
-    selector: 'app-cuenta',
-    templateUrl: './cuenta.component.html',
-    styles: []
+	selector: 'app-cuenta',
+	templateUrl: './cuenta.component.html',
+	styles: []
 })
 
 export class CuentaComponent implements OnInit {
 
-    cuenta: Cuentas;
-	rubros: Rubros;
-	grupos: Grupos;
-    generos: Generos;
+	cuenta: Cuentas;
+	rubros: Rubros[];
+	grupos: Grupos[];
+	generos: Generos[];
 
-    constructor(
+	constructor(
 		private cuentaService: CuentaService,
 		private activitedRoute: ActivatedRoute
-    ) {
-        this.cuenta = {
-            id: '',
-            codigo: '',
-            nombre: '',
-            status: true,
-            id_genero: '',
-            nombre_genero: '',
-            id_grupo: '',
-            nombre_grupo: '',
-            id_rubro: '',
-            nombre_rubro: '',
-        };
+	) {
+		this.cuenta = {
+			id: '',
+			codigo: '',
+			nombre: '',
+			status: true,
+			id_genero: '',
+			id_grupo: '',
+			id_rubro: ''
+		};
 
-        this.cuentaService.getGeneros().subscribe((data: Generos) => {
-            this.generos = data;
-        });
-        
-        this.cuentaService.getGrupos().subscribe((obj: Grupos) => {
-            this.grupos = obj;
-        });
 
-		this.cuentaService.getRubros().subscribe((obj: Rubros) => {
-			this.rubros = obj;
-		});
-    }
+	}
 
-    ngOnInit() {
-        this.activitedRoute.params.subscribe((data: any) => {
-            if (data.id !== 'nuevo') {
-                this.cargarCuenta(data.id);
-            }
-        });
-    }
+	ngOnInit() {
+		this.cuentaService.getGeneros()
+			.subscribe((data: any) => {
+				this.generos = data;
+			});
 
-	cargarCuenta(id: string) {
-		this.cuentaService.getCuenta(id).subscribe((obj: any) => {
-			this.cuenta = obj;
+		this.activitedRoute.params.subscribe((data: any) => {
+			if (data.id !== 'nuevo') {
+				this.cargarCuenta(data.id);
+			}
 		});
 	}
 
-    guardar(f: NgForm) {
-        if (f.valid) {
-            this.cuentaService.createUpdateCuenta(this.cuenta)
-                .subscribe((response: any) => {
-                    console.log(response);
-                },
-                error => {
-                    console.log(error.error);
-                });
-        }
-    }
+	onChangeGenero(id_genero) {
+		this.cuenta.id_grupo = '';
+		this.grupos = [];
+		this.cuenta.id_rubro = '';
+		this.rubros = [];
+		if (id_genero !== '') {
+			this.cuenta.id_genero = id_genero;
+			this.cuentaService.getGruposGenero(id_genero)
+			.subscribe((obj: any) => {
+				this.grupos = obj;
+			});
+		}
+	}
+
+	onChangeGrupo(id_grupo) {
+		this.cuenta.id_rubro = '';
+		this.rubros = [];
+		if (id_grupo !== '') {
+			this.cuenta.id_grupo = id_grupo;
+			this.cuentaService.getRubrosGrupo(id_grupo)
+			.subscribe((obj: any) => {
+				this.rubros = obj;
+			});
+		}
+	}
+
+	onChangeRubro(id_rubro) {
+		this.cuenta.id_rubro = id_rubro;
+	}
+
+	cargarCuenta(id: string) {
+		this.cuentaService.getCuenta(id)
+			.subscribe((obj: Cuentas) => {
+				this.cuenta = obj;
+				const GRUPO = this.cuenta.id_grupo;
+				const RUBRO = this.cuenta.id_rubro;
+				this.onChangeGenero(this.cuenta.id_genero);
+				this.onChangeGrupo(GRUPO);
+				this.onChangeRubro(RUBRO);
+			});
+	}
+
+	guardar(f: NgForm) {
+		if (f.valid) {
+			this.cuentaService.createUpdateCuenta(this.cuenta)
+				.subscribe((response: any) => {
+					console.log(response);
+				},
+				error => {
+					console.log(error.error);
+				});
+		}
+	}
 
 }

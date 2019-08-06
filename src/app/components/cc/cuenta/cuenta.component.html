@@ -1,47 +1,45 @@
-<div class="content-wrapper">
-		<div class="row">
-			<div class="col-12">
-				<div class="panels shadow">
-			
-					<section class="content-header">
-						<div class="row">
-							<div class="col-8">
-								<h2 *ngIf="cuenta.id!=''">
-									Editar una cuenta
-								</h2>
-								<h2 *ngIf="cuenta.id==''">
-									Crear un a cuenta
-								</h2>
-							</div>
-							<div class="col-4">
-								<button class="btn btn-outline-primary mt-2 btn-sm pull-right" type="button"
-									[routerLink]="['/panel-adm/cuentas']">
-									<i class="fas fa-arrow-circle-left"></i>
-									Regresar
-								</button>
+<!-- Breadcrumb-->
+<div class="d-none d-sm-block">
+	<ol class="breadcrumb">
+		<li class="breadcrumb-item"><i class="fa fa-folder-open"></i> Clasificación cuenta</li>
+		<li class="breadcrumb-item"><a [routerLink]="['/panel-adm/cuentas']"> Cuentas</a></li>
+		<li class="breadcrumb-item active"> Cuenta</li>
+	</ol>
+</div>
+
+<div class="container-fluid p-3">
+	<div class="animated fadeIn">
+		<div class="row justify-content-center">
+			<div class="col-md-12">
+				<div class="card shadow">
+					<form #f="ngForm" (ngSubmit)="guardar(f)">
+						<div class="card-header">
+							<div class="row text-center text-sm-left">
+								<div class="col-12 col-md-8 text-md-left h5 font-weight-bold">
+									<span *ngIf="cuenta.id!=''">
+										<i class="fa fa-edit"></i><strong> Editar un cuenta</strong>
+									</span>
+									<span *ngIf="cuenta.id==''">
+										<i class="fa fa-plus-circle"></i><strong> Crear un cuenta</strong>
+									</span>
+								</div>
+								<div class="col-12 col-md-4 text-center text-sm-right">
+									<button class="btn btn-outline-primary mt-2 btn-sm" type="button"
+										[routerLink]="['/panel-adm/cuentas']">
+										<i class="fa fa-arrow-circle-left"></i>
+										Regresar
+									</button>
+								</div>
 							</div>
 						</div>
-				
-						<ol class="breadcrumb">
-							<li>
-								<i class="fa fa-folder-open"></i>
-								Clasificación contable
-							</li>
-							<li>
-								Cuenta
-							</li>
-						</ol>
-					</section>
-			
-					<section class="content container-fluid">
-						<form (ngSubmit)="guardar(f)" #f="ngForm">
+						<div class="card-body">
 							<div class="form-group row">
 								<label for="codigo" class="col-sm-2 col-form-label">
-									Codigo
+									Código
 								</label>
 								<div class="col-sm-10">
-									<input type="text" class="form-control" placeholder="Ingresa el codigo"
-									name="codigo" [(ngModel)]="cuenta.codigo">
+									<input type="text" class="form-control" placeholder="Ingresa el código"
+									name="codigo" [(ngModel)]="cuenta.codigo" required>
 								</div>
 							</div>
 							<div class="form-group row">
@@ -50,7 +48,7 @@
 								</label>
 								<div class="col-sm-10">
 									<input type="text" class="form-control" placeholder="Ingresa el nombre"
-									name="nombre" [(ngModel)]="cuenta.nombre">
+									name="nombre" [(ngModel)]="cuenta.nombre" required>
 								</div>
 							</div>
 							<div class="form-group row">
@@ -59,7 +57,9 @@
 								</label>
 								<div class="col-sm-10">
 									<select class="form-control" name="genero"
-										[(ngModel)]="cuenta.id_genero" #genero>
+										[(ngModel)]="cuenta.id_genero"
+										(change)="onChangeGenero($event.target.value)"
+										required>
 										<option value="">Seleccione un genero</option>
 										<option *ngFor="let genero of generos" [value]="genero.id">
 											{{ genero.nombre }}
@@ -73,9 +73,11 @@
 								</label>
 								<div class="col-sm-10">
 									<select class="form-control" name="grupo" 
-										[(ngModel)]="cuenta.id_grupo" #grupo>
+										[(ngModel)]="cuenta.id_grupo"
+										(change)="onChangeGrupo($event.target.value)"
+										required>
 										<option value="">Seleccione un grupo</option>
-										<option *ngFor="let grupo of grupos | filter: genero.value:'id_genero'" [value]="grupo.id">
+										<option *ngFor="let grupo of grupos" [value]="grupo.id">
 											{{ grupo.nombre }}
 										</option>
 									</select>
@@ -87,9 +89,11 @@
 								</label>
 								<div class="col-sm-10">
 									<select class="form-control" name="rubro" 
-										[(ngModel)]="cuenta.id_rubro">
+										[(ngModel)]="cuenta.id_rubro"
+										(change)="onChangeRubro($event.target.value)"
+										required>
 										<option value="">Seleccione un rubro</option>
-										<option *ngFor="let rubro of rubros | filter: grupo.value:'id_grupo'" [value]="rubro.id">
+										<option *ngFor="let rubro of rubros" [value]="rubro.id">
 											{{ rubro.nombre }}
 										</option>
 									</select>
@@ -99,23 +103,26 @@
 								<label for="status" class="col-sm-2 col-form-label">
 									Estado
 								</label>
-								<div class="col-sm-10">
+								<div class="col-sm-10 text-center text-sm-left">
 									<span class="badge badge-success">
 									Activo
 									</span>
 								</div>
 							</div>
+						</div>
+						<div class="card-footer">
 							<div class="form-group row">
 								<div class="col-12">
-									<button class="btn btn-primary pull-right" type="submit" [disabled]="f.invalid || !f.dirty">
-										<i class="fas fa-save"></i>
+									<button class="btn btn-primary btn-sm pull-right" type="submit" [disabled]="f.invalid || !f.dirty">
+										<i class="fa fa-save"></i>
 										Guardar
 									</button>
 								</div>
 							</div>
-						</form>
-					</section>
+						</div>
+					</form>
 				</div>
-			</div>
-		</div>
+			</div><!-- /.col-->
+		</div><!-- /.row-->
 	</div>
+</div>

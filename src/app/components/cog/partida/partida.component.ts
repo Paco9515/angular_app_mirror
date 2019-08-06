@@ -10,17 +10,19 @@ import { ActivatedRoute } from '@angular/router';
     templateUrl: './partida.component.html',
     styles: []
 })
-export class PartidaComponent implements OnInit {
+export class PartidaComponent implements OnInit{
 
-	capitulos: Capitulos;
-    conceptos: Conceptos;
+	capitulos: Capitulos[];
+    conceptos: Conceptos[];
+    partidas: Partidas[];
 	partida: Partidas;
-	
-	subcuenta: Subcuentas;
+
+	subcuentas: Subcuentas;
 	cuentas: Cuentas;
 	rubros: Rubros;
 	grupos: Grupos;
 	generos: Generos;
+	sub: boolean = true;
 
     constructor(
 		private partidaService: PartidaService,
@@ -37,21 +39,18 @@ export class PartidaComponent implements OnInit {
 			nombre_concepto: '',
 			//Clasificacion contable
 			id_genero: '',
-			nombre_genero: '',
 			id_grupo: '',
-			nombre_grupo: '',
 			id_rubro: '',
-			nombre_rubro: '',
 			id_cuenta: '',
-			nombre_cuenta: ''
+			id_subcuenta: '',
 		};
+
+		/*this.partidaService.getCapitulos().subscribe((data: Capitulos) => {
+			this.capitulos = data;
+		});
 
 		this.partidaService.getConceptos().subscribe((data: Conceptos) => {
 			this.conceptos = data;
-		});
-
-		this.partidaService.getCapitulos().subscribe((data: Capitulos) => {
-			this.capitulos = data;
 		});
 
 		this.partidaService.getGeneros().subscribe((data: Generos) => {
@@ -71,12 +70,16 @@ export class PartidaComponent implements OnInit {
 		});
 
 		this.partidaService.getSubcuentas().subscribe((obj: Subcuentas) => {
-			this.cuentas = obj;
-		});
-
+			this.subcuentas = obj;
+		});*/
 	}
 
 	ngOnInit() {
+		this.partidaService.getCapitulos()
+		.subscribe((data: any) => {
+			this.capitulos = data;
+		});
+
 		this.activitedRoute.params.subscribe((data: any) => {
 			if (data.id !== 'nuevo') {
 				this.cargarPartida(data.id);
@@ -84,9 +87,30 @@ export class PartidaComponent implements OnInit {
 		});
 	}
 
+	onChangeCapitulo(id_capitulo) {
+		this.partida.id_concepto = '';
+		this.conceptos = [];
+		if (id_capitulo !== '') {
+			this.partida.id_capitulo = id_capitulo;
+			this.partidaService.get_conceptos_capitulo(id_capitulo)
+				.subscribe((data: any) => {
+					this.conceptos = data;
+				});
+		}
+	}
+
+	onChangeConcepto(id_concepto) {
+		this.partida.id_concepto = id_concepto;
+	}
+
 	cargarPartida(id: string) {
-		this.partidaService.getPartida(id)
-			.subscribe((obj: Partidas) => this.partida = obj);
+		this.partidaService.getPartidaId(id)
+			.subscribe((obj: Partidas) => {
+			this.partida = obj;
+			const CONCEPTO = this.partida.id_concepto;
+			this.onChangeCapitulo(this.partida.id_capitulo);
+			this.onChangeConcepto(CONCEPTO);
+		});
 	}
 
 	guardar(f: NgForm) {

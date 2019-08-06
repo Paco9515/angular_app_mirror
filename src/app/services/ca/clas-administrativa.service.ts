@@ -35,16 +35,16 @@ export class ClasAdministrativaService {
 		return this.constants.getRequest(`/get_administrativas/${id}`, 'get', false);
 	}
 
-	getSubeconimias() {
-		return this.constants.getRequest(`/get_subeconomias`, 'get', false);
+	getSubeconomiasEconomia(id) {
+		return this.constants.getRequest(`/get_subeconomias_economia/${id}`, 'get', false);
+	}
+	
+	getEconomiasFinanciero(id) {
+		return this.constants.getRequest(`/get_economias_financiero/${id}`, 'get', false);
 	}
 
-	getEconimias() {
-		return this.constants.getRequest(`/get_economias`, 'get', false);
-	}
-
-	getFinancieros() {
-		return this.constants.getRequest(`/get_financieros`, 'get', false);
+	getFinancierosSector(id) {
+		return this.constants.getRequest(`/get_financieros_sector/${id}`, 'get', false);
 	}
 
 	getSectores() {

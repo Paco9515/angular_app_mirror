@@ -1,93 +1,95 @@
-<div class="content-wrapper">
-	<div class="row">
-		<div class="col-12">
-			<div class="panels shadow">
-				<section class="content-header">
-					<div class="row">
-						<div class="col-8">
-							<h2 *ngIf="subprograma.id!=''">
-								Editar un subprograma
-							</h2>
-							<h2 *ngIf="subprograma.id==''">
-								Crear un subprograma
-							</h2>
-						</div>
-						<div class="col-4">
-							<button class="btn btn-outline-primary mt-2 btn-sm pull-right" type="button"
-								[routerLink]="['/panel-adm/subprogramas']">
-								<i class="fas fa-arrow-circle-left"></i>
-								Regresar
-							</button>
-						</div>
-					</div>
+<!-- Breadcrumb-->
+<div class="d-none d-sm-block">
+	<ol class="breadcrumb">
+		<li class="breadcrumb-item"><i class="fa fa-folder-open"></i> Clasificación programática</li>
+		<li class="breadcrumb-item"><a [routerLink]="['/panel-adm/subprogramas']"> Programas</a></li>
+		<li class="breadcrumb-item active"> Programa</li>
+	</ol>
+</div>
 
-					<ol class="breadcrumb">
-						<li>
-							<i class="fa fa-folder-open"></i>
-							Clasificación programática
-						</li>
-						<li>
-							Programas
-						</li>
-					</ol>
-				</section>
-
-				<section class="content container-fluid">
+<div class="container-fluid p-3">
+	<div class="animated fadeIn">
+		<div class="row justify-content-center">
+			<div class="col-md-12">
+				<div class="card shadow">
 					<form #f="ngForm" (ngSubmit)="guardar(f)">
-						<div class="form-group row">
-							<label for="staticEmail" class="col-sm-2 col-form-label">
-								Código
-							</label>
-							<div class="col-sm-10">
-								<input type="text" class="form-control" placeholder="Ingresa el nombre" required
-									name="codigo" [(ngModel)]="subprograma.codigo">
+						<div class="card-header">
+							<div class="row text-center text-sm-left">
+								<div class="col-12 col-md-8 text-md-left h5 font-weight-bold">
+									<span *ngIf="subprograma.id!=''">
+										<i class="fa fa-edit"></i><strong> Editar un subprograma</strong>
+									</span>
+									<span *ngIf="subprograma.id==''">
+										<i class="fa fa-plus-circle"></i><strong> Crear un subprograma</strong>
+									</span>
+								</div>
+								<div class="col-12 col-md-4 text-center text-sm-right">
+									<button class="btn btn-outline-primary mt-2 btn-sm" type="button"
+										[routerLink]="['/panel-adm/subprogramas']">
+										<i class="fa fa-arrow-circle-left"></i>
+										Regresar
+									</button>
+								</div>
 							</div>
 						</div>
-						<div class="form-group row">
-							<label for="nombre" class="col-sm-2 col-form-label">
-								Nombre
-							</label>
-							<div class="col-sm-10">
-								<input type="text" class="form-control" placeholder="Ingresa el nombre" required
-									name="nombre" [(ngModel)]="subprograma.nombre">
+						<div class="card-body">
+							<div class="form-group row">
+								<label for="staticEmail" class="col-sm-2 col-form-label">
+									Código
+								</label>
+								<div class="col-sm-10">
+									<input type="text" class="form-control" placeholder="Ingresa el nombre" required
+										name="codigo" [(ngModel)]="subprograma.codigo">
+								</div>
+							</div>
+							<div class="form-group row">
+								<label for="nombre" class="col-sm-2 col-form-label">
+									Nombre
+								</label>
+								<div class="col-sm-10">
+									<input type="text" class="form-control" placeholder="Ingresa el nombre" required
+										name="nombre" [(ngModel)]="subprograma.nombre">
+								</div>
+							</div>
+							<div class="form-group row">
+								<label for="programa" class="col-sm-2 col-form-label">
+									Programa
+								</label>
+								<div class="col-sm-10">
+									<select class="form-control" name="programa"
+										[(ngModel)]="subprograma.id_programa"
+									>
+										<option value="">Seleccione un programa</option>
+										<option *ngFor="let programa of programas" [value]="programa.id">
+											{{ programa.nombre }}
+										</option>
+									</select>
+								</div>
+							</div>
+							<div class="form-group row">
+								<label for="status" class="col-sm-2 col-form-label">
+									Estado
+								</label>
+								<div class="col-sm-10 text-center text-sm-left">
+									<span class="badge badge-success">
+										Activo
+									</span>
+								</div>
 							</div>
 						</div>
-						<div class="form-group row">
-							<label for="programa" class="col-sm-2 col-form-label">
-								Programa
-							</label>
-							<div class="col-sm-10">
-								<select class="form-control" name="programa"
-									[(ngModel)]="subprograma.id_programa"
-								>
-									<option value="">Seleccione un programa</option>
-									<option *ngFor="let programa of programas" [value]="programa.id">
-										{{ programa.nombre }}
-									</option>
-								</select>
-							</div>
-						</div>
-						<div class="form-group row">
-							<label for="status" class="col-sm-2 col-form-label">
-								Estado
-							</label>
-							<div class="col-sm-10">
-								<span class="badge badge-success">
-									Activo
-								</span>
-							</div>
-						</div>
-						<div class="form-group row">
-							<div class="col-12">
-								<button class="btn btn-primary pull-right" type="submit" [disabled]="f.invalid || !f.dirty">
-									<i class="fas fa-save"></i>
-									Guardar
-								</button>
+						<div class="card-footer">
+							<div class="form-group row">
+								<div class="col-12">
+									<button class="btn btn-primary btn-sm pull-right" type="submit" [disabled]="f.invalid || !f.dirty">
+										<i class="fa fa-save"></i>
+										Guardar
+									</button>
+								</div>
 							</div>
 						</div>
 					</form>
-				</section>
-			</div>
-		</div>
+				</div>
+			</div><!-- /.col-->
+		</div><!-- /.row-->
 	</div>
 </div>

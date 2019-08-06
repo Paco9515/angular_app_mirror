@@ -1,89 +1,90 @@
-<div class="content-wrapper">
-    <div class="row">
-        <div class="col-12">
-            <div class="panels shadow">
-                <section class="content-header">
-                    <div class="row">
-                        <div class="col-8">
-                            <h2 *ngIf="id!='nuevo'">
-                                Editar un Centro de Costo
-                            </h2>
-                            <h2 *ngIf="id=='nuevo'">
-                                Crear un Centro de Costo
-                            </h2>
-                        </div>
-                        <div class="col-4">
-                            <button class="btn btn-outline-primary mt-2 btn-sm pull-right" type="button" [routerLink]="['/panel-adm/ccostos']">
-                            <i class="fas fa-arrow-circle-left"></i>
-                            Regresar
-                          </button>
-                        </div>
-                    </div>
+<!-- Breadcrumb-->
+<div class="d-none d-sm-block">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><i class="fa fa-folder-open"></i> Unidades Internas</li>
+        <li class="breadcrumb-item"><a [routerLink]="['/panel-adm/ccostos']"> 
+            Centros de Costos</a></li>
+        <li class="breadcrumb-item active"> Centro de Costo</li>
+    </ol>
+</div>
 
-                    <ol class="breadcrumb">
-                        <li>
-                            <i class="fa fa-folder-open"></i> Unidades Internas
-                        </li>
-                        <li>
-                            Centros de Costos
-                        </li>
-                    </ol>
-                </section>
-
-                <section class="content container-fluid">
-                    <form (ngSubmit)="guardar()">
-                        <div class="form-group row" *ngIf="bandera">
-                            <div class="col-sm-12">
-                                <label for="staticEmail" class="col-sm-12 col-form-label">Empresa</label>
-                                <div class="col-sm-12">
-                                    <select type="text" class="form-control" [(ngModel)]="emp" name="emp" (change)="inicio();">
-                                        <option *ngFor="let empresa of empresas;let i = index" [value]="empresa.id" >{{i}} {{ empresa.nombre }} </option>
-                                    </select>
+<div class="container-fluid p-3">
+    <div class="animated fadeIn">
+        <div class="row justify-content-center">
+            <div class="col-md-12">
+                <div class="card shadow">
+                    <form #f="ngForm" (ngSubmit)="guardar(f)">
+                        <div class="card-header">
+                            <div class="row text-center text-sm-left">
+                                <div class="col-12 col-md-8 text-md-left h5 font-weight-bold">
+                                    <span *ngIf="ccostos.id!=''">
+                                        <i class="fa fa-edit"></i><strong> Editar un centro de costo</strong>
+                                    </span>
+                                    <span *ngIf="ccostos.id==''">
+                                        <i class="fa fa-plus-circle"></i><strong> Crear un centro de costo</strong>
+                                    </span>
+                                </div>
+                                <div class="col-12 col-md-4 text-center text-sm-right">
+                                    <button class="btn btn-outline-primary mt-2 btn-sm" type="button" [routerLink]="['/panel-adm/ccostos']">
+                                        <i class="fa fa-arrow-circle-left"></i>
+                                        Regresar
+                                    </button>
                                 </div>
                             </div>
                         </div>
-                        <div class="form-group row">
-                            <div class="col-sm-12">
-                                <label for="staticEmail" class="col-sm-12 col-form-label">Unidad Administrativa</label>
+                        <div class="card-body">
+                            <div class="form-group row" *ngIf="bandera">
                                 <div class="col-sm-12">
-                                    <select type="text" class="form-control" [(ngModel)]="ccostos.id_unidad_adm" name="id_unidad_adm" [(disabled)]="bandera2">
-                                        <option *ngFor="let unidad of unidades" [value]="unidad.id"> {{ unidad.nombre }} </option>
-                                    </select>
+                                    <label for="staticEmail" class="col-sm-12 col-form-label">Empresa</label>
+                                    <div class="col-sm-12">
+                                        <select type="text" class="form-control" [(ngModel)]="emp" name="emp" (change)="inicio();">
+                                            <option *ngFor="let empresa of empresas;let i = index" [value]="empresa.id" >{{i}} {{ empresa.nombre }} </option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-sm-12">
+                                    <label for="staticEmail" class="col-sm-12 col-form-label">Unidad Administrativa</label>
+                                    <div class="col-sm-12">
+                                        <select type="text" class="form-control" [(ngModel)]="ccostos.id_unidad_adm" name="id_unidad_adm" [(disabled)]="bandera2">
+                                            <option *ngFor="let unidad of unidades" [value]="unidad.id"> {{ unidad.nombre }} </option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-sm-12">
+                                    <label for="staticEmail" class="col-sm-12 col-form-label">Subfuncion</label>
+                                    <div class="col-sm-12">
+                                        <select class="form-control" [(ngModel)]="ccostos.id_subfuncion" name="id_subfuncion">
+                                            <option *ngFor="let sub of subs" [value]="sub.id"> {{ sub.nombre }} </option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-sm-12">
+                                    <label for="staticEmail" class="col-sm-12 col-form-label">Nombre</label>
+                                    <div class="col-sm-12">
+                                        <input type="text" class="form-control" placeholder="Ingresa el nombre" [(ngModel)]="ccostos.nombre" name="nombre">
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="form-group row">
-                            <div class="col-sm-12">
-                                <label for="staticEmail" class="col-sm-12 col-form-label">Subfuncion</label>
-                                <div class="col-sm-12">
-                                    <select class="form-control" [(ngModel)]="ccostos.id_subfuncion" name="id_subfuncion">
-                                        <option *ngFor="let sub of subs" [value]="sub.id"> {{ sub.nombre }} </option>
-                                    </select>
+                        <div class="card-footer">
+                            <div class="form-group row">
+                                <div class="col-12">
+                                    <button class="btn btn-primary btn-sm pull-right" type="submit">
+                                        <i class="fa fa-save"></i>
+                                        Guardar
+                                    </button>
                                 </div>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <div class="col-sm-12">
-                                <label for="staticEmail" class="col-sm-12 col-form-label">Nombre</label>
-                                <div class="col-sm-12">
-                                    <input type="text" class="form-control" placeholder="Ingresa el nombre" [(ngModel)]="ccostos.nombre" name="nombre">
-                                </div>
-                            </div>
-                        </div>
-
-
-
-                        <div class="form-group row">
-                            <div class="col-12">
-                                <button class="btn btn-primary pull-right" type="submit">
-                                <i class="fas fa-save"></i>
-                                Guardar
-                              </button>
                             </div>
                         </div>
                     </form>
-                </section>
-            </div>
-        </div>
+                </div>
+            </div><!-- /.col-->
+        </div><!-- /.row-->
     </div>
 </div>
