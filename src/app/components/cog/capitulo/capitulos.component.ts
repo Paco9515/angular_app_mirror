@@ -17,7 +17,7 @@ export class CapitulosComponent {
 	) {
 
 		this.detalle = {
-            id: '',
+			id: '',
 			codigo: '',
 			nombre: '',
 			status: true

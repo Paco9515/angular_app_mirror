@@ -12,10 +12,10 @@ import { Grupos, Generos, Rubros, Cuentas, Subcuentas } from '../../../interface
 export class SubcuentaComponent implements OnInit{
 
 	subcuenta: Subcuentas;
-	cuentas: Cuentas;
-	rubros: Rubros;
-	grupos: Grupos;
-	generos: Generos;
+	cuentas: Cuentas[];
+	rubros: Rubros[];
+	grupos: Grupos[];
+	generos: Generos[];
 
 	constructor(
 		private subcuentaService: SubcuentaService,
@@ -27,46 +27,82 @@ export class SubcuentaComponent implements OnInit{
 			nombre: '',
 			status: true,
 			id_genero: '',
-			nombre_genero: '',
 			id_grupo: '',
-			nombre_grupo: '',
 			id_rubro: '',
-			nombre_rubro: '',
-			id_cuenta: '',
-			nombre_cuenta: '',
+			id_cuenta: ''
 		};
+	}
 
+	ngOnInit() {
 		this.subcuentaService.getGeneros().subscribe((data: any) => {
 			this.generos = data;
 		});
 
-		this.subcuentaService.getGrupos().subscribe((obj: Grupos) => {
-			this.grupos = obj;
-		});
-		this.subcuentaService.getRubros().subscribe((obj: Rubros) => {
-			this.rubros = obj;
-		});
-		this.subcuentaService.getCuentas().subscribe((obj: Cuentas) => {
-			this.cuentas = obj;
-		});
-
-
-
-	}
-
-	ngOnInit() {
 		this.activitedRoute.params.subscribe(( data: any) => {
 			if (data.id !== 'nuevo') {
 				this.cargarSubcuenta(data.id);
 			}
 		});
 	}
+
+	onChangeGenero(id_genero) {
+		this.subcuenta.id_grupo = '';
+		this.grupos = [];
+		this.subcuenta.id_rubro = '';
+		this.rubros = [];
+		this.subcuenta.id_cuenta = '';
+		this.cuentas = [];
+		if (id_genero !== '') {
+			this.subcuenta.id_genero = id_genero;
+			this.subcuentaService.getGruposGenero(id_genero)
+			.subscribe((obj: any) => {
+				this.grupos = obj;
+			});
+		}
+	}
+
+	onChangeGrupo(id_grupo) {
+		this.subcuenta.id_rubro = '';
+		this.rubros = [];
+		this.subcuenta.id_cuenta = '';
+		this.cuentas = [];
+		if (id_grupo !== '') {
+			this.subcuenta.id_grupo = id_grupo;
+			this.subcuentaService.getRubrosGrupo(id_grupo)
+			.subscribe((obj: any) => {
+				this.rubros = obj;
+			});
+		}
+	}
+
+	onChangeRubro(id_rubro) {
+		this.subcuenta.id_rubro = '';
+		this.rubros = [];
+		if (id_rubro !== '') {
+			this.subcuenta.id_rubro = id_rubro;
+			this.subcuentaService.getCuentasRubro(id_rubro)
+			.subscribe((obj: any) => {
+				this.cuentas = obj;
+			});
+		}
+	}
+
+	onChangeCuenta(id_cuenta) {
+		this.subcuenta.id_cuenta = id_cuenta;
+	}
+
 	cargarSubcuenta(id: string) {
 		this.subcuentaService.getSubcuenta(id).subscribe((obj: any) => {
 			this.subcuenta = obj;
+			const GRUPO = this.subcuenta.id_grupo;
+			const RUBRO = this.subcuenta.id_rubro;
+			const CUENTA = this.subcuenta.id_cuenta;
+			this.onChangeGenero(this.subcuenta.id_genero);
+			this.onChangeGrupo(GRUPO);
+			this.onChangeRubro(RUBRO);
+			this.onChangeCuenta(CUENTA);
 		});
 	}
-
 
 	guardar(f: NgForm) {
 		if (f.valid) {

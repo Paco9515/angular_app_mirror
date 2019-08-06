@@ -1,93 +1,94 @@
-<div class="content-wrapper">
-	<div class="row">
-		<div class="col-12">
-			<div class="panels shadow">
+<!-- Breadcrumb-->
+<div class="d-none d-sm-block">
+	<ol class="breadcrumb">
+		<li class="breadcrumb-item"><i class="fa fa-folder-open"></i> Clasificación administrativa</li>
+		<li class="breadcrumb-item"><a [routerLink]="['/panel-adm/financieros']"> Financieros</a></li>
+		<li class="breadcrumb-item active"> Financiero</li>
+	</ol>
+</div>
 
-				<section class="content-header">
-					<div class="row">
-						<div class="col-8">
-							<h2 *ngIf="financiero.id!=''">
-								Editar una clase financiero
-							</h2>
-							<h2 *ngIf="financiero.id==''">
-								Crear una clase financiero
-							</h2>
+<div class="container-fluid p-3">
+	<div class="animated fadeIn">
+		<div class="row justify-content-center">
+			<div class="col-md-12">
+				<div class="card shadow">
+					<form #f="ngForm" (ngSubmit)="guardar(f)">
+						<div class="card-header">
+							<div class="row text-center">
+								<div class="col-12 col-md-8 text-md-left h5 font-weight-bold">
+									<span *ngIf="financiero.id!=''">
+										<i class="fa fa-edit"></i><strong> Editar un financiero</strong>
+									</span>
+									<span *ngIf="financiero.id==''">
+										<i class="fa fa-plus-circle"></i><strong> Crear un financiero</strong>
+									</span>
+								</div>
+								<div class="col-12 col-md-4 text-center text-sm-right">
+									<button class="btn btn-outline-primary mt-2 btn-sm" type="button"
+										[routerLink]="['/panel-adm/financieros']">
+										<i class="fa fa-arrow-circle-left"></i>
+										Regresar
+									</button>
+								</div>
+							</div>
 						</div>
-						<div class="col-4">
-							<button class="btn btn-outline-primary mt-2 btn-sm pull-right" type="button"
-								[routerLink]="['/panel-adm/financieros']">
-								<i class="fas fa-arrow-circle-left"></i>
-								Regresar
-							</button>
-						</div>
-					</div>
-
-					<ol class="breadcrumb">
-						<li>
-							<i class="fa fa-folder-open"></i>
-							Clasificación administrativa
-						</li>
-						<li>
-							Financiero
-						</li>
-					</ol>
-				</section>
-
-				<section class="content container-fluid">
-					<form (ngSubmit)="guardar(f)" #f="ngForm">
-						<div class="form-group row">
+						<div class="card-body">
+							<div class="form-group row">
 								<label for="codigo" class="col-sm-2 col-form-label">
-									Codigo
+									Código
 								</label>
 								<div class="col-sm-10">
 									<input type="text" class="form-control" placeholder="Ingresa el codigo"
-									name="codigo" [(ngModel)]="financiero.codigo">
+									name="codigo" [(ngModel)]="financiero.codigo" required>
 								</div>
 							</div>
-						<div class="form-group row">
-							<label for="nombre" class="col-sm-2 col-form-label">
-								Nombre
-							</label>
-							<div class="col-sm-10">
-								<input type="text" class="form-control" placeholder="Ingresa el nombre"
-								name="nombre" [(ngModel)]="financiero.nombre">
+							<div class="form-group row">
+								<label for="nombre" class="col-sm-2 col-form-label">
+									Nombre
+								</label>
+								<div class="col-sm-10">
+									<input type="text" class="form-control" placeholder="Ingresa el nombre"
+									name="nombre" [(ngModel)]="financiero.nombre" required>
+								</div>
+							</div>
+							<div class="form-group row">
+								<label for="sector" class="col-sm-2 col-form-label">
+									Sector
+								</label>
+								<div class="col-sm-10">
+									<select class="form-control"  name="sector" 
+									[(ngModel)]="financiero.id_sector" required>
+										<option value="">Seleccione un sector</option>
+										<option *ngFor="let sector of sectores" [value]="sector.id">
+											{{ sector.nombre }}
+										</option>
+									</select>
+								</div>
+							</div>
+							<div class="form-group row">
+								<label for="status" class="col-sm-2 col-form-label">
+									Estado
+								</label>
+								<div class="col-sm-10">
+									<span class="badge badge-success">
+										Activo
+									</span>
+								</div>
 							</div>
 						</div>
-						<div class="form-group row">
-							<label for="sector" class="col-sm-2 col-form-label">
-								Sector
-							</label>
-							<div class="col-sm-10">
-								<select class="form-control"  name="sector" 
-								[(ngModel)]="financiero.id_sector" #sector>
-									<option value="">Seleccione un sector</option>
-									<option *ngFor="let sector of sectores" [value]="sector.id">
-										{{ sector.nombre }}
-									</option>
-								</select>
-							</div>
-						</div>
-						<div class="form-group row">
-							<label for="inputPassword" class="col-sm-2 col-form-label">
-								Estado
-							</label>
-							<div class="col-sm-10">
-								<span class="badge badge-success">
-									Activo
-								</span>
-							</div>
-						</div>
-						<div class="form-group row">
-							<div class="col-12">
-								<button class="btn btn-primary pull-right" type="submit" [disabled]="f.invalid || !f.dirty">
-									<i class="fas fa-save"></i>
-									Guardar
-								</button>
+						<div class="card-footer">
+							<div class="form-group row">
+								<div class="col-12">
+									<button class="btn btn-primary  btn-sm pull-right" type="submit" [disabled]="f.invalid || !f.dirty">
+										<i class="fa fa-save"></i>
+										Guardar
+									</button>
+								</div>
 							</div>
 						</div>
 					</form>
-				</section>
-			</div>
-		</div>
+				</div>
+			</div><!-- /.col-->
+		</div><!-- /.row-->
 	</div>
 </div>

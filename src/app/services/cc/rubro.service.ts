@@ -28,12 +28,16 @@ export class RubroService {
 		}
 	}
 
-	getGeneros() {
-		return this.constants.getRequest(`/get_generos`, 'get', false);
+	getGruposGenero(id) {
+		return this.constants.getRequest(`/get_grupos_genero/${id}`, 'get', false);
 	}
 
-	getGrupos() {
-		return this.constants.getRequest(`/get_grupos`, 'get', false);
+	getRubrosGrupo(id) {
+		return this.constants.getRequest(`/get_rubros_grupo/${id}`, 'get', false);
+	}
+
+	getGeneros() {
+		return this.constants.getRequest(`/get_generos`, 'get', false);
 	}
 
 	getRubros() {

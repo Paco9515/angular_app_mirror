@@ -42,4 +42,46 @@ export class PartidaService {
 	getPartida(id: string) {
 		return this.constants.getRequest(`/get_partida/${id}`, 'get', false);
 	}
+
+	getPartidaId(id: string) {
+		return this.constants.getRequest(`/get_partida_id/${id}`, 'get', false);
+	}
+
+
+	// Clasificacion contable
+	getGeneros() {
+		return this.constants.getRequest(`/get_generos`, 'get', false);
+	}
+
+	getGrupos() {
+		return this.constants.getRequest(`/get_grupos`, 'get', false);
+	}
+
+	getRubros() {
+		return this.constants.getRequest(`/get_rubros`, 'get', false);
+	}
+
+	getCuentas() {
+		return this.constants.getRequest(`/get_cuentas`, 'get', false);
+	}
+
+	getSubcuentas() {
+		return this.constants.getRequest(`/get_subcuentas`, 'get', false);
+	}
+
+	getSubcuenta() {
+		return this.constants.getRequest(`/get_subcuentas`, 'get', false);
+	}
+
+	getConcepto(id: string) {
+		return this.constants.getRequest(`/get_concepto/${id}`, 'get', false);
+	}
+
+	get_conceptos_capitulo(id: string) {
+		return this.constants.getRequest(`/get_conceptos_capitulo/${id}`, 'get', false);
+	}
+
+	get_partidas_concepto(id: string) {
+		return this.constants.getRequest(`/get_partidas_concepto/${id}`, 'get', false);
+	}
 }

@@ -12,10 +12,12 @@ export class CogComponent implements OnInit {
 	@Input() primary_keys: any;
 	capitulos: Capitulos[];
 	conceptos: Conceptos[];
-	partidas: Partidas[];
+	partidas: any;
 	data: any;
 
 	@Output() out = new EventEmitter<any>();
+
+	cc;
 
 	constructor(
 		private cog_service: CogService
@@ -35,6 +37,8 @@ export class CogComponent implements OnInit {
 			.subscribe((data: any) => {
 				this.capitulos = data;
 			});
+		console.log(this.primary_keys);
+		this.cc = this.primary_keys[3];
 
 		if (this.primary_keys[0] !== 0) {
 			this.onChangeCapitulo(this.primary_keys[0]);

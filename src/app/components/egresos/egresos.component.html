@@ -13,10 +13,7 @@
 					<!-- ******** INICIO RICARDO ********* -->
 					<div class="form-group row">
 						<div class="col-8">
-							<app-cog
-								[primary_keys]="keys"
-								(out)="onData($event)"
-							></app-cog>
+							<app-cog [primary_keys]="keys" (out)="onData($event)"></app-cog>
 						</div>
 						<div class="col-4">
 							<div class="form-group row">
@@ -25,15 +22,11 @@
 										Cantidad
 									</label>
 									<input class="form-control" type="number" placeholder="Ingresa la cantidad"
-										minlength="0"
-										[(ngModel)]="cantidad"
-									>
+										minlength="0" [(ngModel)]="cantidad">div
 								</div>
-								<div class="col-12">
-									<button class="btn btn-success"
-										(click)="agregarPartida()"
-										[disabled]="cog_data.id_partida===''"
-									>
+								<div divss="col-12">
+									<button class="btn btn-success" div(click)="agregarPartida()"
+										[disabled]="cog_data.id_partida===''">
 										Agregar partida
 									</button>
 								</div>
@@ -77,13 +70,26 @@
 					<!-- ******** FIN RICARDO ********* -->
 
 					<!-- ******** INICIO CRISTY ********* -->
+					<!-- <div class="col-sm-6">
+                        <app-cc [primary_keys_cc]="cc" (cc)="onDataCc($event)"></app-cc>
+                    </div>
 
-
-
+                    <div class="col-sm-6">
+                        <app-ca [primary_keys_ca]="ca" (ca)="onDataCa($event)"></app-ca>
+                    </div> -->
 
 					<!-- ******** FIN CRISTY ********* -->
 
 					<!-- ******** INICIO PACO ********* -->
+					<!-- <div class="col-sm-6">
+                        <app-ui [primary_keys]="uikeys" (out)="onUI($event)"></app-ui>
+                    </div>
+
+                    <div class="col-sm-6">
+                        <app-cfg [primary_keys]="cffkeys" (out)="onCFF($event)"></app-cfg>
+                    </div> -->
+
+					<!-- <app-cff class="col-6" [primary_keys]="cffkeys" (out)="onCFF($event)"></app-cff> -->
 
 
 
@@ -93,3 +99,4 @@
 		</div>
 	</div>
 </div>
+<br><br><br>

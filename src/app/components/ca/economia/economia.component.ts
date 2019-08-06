@@ -10,11 +10,11 @@ import { Economias, Financieros, Sectores } from '../../../interfaces/ca.interfa
 	templateUrl: './economia.component.html',
 	styles: []
 })
-export class EconomiaComponent implements OnInit{
+export class EconomiaComponent implements OnInit {
 
 	economia: Economias;
-	financieros: Financieros;
-	sectores: Sectores;
+	financieros: Financieros[];
+	sectores: Sectores[];
 
   constructor(
 	private economiaService: EconomiaService,
@@ -26,22 +26,16 @@ export class EconomiaComponent implements OnInit{
 			nombre: '',
 			status: true,
 			id_financiero: '',
-			nombre_financiero: '',
-			id_sector: '',
-			nombre_sector: ''
+			id_sector: ''
 		};
-
-		this.economiaService.getSectores().subscribe((data: any) => {
-			this.sectores = data;
-		});
-
-		this.economiaService.getFinancieros().subscribe((obj: Financieros) => {
-			this.financieros = obj;
-		});
-
 	}
 
 	ngOnInit() {
+		this.economiaService.getSectores()
+			.subscribe((data: any) => {
+			this.sectores = data;
+		});
+
 		this.activitedRoute.params.subscribe(( data: any) => {
 			if (data.id !== 'nuevo') {
 				this.cargarEconomia(data.id);
@@ -49,20 +43,30 @@ export class EconomiaComponent implements OnInit{
 		});
 	}
 
-	getFinancieros(id_sector) {
-		if(this.financieros.id_sector == id_sector){
-			return this.financieros;
+	onChangeSector(id_sector) {
+		this.economia.id_financiero = '';
+		this.financieros = [];
+		if (id_sector !== '') {
+			this.economia.id_sector = id_sector;
+			this.economiaService.getFinancierosSector(id_sector)
+			.subscribe((obj: any) => {
+				this.financieros = obj;
+			});
 		}
+	}
+
+	onChangeFinanciero(id_financiero) {
+		this.economia.id_financiero = id_financiero;
 	}
 
 	cargarEconomia(id: string) {
 		this.economiaService.getEconomia(id).subscribe((obj: any) => {
 			this.economia = obj;
+			const FINANCIERO = this.economia.id_financiero;
+			this.onChangeSector(this.economia.id_sector);
+			this.onChangeFinanciero(FINANCIERO);
 		});
 	}
-
-
-
 
 	guardar(f: NgForm) {
 		if (f.valid) {

@@ -1,106 +1,188 @@
-<div class="content-wrapper">
-	<div class="row">
-		<div class="col-12">
-			<div class="panels shadow">
-				<section class="content-header">
-                    <div class="row">
-                        <div class="col-8">
-                            <h2 *ngIf="partida.id!=''">
-                                Editar una partida
-                            </h2>
-                            <h2 *ngIf="partida.id==''">
-                                Crear una partida
-                            </h2>
-                        </div>
-                        <div class="col-4">
-                            <button class="btn btn-outline-primary mt-2 btn-sm pull-right" type="button"
-                                [routerLink]="['/panel-adm/partidas']"
-                            >
-                                <i class="fas fa-arrow-circle-left"></i>
-                                Regresar
-                            </button>
-                        </div>
-                    </div>            
-                    <ol class="breadcrumb">
-                        <li>
-                            <i class="fa fa-folder-open"></i>
-                            Clasificación por objeto de gasto
-                        </li>
-                        <li>
-                            Partida
-                        </li>
-                    </ol>
-				</section>
-		
-				<section class="content container-fluid">
-					<form (ngSubmit)="guardar(f)" #f="ngForm">
-						<div class="form-group row">
-							<label for="codigo" class="col-sm-2 col-form-label">
-								Codigo
-							</label>
-							<div class="col-sm-10">
-								<input type="text" class="form-control" placeholder="Ingresa el codigo" required
-								name="codigo" [(ngModel)]="partida.codigo">
+<!-- Breadcrumb-->
+<div class="d-none d-sm-block">
+	<ol class="breadcrumb">
+		<li class="breadcrumb-item"><i class="fa fa-folder-open"></i> Clasificación por objeto de gasto</li>
+		<li class="breadcrumb-item"><a [routerLink]="['/panel-adm/partidas']"> Partidas</a></li>
+		<li class="breadcrumb-item active"> Partida</li>
+	</ol>
+</div>
+
+<div class="container-fluid p-3">
+	<div class="animated fadeIn">
+		<div class="row justify-content-center">
+			<div class="col-md-12">
+				<div class="card shadow">
+					<form #f="ngForm" (ngSubmit)="guardar(f)">
+						<div class="card-header">
+							<div class="row text-center text-sm-left">
+								<div class="col-12 col-md-8 text-md-left h5 font-weight-bold">
+									<span *ngIf="partida.id!=''">
+										<i class="fa fa-edit"></i><strong> Editar una partida</strong>
+									</span>
+									<span *ngIf="partida.id==''">
+										<i class="fa fa-plus-circle"></i><strong> Crear una partida</strong>
+									</span>
+								</div>
+								<div class="col-12 col-md-4 text-center text-sm-right">
+									<button class="btn btn-outline-primary mt-2 btn-sm" type="button"
+										[routerLink]="['/panel-adm/partidas']">
+										<i class="fa fa-arrow-circle-left"></i>
+										Regresar
+									</button>
+								</div>
 							</div>
 						</div>
-						<div class="form-group row">
-							<label for="nombre" class="col-sm-2 col-form-label">
-								Nombre
-							</label>
-							<div class="col-sm-10">
-								<input type="text" class="form-control" placeholder="Ingresa el nombre" required name="nombre"
-								[(ngModel)]="partida.nombre">
+						<div class="card-body">
+							<div class="form-group row">
+								<label for="codigo" class="col-sm-2 col-form-label">
+									Código
+								</label>
+								<div class="col-sm-10">
+									<input type="text" class="form-control" placeholder="Ingresa el código" required
+									name="codigo" [(ngModel)]="partida.codigo" required>
+								</div>
 							</div>
-                        </div>
-                        <div class="form-group row">
-							<label for="capitulo" class="col-sm-2 col-form-label">
-								Capitulo
-							</label>
-							<div class="col-sm-10">
-								<select class="form-control"  name="capitulo" 
-								[(ngModel)]="partida.id_capitulo" #capitulo>
-									<option value="">Seleccione un capitulo</option>
-									<option *ngFor="let capitulo of capitulos" [value]="capitulo.id">
-										{{ capitulo.nombre }}
-									</option>
-								</select>
+							<div class="form-group row">
+								<label for="nombre" class="col-sm-2 col-form-label">
+									Nombre
+								</label>
+								<div class="col-sm-10">
+									<input type="text" class="form-control" placeholder="Ingresa el nombre" required name="nombre"
+									[(ngModel)]="partida.nombre" required>
+								</div>
 							</div>
-						</div>
-						<div class="form-group row">
-							<label for="concepto" class="col-sm-2 col-form-label">
-								Concepto
-							</label>
-							<div class="col-sm-10">
-								<select class="form-control" name="concepto"
-									[(ngModel)]="partida.id_concepto">
-									<option value="" disabled>Seleccione un concepto</option>
-									<option *ngFor="let concepto of conceptos| filter:capitulo.value:'id_capitulo'" [value]="concepto.id">
-										{{ concepto.nombre }}
-									</option>
-								</select>
+							<div class="form-group row">
+								<label for="capitulo" class="col-sm-2 col-form-label">
+									Capítulo
+								</label>
+								<div class="col-sm-10">
+									<select class="form-control"  name="capitulo" 
+									[(ngModel)]="partida.id_capitulo"
+									(change)="onChangeCapitulo($event.target.value)" required>
+										<option value="">Seleccione un capítulo</option>
+										<option *ngFor="let capitulo of capitulos" [value]="capitulo.id">
+											{{ capitulo.nombre }}
+										</option>
+									</select>
+								</div>
 							</div>
-						</div>
-						<div class="form-group row">
+							<div class="form-group row">
+								<label for="concepto" class="col-sm-2 col-form-label">
+									Concepto
+								</label>
+								<div class="col-sm-10">
+									<select class="form-control" name="concepto"
+										[(ngModel)]="partida.id_concepto"
+										(change)="onChangeConcepto($event.target.value)" required>
+										<option value="">Seleccione un concepto</option>
+										<option *ngFor="let concepto of conceptos" [value]="concepto.id">
+											{{ concepto.nombre }}
+										</option>
+									</select>
+								</div>
+							</div>
+							<div class="form-group row">
+								<label for=status class="col-sm-2 col-form-label">
+									Estado
+								</label>
+								<div class="col-sm-10">
+									<span class="badge badge-success">
+										Activo
+									</span>
+								</div>
+							</div>
+
+							<!--div class="form-group row">
 							<label for=status class="col-sm-2 col-form-label">
-								Estado
+								Cuenta o Subcuenta
+							</label>
+						</div>
+						<div class="form-group row">
+							<label for="genero" class="col-sm-2 col-form-label">
+								Generos
 							</label>
 							<div class="col-sm-10">
-								<span class="badge badge-success">
-								    Activo
-								</span>
+								<select class="form-control"  name="genero" 
+								[(ngModel)]="partida.id_genero"
+								#genero>
+									<option value="">Seleccione un genero</option>
+									<option *ngFor="let genero of generos" [value]="genero.id">
+										{{ genero.nombre }}
+									</option>
+								</select>
 							</div>
 						</div>
 						<div class="form-group row">
-							<div class="col-12">
-								<button class="btn btn-primary pull-right" type="submit" [disabled]="f.invalid || !f.dirty">
-								<i class="fas fa-save"></i>
-									Guardar
-								</button>
+							<label for="grupo" class="col-sm-2 col-form-label">
+								Grupo
+							</label>
+							<div class="col-sm-10">
+								<select class="form-control"  name="grupo" 
+								[(ngModel)]="partida.id_grupo" #grupo>
+									<option value="">Seleccione un grupo</option>
+									<option *ngFor="let grupo of grupos | filter: genero.value:'id_genero'" [value]="grupo.id">
+										{{ grupo.nombre }}
+									</option>
+								</select>
+							</div>
+						</div>
+						<div class="form-group row">
+							<label for="rubro" class="col-sm-2 col-form-label">
+								Rubro
+							</label>
+							<div class="col-sm-10">
+								<select class="form-control"  name="rubro" 
+								[(ngModel)]="partida.id_rubro" #rubro>
+									<option value="">Seleccione un rubro</option>
+									<option *ngFor="let rubro of rubros | filter: grupo.value:'id_grupo'" [value]="rubro.id">
+										{{ rubro.nombre }}
+									</option>
+								</select>
+							</div>
+						</div>
+						<div class="form-group row">
+							<label for="cuenta" class="col-sm-2 col-form-label">
+								Cuenta
+							</label>
+							<div class="col-sm-10">
+								<select class="form-control"  name="cuenta" 
+								[(ngModel)]="partida.id_cuenta" #cuenta (change)="sub" >
+									<option value="">Seleccione una cuenta</option>
+									<option *ngFor="let cuenta of cuentas | filter: rubro.value:'id_rubro'" [value]="cuenta.id">
+										{{ cuenta.nombre }}
+									</option>
+								</select>
+							</div>
+						</div>
+
+						<div class="form-group row">
+							<label for="subcuenta" class="col-sm-2 col-form-label">
+								Subuenta
+							</label>
+							<div class="col-sm-10">
+								<select class="form-control"  name="subcuenta" 
+								[(ngModel)]="partida.id_subcuenta" >
+									<option value="">Seleccione una subcuenta</option>
+									<option *ngFor="let subcuenta of subcuentas | filter: cuenta.value:'id_cuenta'" [value]="cuenta.id">
+										{{ subcuenta.nombre }}
+									</option>
+								</select>
+							</div>
+						</div-->
+						</div>
+						<div class="card-footer">
+							<div class="form-group row">
+								<div class="col-12">
+									<button class="btn btn-primary btn-sm pull-right" type="submit" [disabled]="f.invalid || !f.dirty">
+										<i class="fa fa-save"></i>
+										Guardar
+									</button>
+								</div>
 							</div>
 						</div>
 					</form>
-				</section>
-			</div>
-		</div>
+				</div>
+			</div><!-- /.col-->
+		</div><!-- /.row-->
 	</div>
 </div>

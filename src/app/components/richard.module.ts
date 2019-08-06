@@ -13,6 +13,12 @@ import { SubprogramaComponent } from './cp/subprograma/subprograma.component';
 import { SubprogramasComponent } from './cp/subprograma/subprogramas.component';
 import { EgresosComponent } from './egresos/egresos.component';
 import { CogComponent } from './cog/cog/cog.component';
+import { CcComponent } from './cc/cc/cc.component';
+import { CaComponent } from './ca/ca/ca.component';
+import { CffComponent } from './cff/cff/cff.component';
+import { CfgComponent } from './cfg/cfg/cfg.component';
+import { UiComponent } from './ui/ui/ui.component';
+import { ProyectoComponent } from './proyecto/proyecto.component';
 
 @NgModule({
 	declarations: [
@@ -21,7 +27,13 @@ import { CogComponent } from './cog/cog/cog.component';
 		SubprogramaComponent,
 		SubprogramasComponent,
 		CogComponent,
-		EgresosComponent
+		CcComponent,
+		CaComponent,
+		CffComponent,
+		CfgComponent,
+		UiComponent,
+		EgresosComponent,
+		ProyectoComponent
 	],
 	exports: [
 		ProgramasComponent,

@@ -1,106 +1,112 @@
-<div class="content-wrapper">
-    <div class="row">
-        <div class="col-12">
-            <div class="panels shadow">
-        
-                <section class="content-header">
-                    <div class="row">
-                        <div class="col-8">
-                            <h2 *ngIf="rubro.id!=''">
-                                Editar un rubro
-                            </h2>
-                            <h2 *ngIf="rubro.id==''">
-                                Crear un rubro
-                            </h2>
-                        </div>
-                        <div class="col-4">
-                            <button class="btn btn-outline-primary mt-2 btn-sm pull-right" type="button"
-                                [routerLink]="['/panel-adm/rubros']">
-                                <i class="fas fa-arrow-circle-left"></i>
-                                Regresar
-                            </button>
-                        </div>
-                    </div>
-            
-                    <ol class="breadcrumb">
-                        <li>
-                            <i class="fa fa-folder-open"></i>
-                            Clasificación contable
-                        </li>
-                        <li>
-                            Rubros
-                        </li>
-                    </ol>
-                </section>
-        
-                <section class="content container-fluid">
-                    <form (ngSubmit)="guardar(f)" #f="ngForm">
-                        <div class="form-group row">
-                            <label for="codigo" class="col-sm-2 col-form-label">
-                                Codigo
-                            </label>
-                            <div class="col-sm-10">
-                                <input type="text" class="form-control" placeholder="Ingresa el codigo" name="codigo"
-                                [(ngModel)]="rubro.codigo">
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label for="nombre" class="col-sm-2 col-form-label">
-                                Nombre
-                            </label>
-                            <div class="col-sm-10">
-                                <input type="text" class="form-control" placeholder="Ingresa el nombre" name="nombre"
-                                [(ngModel)]="rubro.nombre">
-                            </div>
-                        </div>
-						<div class="form-group row">
-                            <label for="genero" class="col-sm-2 col-form-label">
-                                Genero
-                            </label>
-                            <div class="col-sm-10">
-                                <select class="form-control" name="id_genero"
-                                    [(ngModel)]="rubro.id_genero"
-                                    (change)="getGrupos(genero.value)"
-                                    #genero>
-                                    <option value="">Seleccione un genero</option>
-                                    <option *ngFor="let genero of generos" [value]="genero.id">
-                                        {{ genero.nombre }}
-                                    </option>
-                                </select>
-                            </div>
-                        </div>
-						<div class="form-group row">
-							<label for="grupo" class="col-sm-2 col-form-label">
-								Grupo
-							</label>
-							<div class="col-sm-10">
-								<select class="form-control" name="grupo"
-									[(ngModel)]="rubro.id_grupo">
-									<option value="">Seleccione un grupo</option>
-									<option *ngFor="let grupo of grupos | filter: genero.value:'id_genero'" [value]="grupo.id">
-										{{ grupo.nombre }}
-									</option>
-								</select>
-							</div>
-                        </div>
-                        <div class="form-group row">
-                            <label for="status" class="col-sm-2 col-form-label">
-                                Estado
-                            </label>
-                            <div class="col-sm-10">
-                                <span class="badge badge-success">
-                                Activo
-                                </span>
-                            </div>
-                        </div>
-						<div class="form-group row">
-							<div class="col-12">
-								
+<!-- Breadcrumb-->
+<div class="d-none d-sm-block">
+	<ol class="breadcrumb">
+		<li class="breadcrumb-item"><i class="fa fa-folder-open"></i> Clasificación contable</li>
+		<li class="breadcrumb-item"><a [routerLink]="['/panel-adm/rubros']"> Rubros</a></li>
+		<li class="breadcrumb-item active"> Rubro</li>
+	</ol>
+</div>
+
+<div class="container-fluid p-3">
+	<div class="animated fadeIn">
+		<div class="row justify-content-center">
+			<div class="col-md-12">
+				<div class="card shadow">
+					<form #f="ngForm" (ngSubmit)="guardar(f)">
+						<div class="card-header">
+							<div class="row text-center text-sm-left">
+								<div class="col-12 col-md-8 text-md-left h5 font-weight-bold">
+									<span *ngIf="rubro.id!=''">
+										<i class="fa fa-edit"></i><strong> Editar un rubro</strong>
+									</span>
+									<span *ngIf="rubro.id==''">
+										<i class="fa fa-plus-circle"></i><strong> Crear un rubro</strong>
+									</span>
+								</div>
+								<div class="col-12 col-md-4 text-center text-sm-right">
+									<button class="btn btn-outline-primary mt-2 btn-sm" type="button"
+                                        [routerLink]="['/panel-adm/rubros']">
+                                        <i class="fa fa-arrow-circle-left"></i>
+                                        Regresar
+                                    </button>
+								</div>
 							</div>
 						</div>
-                    </form>
-                </section>
-            </div>
-        </div>
-    </div>
+						<div class="card-body">
+                            <div class="form-group row">
+								<label for="codigo" class="col-sm-2 col-form-label">
+									Código
+								</label>
+								<div class="col-sm-10">
+									<input type="text" class="form-control" placeholder="Ingresa el codigo" name="codigo"
+									[(ngModel)]="rubro.codigo" required>
+								</div>
+							</div>
+							<div class="form-group row">
+								<label for="nombre" class="col-sm-2 col-form-label">
+									Nombre
+								</label>
+								<div class="col-sm-10">
+									<input type="text" class="form-control" placeholder="Ingresa el nombre" name="nombre"
+									[(ngModel)]="rubro.nombre" required>
+								</div>
+							</div>
+							<div class="form-group row">
+								<label for="genero" class="col-sm-2 col-form-label">
+									Genero
+								</label>
+								<div class="col-sm-10">
+									<select class="form-control" name="genero"
+										[(ngModel)]="rubro.id_genero"
+										(change)="onChangeGenero($event.target.value)"
+										required>
+										<option value="">Seleccione un genero</option>
+										<option *ngFor="let genero of generos" [value]="genero.id">
+											{{ genero.nombre }}
+										</option>
+									</select>
+								</div>
+							</div>
+							<div class="form-group row">
+								<label for="grupo" class="col-sm-2 col-form-label">
+									Grupo
+								</label>
+								<div class="col-sm-10">
+									<select class="form-control" name="grupo"
+										[(ngModel)]="rubro.id_grupo"
+										(change)="onChangeGrupo($event.target.value)"
+										required>
+										<option value="">Seleccione un grupo</option>
+										<option *ngFor="let grupo of grupos" [value]="grupo.id">
+											{{ grupo.nombre }}
+										</option>
+									</select>
+								</div>
+							</div>
+							<div class="form-group row">
+								<label for="status" class="col-sm-2 col-form-label">
+									Estado
+								</label>
+								<div class="col-sm-10">
+									<span class="badge badge-success">
+									Activo
+									</span>
+								</div>
+							</div>
+						</div>
+						<div class="card-footer">
+							<div class="form-group row">
+								<div class="col-12">
+                                    <button class="btn btn-primary btn-sm pull-right" type="submit" [disabled]="f.invalid || !f.dirty">
+                                        <i class="fa fa-save"></i>
+                                        Guardar
+                                    </button>
+								</div>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div><!-- /.col-->
+		</div><!-- /.row-->
 	</div>
+</div>

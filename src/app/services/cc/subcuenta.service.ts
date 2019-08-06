@@ -21,7 +21,7 @@ export class SubcuentaService {
 
 	activarEliminarSubcuenta(id: string, opcion: boolean) {
 		if (opcion) {
-			return this.constants.getRequest(`/activate_subcuenta/${id}`, 'put', false);
+			return this.constants.getRequest(`/activate_subcuenta/${id}`, 'get', false);
 		} else {
 			return this.constants.getRequest(`/delete_subcuenta/${id}`, 'delete', false);
 		}
@@ -31,16 +31,16 @@ export class SubcuentaService {
 		return this.constants.getRequest(`/get_generos`, 'get', false);
 	}
 
-	getGrupos() {
-		return this.constants.getRequest(`/get_grupos`, 'get', false);
+	getGruposGenero(id) {
+		return this.constants.getRequest(`/get_grupos_genero/${id}`, 'get', false);
 	}
 
-	getRubros() {
-		return this.constants.getRequest(`/get_rubros`, 'get', false);
+	getRubrosGrupo(id) {
+		return this.constants.getRequest(`/get_rubros_grupo/${id}`, 'get', false);
 	}
 
-	getCuentas() {
-		return this.constants.getRequest(`/get_cuentas`, 'get', false);
+	getCuentasRubro(id) {
+		return this.constants.getRequest(`/get_cuentas_rubro/${id}`, 'get', false);
 	}
 
 	getSubcuentas() {

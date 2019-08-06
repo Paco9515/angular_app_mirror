@@ -19,10 +19,10 @@ export class Economias {
 	codigo: string;
 	nombre: string;
 	status: boolean;
-	id_financiero: string;
-	nombre_financiero: string;
-	id_sector: string;
-	nombre_sector: string;
+	id_financiero?: string;
+	nombre_financiero?: string;
+	id_sector?: string;
+	nombre_sector?: string;
 }
 
 export class Subeconomias {
@@ -30,12 +30,12 @@ export class Subeconomias {
 	codigo: string;
 	nombre: string;
 	status: boolean;
-	id_economia: string;
-	nombre_economia: string;
-	id_financiero: string;
-	nombre_financiero: string;
-	id_sector: string;
-	nombre_sector: string;
+	id_economia?: string;
+	nombre_economia?: string;
+	id_financiero?: string;
+	nombre_financiero?: string;
+	id_sector?: string;
+	nombre_sector?: string;
 }
 export class Clas_admin {
 	id?: string;

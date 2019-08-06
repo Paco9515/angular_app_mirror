@@ -35,8 +35,9 @@ export class EconomiaService {
 		return this.constants.getRequest(`/get_economias/${id}`, 'get', false);
 	}
 
-	getFinancieros() {
-		return this.constants.getRequest(`/get_financieros`, 'get', false);
+
+	getFinancierosSector(id) {
+		return this.constants.getRequest(`/get_financieros_sector/${id}`, 'get', false);
 	}
 
 	getSectores() {
