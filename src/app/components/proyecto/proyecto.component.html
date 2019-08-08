@@ -35,16 +35,16 @@
                                 <ng-template #tableBlock>
                                     <tr *ngFor="let proyecto of proyectos; let i = index">
                                         <td class="text-center">{{ i+1 }}</td>
-                                        <td class="text-center" width="40%">{{ proyecto[1] }}</td>
-                                        <td class="text-center" width="10%">{{ proyecto[2] }}</td>
+                                        <td class="text-center" width="40%">{{ proyecto.nombre }}</td>
+                                        <td class="text-center" width="10%">{{ proyecto.importe }}</td>
 
                                         <td class="text-center">
-                                            <button type="button" class="btn btn-primary btn-sm ml-3" data-toggle="modal" data-target="#ampliar" (click)="getPartidas(proyecto[0]);">
+                                            <button type="button" class="btn btn-primary btn-sm ml-3" data-toggle="modal" data-target="#ampliar" (click)="getPartidas(proyecto.id);">
                                             <i class="fas fa-plus"></i> | <i class="fas fa-minus"></i>
                                         </button>
                                         </td>
                                         <td class="text-center">
-                                            <button type="button" class="btn btn-primary btn-sm ml-3" data-toggle="modal" data-target="#transferir" (click)="getPartidas(proyecto[0]);">
+                                            <button type="button" class="btn btn-primary btn-sm ml-3" data-toggle="modal" data-target="#transferir" (click)="getPartidas(proyecto.id);">
                                             <i class="fas fa-exchange-alt"></i>
                                             Tranferir
                                         </button>
@@ -123,7 +123,7 @@
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-success" (click)="enviar()">
-                                            <i class="fas fa-save"></i>   
+                                            <i class="fas fa-save"></i>
                                             Guardar
                                         </button>
                                         <button type="button" class="btn btn-secondary" data-dismiss="modal">
@@ -254,11 +254,11 @@
                                     <div class="modal-footer">
 
                                         <button type="button" class="btn btn-success" (click)="enviar()" *ngIf="banderaButton">
-                                            <i class="fas fa-save"></i>   
+                                            <i class="fas fa-save"></i>
                                             Guardar
                                         </button>
                                         <button type="button" class="btn btn-success" (click)="enviar()" *ngIf="!banderaButton" disabled>
-                                            <i class="fas fa-save"></i>   
+                                            <i class="fas fa-save"></i>
                                             Guardar
                                         </button>
                                         <button type="button" class="btn btn-secondary" data-dismiss="modal">

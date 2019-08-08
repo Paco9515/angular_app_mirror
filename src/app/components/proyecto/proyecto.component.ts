@@ -30,19 +30,25 @@ export class ProyectoComponent implements OnInit {
 	constructor(
 		private proyecto_service: ProyectoService
 	) {
+		this.proyecto_service.getProyectos()
+			.subscribe((data: any) => {
+				this.proyectos = data;
+				console.log('data: ', data);
+			});
+		this.nuevoTotal_proyecto = this.total_proyecto;
 	}
 
 	ngOnInit() {
-		this.iniciar();
+		// console.log('Proyectos', this.proyectos);
+		// this.iniciar();
 	}
 
 	iniciar() {
-		this.nuevoTotal_proyecto = this.total_proyecto;
-		this.proyectos = this.proyecto_service.getProyectos();
-		// console.log('Proyectos', this.proyectos);
+		// this.nuevoTotal_proyecto = this.total_proyecto;
 	}
 
 	getPartidas(id: any) {
+		id = 1;
 		this.banderaTotal = false;
 		if (this.total_proyecto === this.nuevoTotal_proyecto) {
 			this.banderaButton = true;
@@ -50,11 +56,15 @@ export class ProyectoComponent implements OnInit {
 		this.diferencia = 0;
 		this.total_proyecto = 0;
 		this.id_proyecto = '';
+
 		this.partidas = this.proyecto_service.getPartidas_Proyecto(id);
+
 		this.partidasOld = this.proyecto_service.getPartidas_Proyecto(id);
 		this.partidasOriginal = this.proyecto_service.getPartidas_Proyecto(id);
+
+
 		let i = 0;
-		for ( const partida of this.partidas) {
+		for (const partida of this.partidas) {
 			this.total_proyecto = this.total_proyecto + partida.saldo;
 			this.saldo_inicial[i] = partida.saldo;
 			this.bandera[i] = 1;
@@ -82,7 +92,7 @@ export class ProyectoComponent implements OnInit {
 			}
 		}
 		this.nuevoTotal_proyecto = 0;
-		for ( const partida of this.partidas) {
+		for (const partida of this.partidas) {
 			this.nuevoTotal_proyecto = this.nuevoTotal_proyecto + partida.saldo;
 		}
 		// console.log(this.nuevoTotal_proyecto);
@@ -133,7 +143,7 @@ export class ProyectoComponent implements OnInit {
 	}
 
 	disabled1(id: any) {
-		for (let x = 0; x < this.partidas.length; x ++) {
+		for (let x = 0; x < this.partidas.length; x++) {
 			this.banderaDisabled1[x] = false;
 			this.banderaDisabled2[x] = false;
 		}
@@ -141,7 +151,7 @@ export class ProyectoComponent implements OnInit {
 
 		if (this.partidasOld[id].saldo > this.partidas[id].saldo) {
 			this.banderaMensaje1[id] = true;
-			for (let x = 0; x < this.partidas.length; x ++) {
+			for (let x = 0; x < this.partidas.length; x++) {
 				this.banderaDisabled1[x] = true;
 				this.banderaDisabled2[x] = true;
 			}
@@ -156,7 +166,7 @@ export class ProyectoComponent implements OnInit {
 	}
 
 	disabled2(id: any) {
-		for (let x = 0; x < this.partidas.length; x ++) {
+		for (let x = 0; x < this.partidas.length; x++) {
 			this.banderaDisabled1[x] = false;
 			this.banderaDisabled2[x] = false;
 		}
@@ -164,7 +174,7 @@ export class ProyectoComponent implements OnInit {
 
 		if (this.partidasOld[id].saldo < this.partidas[id].saldo) {
 			this.banderaMensaje2[id] = true;
-			for (let x = 0; x < this.partidas.length; x ++) {
+			for (let x = 0; x < this.partidas.length; x++) {
 				this.banderaDisabled1[x] = true;
 				this.banderaDisabled2[x] = true;
 			}

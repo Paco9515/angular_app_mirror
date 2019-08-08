@@ -37,12 +37,12 @@ export class CogService {
 
 	getPartida(id: string, sub: boolean) {
 		return this.constants.getRequest(`/get_partida/${id}`, 'get', false)
-			.pipe( map( data => {
-				if(sub){
+			.pipe(map(data => {
+				if (sub) {
 					return data['codigo_subcuenta'];
 				}
-					return data['codigo_cuenta'];
-	   	}));
+				return data['codigo_cuenta'];
+			}));
 	}
 
 	get_partidas_concepto(id: string) {

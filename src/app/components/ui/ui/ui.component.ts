@@ -9,13 +9,16 @@ import { Empresas, UnidadesAdmin, Ccosto, Ctrabajo } from 'src/app/interfaces/ui
 	styles: []
 })
 export class UiComponent implements OnInit {
-	@Input() primary_keys: any;
+	@Input() primary_keys_ui: any;
 	empresas: Empresas[];
 	unidades: UnidadesAdmin[];
 	ccostos: Ccosto[];
 	ctrabajos: Ctrabajo[];
 	data: any;
 	data2: any;
+
+
+	id_centro_costo: any; /// lkasgdkjasgdkjas
 
 	@Output() out = new EventEmitter<any>();
 
@@ -44,11 +47,11 @@ export class UiComponent implements OnInit {
 				this.empresas = data;
 			});
 
-		if (this.primary_keys[0] !== 0) {
-			this.onChangeEmpresa(this.primary_keys[0]);
-			this.onChangeUnidad(this.primary_keys[1]);
-			this.onChangeCcosto(this.primary_keys[2]);
-			this.onChangeCtrabajo(this.primary_keys[3]);
+		if (this.primary_keys_ui[0] !== 0) {
+			this.onChangeEmpresa(this.primary_keys_ui[0]);
+			this.onChangeUnidad(this.primary_keys_ui[1]);
+			this.onChangeCcosto(this.primary_keys_ui[2]);
+			this.onChangeCtrabajo(this.primary_keys_ui[3]);
 		}
 	}
 
@@ -104,11 +107,13 @@ export class UiComponent implements OnInit {
 				.subscribe((data: any) => {
 					this.ctrabajos = data;
 				});
+			this.id_centro_costo = id_ccosto;
 		}
 	}
 
 	onChangeCtrabajo(id_ctrabajo) {
-		this.data2.id_ctrabajo = id_ctrabajo;
+		// this.data2.id_ctrabajo = id_ctrabajo;
+		this.data2.id_ctrabajo = this.id_centro_costo;
 		this.out.emit(this.data2);
 	}
 }

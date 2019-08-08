@@ -21,6 +21,10 @@ export class SubprogramaService {
 
 	}
 
+	get_gastos() {
+		return this.constants.getRequest(`/get_tipogastos`, 'get', false);
+	}
+
 	getProgramas() {
 		return this.constants.getRequest(`/get_programas`, 'get', false);
 	}
@@ -31,6 +35,10 @@ export class SubprogramaService {
 
 	getSubprogramas() {
 		return this.constants.getRequest(`/get_subprogramas`, 'get', false);
+	}
+
+	getSubprogramaPRograma(id: string) {
+		return this.constants.getRequest(`/get_subprogramas_programa/${id}`, 'get', false);
 	}
 
 	activarEliminarSubprograma(id: string, opcion: boolean) {

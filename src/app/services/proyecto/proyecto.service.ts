@@ -2,9 +2,10 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ConstantsService } from '../shared/constants.service';
 import { Proyecto } from 'src/app/interfaces/proyectos.interface';
+import { Partidas } from '../../interfaces/cog.interface';
 
 @Injectable({
-  providedIn: 'root'
+	providedIn: 'root'
 })
 export class ProyectoService {
 
@@ -16,69 +17,85 @@ export class ProyectoService {
 		this.url = this.constants.url;
 	}
 
-  	getProyectos() {
-		// return this.constants.getRequest(`/get_empresa/${id}`, 'get', null);
-		const proyectos = [[1, 'Proyecto 1', 100000], [2, 'Proyecto 2', 50000], [3, 'Proyecto 3', 9000]];
-		return proyectos;
-  	}
+	setPresEgreso(data: any, partidas: any) {
+		return this.constants.createEgreso(`/create_presupuesto/`, data, partidas);
+	}
+
+	getFasesProyecto(id) {
+		return this.constants.getRequest(`/get_fase_proyecto/${id}`, 'get', false);
+	}
+
+	getProyectos() {
+		return this.constants.getRequest(`/get_proyectos`, 'get', false);
+	}
 
 	getPartidas_Proyecto(id) {
- 
+
 		let partidas = [];
 
-		 // return this.constants.getRequest(`/get_soloempresas`, 'get', null);
+		// return this.constants.getRequest(`/get_soloempresas`, 'get', null);
 		if (id === 1) {
 			partidas = [
-				{	id: 1,
-					nombre: 'Partida 1'	,
+				{
+					id: 1,
+					nombre: 'Partida 1',
 					saldo: 50000
 				},
-				{	id: 2,
-					nombre: 'Partida 2'	,
+				{
+					id: 2,
+					nombre: 'Partida 2',
 					saldo: 50000
 				}
 			];
 		}
 
 		// tslint:disable-next-line: align
-  		if (id === 2) {
+		if (id === 2) {
 			partidas = [
-				{	id: 1,
-					nombre: 'Partida 1'	,
+				{
+					id: 1,
+					nombre: 'Partida 1',
 					saldo: 10000
 				},
-				{	id: 2,
-					nombre: 'Partida 2'	,
+				{
+					id: 2,
+					nombre: 'Partida 2',
 					saldo: 10000
 				},
-				{	id: 3,
-					nombre: 'Partida 3'	,
+				{
+					id: 3,
+					nombre: 'Partida 3',
 					saldo: 10000
 				},
-				{	id: 4,
-					nombre: 'Partida 4'	,
+				{
+					id: 4,
+					nombre: 'Partida 4',
 					saldo: 10000
 				},
-				{	id: 5,
-					nombre: 'Partida 5'	,
+				{
+					id: 5,
+					nombre: 'Partida 5',
 					saldo: 10000
 				}
 			];
 		}
 
-  		// tslint:disable-next-line: align
-  		if (id === 3) {
+		// tslint:disable-next-line: align
+		if (id === 3) {
 			partidas = [
-				{	id: 1,
-					nombre: 'Partida 1'	,
+				{
+					id: 1,
+					nombre: 'Partida 1',
 					saldo: 3000
 				},
-				{	id: 2,
-					nombre: 'Partida 2'	,
+				{
+					id: 2,
+					nombre: 'Partida 2',
 					saldo: 3000
 				},
-				{	id: 3,
-					nombre: 'Partida 3'	,
+				{
+					id: 3,
+					nombre: 'Partida 3',
 					saldo: 3000
 				}
 			];

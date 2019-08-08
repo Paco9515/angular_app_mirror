@@ -3,10 +3,10 @@ import { Clas_admin, Subeconomias, Economias, Financieros, Sectores } from '../.
 import { CaService } from 'src/app/services/ca/ca.service';
 
 @Component({
-  selector: 'app-ca',
-  templateUrl: './ca.component.html'
+	selector: 'app-ca',
+	templateUrl: './ca.component.html'
 })
-export class CaComponent implements OnInit{
+export class CaComponent implements OnInit {
 	@Input() primary_keys_ca: any;
 
 	administrativas: Clas_admin[];
@@ -59,10 +59,10 @@ export class CaComponent implements OnInit{
 		if (id_sector !== '') {
 			this.data.id_sector = id_sector;
 			this.caService.get_financieros_sector(id_sector)
-			.subscribe((data: any) => {
-				console.log(data);
-				this.financieros = data;
-			});
+				.subscribe((data: any) => {
+					console.log(data);
+					this.financieros = data;
+				});
 		}
 	}
 
@@ -78,9 +78,9 @@ export class CaComponent implements OnInit{
 		if (id_financiero !== '') {
 			this.data.id_financiero = id_financiero;
 			this.caService.get_economias_financiero(id_financiero)
-			.subscribe((data: any) => {
-				this.economias = data;
-			});
+				.subscribe((data: any) => {
+					this.economias = data;
+				});
 		}
 	}
 
@@ -94,9 +94,9 @@ export class CaComponent implements OnInit{
 		if (id_economia !== '') {
 			this.data.id_economia = id_economia;
 			this.caService.get_subeconomias_economia(id_economia)
-			.subscribe((data: any) => {
-				this.subeconomias = data;
-			});
+				.subscribe((data: any) => {
+					this.subeconomias = data;
+				});
 		}
 	}
 
@@ -108,15 +108,15 @@ export class CaComponent implements OnInit{
 		if (id_subeconomia !== '') {
 			this.data.id_subeconomia = id_subeconomia;
 			this.caService.get_administrativas_subeconomia(id_subeconomia)
-			.subscribe((data: any) => {
-				this.administrativas = data;
-			});
+				.subscribe((data: any) => {
+					this.administrativas = data;
+				});
 		}
 	}
 
 	onChangeAdministrativas(id_administrativas) {
-			this.data.id_administrativa = id_administrativas;
-			this.ca.emit(this.data);
+		this.data.id_administrativa = id_administrativas;
+		this.ca.emit(this.data);
 	}
 
 

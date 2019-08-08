@@ -9,7 +9,7 @@ import { CfgService } from 'src/app/services/cfg/cfg.service';
 	styles: []
 })
 export class CfgComponent implements OnInit {
-	@Input() primary_keys: any;
+	@Input() primary_keys_cfg: any;
 	finalidades: Finalidad[];
 	funciones: Funciones[];
 	subfunciones: Subfunciones[];
@@ -34,10 +34,10 @@ export class CfgComponent implements OnInit {
 				this.finalidades = data;
 			});
 
-		if (this.primary_keys[0] !== 0) {
-			this.onChangeFinalidad(this.primary_keys[0]);
-			this.onChangeFuncion(this.primary_keys[1]);
-			this.onChangeSubfuncion(this.primary_keys[2]);
+		if (this.primary_keys_cfg[0] !== 0) {
+			this.onChangeFinalidad(this.primary_keys_cfg[0]);
+			this.onChangeFuncion(this.primary_keys_cfg[1]);
+			this.onChangeSubfuncion(this.primary_keys_cfg[2]);
 		}
 	}
 

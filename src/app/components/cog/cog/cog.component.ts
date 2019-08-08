@@ -9,7 +9,7 @@ import { Capitulos, Conceptos, Partidas } from 'src/app/interfaces/cog.interface
 })
 export class CogComponent implements OnInit {
 
-	@Input() primary_keys: any;
+	@Input() primary_keys_cog: any;
 	capitulos: Capitulos[];
 	conceptos: Conceptos[];
 	partidas: any;
@@ -37,13 +37,13 @@ export class CogComponent implements OnInit {
 			.subscribe((data: any) => {
 				this.capitulos = data;
 			});
-		console.log(this.primary_keys);
-		this.cc = this.primary_keys[3];
+		// console.log(this.primary_keys);
+		this.cc = this.primary_keys_cog[3];
 
-		if (this.primary_keys[0] !== 0) {
-			this.onChangeCapitulo(this.primary_keys[0]);
-			this.onChangeConcepto(this.primary_keys[1]);
-			this.onChangePartida(this.primary_keys[2]);
+		if (this.primary_keys_cog[0] !== 0) {
+			this.onChangeCapitulo(this.primary_keys_cog[0]);
+			this.onChangeConcepto(this.primary_keys_cog[1]);
+			this.onChangePartida(this.primary_keys_cog[2]);
 		}
 	}
 
@@ -70,14 +70,17 @@ export class CogComponent implements OnInit {
 			this.cog_service.get_partidas_concepto(id_concepto)
 				.subscribe((data: any) => {
 					this.partidas = data;
+					// console.log(this.partidas);
 				});
 		}
 	}
 
 	onChangePartida(id_partida) {
-		this.data.id_partida = id_partida;
-		this.data.codigo = this.partidas[id_partida].codigo;
-		this.data.nombre = this.partidas[id_partida].nombre;
+		// tslint:disable-next-line:triple-equals
+		const partida_temporal = this.partidas.find(e => e.id == id_partida);
+		this.data.id_partida = partida_temporal.id;
+		this.data.codigo = partida_temporal.codigo;
+		this.data.nombre = partida_temporal.nombre;
 		this.out.emit(this.data);
 	}
 }

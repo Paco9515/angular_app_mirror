@@ -10,7 +10,7 @@ import { Fuente, Subfuente, Tipo } from 'src/app/interfaces/cff.interface';
 })
 export class CffComponent implements OnInit {
 
-	@Input() primary_keys: any;
+	@Input() primary_keys_cff: any;
 	fuentes: Fuente[];
 	subfuentes: Subfuente[];
 	tipos: Tipo[];
@@ -35,10 +35,10 @@ export class CffComponent implements OnInit {
 				this.fuentes = data;
 			});
 
-		if (this.primary_keys[0] !== 0) {
-			this.onChangeFuente(this.primary_keys[0]);
-			this.onChangeSubfuente(this.primary_keys[1]);
-			this.onChangeTipo(this.primary_keys[2]);
+		if (this.primary_keys_cff[0] !== 0) {
+			this.onChangeFuente(this.primary_keys_cff[0]);
+			this.onChangeSubfuente(this.primary_keys_cff[1]);
+			this.onChangeTipo(this.primary_keys_cff[2]);
 		}
 	}
 

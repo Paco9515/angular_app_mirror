@@ -17,6 +17,14 @@ export class ConstantsService {
 		private http: HttpClient
 	) { }
 
+	public createEgreso(url: string, _data: any, _partidas: any) {
+		const data = {
+			data: _data,
+			partidas: _partidas
+		};
+		return this.http.post(this._url + url, data);
+	}
+
 	public getRequest(url: string, tipo: string, data: any) {
 
 		switch (tipo) {
