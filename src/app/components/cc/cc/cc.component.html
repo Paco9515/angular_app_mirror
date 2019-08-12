@@ -12,7 +12,7 @@
 			</option>
 			<option *ngFor="let genero of generos" 
 				[value]="genero.id">
-				{{ genero.nombre }}
+				{{ genero.codigo + ' ' + genero.nombre }}
 			</option>
 		</select>
 	</div>
@@ -30,7 +30,7 @@
 			</option>
 			<option *ngFor="let grupo of grupos" 
 				[value]="grupo.id">
-				{{ grupo.nombre }}
+				{{ grupo.codigo + ' ' + grupo.nombre }}
 			</option>
 		</select>
 	</div>
@@ -48,7 +48,7 @@
 			</option>
 			<option *ngFor="let rubro of rubros" 
 			[value]="rubro.id">
-				{{ rubro.nombre }}
+				{{ rubro.codigo + ' ' + rubro.nombre }}
 			</option>
 		</select>
 	</div>
@@ -65,7 +65,7 @@
 				Seleccione un cuenta
 			</option>
 			<option *ngFor="let cuenta of cuentas" [value]="cuenta.id">
-				{{ cuenta.nombre }}
+				{{ cuenta.codigo + ' ' + cuenta.nombre }}
 			</option>
 		</select>
 	</div>
@@ -82,7 +82,7 @@
 				Seleccione un subcuenta
 			</option>
 			<option *ngFor="let subcuenta of subcuentas" [value]="subcuenta.id">
-				{{ subcuenta.nombre }}
+				{{ subcuenta.codigo + ' ' + subcuenta.nombre }}
 			</option>
 		</select>
 	</div>

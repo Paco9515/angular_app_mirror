@@ -12,7 +12,7 @@
 			<option *ngFor="let capitulo of capitulos"
 				[value]="capitulo.id"
 			>
-				{{ capitulo.nombre }}
+				{{ capitulo.codigo + ' ' + capitulo.nombre }}
 			</option>
 		</select>
 	</div>
@@ -30,7 +30,7 @@
 			</option>
 			<option *ngFor="let concepto of conceptos"
 				[value]="concepto.id">
-				{{ concepto.nombre }}
+				{{ concepto.codigo + ' ' + concepto.nombre }}
 			</option>
 		</select>
 	</div>
@@ -48,7 +48,7 @@
 			</option>
 			<option *ngFor="let partida of partidas"
 				[value]="partida.id">
-				{{ partida.nombre }}
+				{{ partida.codigo + ' ' + partida.nombre }}
 			</option>
 		</select>
 	</div>

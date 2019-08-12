@@ -60,7 +60,7 @@
 									<select class="form-control"  name="genero" [(ngModel)]="grupo.id_genero" required>
 										<option value="">Seleccione un genero</option>
 										<option *ngFor="let genero of generos" [value]="genero.id">
-											{{ genero.nombre }}
+											{{ genero.codigo + ' ' + genero.nombre }}
 										</option>
 									</select>
 								</div>

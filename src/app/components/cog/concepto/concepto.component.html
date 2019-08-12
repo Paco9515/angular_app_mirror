@@ -61,7 +61,7 @@
 										[(ngModel)]="concepto.id_capitulo" required>
 										<option value="">Seleccione un capítulo</option>
 										<option *ngFor="let capitulo of capitulos" [value]="capitulo.id">
-											{{ capitulo.nombre }}
+											{{ capitulo.codigo + ' ' +capitulo.nombre }}
 										</option>
 									</select>
 								</div>
@@ -75,7 +75,7 @@
 										[(ngModel)]="concepto.id_gasto" required>
 										<option value="">Seleccione un capítulo</option>
 										<option *ngFor="let gasto of gastos" [value]="gasto.id">
-											{{ gasto.nombre }}
+											{{ gasto.id + ' ' + gasto.nombre }}
 										</option>
 									</select>
 								</div>

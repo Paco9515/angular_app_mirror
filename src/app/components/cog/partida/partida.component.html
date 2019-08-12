@@ -61,7 +61,7 @@
 									(change)="onChangeCapitulo($event.target.value)" required>
 										<option value="">Seleccione un capítulo</option>
 										<option *ngFor="let capitulo of capitulos" [value]="capitulo.id">
-											{{ capitulo.nombre }}
+											{{ capitulo.codigo + ' ' + capitulo.nombre }}
 										</option>
 									</select>
 								</div>
@@ -76,7 +76,7 @@
 										(change)="onChangeConcepto($event.target.value)" required>
 										<option value="">Seleccione un concepto</option>
 										<option *ngFor="let concepto of conceptos" [value]="concepto.id">
-											{{ concepto.nombre }}
+											{{ concepto.codigo + ' ' + concepto.nombre }}
 										</option>
 									</select>
 								</div>

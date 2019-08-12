@@ -7,7 +7,7 @@
 			(change)="onChangeSectores($event.target.value)">
 			<option value="">Seleccione un sector</option>
 			<option *ngFor="let sector of sectores" [value]="sector.id">
-				{{ sector.nombre }}
+				{{ sector.codigo + ' ' + sector.nombre }}
 			</option>
 		</select>
 	</div>
@@ -21,7 +21,7 @@
 			(change)="onChangeFinancieros($event.target.value)">
 			<option value="">Seleccione un financiero</option>
 			<option *ngFor="let financiero of financieros" [value]="financiero.id">
-				{{ financiero.nombre }}
+				{{ financiero.codigo + ' ' + financiero.nombre }}
 			</option>
 		</select>
 	</div>
@@ -35,7 +35,7 @@
 			(change)="onChangeEconomia($event.target.value)">
 			<option value="">Seleccione un rubro</option>
 			<option *ngFor="let economia of economias" [value]="economia.id">
-				{{ economia.nombre }}
+				{{ economia.codigo + ' ' + economia.nombre }}
 			</option>
 		</select>
 	</div>
@@ -49,7 +49,7 @@
 			(change)="onChangeSubeconomia($event.target.value)">
 			<option value="">Seleccione una subeconomia</option>
 			<option *ngFor="let subeconomia of subeconomias" [value]="subeconomia.id">
-				{{ subeconomia.nombre }}
+				{{ subeconomia.codigo + ' ' + subeconomia.nombre }}
 			</option>
 		</select>
 	</div>
@@ -64,7 +64,7 @@
 			(change)="onChangeAdministrativas($event.target.value)">
 			<option value="">Seleccione una administrativa</option>
 			<option *ngFor="let admin of administrativas" [value]="admin.id">
-				{{ admin.nombre }}
+				{{ admin.codigo + ' ' + admin.nombre }}
 			</option>
 		</select>
 	</div>
