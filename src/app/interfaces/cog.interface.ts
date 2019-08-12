@@ -12,7 +12,8 @@ export interface Conceptos {
 	status: boolean;
 	id_capitulo?: string;
 	nombre_capitulo?: string;
-
+	id_gasto?: string;
+	nombre_gasto?: string;
 }
 
 export interface Partidas {
