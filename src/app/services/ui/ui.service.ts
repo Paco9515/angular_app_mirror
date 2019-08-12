@@ -15,7 +15,7 @@ export class UiService {
 		this.url = this.constants.url;
 	}
 
-  	getEmpresa(id: string) {
+  	getEmpresa(id: any) {
 		return this.constants.getRequest(`/get_empresa/${id}`, 'get', null);
 	}
 

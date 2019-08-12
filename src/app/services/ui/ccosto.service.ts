@@ -37,7 +37,7 @@ export class CcostoService {
 		return this.constants.getRequest(`/get_unidades_empresa/${id}`, 'get', false);
 	}
 
-	getUnidad(id:number) {
+	getUnidad(id: string) {
 		return this.constants.getRequest(`/get_unidad/${id}`, 'get', false);
 	}
 

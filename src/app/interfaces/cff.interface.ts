@@ -15,7 +15,7 @@ export interface Subfuente {
 
 export interface Tipo {
     id?: string;
-    id_subfuente:number;
+    id_subfuente:string;
     codigo: string;
     nombre: string;
     anio:string;

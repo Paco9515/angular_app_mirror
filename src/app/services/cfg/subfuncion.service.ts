@@ -38,7 +38,7 @@ export class SubfuncionService {
 		return this.constants.getRequest(`/get_funcion_finalidad/${id}`, 'get', false);
 	}
 
-	getFuncion(id:number) {
+	getFuncion(id: string) {
 		return this.constants.getRequest(`/get_funcion/${id}`, 'get', false);
 	}
 

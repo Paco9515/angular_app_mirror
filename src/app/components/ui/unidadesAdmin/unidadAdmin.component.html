@@ -37,6 +37,7 @@
                                     <label for="staticEmail" class="col-sm-12 col-form-label">Empresa</label>
                                     <div class="col-sm-12">
                                         <select [(ngModel)]="unidad.id_empresa" name="id_empresa" class="form-control">
+                                            <option value=""> Seleccione una opcion... </option>
                                             <option *ngFor="let empresa of emps_unidades;" [value]="empresa.id">{{empresa.nombre}}</option>
                                         </select>
                                     </div>
@@ -58,7 +59,7 @@
                         <div class="card-footer">
                             <div class="form-group row">
                                 <div class="col-12">
-                                    <button class="btn btn-primary btn-sm pull-right" type="submit" [disabled]="!forma.valid">
+                                    <button class="btn btn-primary btn-sm pull-right" type="submit" [disabled]="f.invalid || !f.dirty">
                                         <i class="fa fa-save"></i>
                                         Guardar
                                     </button>
@@ -67,7 +68,9 @@
                         </div>
                     </form>
                 </div>
-            </div><!-- /.col-->
-        </div><!-- /.row-->
+            </div>
+            <!-- /.col-->
+        </div>
+        <!-- /.row-->
     </div>
 </div>

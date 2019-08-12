@@ -49,6 +49,7 @@
                                     <label class="col-sm-12 col-form-label">Unidad Administrativo</label>
                                     <div class="col-sm-12">
                                         <select class="form-control" name="unidadAdm" [(ngModel)]="unidadAdm" (change)="inicio();">
+                                            <option value=""> Seleccione una opcion... </option>
                                             <option *ngFor="let unidad of unidades" [value]="unidad.id"> {{ unidad.nombre }} </option>
                                         </select>
                                     </div>
@@ -57,6 +58,7 @@
                                     <label class="col-sm-12 col-form-label">Centro de Costo</label>
                                     <div class="col-sm-12">
                                         <select class="form-control" name="id_centro_costo" [(ngModel)]="ctrabajo.id_centro_costo" [(disabled)]="bandera2">
+                                            <option value=""> Seleccione una opcion... </option>
                                             <option *ngFor="let centro of centros" [value]="centro.id"> {{ centro.nombre }} </option>
                                         </select>
                                     </div>
@@ -126,7 +128,7 @@
                         <div class="card-footer">
                             <div class="form-group row">
                                 <div class="col-12">
-                                    <button class="btn btn-primary pull-right btn-sm" type="submit">
+                                    <button class="btn btn-primary pull-right btn-sm" type="submit" [disabled]="f.invalid || !f.dirty">
                                         <i class="fa fa-save"></i>
                                         Guardar
                                     </button>
@@ -135,7 +137,9 @@
                         </div>
                     </form>
                 </div>
-            </div><!-- /.col-->
-        </div><!-- /.row-->
+            </div>
+            <!-- /.col-->
+        </div>
+        <!-- /.row-->
     </div>
 </div>

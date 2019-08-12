@@ -10,7 +10,7 @@
 			<option *ngFor="let finalidad of finalidades"
 				[value]="finalidad.id"
 			>
-				{{ finalidad.nombre }}
+				{{ finalidad.codigo }} - {{ finalidad.nombre }}
 			</option>
 		</select>
     </div>
@@ -27,7 +27,7 @@
 			<option *ngFor="let funcion of funciones"
 				[value]="funcion.id"
 			>
-				{{ funcion.nombre }}
+				{{ funcion.codigo }} - {{ funcion.nombre }}
 			</option>
 		</select>
     </div>
@@ -45,7 +45,7 @@
 			<option *ngFor="let subfuncion of subfunciones"
 				[value]="subfuncion.id"
 			>
-				{{ subfuncion.nombre }}
+				{{ subfuncion.codigo }} - {{ subfuncion.nombre }}
 			</option>
 		</select>
     </div>

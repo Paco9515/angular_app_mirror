@@ -3,7 +3,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { NgForm } from '@angular/forms';
 //import { ToastrService } from 'ngx-toastr';
 import { UnidadesAdminService } from "src/app/services/ui/unidadesAdmin.service";
-import { UnidadesAdmin } from "src/app/interfaces/ui.interface";
+import { UnidadesAdmin, Empresas } from 'src/app/interfaces/ui.interface';
 
 @Component({
 	selector: 'app-unidadAdmin',
@@ -47,12 +47,13 @@ export class UnidadAdminComponent  {
 			} else {
 				this.createForma({
 					id: '',
-					id_empresa: '1',
+					id_empresa: '',
 					codigo: '',
 					nombre: '',
 					desc: '',
 					status: true
 				});
+				this.unidad.id_empresa = '';
 				// this.programa = {nombre: '', status: true};
 			}
 		});
@@ -61,11 +62,13 @@ export class UnidadAdminComponent  {
 
 	createForma(obj: UnidadesAdmin) {
 		
+		
 		this.unidadesService.getEmpresas().subscribe((empresas: any) => {
 			this.emps_unidades = empresas;
 			//console.log('unidades por id',this.emps_unidades);
 		});
-		this.unidad = obj;			
+		this.unidad = obj;	
+			
 	}
 
 

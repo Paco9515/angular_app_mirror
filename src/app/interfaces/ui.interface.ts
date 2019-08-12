@@ -59,7 +59,7 @@ export interface InfoEmpresa{
 
 export interface UnidadesAdmin {
     id?: string;
-    id_empresa?: string;
+    id_empresa?: any;
     codigo: string;
     nombre: string;
     desc: string;
@@ -68,8 +68,8 @@ export interface UnidadesAdmin {
 
 export interface Ccosto {
     id?: string;
-    id_unidad_adm: number;
-    id_subfuncion: number;
+    id_unidad_adm: string;
+    id_subfuncion: string;
     codigo: string;
     nombre: string;
     status:boolean;
@@ -77,7 +77,7 @@ export interface Ccosto {
 
 export interface Ctrabajo {
     id?: string;
-    id_centro_costo?: number;
+    id_centro_costo?: string;
     codigo?: string;
     nombre: string;
     estado: string;
