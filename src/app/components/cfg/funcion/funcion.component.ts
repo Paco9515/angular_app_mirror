@@ -25,7 +25,7 @@ export class FuncionComponent {
 		private funcionService: FuncionService,
 		private router: Router,
 		private activatedRoute: ActivatedRoute,
-		//private toastrService: ToastrService
+		// private toastrService: ToastrService
 	) {
 		this.activatedRoute.params.subscribe((data: any) => {
 			this.id = data.id;
@@ -42,6 +42,7 @@ export class FuncionComponent {
 					nombre: '',
 					status: true
 				});
+				this.funcion.id_finalidad = '';
 			}
 		});
 	}

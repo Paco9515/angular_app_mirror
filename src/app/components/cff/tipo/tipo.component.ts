@@ -21,7 +21,7 @@ export class TipoComponent {
 	};
 	subfuentes:[];
 	fuentes=[];
-	fuen;
+	fuen: any = '';
 	bandera:boolean=false;
 	bandera2:boolean=true;
   
@@ -52,6 +52,9 @@ export class TipoComponent {
 					anio: '',
 					status: true
 				});
+
+				this.fuen = '';
+				this.tipo.id_subfuente = '';
 			}
 		});
   }
@@ -60,8 +63,8 @@ export class TipoComponent {
 		this.bandera2=false;
 		this.tipoService.getSubs(this.fuen).subscribe((centros2: any) => {
 			this.subfuentes=centros2;		
-		});	
-				
+		});
+		this.tipo.id_subfuente = '';
 	}
   
 	createForma(obj: Tipo) {

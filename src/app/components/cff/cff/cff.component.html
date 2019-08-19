@@ -10,7 +10,7 @@
 			<option *ngFor="let fuente of fuentes"
 				[value]="fuente.id"
 			>
-				{{ fuente.nombre }}
+				{{ fuente.codigo }} - {{ fuente.nombre }}
 			</option>
 		</select>
     </div>
@@ -27,7 +27,7 @@
 			<option *ngFor="let subfuente of subfuentes"
 				[value]="subfuente.id"
 			>
-				{{ subfuente.nombre }}
+				{{ subfuente.codigo }} - {{ subfuente.nombre }}
 			</option>
 		</select>
     </div>
@@ -45,7 +45,7 @@
 			<option *ngFor="let tipo of tipos"
 				[value]="tipo.id"
 			>
-				{{ tipo.nombre }}
+				{{ tipo.codigo }} - {{ tipo.nombre }}
 			</option>
 		</select>
     </div>

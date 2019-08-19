@@ -16,6 +16,7 @@ export class UiComponent implements OnInit {
 	ctrabajos: Ctrabajo[];
 	data: any;
 	data2: any;
+	nombre_clas = false;
 
 
 	id_centro_costo: any; /// lkasgdkjasgdkjas
@@ -38,28 +39,28 @@ export class UiComponent implements OnInit {
 			clas_codigo: '',
 			clas_nombre: ''
 		};
-		this.out.emit(this.data2);
 	}
 
 	ngOnInit() {
-		this.ui_service.getEmpresas()
+		this.ui_service.getEmpresa(1)
 			.subscribe((data: any) => {
 				this.empresas = data;
+				console.log(this.empresas);
 			});
 
 		if (this.primary_keys_ui[0] !== 0) {
 			this.onChangeEmpresa(this.primary_keys_ui[0]);
 			this.onChangeUnidad(this.primary_keys_ui[1]);
 			this.onChangeCcosto(this.primary_keys_ui[2]);
-			this.onChangeCtrabajo(this.primary_keys_ui[3]);
 		}
+		this.onChangeEmpresa(1);
 	}
 
 	onChangeEmpresa(id_empresa) {
-		this.data.id_empresa = '';
 		this.data.id_unidad = '';
 		this.data.id_ccosto = '';
 		this.data.id_ctrabajo = '';
+
 		this.unidades = [];
 		this.ccostos = [];
 		this.ctrabajos = [];
@@ -75,11 +76,13 @@ export class UiComponent implements OnInit {
 					this.data2.clas_nombre = data2[0].nombre;
 			});
 		}
+		this.nombre_clas = false;
 	}
 
 	onChangeUnidad(id_unidad) {
 		this.data.id_ccosto = '';
 		this.data.id_ctrabajo = '';
+
 		this.ccostos = [];
 		this.ctrabajos = [];
 		if (id_unidad !== '') {
@@ -96,10 +99,12 @@ export class UiComponent implements OnInit {
 					this.ccostos = data1;
 				});
 		}
+		this.nombre_clas = false;
 	}
 
 	onChangeCcosto(id_ccosto) {
 		this.data.id_ctrabajo = '';
+
 		this.ctrabajos = [];
 		if (id_ccosto !== '') {
 			// this.data.id_ccosto = id_ccosto;
@@ -108,12 +113,10 @@ export class UiComponent implements OnInit {
 					this.ctrabajos = data;
 				});
 			this.id_centro_costo = id_ccosto;
+			this.data2.id_ctrabajo = this.id_centro_costo;
+			this.out.emit(this.data2);
 		}
+		this.nombre_clas = true;
 	}
 
-	onChangeCtrabajo(id_ctrabajo) {
-		// this.data2.id_ctrabajo = id_ctrabajo;
-		this.data2.id_ctrabajo = this.id_centro_costo;
-		this.out.emit(this.data2);
-	}
 }

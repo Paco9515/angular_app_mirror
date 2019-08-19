@@ -1,32 +1,31 @@
 <div class="container-fluid p-3">
-	<div class="animated fadeIn">
-		<div class="row justify-content-center">
-			<div class="col-md-12">
-				<div class="card shadow">
-					<div class="card-header">
-						<div class="row">
-							<div class="col-12 col-md-8 text-center text-sm-left  h5 font-weight-bold">
-								Catalogo de presupuesto de egresos.
-							</div>
-						</div>
-					</div>
-					<div class="card-body">
+    <div class="animated fadeIn">
+        <div class="row justify-content-center">
+            <div class="col-md-12">
+                <div class="card shadow">
+                    <div class="card-header">
+                        <div class="row">
+                            <div class="col-12 col-md-8 text-center text-sm-left  h5 font-weight-bold">
+                                Catalogo de presupuesto de egresos.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
 
 
 
-						<div class="row">
-							<div class="col-12">
-								<h2>
-									Clasificación programatica
-								</h2>
-							</div>
-							<div class="col-6">
-								<label>
+                        <div class="row">
+                            <div class="col-12">
+                                <h2>
+                                    Clasificación programatica
+                                </h2>
+                            </div>
+                            <div class="col-6">
+                                <label>
 									Programa
 								</label>
-								<div class="col-sm-10">
-									<select class="form-control" name="programa"
-										(change)="onChangePrograma($event.target.value)">
+                                <div class="col-sm-10">
+                                    <select class="form-control" name="programa" (change)="onChangePrograma($event.target.value)">
 										<option value="">
 											Seleccione un programa
 										</option>
@@ -34,14 +33,14 @@
 											{{ programa.nombre }}
 										</option>
 									</select>
-								</div>
-							</div>
-							<div class="col-6">
-								<label>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <label>
 									Subprograma
 								</label>
-								<div class="col-sm-10">
-									<select class="form-control" name="subprograma" [(ngModel)]="id_sub">
+                                <div class="col-sm-10">
+                                    <select class="form-control" name="subprograma" [(ngModel)]="id_sub">
 										<option value="">
 											Seleccione un programa
 										</option>
@@ -49,23 +48,22 @@
 											{{ subprograma.nombre }}
 										</option>
 									</select>
-								</div>
-							</div>
-						</div>
+                                </div>
+                            </div>
+                        </div>
 
-						<div class="row mt-2">
-							<div class="col-12">
-								<h2>
-									Proyectos y fases
-								</h2>
-							</div>
-							<div class="col-6">
-								<label>
+                        <div class="row mt-2">
+                            <div class="col-12">
+                                <h2>
+                                    Proyectos y fases
+                                </h2>
+                            </div>
+                            <div class="col-6">
+                                <label>
 									Proyecto
 								</label>
-								<div class="col-sm-10">
-									<select class="form-control" name="proyecto"
-										(change)="onChangeProyecto($event.target.value)">
+                                <div class="col-sm-10">
+                                    <select class="form-control" name="proyecto" (change)="onChangeProyecto($event.target.value)">
 										<option value=''>
 											Seleccione un proyecto
 										</option>
@@ -73,14 +71,14 @@
 											{{ proyecto.nombre }}
 										</option>
 									</select>
-								</div>
-							</div>
-							<div class="col-6">
-								<label>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <label>
 									Fase
 								</label>
-								<div class="col-sm-10">
-									<select class="form-control" name="fase" [(ngModel)]="id_fase">
+                                <div class="col-sm-10">
+                                    <select class="form-control" name="fase" [(ngModel)]="id_fase">
 										<option value="">
 											Seleccione un fase
 										</option>
@@ -88,46 +86,46 @@
 											{{ fase.nombre }}
 										</option>
 									</select>
-								</div>
-							</div>
-						</div>
+                                </div>
+                            </div>
+                        </div>
 
-						<div class="row mt-3">
-							<div class="col-6">
-								<h2>
-									Unidades internas
-								</h2>
-							</div>
-							<div class="col-6">
-								<h2>
-									Clasificación por fuente de financiamiento
-								</h2>
-							</div>
-							<div class="col-6">
-								<app-ui [primary_keys_ui]="ui_keys" (out)="Data_UI($event)"></app-ui>
-							</div>
-							<div class="col-6">
-								<app-cff class="col-6" [primary_keys_cff]="cff_keys" (out)="Data_CFF($event)"></app-cff>
-							</div>
-						</div>
+                        <div class="row mt-3">
+                            <div class="col-6">
+                                <h2>
+                                    Clasificación Administrativa
+                                </h2>
+                            </div>
+                            <div class="col-6">
+                                <h2>
+                                    Clasificación por fuente de financiamiento
+                                </h2>
+                            </div>
+                            <div class="col-6">
+                                <app-ui class="col-6" [primary_keys_ui]="ui_keys" (out)="Data_UI($event)"></app-ui>
+                            </div>
+                            <div class="col-6">
+                                <app-cff class="col-6" [primary_keys_cff]="cff_keys" (out)="Data_CFF($event)"></app-cff>
+                            </div>
+                        </div>
 
-						<div class="row mt-3">
-							<div class="col-6">
-								<h2>
-									Clasificación administrativa
-								</h2>
-							</div>
-							<div class="col-6">
-								<h2>
-									Clasificación por tipo de gasto
-								</h2>
-							</div>
+                        <div class="row mt-3">
+                            <div class="col-6">
+                                <h2>
+                                    Clasificación administrativa
+                                </h2>
+                            </div>
+                            <div class="col-6">
+                                <h2>
+                                    Clasificación por tipo de gasto
+                                </h2>
+                            </div>
 
-							<div class="col-6">
-								<app-ca [primary_keys_ca]="ca_keys" (ca)="Data_CA($event)"></app-ca>
-							</div>
-							<div class="col-6">
-								<select class="form-control" name="gasto" [(ngModel)]="id_gasto">
+                            <div class="col-6">
+                                <app-ca [primary_keys_ca]="ca_keys" (ca)="Data_CA($event)"></app-ca>
+                            </div>
+                            <div class="col-6">
+                                <select class="form-control" name="gasto" [(ngModel)]="id_gasto">
 									<option value="">
 										Seleccione un tipo de gasto
 									</option>
@@ -135,105 +133,99 @@
 										{{ gasto.nombre }}
 									</option>
 								</select>
-							</div>
-						</div>
+                            </div>
+                        </div>
 
-						<div class="row mt-4">
-							<div class="col-12">
-								<h2>
-									Información general
-								</h2>
-							</div>
-							<div class="col-4">
-								<label for="cantidad">
+                        <div class="row mt-4">
+                            <div class="col-12">
+                                <h2>
+                                    Información general
+                                </h2>
+                            </div>
+                            <div class="col-4">
+                                <label for="cantidad">
 									Año
 								</label>
-								<input class="form-control" type="number" minlength="0"
-									[(ngModel)]="anio">
-							</div>
-							<div class="col-8">
-									<label for="cantidad">
+                                <input class="form-control" type="number" minlength="0" [(ngModel)]="anio">
+                            </div>
+                            <div class="col-8">
+                                <label for="cantidad">
 										Descripción
 									</label>
-									<input class="form-control" type="text" minlength="0"
-									placeholder="Escribe una breve descripci"
-										[(ngModel)]="desc">
-								</div>
-						</div>
+                                <input class="form-control" type="text" minlength="0" placeholder="Escribe una breve descripci" [(ngModel)]="desc">
+                            </div>
+                        </div>
 
-						<div class="row">
-								<div class="col-6">
-									<h2>
-										Clasificación por objeto de gasto
-									</h2>
-									<app-cog [primary_keys_cog]="cog_keys" (out)="Data_COG($event)"></app-cog>
-								</div>
+                        <div class="row">
+                            <div class="col-6">
+                                <h2>
+                                    Clasificación por objeto de gasto
+                                </h2>
+                                <app-cog [primary_keys_cog]="cog_keys" (out)="Data_COG($event)"></app-cog>
+                            </div>
 
-								<div class="col-6 mt-5">
-									<div class="col-12">
-										<label for="cantidad">
+                            <div class="col-6 mt-5">
+                                <div class="col-12">
+                                    <label for="cantidad">
 											Cantidad
 										</label>
-										<input class="form-control" type="number" placeholder="Ingresa la cantidad"
-											minlength="0" [(ngModel)]="cantidad">
+                                    <input class="form-control" type="number" placeholder="Ingresa la cantidad" minlength="0" [(ngModel)]="cantidad">
 
-										<button class="btn btn-success mt-2 mb-3" (click)="agregarPartida()"
-											[disabled]="cog_data.id_partida===''">
+                                    <button class="btn btn-success mt-2 mb-3" (click)="agregarPartida()" [disabled]="cog_data.id_partida===''">
 											Agregar partida
 										</button>
-									</div>
-								</div>
-							</div>
+                                </div>
+                            </div>
+                        </div>
 
 
 
 
-							<button class="btn btn-primary mt-3">
+                        <button class="btn btn-primary mt-3">
 								Ocultar tabla
 							</button>
 
-							<ng-container *ngIf="show">
-								<div class="table-responsive mt-2">
-									<table class="table table-striped">
-										<thead class="thead-dark">
-											<tr>
-												<th scope="col">#</th>
-												<th scope="col">Cod. Partida</th>
-												<th scope="col">Nombre partida</th>
-												<th scope="col">Importe</th>
-												<th class="text-center" scope="col">Eliminar</th>
-											</tr>
-										</thead>
-										<tbody>
-											<tr *ngFor="let item of partidas; let i = index">
-												<td>{{ i+1 }}</td>
-												<td>{{ item.codigo }}</td>
-												<td>{{ item.nombre }}</td>
-												<td>{{ item.importe }}</td>
-												<td>
-													<button type="button" class="btn btn-danger btn-sm w-auto mb-1 ml-1"
-														(click)="eliminar(i)">
+                        <ng-container *ngIf="show">
+                            <div class="table-responsive mt-2">
+                                <table class="table table-striped">
+                                    <thead class="thead-dark">
+                                        <tr>
+                                            <th scope="col">#</th>
+                                            <th scope="col">Cod. Partida</th>
+                                            <th scope="col">Nombre partida</th>
+                                            <th scope="col">Importe</th>
+                                            <th class="text-center" scope="col">Eliminar</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let item of partidas; let i = index">
+                                            <td>{{ i+1 }}</td>
+                                            <td>{{ item.codigo }}</td>
+                                            <td>{{ item.nombre }}</td>
+                                            <td>{{ item.importe }}</td>
+                                            <td>
+                                                <button type="button" class="btn btn-danger btn-sm w-auto mb-1 ml-1" (click)="eliminar(i)">
 														<i class="fas fa-trash"></i>
 														Eliminar
 													</button>
-												</td>
-											</tr>
-										</tbody>
-									</table>
-								</div>
-							</ng-container>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </ng-container>
 
-						<div class="col-12">
-							<button class="btn btn-success mt-5" (click)="guardarInfo()">
+                        <div class="col-12">
+                            <button class="btn btn-success mt-5" (click)="guardarInfo()">
 								Guardar información
 							</button>
-						</div>
+                        </div>
 
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 <!--
 					<div class="col-sm-6">

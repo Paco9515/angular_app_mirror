@@ -7,7 +7,7 @@ export interface Finalidad {
 
 export interface Funciones {
     id?: string;
-    id_finalidad:number;
+    id_finalidad:string;
     codigo:string;
 	nombre: string;
 	status: boolean;
@@ -15,7 +15,7 @@ export interface Funciones {
 
 export interface Subfunciones {
     id?: string;
-    id_funcion:number;
+    id_funcion: string;
     codigo:string;
 	nombre: string;
 	status: boolean;

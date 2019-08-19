@@ -1,33 +1,25 @@
-<div>
+<!-- <div>
     <label>
 		Empresas
 	</label>
     <div class="col-sm-10">
-        <select class="form-control" name="empresa" [ngModel]="data.id_empresa" (change)="onChangeEmpresa($event.target.value)">
-			<option value="">
-				Seleccione una empresa
-			</option>
-			<option *ngFor="let empresa of empresas"
-				[value]="empresa.id"
-			>
+        <select class="form-control" name="empresa" [(ngModel)]="data.id_empresa" (change)="onChangeEmpresa($event.target.value)">
+			<option value="">Seleccione una Empresa</option>
+			<option *ngFor="let empresa of empresas" [value]="empresa.id">
 				{{ empresa.nom_comercial }}
 			</option>
 		</select>
     </div>
-</div>
+</div> -->
 <div>
     <label>
 		Unidades
 	</label>
     <div class="col-sm-10">
-        <select class="form-control" name="unidad" [ngModel]="data.id_unidad" (change)="onChangeUnidad($event.target.value)">
-			<option value="">
-				Seleccione una unidad
-			</option>
-			<option *ngFor="let unidad of unidades"
-				[value]="unidad.id"
-			>
-				{{ unidad.nombre }}
+        <select class="form-control" name="unidad" [(ngModel)]="data.id_unidad" (change)="onChangeUnidad($event.target.value)">
+			<option value="">Seleccione una Unidad Administrativa</option>
+			<option *ngFor="let unidad of unidades"	[value]="unidad.id">
+				{{ unidad.codigo }} - {{ unidad.nombre }}
 			</option>
 		</select>
     </div>
@@ -37,33 +29,57 @@
 		Centros de Costo
 	</label>
     <div class="col-sm-10">
-        <select class="form-control" name="ccosto" [ngModel]="data.id_ccosto" (change)="onChangeCcosto($event.target.value)">
-			<option value="">
-				Seleccione una ccosto
-			</option>
-			<option *ngFor="let ccosto of ccostos"
-				[value]="ccosto.id"
-			>
-				{{ ccosto.nombre }}
+        <select class="form-control" name="ccosto" [(ngModel)]="data.id_ccosto" (change)="onChangeCcosto($event.target.value)">
+			<option value="">Seleccione una Centro de Costo</option>
+			<option *ngFor="let ccosto of ccostos" [value]="ccosto.id">
+				{{ ccosto.codigo }} - {{ ccosto.nombre }}
 			</option>
 		</select>
     </div>
 </div>
 
-<div>
+<div class="mt-3">
+    <h2>
+        Clasificación Administrativa
+    </h2>
+</div>
+<div class="mt-3">
+    <label>
+		Clasificación Administrativa
+	</label>
+</div>
+<div class="col-sm-10">
+    <textarea *ngIf="!nombre_clas" type="text" class="form-control" disabled>Esperando Centro de Costo...</textarea>
+    <textarea *ngIf="nombre_clas" type="text" class="form-control" value="{{ data2.clas_codigo }} - {{ data2.clas_nombre }}" disabled></textarea>
+</div>
+
+
+<div class="mt-3">
+    <h2>
+        Clasificación Funcional del Gasto
+    </h2>
+</div>
+<div class="mt-3">
+    <label>
+		Clasificación Funcional del Gasto
+	</label>
+</div>
+<div class="col-sm-10">
+    <textarea *ngIf="!nombre_clas" type="text" class="form-control" disabled>Esperando Centro de Costo...</textarea>
+    <textarea *ngIf="nombre_clas" type="text" class="form-control" value="{{ data2.sub_codigo }} - {{ data2.sub_nombre }}" disabled></textarea>
+</div>
+
+
+<!-- <div>
     <label>
 		Centros de trabajo
 	</label>
     <div class="col-sm-10">
-        <select class="form-control" name="ctrabajo" [ngModel]="data.id_ctrabajo" (change)="onChangeCtrabajo($event.target.value)">
-			<option value="">
-				Seleccione un ctrabajo
-			</option>
-			<option *ngFor="let ctrabajo of ctrabajos"
-				[value]="ctrabajo.id"
-			>
+        <select class="form-control" name="ctrabajo" [(ngModel)]="data.id_ctrabajo" (change)="onChangeCtrabajo($event.target.value)">
+			<option value="">Seleccione un ctrabajo</option>
+			<option *ngFor="let ctrabajo of ctrabajos" [value]="ctrabajo.id">
 				{{ ctrabajo.nombre }}
 			</option>
 		</select>
     </div>
-</div>
+</div> -->

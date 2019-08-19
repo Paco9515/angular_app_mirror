@@ -1,7 +1,7 @@
 <!-- Breadcrumb-->
 <div class="d-none d-sm-block">
     <ol class="breadcrumb">
-        <li class="breadcrumb-item"><i class="fa fa-folder-open"></i>  Unidades Internas</li>
+        <li class="breadcrumb-item"><i class="fa fa-folder-open"></i> Unidades Internas</li>
         <li class="breadcrumb-item"><a [routerLink]="['/panel-adm/empresa']"> Empresas</a></li>
         <li class="breadcrumb-item active"> Empresa</li>
     </ol>
@@ -76,7 +76,7 @@
                                     </div>
                                 </div>
                             </div>
-    
+
                             <div class="form-group row">
                                 <input type="hidden" [(ngModel)]="empresa.id_info_gene" name="id_info_gene">
                                 <div class="col-sm-3">
@@ -104,7 +104,7 @@
                                     </div>
                                 </div>
                             </div>
-    
+
                             <div class="form-group row">
                                 <div class="col-sm-4">
                                     <label class="col-sm-12 col-form-label">Colonia: </label>
@@ -152,7 +152,7 @@
                                         <input type="text" class="form-control" placeholder="Ingresa el correo" [(ngModel)]="info.correo" name="correo">
                                     </div>
                                 </div>
-    
+
                                 <div class="col-sm-4">
                                     <label class="col-sm-12 col-form-label">RFC: </label>
                                     <div class="col-sm-12">
@@ -186,7 +186,7 @@
                                     </div>
                                 </div>
                             </div>
-    
+
                             <div class="form-group row">
                                 <div class="col-sm-12">
                                     <label class="col-sm-12 col-form-label">URL Imagen: </label>
@@ -199,7 +199,7 @@
                         <div class="card-footer">
                             <div class="form-group row">
                                 <div class="col-12">
-                                    <button class="btn btn-primary pull-right btn-sm" type="submit">
+                                    <button class="btn btn-primary pull-right btn-sm" type="submit" [disabled]="f.invalid || !f.dirty">
                                         <i class="fa fa-save"></i>
                                         Guardar
                                     </button>
@@ -208,7 +208,9 @@
                         </div>
                     </form>
                 </div>
-            </div><!-- /.col-->
-        </div><!-- /.row-->
+            </div>
+            <!-- /.col-->
+        </div>
+        <!-- /.row-->
     </div>
 </div>

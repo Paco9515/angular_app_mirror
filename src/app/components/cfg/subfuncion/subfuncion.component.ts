@@ -19,7 +19,7 @@ export class SubfuncionComponent {
 	};
 	funciones:[];
 	finalidades=[];
-	fina;
+	fina: any;
 	bandera:boolean=false;
 	bandera2:boolean=true;
   
@@ -49,24 +49,27 @@ export class SubfuncionComponent {
 					nombre: '',
 					status: true
 				});
+
+				this.fina = '';
+				this.subfuncion.id_funcion = '';
 			}
 		});
   }
 
-  	inicio(){		
+  	inicio(){
 		this.bandera2=false;
 		this.subfuncionService.getFunciones(this.fina).subscribe((centros2: any) => {
 			this.funciones=centros2;	
 		});	
-				
+		this.subfuncion.id_funcion = '';
 	}
   
   	createForma(obj: Subfunciones) {
 		if(this.id != 'nuevo'){
-			var id_emp:number = 0;
+			var id_emp: number = 0;
 			this.subfuncionService.getFuncion(obj.id_funcion).subscribe((centros: any) => {
 				id_emp = centros.id_finalidad;		
-				//console.log('centros de costo',centros);
+				// console.log('centros de costo',centros);
 				this.subfuncionService.getFunciones(id_emp).subscribe((centros2: any) => {
 					this.funciones=centros2;		
 				});

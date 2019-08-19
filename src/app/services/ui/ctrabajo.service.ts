@@ -43,7 +43,7 @@ export class CtrabajoService {
 		return this.constants.getRequest(`/get_unidades/`, 'get', false);
 	}
 
-	getCentro(id:number) {
+	getCentro(id: string) {
 		return this.constants.getRequest(`/get_ccosto/${id}`, 'get', false);
 	}
 

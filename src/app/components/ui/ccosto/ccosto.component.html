@@ -38,7 +38,8 @@
                                     <label for="staticEmail" class="col-sm-12 col-form-label">Empresa</label>
                                     <div class="col-sm-12">
                                         <select type="text" class="form-control" [(ngModel)]="emp" name="emp" (change)="inicio();">
-                                            <option *ngFor="let empresa of empresas;let i = index" [value]="empresa.id" >{{i}} {{ empresa.nombre }} </option>
+                                            <option value=""> Seleccione una opcion... </option>
+                                            <option *ngFor="let empresa of empresas;let i = index" [value]="empresa.id" >{{ empresa.nombre }} </option>
                                         </select>
                                     </div>
                                 </div>
@@ -48,7 +49,8 @@
                                     <label for="staticEmail" class="col-sm-12 col-form-label">Unidad Administrativa</label>
                                     <div class="col-sm-12">
                                         <select type="text" class="form-control" [(ngModel)]="ccostos.id_unidad_adm" name="id_unidad_adm" [(disabled)]="bandera2">
-                                            <option *ngFor="let unidad of unidades" [value]="unidad.id"> {{ unidad.nombre }} </option>
+                                                <option value=""> Seleccione una opcion... </option>
+                                                <option *ngFor="let unidad of unidades" [value]="unidad.id"> {{ unidad.nombre }} </option>
                                         </select>
                                     </div>
                                 </div>
@@ -58,7 +60,8 @@
                                     <label for="staticEmail" class="col-sm-12 col-form-label">Subfuncion</label>
                                     <div class="col-sm-12">
                                         <select class="form-control" [(ngModel)]="ccostos.id_subfuncion" name="id_subfuncion">
-                                            <option *ngFor="let sub of subs" [value]="sub.id"> {{ sub.nombre }} </option>
+                                            <option value=""> Seleccione una opcion... </option>
+                                            <option *ngFor="let sub of subs" [value]="sub.id">{{sub.codigo}} - {{ sub.nombre }} </option>
                                         </select>
                                     </div>
                                 </div>
@@ -75,7 +78,7 @@
                         <div class="card-footer">
                             <div class="form-group row">
                                 <div class="col-12">
-                                    <button class="btn btn-primary btn-sm pull-right" type="submit">
+                                    <button class="btn btn-primary btn-sm pull-right" type="submit" [disabled]="f.invalid || !f.dirty">
                                         <i class="fa fa-save"></i>
                                         Guardar
                                     </button>
@@ -84,7 +87,9 @@
                         </div>
                     </form>
                 </div>
-            </div><!-- /.col-->
-        </div><!-- /.row-->
+            </div>
+            <!-- /.col-->
+        </div>
+        <!-- /.row-->
     </div>
 </div>

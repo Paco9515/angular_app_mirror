@@ -39,7 +39,7 @@ export class TipoService {
 		return this.constants.getRequest(`/get_subfuentes_fuente/${id}`, 'get', false);
 	}
 	
-	getSub(id:number) {
+	getSub(id: string) {
 		return this.constants.getRequest(`/get_subfuente/${id}`, 'get', false);
 	}
 

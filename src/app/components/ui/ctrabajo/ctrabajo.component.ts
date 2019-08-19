@@ -30,16 +30,16 @@ export class CtrabajoComponent {
 		status:true,
 	};
 	centros = [];
-	unidades=[];
+	unidades = [];
 	unidadAdm;
-	bandera:boolean=false;
-	bandera2:boolean=true;
-	
+	bandera: boolean = false;
+	bandera2: boolean = true;
+
 	constructor(
 		private ctrabajoService: CtrabajoService,
 		private router: Router,
 		private activatedRoute: ActivatedRoute,
-		//private toastrService: ToastrService
+		// private toastrService: ToastrService
 	) {
 		this.activatedRoute.params.subscribe((data: any) => {
 		this.id = data.id;
@@ -53,12 +53,12 @@ export class CtrabajoComponent {
 			this.bandera=true;
 			this.ctrabajoService.getUnidades().subscribe((obj: any) => {
 					this.unidades = obj;
-					//console.log(this.unidades);
+					// console.log(this.unidades);
 				});
-				
-				this.createForma({				
+
+			this.createForma({
 					id: '',
-					id_centro_costo: null,
+					id_centro_costo: '',
 					codigo: '',
 					nombre: '',
 					estado: '',
@@ -71,7 +71,9 @@ export class CtrabajoComponent {
 					dom_interior: '',
 					num_interior: '',
 					status:true,
-				});		
+				});	
+			this.unidadAdm = '';
+			this.ctrabajo.id_centro_costo = '';	
 			}
 		});
 	}
@@ -79,10 +81,10 @@ export class CtrabajoComponent {
 	inicio(){		
 		this.bandera2=false;
 		this.ctrabajoService.getCentros(this.unidadAdm).subscribe((centros: any) => {	
-			this.centros=centros;		
+			this.centros=centros;
 		});
 		
-				
+		this.ctrabajo.id_centro_costo = '';	
 	}
 	
 	createForma(obj: Ctrabajo) {
@@ -97,6 +99,7 @@ export class CtrabajoComponent {
 			});
 		}		
 		this.ctrabajo = obj;
+		
 	}
 	
 	guardar() {
