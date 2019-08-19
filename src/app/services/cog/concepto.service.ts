@@ -25,6 +25,10 @@ export class ConceptoService {
 		return this.constants.getRequest(`/get_capitulos`, 'get', false);
 	}
 
+	getGastos() {
+		return this.constants.getRequest(`/get_tipogastos`, 'get', false);
+	}
+
 	getConceptos() {
 		return this.constants.getRequest(`/get_conceptos`, 'get', false);
 	}

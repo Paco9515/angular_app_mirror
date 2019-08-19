@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { ConceptoService } from 'src/app/services/cog/concepto.service';
 import { Conceptos, Capitulos } from 'src/app/interfaces/cog.interface';
+import { TipoGasto } from 'src/app/interfaces/ctg.interface';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
@@ -13,6 +14,7 @@ import { ActivatedRoute } from '@angular/router';
 
 	concepto: Conceptos;
 	capitulos: Capitulos;
+	gastos: TipoGasto;
 
 	constructor(
 		private conceptoService: ConceptoService,
@@ -25,6 +27,8 @@ import { ActivatedRoute } from '@angular/router';
 			status: true,
 			id_capitulo: '',
 			nombre_capitulo: '',
+			id_gasto: '',
+			nombre_gasto: '',
 		};
 
 		this.activitedRoute.params.subscribe((data: any) => {
@@ -37,6 +41,11 @@ import { ActivatedRoute } from '@angular/router';
 		this.conceptoService.getCapitulos()
 			.subscribe((data: any) => {
 				this.capitulos = data;
+		});
+
+		this.conceptoService.getGastos()
+			.subscribe((data: any) => {
+				this.gastos = data;
 		});
 	}
 
@@ -55,5 +64,4 @@ import { ActivatedRoute } from '@angular/router';
 			});
 		}
 	}
-
 }

@@ -60,7 +60,7 @@
 									[(ngModel)]="financiero.id_sector" required>
 										<option value="">Seleccione un sector</option>
 										<option *ngFor="let sector of sectores" [value]="sector.id">
-											{{ sector.nombre }}
+											{{ sector.codigo + ' ' + sector.nombre }}
 										</option>
 									</select>
 								</div>

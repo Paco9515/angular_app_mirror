@@ -62,7 +62,7 @@
 									required>
 										<option value="">Seleccione un genero</option>
 										<option *ngFor="let genero of generos" [value]="genero.id">
-											{{ genero.nombre }}
+											{{ genero.codigo + ' ' +genero.nombre }}
 										</option>
 									</select>
 								</div>
@@ -78,7 +78,7 @@
 									required>
 										<option value="">Seleccione un grupo</option>
 										<option *ngFor="let grupo of grupos" [value]="grupo.id">
-											{{ grupo.nombre }}
+											{{ grupo.codigo + ' ' +grupo.nombre }}
 										</option>
 									</select>
 								</div>
@@ -94,7 +94,7 @@
 									required>
 										<option value="">Seleccione un rubro</option>
 										<option *ngFor="let rubro of rubros" [value]="rubro.id">
-											{{ rubro.nombre }}
+											{{ rubro.codigo + ' ' +rubro.nombre }}
 										</option>
 									</select>
 								</div>
@@ -110,7 +110,7 @@
 									required>
 										<option value="">Seleccione un cuenta</option>
 										<option *ngFor="let cuenta of cuentas" [value]="cuenta.id">
-											{{ cuenta.nombre }}
+											{{ cuenta.codigo + ' ' +cuenta.nombre }}
 										</option>
 									</select>
 								</div>

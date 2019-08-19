@@ -62,7 +62,7 @@
 									required>
 										<option value="">Seleccione un sector</option>
 										<option *ngFor="let sector of sectores" [value]="sector.id">
-											{{ sector.nombre }}
+											{{ sector.codigo + ' ' + sector.nombre }}
 										</option>
 									</select>
 								</div>
@@ -78,7 +78,7 @@
 									required>
 										<option value="">Seleccione un financiero</option>
 										<option *ngFor="let financiero of financieros" [value]="financiero.id">
-											{{ financiero.nombre }}
+											{{ financiero.codigo + ' ' + financiero.nombre }}
 										</option>
 									</select>
 								</div>
@@ -94,7 +94,7 @@
 									required>
 										<option value="">Seleccione una economía</option>
 										<option *ngFor="let economia of economias" [value]="economia.id">
-											{{ economia.nombre }}
+											{{ economia.codigo + ' ' + economia.nombre }}
 										</option>
 									</select>
 								</div>
@@ -110,7 +110,7 @@
 									required>
 										<option value="">Seleccione una subeconomía</option>
 										<option *ngFor="let subeconomia of subeconomias" [value]="subeconomia.id">
-											{{ subeconomia.nombre }}
+											{{ subeconomia.codigo + ' ' + subeconomia.nombre }}
 										</option>
 									</select>
 								</div>

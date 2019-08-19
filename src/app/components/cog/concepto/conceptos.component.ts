@@ -21,7 +21,9 @@ export class ConceptosComponent {
 			nombre: '',
 			status: true,
 			id_capitulo: '',
-			nombre_capitulo: ''
+			nombre_capitulo: '',
+			id_gasto: '',
+			nombre_gasto: ''
 		};
         this.conceptos = [];
         this.getConceptos();

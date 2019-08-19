@@ -2,7 +2,7 @@
 <div class="d-none d-sm-block">
 	<ol class="breadcrumb">
 		<li class="breadcrumb-item"><i class="fa fa-folder-open"></i> Clasificación  por objeto de gasto</li>
-		<li class="breadcrumb-item"><a [routerLink]="['']"> Conceptos</a></li>
+		<li class="breadcrumb-item"><a [routerLink]="['/panel-adm/conceptos']"> Conceptos</a></li>
 		<li class="breadcrumb-item active"> Concepto</li>
 	</ol>
 </div>
@@ -61,7 +61,21 @@
 										[(ngModel)]="concepto.id_capitulo" required>
 										<option value="">Seleccione un capítulo</option>
 										<option *ngFor="let capitulo of capitulos" [value]="capitulo.id">
-											{{ capitulo.nombre }}
+											{{ capitulo.codigo + ' ' +capitulo.nombre }}
+										</option>
+									</select>
+								</div>
+							</div>
+							<div class="form-group row">
+								<label for="gasto" class="col-sm-2 col-form-label">
+									Tipo de gasto
+								</label>
+								<div class="col-sm-10">
+									<select class="form-control" name="gasto"
+										[(ngModel)]="concepto.id_gasto" required>
+										<option value="">Seleccione un capítulo</option>
+										<option *ngFor="let gasto of gastos" [value]="gasto.id">
+											{{ gasto.id + ' ' + gasto.nombre }}
 										</option>
 									</select>
 								</div>
