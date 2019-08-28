@@ -1,8 +1,9 @@
-<div>
-	<label>
-		Capitulo
-	</label>
-	<div class="col-sm-10">
+<!-- <div> -->
+
+	<div class="col-sm-12 mb-2">
+			<label>
+					Capitulo
+				</label>
 		<select class="form-control" name="capitulo"
 			[ngModel]="data.id_capitulo"
 			(change)="onChangeCapitulo($event.target.value)">
@@ -16,12 +17,13 @@
 			</option>
 		</select>
 	</div>
-</div>
- <div>
-	<label>
-		Concepto
-	</label>
-	<div class="col-sm-10">
+<!-- </div> -->
+ <!-- <div> -->
+
+	<div class="col-sm-12 mb-2">
+			<label>
+					Concepto
+				</label>
 		<select class="form-control" name="concepto"
 			[ngModel]="data.id_concepto"
 			(change)="onChangeConcepto($event.target.value)">
@@ -34,12 +36,13 @@
 			</option>
 		</select>
 	</div>
-</div>
-<div>
-	<label>
-		Partidas
-	</label>
-	<div class="col-sm-10">
+<!-- </div> -->
+<!-- <div> -->
+
+	<div class="col-sm-12 mb-2">
+			<label>
+					Partidas
+				</label>
 		<select class="form-control" name="partida"
 			[ngModel]="data.id_partida"
 			(change)="onChangePartida($event.target.value)">
@@ -52,4 +55,19 @@
 			</option>
 		</select>
 	</div>
-</div>
+
+	<div class="col-sm-12 mb-2">
+		<label>
+			Clasificación contable
+		</label>
+		<textarea *ngIf="!data.id_partida" type="text" class="form-control" disabled>Esperando la partida.</textarea>
+		<textarea *ngIf="data.id_partida" type="text" class="form-control" value="{{ data.codigo_cuenta }} - {{ data.nombre_cuenta }}" disabled></textarea>
+	</div>
+
+	<div class="col-sm-12">
+		<label>
+			Clasificación por tipo de gasto
+		</label>
+		<textarea *ngIf="!data.id_partida" type="text" class="form-control" disabled>Esperando la partida.</textarea>
+		<textarea *ngIf="data.id_partida" type="text" class="form-control" value="{{ data.codigo_tipogasto }} - {{ data.nombre_tipogasto }}" disabled></textarea>
+	</div>

@@ -18,10 +18,17 @@ import { CaComponent } from './ca/ca/ca.component';
 import { CffComponent } from './cff/cff/cff.component';
 import { CfgComponent } from './cfg/cfg/cfg.component';
 import { UiComponent } from './ui/ui/ui.component';
-import { ProyectoComponent } from './proyecto/proyecto.component';
+import { ProyectoComponent } from './pe/proyectos/proyecto.component';
+import { ProyectosComponent } from './pe/proyectos/proyectos.component';
+import { FasesComponent } from './pe/fases/fases.component';
+import { FaseComponent } from './pe/fases/fase.component';
 
 @NgModule({
 	declarations: [
+		ProyectosComponent,
+		ProyectoComponent,
+		FasesComponent,
+		FaseComponent,
 		ProgramasComponent,
 		ProgramaComponent,
 		SubprogramaComponent,
@@ -33,11 +40,12 @@ import { ProyectoComponent } from './proyecto/proyecto.component';
 		CfgComponent,
 		UiComponent,
 		EgresosComponent,
-		ProyectoComponent
 	],
 	exports: [
-		ProgramasComponent,
-		ProgramaComponent
+		ProyectosComponent,
+		ProyectoComponent,
+		FasesComponent,
+		FaseComponent
 	],
 	imports: [
 		CommonModule,

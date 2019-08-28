@@ -11,61 +11,48 @@
 		</select>
     </div>
 </div> -->
-<div>
-    <label>
-		Unidades
-	</label>
-    <div class="col-sm-10">
+
+
+    <div class="col-sm-12 mb-2">
+			<label>
+				Unidad administrativa
+			</label>
         <select class="form-control" name="unidad" [(ngModel)]="data.id_unidad" (change)="onChangeUnidad($event.target.value)">
-			<option value="">Seleccione una Unidad Administrativa</option>
+			<option value="">Seleccione una unidad administrativa</option>
 			<option *ngFor="let unidad of unidades"	[value]="unidad.id">
 				{{ unidad.codigo }} - {{ unidad.nombre }}
 			</option>
 		</select>
     </div>
-</div>
-<div>
-    <label>
-		Centros de Costo
+
+
+
+<div class="col-sm-12 mb-2">
+	<label>
+		Centro de costo
 	</label>
-    <div class="col-sm-10">
-        <select class="form-control" name="ccosto" [(ngModel)]="data.id_ccosto" (change)="onChangeCcosto($event.target.value)">
-			<option value="">Seleccione una Centro de Costo</option>
-			<option *ngFor="let ccosto of ccostos" [value]="ccosto.id">
-				{{ ccosto.codigo }} - {{ ccosto.nombre }}
-			</option>
-		</select>
-    </div>
+	<select class="form-control" name="ccosto" [(ngModel)]="data.id_ccosto" (change)="onChangeCcosto($event.target.value)">
+		<option value="">Seleccione una centro de costo</option>
+		<option *ngFor="let ccosto of ccostos" [value]="ccosto.id">
+			{{ ccosto.codigo }} - {{ ccosto.nombre }}
+		</option>
+	</select>
 </div>
 
-<div class="mt-3">
-    <h2>
-        Clasificación Administrativa
-    </h2>
-</div>
-<div class="mt-3">
-    <label>
-		Clasificación Administrativa
+
+<div class="col-sm-12 mb-2">
+	<label>
+		Clasificación administrativa
 	</label>
-</div>
-<div class="col-sm-10">
-    <textarea *ngIf="!nombre_clas" type="text" class="form-control" disabled>Esperando Centro de Costo...</textarea>
+    <textarea *ngIf="!nombre_clas" type="text" class="form-control" disabled>Esperando centro de costo.</textarea>
     <textarea *ngIf="nombre_clas" type="text" class="form-control" value="{{ data2.clas_codigo }} - {{ data2.clas_nombre }}" disabled></textarea>
 </div>
 
-
-<div class="mt-3">
-    <h2>
-        Clasificación Funcional del Gasto
-    </h2>
-</div>
-<div class="mt-3">
-    <label>
-		Clasificación Funcional del Gasto
+<div class="col-sm-12">
+	<label>
+		Clasificación funcional del gasto
 	</label>
-</div>
-<div class="col-sm-10">
-    <textarea *ngIf="!nombre_clas" type="text" class="form-control" disabled>Esperando Centro de Costo...</textarea>
+    <textarea *ngIf="!nombre_clas" type="text" class="form-control" disabled>Esperando centro de costo.</textarea>
     <textarea *ngIf="nombre_clas" type="text" class="form-control" value="{{ data2.sub_codigo }} - {{ data2.sub_nombre }}" disabled></textarea>
 </div>
 

@@ -113,7 +113,8 @@ export class UiComponent implements OnInit {
 					this.ctrabajos = data;
 				});
 			this.id_centro_costo = id_ccosto;
-			this.data2.id_ctrabajo = this.id_centro_costo;
+			this.data2.id_ccosto = this.id_centro_costo;
+
 			this.out.emit(this.data2);
 		}
 		this.nombre_clas = true;

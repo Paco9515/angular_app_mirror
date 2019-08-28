@@ -12,8 +12,11 @@ export class CogComponent implements OnInit {
 	@Input() primary_keys_cog: any;
 	capitulos: Capitulos[];
 	conceptos: Conceptos[];
+	nombre_clas: any;
 	partidas: any;
 	data: any;
+
+	var_trash: any;
 
 	@Output() out = new EventEmitter<any>();
 
@@ -26,8 +29,13 @@ export class CogComponent implements OnInit {
 			id_capitulo: '',
 			id_concepto: '',
 			id_partida: '',
-			nombre: '',
-			codigo: ''
+			nombre_partida: '',
+			codigo_partida: '',
+			codigo_cuenta: '',
+			nombre_cuenta: '',
+			codigo_tipogasto: '',
+			nombre_tipogasto: '',
+			id_tgasto: ''
 		};
 		this.out.emit(this.data);
 	}
@@ -70,17 +78,36 @@ export class CogComponent implements OnInit {
 			this.cog_service.get_partidas_concepto(id_concepto)
 				.subscribe((data: any) => {
 					this.partidas = data;
-					// console.log(this.partidas);
+					console.log('CHILD: ', this.partidas);
 				});
 		}
 	}
 
 	onChangePartida(id_partida) {
 		// tslint:disable-next-line:triple-equals
-		const partida_temporal = this.partidas.find(e => e.id == id_partida);
-		this.data.id_partida = partida_temporal.id;
-		this.data.codigo = partida_temporal.codigo;
-		this.data.nombre = partida_temporal.nombre;
-		this.out.emit(this.data);
+		if (id_partida !== '') {
+			const partida_temporal = this.partidas.find(e => e.id == id_partida);
+
+			this.data.id_partida = partida_temporal.id;
+			console.log('AASKGDH: ', partida_temporal);
+			this.data.codigo_tipogasto = partida_temporal.codigo_tipogasto;
+			this.data.nombre_tipogasto = partida_temporal.nombre_tipogasto;
+			this.data.codigo_partida = partida_temporal.codigo;
+			this.data.nombre_partida = partida_temporal.nombre;
+			if (partida_temporal.codigo_subcuenta === null) {
+				this.data.codigo_cuenta = partida_temporal.codigo_cuenta;
+				this.data.nombre_cuenta = partida_temporal.nombre_cuenta;
+			} else {
+				this.data.codigo_cuenta = partida_temporal.codigo_subcuenta;
+				this.data.nombre_cuenta = partida_temporal.nombre_subcuenta;
+			}
+
+
+			this.data.id_tgasto = partida_temporal.id_tgasto;
+			this.out.emit(this.data);
+		} else {
+			this.data.id_partida = '';
+		}
+
 	}
 }

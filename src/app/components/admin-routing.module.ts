@@ -58,8 +58,11 @@ import { PromesasComponent } from './promesas/promesas.component';
 import { SubprogramasComponent } from './cp/subprograma/subprogramas.component';
 import { SubprogramaComponent } from './cp/subprograma/subprograma.component';
 import { EgresosComponent } from './egresos/egresos.component';
-import { ProyectoComponent } from './proyecto/proyecto.component';
-
+// import { ProyectoComponent } from './proyecto/proyecto.component';
+import { ProyectosComponent } from './pe/proyectos/proyectos.component';
+import { ProyectoComponent } from './pe/proyectos/proyecto.component';
+import { FasesComponent } from './pe/fases/fases.component';
+import { FaseComponent } from './pe/fases/fase.component';
 
 const admin_routes: Routes = [
 	{
@@ -74,7 +77,10 @@ const admin_routes: Routes = [
 			{ path: 'subprogramas', component: SubprogramasComponent },
 			{ path: 'subprograma/:id', component: SubprogramaComponent },
 			{ path: 'pres_egresos', component: EgresosComponent },
-			{ path: 'proyectos', component: ProyectoComponent },
+			{ path: 'proyectos', component: ProyectosComponent },
+			{ path: 'proyecto/:id', component: ProyectoComponent },
+			{ path: 'fases', component: FasesComponent },
+			{ path: 'fase/:id', component: FaseComponent },
 
 			{ path: 'capitulos', component: CapitulosComponent },
 			{ path: 'capitulos/:id', component: CapituloComponent },

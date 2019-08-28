@@ -6,240 +6,231 @@
                     <div class="card-header">
                         <div class="row">
                             <div class="col-12 col-md-8 text-center text-sm-left  h5 font-weight-bold">
-                                Catalogo de presupuesto de egresos.
+                                Clasificación programática.
                             </div>
                         </div>
                     </div>
                     <div class="card-body">
-
-
-
                         <div class="row">
-                            <div class="col-12">
-                                <h2>
-                                    Clasificación programatica
-                                </h2>
-                            </div>
                             <div class="col-6">
-                                <label>
-									Programa
-								</label>
-                                <div class="col-sm-10">
+                                <div class="col-sm-12">
+									<label>
+										Programa
+									</label>
                                     <select class="form-control" name="programa" (change)="onChangePrograma($event.target.value)">
-										<option value="">
+										<option value=''>
 											Seleccione un programa
 										</option>
 										<option *ngFor="let programa of programas" [value]="programa.id">
-											{{ programa.nombre }}
+											{{ programa.id}} - {{ programa.nombre }}
 										</option>
 									</select>
                                 </div>
                             </div>
                             <div class="col-6">
-                                <label>
-									Subprograma
-								</label>
-                                <div class="col-sm-10">
+                                <div class="col-sm-12">
+									<label>
+										Subprograma
+									</label>
                                     <select class="form-control" name="subprograma" [(ngModel)]="id_sub">
-										<option value="">
+										<option value=''>
 											Seleccione un programa
 										</option>
 										<option *ngFor="let subprograma of subprogramas" [value]="subprograma.id">
-											{{ subprograma.nombre }}
+											{{ subprograma.codigo }} - {{ subprograma.nombre }}
 										</option>
 									</select>
                                 </div>
                             </div>
                         </div>
-
-                        <div class="row mt-2">
-                            <div class="col-12">
-                                <h2>
-                                    Proyectos y fases
-                                </h2>
-                            </div>
-                            <div class="col-6">
-                                <label>
-									Proyecto
-								</label>
-                                <div class="col-sm-10">
-                                    <select class="form-control" name="proyecto" (change)="onChangeProyecto($event.target.value)">
-										<option value=''>
-											Seleccione un proyecto
-										</option>
-										<option *ngFor="let proyecto of proyectos" [value]="proyecto.id">
-											{{ proyecto.nombre }}
-										</option>
-									</select>
-                                </div>
-                            </div>
-                            <div class="col-6">
-                                <label>
-									Fase
-								</label>
-                                <div class="col-sm-10">
-                                    <select class="form-control" name="fase" [(ngModel)]="id_fase">
-										<option value="">
-											Seleccione un fase
-										</option>
-										<option *ngFor="let fase of fases" [value]="fase.id">
-											{{ fase.nombre }}
-										</option>
-									</select>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row mt-3">
-                            <div class="col-6">
-                                <h2>
-                                    Clasificación Administrativa
-                                </h2>
-                            </div>
-                            <div class="col-6">
-                                <h2>
-                                    Clasificación por fuente de financiamiento
-                                </h2>
-                            </div>
-                            <div class="col-6">
-                                <app-ui class="col-6" [primary_keys_ui]="ui_keys" (out)="Data_UI($event)"></app-ui>
-                            </div>
-                            <div class="col-6">
-                                <app-cff class="col-6" [primary_keys_cff]="cff_keys" (out)="Data_CFF($event)"></app-cff>
-                            </div>
-                        </div>
-
-                        <div class="row mt-3">
-                            <div class="col-6">
-                                <h2>
-                                    Clasificación administrativa
-                                </h2>
-                            </div>
-                            <div class="col-6">
-                                <h2>
-                                    Clasificación por tipo de gasto
-                                </h2>
-                            </div>
-
-                            <div class="col-6">
-                                <app-ca [primary_keys_ca]="ca_keys" (ca)="Data_CA($event)"></app-ca>
-                            </div>
-                            <div class="col-6">
-                                <select class="form-control" name="gasto" [(ngModel)]="id_gasto">
-									<option value="">
-										Seleccione un tipo de gasto
-									</option>
-									<option *ngFor="let gasto of gastos" [value]="gasto.id">
-										{{ gasto.nombre }}
-									</option>
-								</select>
-                            </div>
-                        </div>
-
-                        <div class="row mt-4">
-                            <div class="col-12">
-                                <h2>
-                                    Información general
-                                </h2>
-                            </div>
-                            <div class="col-4">
-                                <label for="cantidad">
-									Año
-								</label>
-                                <input class="form-control" type="number" minlength="0" [(ngModel)]="anio">
-                            </div>
-                            <div class="col-8">
-                                <label for="cantidad">
-										Descripción
-									</label>
-                                <input class="form-control" type="text" minlength="0" placeholder="Escribe una breve descripci" [(ngModel)]="desc">
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-6">
-                                <h2>
-                                    Clasificación por objeto de gasto
-                                </h2>
-                                <app-cog [primary_keys_cog]="cog_keys" (out)="Data_COG($event)"></app-cog>
-                            </div>
-
-                            <div class="col-6 mt-5">
-                                <div class="col-12">
-                                    <label for="cantidad">
-											Cantidad
-										</label>
-                                    <input class="form-control" type="number" placeholder="Ingresa la cantidad" minlength="0" [(ngModel)]="cantidad">
-
-                                    <button class="btn btn-success mt-2 mb-3" (click)="agregarPartida()" [disabled]="cog_data.id_partida===''">
-											Agregar partida
-										</button>
-                                </div>
-                            </div>
-                        </div>
-
-
-
-
-                        <button class="btn btn-primary mt-3">
-								Ocultar tabla
-							</button>
-
-                        <ng-container *ngIf="show">
-                            <div class="table-responsive mt-2">
-                                <table class="table table-striped">
-                                    <thead class="thead-dark">
-                                        <tr>
-                                            <th scope="col">#</th>
-                                            <th scope="col">Cod. Partida</th>
-                                            <th scope="col">Nombre partida</th>
-                                            <th scope="col">Importe</th>
-                                            <th class="text-center" scope="col">Eliminar</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr *ngFor="let item of partidas; let i = index">
-                                            <td>{{ i+1 }}</td>
-                                            <td>{{ item.codigo }}</td>
-                                            <td>{{ item.nombre }}</td>
-                                            <td>{{ item.importe }}</td>
-                                            <td>
-                                                <button type="button" class="btn btn-danger btn-sm w-auto mb-1 ml-1" (click)="eliminar(i)">
-														<i class="fas fa-trash"></i>
-														Eliminar
-													</button>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </ng-container>
-
-                        <div class="col-12">
-                            <button class="btn btn-success mt-5" (click)="guardarInfo()">
-								Guardar información
-							</button>
-                        </div>
-
                     </div>
                 </div>
             </div>
+            <div class="col-md-12">
+                <div class="card shadow">
+                    <div class="card-header">
+                        <div class="row">
+                            <div class="col-12 col-md-8 text-center text-sm-left  h5 font-weight-bold">
+                                Proyectos y fases.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="col-sm-12">
+									<label>
+										Proyecto
+									</label>
+                                    <select class="form-control" name="proyecto" (change)="onChangeProyecto($event.target.value)">
+                                        <option value=''>
+                                            Seleccione un proyecto
+                                        </option>
+                                        <option *ngFor="let proyecto of proyectos" [value]="proyecto.id">
+                                            {{ proyecto.codigo }} - {{ proyecto.nombre }}
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="col-sm-12">
+									<label>
+										Fase
+									</label>
+                                    <select class="form-control" name="fase" [(ngModel)]="id_fase">
+                                        <option value="">
+                                            Seleccione un fase
+                                        </option>
+                                        <option *ngFor="let fase of fases" [value]="fase.id">
+                                            {{ fase.codigo }} - {{ fase.nombre }}
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-12">
+                <div class="card shadow">
+                    <div class="card-header">
+                        <div class="row">
+                            <div class="col-12 col-md-8 text-center text-sm-left  h5 font-weight-bold">
+                                Clasificación administrativa.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-12">
+                                <app-ui [primary_keys_ui]="ui_keys" (out)="Data_UI($event)"></app-ui>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-12">
+                <div class="card shadow">
+                    <div class="card-header">
+                        <div class="row">
+                            <div class="col-12 col-md-8 text-center text-sm-left  h5 font-weight-bold">
+                                Clasificación por objeto de gasto.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-12">
+								<app-cog [primary_keys_cog]="cog_keys" (out)="Data_COG($event)"></app-cog>
+                                <div class="row">
+                                    <div class="col-6 mt-2">
+                                        <label for="cantidad">
+                                            Cantidad
+                                        </label>
+                                        <input class="form-control" type="number" placeholder="Ingresa la cantidad" minlength="0" [(ngModel)]="cantidad">
+                                    </div>
+								</div>
+
+								<div class="row">
+									<div class="col-6">
+										<button class="btn btn-success mt-2" (click)="agregarPartida()" [disabled]="cog_data.id_partida===''">
+											Agregar partida
+										</button>
+									</div>
+									<div class="col-6 text-right">
+										<button class="btn btn-primary mt-2"
+											(click)="show=!show"
+											>
+											Ocultar tabla
+										</button>
+									</div>
+								</div>
+
+								<ng-container *ngIf="show">
+									<div class="table-responsive mt-3">
+										<table class="table table-striped">
+											<thead class="thead-dark">
+												<tr>
+													<th scope="col">#</th>
+													<th scope="col">Cod. Partida</th>
+													<th scope="col">Nombre partida</th>
+													<th scope="col">Importe</th>
+													<th class="text-center" scope="col">Eliminar</th>
+												</tr>
+											</thead>
+											<tbody *ngIf="partidas.length!=0; else no_data">
+												<tr *ngFor="let item of partidas; let i = index">
+													<td>{{ i+1 }}</td>
+													<td>{{ item.codigo }}</td>
+													<td>{{ item.nombre }}</td>
+													<td>{{ item.importe }}</td>
+													<td>
+														<button type="button" class="btn btn-danger btn-sm w-auto mb-1 ml-1" (click)="eliminar(i,item.importe)">
+															<i class="fas fa-trash"></i>
+															Eliminar
+														</button>
+													</td>
+												</tr>
+											</tbody>
+											<tfoot class="bg-black">
+												<tr>
+													<td colspan="3" align="right">
+														Total
+													</td>
+													<td colspan="2" align="left">
+														${{ total }}
+													</td>
+												</tr>
+											</tfoot>
+                                            <ng-template #no_data>
+                                                <tbody>
+                                                    <tr>
+                                                        <td colspan="5" align="center">
+                                                            No hay datos para mostrar.
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </ng-template>
+										</table>
+									</div>
+								</ng-container>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+			<div class="col-md-12">
+                <div class="card shadow">
+                    <div class="card-header">
+                        <div class="row">
+                            <div class="col-12 col-md-8 text-center text-sm-left h5 font-weight-bold">
+                                Clasificación por fuente de financiamiento.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-12">
+								<app-cff class="col-6" [primary_keys_cff]="cff_keys" (out)="Data_CFF($event)"></app-cff>
+							</div>
+						</div>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </div>
 </div>
-<!--
-					<div class="col-sm-6">
-                        <app-cc [primary_keys_cc]="cc_keys" (cc)="Data_CC($event)"></app-cc>
-                    </div>
 
-                    <div class="col-sm-6">
-                    </div>
-
-					<div class="col-sm-6">
-                    </div>
-
-                    <div class="col-sm-6">
-                        <app-cfg [primary_keys_cfg]="cfg_keys" (out)="Data_CFG($event)"></app-cfg>
-                    </div>
-					<div class="col-sm-6">
-					</div> -->
+<div class="container">
+	<div class="row">
+		<div class="col-12">
+			<button class="btn btn-success mb-3 btn-block" (click)="guardarInfo()">
+				Guardar información
+			</button>
+		</div>
+	</div>
+</div>
