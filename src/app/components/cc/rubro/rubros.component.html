@@ -109,46 +109,42 @@
 											<div class="row">
 												<div class="col-12">
 													<div class="form-group row">
-														<label for="" class="col-sm-2 col-form-label">
+														<label for="" class="col-sm-2 col-form-label font-weight-bold">
 															Código:
 														</label>
-														<div class="col-10">
-															<input type="text" readonly class="form-control-plaintext"
-																[(ngModel)]="detalle.codigo">
+														<div class="col-sm-10">
+															<p>{{ detalle.codigo}}</p>
 														</div>
 													</div>
 													<div class="form-group row">
-														<label for="" class="col-sm-2 col-form-label">
+														<label for="" class="col-sm-2 col-form-label font-weight-bold">
 															Nombre:
 														</label>
-														<div class="col-10">
-															<input type="text" readonly class="form-control-plaintext"
-																[(ngModel)]="detalle.nombre">
+														<div class="col-sm-10">
+															<p>{{ detalle.nombre}}</p>
 														</div>
 													</div>
 													<div class="form-group row">
-														<label for="" class="col-sm-2 col-form-label">
+														<label for="" class="col-sm-2 col-form-label font-weight-bold">
 															Nombre del grupo:
 														</label>
-														<div class="col-10">
-															<input type="text" readonly class="form-control-plaintext"
-																[(ngModel)]="detalle.nombre_grupo">
+														<div class="col-sm-10">
+															<p>{{ detalle.nombre_grupo}}</p>
 														</div>
 													</div>
 													<div class="form-group row">
-														<label for="" class="col-sm-2 col-form-label">
+														<label for="" class="col-sm-2 col-form-label font-weight-bold">
 															Nombre del genero:
 														</label>
-														<div class="col-8">
-															<input type="text" readonly class="form-control-plaintext"
-																[(ngModel)]="detalle.nombre_genero">
+														<div class="col-sm-10">
+															<p>{{ detalle.nombre_genero}}</p>
 														</div>
 													</div>
 													<div class="form-group row">
-														<label for="" class="col-sm-2 col-form-label">
+														<label for="" class="col-sm-2 col-form-label font-weight-bold">
 															Estado:
 														</label>
-														<div class="col-10">
+														<div class="col-sm-10">
 															<span *ngIf="detalle.status; else inactiveBlock"
 																class="badge badge-success">
 																Activo

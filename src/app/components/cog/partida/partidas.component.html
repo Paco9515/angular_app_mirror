@@ -94,7 +94,7 @@
 							</table>
 							<div class="modal fade" id="partidaModal" tabindex="-1" role="dialog"
 								aria-labelledby="" aria-hidden="true">
-								<div class="modal-dialog modal_class" role="document">
+								<div class="modal-dialog modal-dialog-centered" role="document">
 									<div class="modal-content ">
 										<div class="modal-header">
 											<h5 class="modal-title" id="">
@@ -108,46 +108,42 @@
 											<div class="row">
 												<div class="col-12">
 													<div class="form-group row">
-														<label for="codigo" class="col-sm-2 col-form-label">
+														<label for="codigo" class="col-sm-3 col-form-label font-weight-bold">
 															Código:
 														</label>
-														<div class="col-10">
-															<input type="text" readonly class="form-control-plaintext"
-																[(ngModel)]="detalle.codigo">
+														<div class="col-sm-9">
+															<p>{{ detalle.codigo }}</p>
 														</div>
 													</div>
 													<div class="form-group row">
-														<label for="nombre" class="col-sm-2 col-form-label">
+														<label for="nombre" class="col-sm-3 col-form-label font-weight-bold">
 															Nombre:
 														</label>
-														<div class="col-10">
-															<input type="text" readonly class="form-control-plaintext"
-																[(ngModel)]="detalle.nombre">
+														<div class="col-sm-9">
+															<p>{{ detalle.nombre }}</p>
 														</div>
 													</div>
 													<div class="form-group row">
-														<label for="capitulo" class="col-sm-2 col-form-label">
+														<label for="capitulo" class="col-sm-3 col-form-label font-weight-bold">
 															Nombre del capítulo:
 														</label>
-														<div class="col-10">
-															<input type="text" readonly class="form-control-plaintext"
-																[(ngModel)]="detalle.nombre_capitulo">
+														<div class="col-sm-9">
+															<p>{{ detalle.nombre_capitulo }}</p>
 														</div>
 													</div>
 													<div class="form-group row">
-														<label for="concepto" class="col-sm-2 col-form-label">
+														<label for="concepto" class="col-sm-3 col-form-label font-weight-bold">
 															Nombre del concepto:
 														</label>
-														<div class="col-10">
-															<input type="text" readonly class="form-control-plaintext"
-																[(ngModel)]="detalle.nombre_concepto">
+														<div class="col-sm-9">
+															<p>{{ detalle.nombre_concepto }}</p>
 														</div>
 													</div>
 													<div class="form-group row">
-														<label for="status" class="col-sm-2 col-form-label">
+														<label for="status" class="col-sm-3 col-form-label font-weight-bold">
 															Estado:
 														</label>
-														<div class="col-10">
+														<div class="col-sm-9">
 															<span *ngIf="detalle.status; else inactiveBlock"
 																class="badge badge-success">
 																Activo
