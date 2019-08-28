@@ -1,0 +1,95 @@
+<!-- Breadcrumb-->
+<div class="d-none d-sm-block">
+	<ol class="breadcrumb">
+		<li class="breadcrumb-item">
+			<i class="fa fa-folder-open"></i> Proyectos de egreso</li>
+		<li class="breadcrumb-item active">
+			Fases
+		</li>
+	</ol>
+</div>
+
+<div class="container-fluid p-3">
+	<div class="animated fadeIn">
+		<div class="row justify-content-center">
+			<div class="col-md-12">
+				<div class="card shadow">
+					<div class="card-header">
+						<div class="row">
+							<div class="col-12 col-md-8 text-center text-sm-left  h5 font-weight-bold">
+								<i class="fa fa-list"></i> Listado de las fases
+							</div>
+							<div class="col-12 col-md-4 text-center text-sm-right">
+								<button type="button" class="btn btn-success btn-sm mb-2 pull"
+									[routerLink]="['/panel-adm/fase', 'nuevo']">
+									<i class="fa fa-plus-circle"></i>
+									Agregar nuevo fase
+								</button>
+							</div>
+						</div>
+					</div>
+					<div class="card-body">
+						<div class="table-responsive">
+							<table class="table table-striped table-sm">
+								<thead class="thead-dark">
+									<tr>
+										<th scope="col">#</th>
+										<th scope="col">Nombre</th>
+										<th  class="text-center" scope="col">Estado</th>
+										<th class="text-center" scope="col">Opciones</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr *ngIf="fases.length==0; else tableBlock">
+										<td colspan="4" class="text-center">
+											<span class="badge badge-info">
+												<h5>
+													<i class="far fa-frown"></i>
+													No hay elementos para mostrar.
+												</h5>
+											</span>
+										</td>
+									</tr>
+									<ng-template #tableBlock>
+										<tr *ngFor="let fase of fases; let i = index">
+											<td>{{ i+1 }}</td>
+											<td>{{ fase.nombre }}</td>
+											<td class="text-center">
+												<span *ngIf="fase.status; else inactiveBlock"
+													class="badge badge-success">
+													Activo
+												</span>
+												<ng-template #inactiveBlock>
+													<span class="badge badge-secondary">Inactivo</span>
+												</ng-template>
+											</td>
+											<td class="text-center" nowrap>
+												<button type="button" class="btn btn-primary btn-sm"
+													[routerLink]="['/panel-adm/fase', fase.id]"
+													[disabled]="!fase.status"
+												>
+													<i class="fa fa-edit"></i>
+													Editar
+												</button>
+												<button *ngIf="fase.status" type="button" class="btn btn-danger btn-sm ml-3"
+													(click)="eliminarActivar(fase.id, false)">
+													<i class="fa fa-trash"></i>
+													Eliminar
+												</button>
+												<button *ngIf="!fase.status" type="button" class="btn btn-success btn-sm ml-3"
+													(click)="eliminarActivar(fase.id, true)">
+													<i class="fa fa-arrow-circle-up"></i>
+													Activar
+												</button>
+											</td>
+										</tr>
+									</ng-template>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div><!-- /.card-->
+			</div><!-- /.col-->
+		</div><!-- /.row-->
+	</div>
+</div>

@@ -15,6 +15,7 @@ export class EgresosComponent {
 
 	show: boolean;
 	mensaje: any;
+	total: number;
 
 	partidas: any;
 	cantidad: any;
@@ -57,6 +58,7 @@ export class EgresosComponent {
 		private proyecto_service: ProyectoService
 	) {
 
+		this.total = 0;
 		this.subprograma_service.get_gastos()
 			.subscribe((data: any) => {
 				this.gastos = data;
@@ -83,8 +85,10 @@ export class EgresosComponent {
 			id_capitulo: '',
 			id_concepto: '',
 			id_partida: '',
-			codigo: '',
-			nombre: ''
+			nombre_partida: '',
+			codigo_partida: '',
+			codigo_cuenta: '',
+			nombre_cuenta: ''
 		};
 	}
 
@@ -92,19 +96,21 @@ export class EgresosComponent {
 		const data = {
 			id_subprograma: this.id_sub,
 			id_fase: this.id_fase,
-			id_centro_costo: this.ui_data.id_ctrabajo,
+			id_centro_costo: this.ui_data.id_ccosto,
 			id_tipo_financ: this.cff_data.id_tipo,
-			id_gasto: this.id_gasto,
-			anio: this.anio,
+			id_gasto: this.cog_data.id_tgasto,
 			desc: this.desc
 		};
+		console.log('data:', data);
+		console.log('partidas:', this.partidas);
 		this.proyecto_service.setPresEgreso(data, this.partidas)
 			.subscribe((response: any) => {
 				console.log(response);
 			});
 	}
 
-	onChangeProyecto(id_proyecto) {
+	onChangeProyecto(id_proyecto: string) {
+		this.id_fase = '';
 		if (id_proyecto !== '') {
 			this.proyecto_service.getFasesProyecto(id_proyecto)
 				.subscribe((data: any) => {
@@ -113,7 +119,8 @@ export class EgresosComponent {
 		}
 	}
 
-	onChangePrograma(id_programa) {
+	onChangePrograma(id_programa: string) {
+		this.id_sub = '';
 		if (id_programa !== '') {
 			this.subprograma_service.getSubprogramaPRograma(id_programa)
 				.subscribe((data: any) => {
@@ -153,23 +160,27 @@ export class EgresosComponent {
 	}
 
 	agregarPartida() {
+		this.total += this.cantidad;
 		this.partidas.push({
 			id: this.cog_data.id_partida,
-			codigo: this.cog_data.codigo,
-			nombre: this.cog_data.nombre,
+			codigo: this.cog_data.codigo_partida,
+			nombre: this.cog_data.nombre_partida,
 			importe: this.cantidad
 		});
 		this.cantidad = 0;
-		this.cog_data = {
-			id_capitulo: '',
-			id_concepto: '',
-			id_partida: ''
-		};
-		this.cog_component.onChangeCapitulo('');
+		// this.cog_data = {
+		// 	id_partida: '',
+		// 	nombre_partida: '',
+		// 	codigo_partida: '',
+		// 	codigo_cuenta: '',
+		// 	nombre_cuenta: ''
+		// };
+		this.cog_component.onChangePartida('');
 	}
 
-	eliminar(id) {
-		console.log('Eliminado: ', id);
+	eliminar(id: any, importe: number) {
+		this.total -= importe;
+		this.partidas.splice(id, 1);
 	}
 
 }

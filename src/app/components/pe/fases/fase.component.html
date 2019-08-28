@@ -1,0 +1,96 @@
+<!-- Breadcrumb-->
+<div class="d-none d-sm-block">
+	<ol class="breadcrumb">
+		<li class="breadcrumb-item">
+			<i class="fa fa-folder-open"></i> Proyectos de egreso</li>
+		<li class="breadcrumb-item">
+			<a [routerLink]="['/panel-adm/fases']"> Proyectos</a>
+		</li>
+		<li class="breadcrumb-item active"> Fases</li>
+	</ol>
+</div>
+
+<div class="container-fluid p-3">
+	<div class="animated fadeIn">
+		<div class="row justify-content-center">
+			<div class="col-md-12">
+				<div class="card shadow">
+					<form #f="ngForm" (ngSubmit)="guardar(f)">
+						<div class="card-header">
+							<div class="row text-center">
+								<div class="col-12 col-md-8 text-md-left h5 font-weight-bold">
+									<span *ngIf="fase.id!=''">
+										<i class="fa fa-edit"></i>
+											<strong> Editar una fase</strong>
+									</span>
+									<span *ngIf="fase.id==''">
+										<i class="fa fa-plus-circle"></i>
+										<strong> Crear una fase</strong>
+									</span>
+								</div>
+								<div class="col-12 col-md-4 text-center text-sm-right">
+									<button class="btn btn-outline-primary mt-2 btn-sm" type="button"
+										[routerLink]="['/panel-adm/fases']">
+										<i class="fa fa-arrow-circle-left"></i>
+										Regresar
+									</button>
+								</div>
+							</div>
+						</div>
+						<div class="card-body">
+							<div class="form-group row">
+								<label for="staticEmail" class="col-sm-2 col-form-label">
+									Nombre
+								</label>
+								<div class="col-sm-10">
+									<input type="text" class="form-control" placeholder="Ingresa el nombre"
+										required name="nombre"
+										[(ngModel)]="fase.nombre"
+									>
+								</div>
+							</div>
+							<div class="form-group row">
+								<label for="staticEmail" class="col-sm-2 col-form-label">
+									Descripción
+								</label>
+								<div class="col-sm-10">
+									<input type="text" class="form-control" placeholder="Ingresa la descripción"
+										required name="descripcion"
+										[(ngModel)]="fase.descripcion"
+									>
+								</div>
+							</div>
+							<div class="form-group row">
+									<label for="staticEmail" class="col-sm-2 col-form-label">
+										Proyecto
+									</label>
+									<div class="col-sm-10">
+										<select class="form-control" name="proyecto"
+											[(ngModel)]="fase.id_proyecto"
+											(change)="onChangeFase($event.target.value)" required
+										>
+											<option value="">Seleccione un proyecto</option>
+											<option *ngFor="let proyecto of proyectos" [value]="proyecto.id">
+												{{ proyecto.codigo + ' ' + proyecto.nombre }}
+											</option>
+										</select>
+									</div>
+								</div>
+						</div>
+						<div class="card-footer">
+							<div class="form-group row">
+								<div class="col-12">
+									<button class="btn btn-primary btn-sm pull-right" type="submit"
+										[disabled]="f.invalid">
+										<i class="fa fa-save"></i>
+										Guardar
+									</button>
+								</div>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div><!-- /.col-->
+		</div><!-- /.row-->
+	</div>
+</div>
