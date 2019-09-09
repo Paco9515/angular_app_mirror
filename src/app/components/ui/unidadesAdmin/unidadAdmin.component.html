@@ -36,7 +36,7 @@
                                 <div class="col-sm-12">
                                     <label for="staticEmail" class="col-sm-12 col-form-label">Empresa</label>
                                     <div class="col-sm-12">
-                                        <select [(ngModel)]="unidad.id_empresa" name="id_empresa" class="form-control">
+                                        <select [(ngModel)]="unidad.id_empresa" name="id_empresa" class="form-control" required>
                                             <option value=""> Seleccione una opcion... </option>
                                             <option *ngFor="let empresa of emps_unidades;" [value]="empresa.id">{{empresa.nombre}}</option>
                                         </select>
@@ -45,13 +45,13 @@
                                 <div class="col-sm-12">
                                     <label for="staticEmail" class="col-sm-12 col-form-label">Nombre</label>
                                     <div class="col-sm-12">
-                                        <input type="text" class="form-control" placeholder="Ingresa el nombre" [(ngModel)]="unidad.nombre" name="nombre">
+                                        <input type="text" class="form-control" placeholder="Ingresa el nombre" [(ngModel)]="unidad.nombre" name="nombre" required>
                                     </div>
                                 </div>
                                 <div class="col-sm-12">
                                     <label for="staticEmail" class="col-sm-12 col-form-label">Descripción</label>
                                     <div class="col-sm-12">
-                                        <textarea type="text" class="form-control" placeholder="Ingresa una descripción" [(ngModel)]="unidad.desc" name="desc"></textarea>
+                                        <textarea type="text" class="form-control" placeholder="Ingresa una descripción" [(ngModel)]="unidad.desc" name="desc" required></textarea>
                                     </div>
                                 </div>
                             </div>
@@ -69,7 +69,6 @@
                     </form>
                 </div>
             </div>
-            <!-- /.col-->
         </div>
         <!-- /.row-->
     </div>

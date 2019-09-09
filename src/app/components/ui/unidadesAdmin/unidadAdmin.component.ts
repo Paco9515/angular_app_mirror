@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { NgForm } from '@angular/forms';
-//import { ToastrService } from 'ngx-toastr';
-import { UnidadesAdminService } from "src/app/services/ui/unidadesAdmin.service";
-import { UnidadesAdmin, Empresas } from 'src/app/interfaces/ui.interface';
+import { UnidadesAdminService } from 'src/app/services/ui/unidadesAdmin.service';
+import { UnidadesAdmin } from 'src/app/interfaces/ui.interface';
 
 @Component({
 	selector: 'app-unidadAdmin',
@@ -21,69 +20,58 @@ export class UnidadAdminComponent  {
 		desc: '',
 		status: true
 	};
-	emps_unidades=[];
-	
-	// programa: Programas;
+	emps_unidades = [];
+	ult_unidad = [];
+
 
 	constructor(
 		private unidadesService: UnidadesAdminService,
-		private router: Router,
 		private activatedRoute: ActivatedRoute,
-		//private toastrService: ToastrService
 	) {
-		//console.log('1');
 		this.activatedRoute.params.subscribe((data: any) => {
 			this.id = data.id;
 			if (this.id !== 'nuevo') {
 				this.unidadesService.getUnidadAdmin(this.id)
 					.subscribe((obj: UnidadesAdmin) => {
 						this.createForma(obj);
-						//this.unidad = obj;
-						//console.log('2');
-
-						//console.log(obj);
-
 					});
 			} else {
 				this.createForma({
 					id: '',
 					id_empresa: '',
-					codigo: '',
+					codigo: null,
 					nombre: '',
 					desc: '',
 					status: true
 				});
 				this.unidad.id_empresa = '';
-				// this.programa = {nombre: '', status: true};
 			}
 		});
-		//console.log('3');
 	}
 
 	createForma(obj: UnidadesAdmin) {
-		
-		
+
 		this.unidadesService.getEmpresas().subscribe((empresas: any) => {
 			this.emps_unidades = empresas;
-			//console.log('unidades por id',this.emps_unidades);
 		});
-		this.unidad = obj;	
-			
+		this.unidadesService.getUltimaUnidad().subscribe((unidad: any) => {
+			 this.unidad.codigo = parseInt(unidad.codigo, 10) + 1;
+		});
+		this.unidad = obj;
 	}
 
 
-	guardar() {
-		// this.toastrService.success('Programa creado correctamente.', '¡Éxito!');		
-				
-		this.unidadesService.createUnidad(this.unidad)
+	guardar(f: NgForm) {
+		if (f.valid) {
+			this.unidadesService.createUnidad(this.unidad)
 			.subscribe((response: any) => {
-				if (response.message === 'creada') {
+				if (response.mensaje === 'creado') {
 					console.log('Empresa creada con exito.');
 				} else {
 					console.log('Empresa editada con exito.');
 				}
 			});
-		//console.log(rr);
+		}
+		// console.log(this.unidad);
 	}
-
 }
