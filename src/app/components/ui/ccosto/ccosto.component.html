@@ -37,7 +37,7 @@
                                 <div class="col-sm-12">
                                     <label for="staticEmail" class="col-sm-12 col-form-label">Empresa</label>
                                     <div class="col-sm-12">
-                                        <select type="text" class="form-control" [(ngModel)]="emp" name="emp" (change)="inicio();">
+                                        <select type="text" class="form-control" [(ngModel)]="emp" name="emp" (change)="inicio();" required>
                                             <option value=""> Seleccione una opcion... </option>
                                             <option *ngFor="let empresa of empresas;let i = index" [value]="empresa.id" >{{ empresa.nombre }} </option>
                                         </select>
@@ -48,7 +48,7 @@
                                 <div class="col-sm-12">
                                     <label for="staticEmail" class="col-sm-12 col-form-label">Unidad Administrativa</label>
                                     <div class="col-sm-12">
-                                        <select type="text" class="form-control" [(ngModel)]="ccostos.id_unidad_adm" name="id_unidad_adm" [(disabled)]="bandera2">
+                                        <select type="text" class="form-control" [(ngModel)]="ccostos.id_unidad_adm" name="id_unidad_adm" [(disabled)]="bandera2" required>
                                                 <option value=""> Seleccione una opcion... </option>
                                                 <option *ngFor="let unidad of unidades" [value]="unidad.id"> {{ unidad.nombre }} </option>
                                         </select>
@@ -59,7 +59,7 @@
                                 <div class="col-sm-12">
                                     <label for="staticEmail" class="col-sm-12 col-form-label">Subfuncion</label>
                                     <div class="col-sm-12">
-                                        <select class="form-control" [(ngModel)]="ccostos.id_subfuncion" name="id_subfuncion">
+                                        <select class="form-control" [(ngModel)]="ccostos.id_subfuncion" name="id_subfuncion" required>
                                             <option value=""> Seleccione una opcion... </option>
                                             <option *ngFor="let sub of subs" [value]="sub.id">{{sub.codigo}} - {{ sub.nombre }} </option>
                                         </select>
@@ -70,7 +70,18 @@
                                 <div class="col-sm-12">
                                     <label for="staticEmail" class="col-sm-12 col-form-label">Nombre</label>
                                     <div class="col-sm-12">
-                                        <input type="text" class="form-control" placeholder="Ingresa el nombre" [(ngModel)]="ccostos.nombre" name="nombre">
+                                        <input type="text" class="form-control" placeholder="Ingresa el nombre" [(ngModel)]="ccostos.nombre" name="nombre" required>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-sm-12">
+                                    <label for="staticEmail" class="col-sm-12 col-form-label">Nivel</label>
+                                    <div class="col-sm-12">
+                                        <select class="form-control" [(ngModel)]="ccostos.id_nivel" name="id_nivel" required>
+                                            <option value=""> Seleccione una opcion... </option>
+                                            <option *ngFor="let nivel of niveles" [value]="nivel.id">{{nivel.codigo}} - {{ nivel.nombre }} </option>
+                                        </select>
                                     </div>
                                 </div>
                             </div>
