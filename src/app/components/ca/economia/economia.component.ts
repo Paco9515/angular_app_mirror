@@ -71,12 +71,12 @@ export class EconomiaComponent implements OnInit {
 	guardar(f: NgForm) {
 		if (f.valid) {
 			this.economiaService.createUpdateEconomia(this.economia)
-				.subscribe((response: any) => {
-					console.log(response);
-				},
-				error => {
-					console.log(error.error);
-				});
+			.subscribe((response: any) => {
+				console.log(response);
+			},
+			error => {
+				console.log(error.error);
+			});
 		}
 	}
 

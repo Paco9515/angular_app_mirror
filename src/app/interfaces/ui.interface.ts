@@ -60,7 +60,7 @@ export interface InfoEmpresa{
 export interface UnidadesAdmin {
     id?: string;
     id_empresa?: any;
-    codigo: string;
+    codigo: number;
     nombre: string;
     desc: string;
     status?:boolean;
@@ -70,9 +70,10 @@ export interface Ccosto {
     id?: string;
     id_unidad_adm: string;
     id_subfuncion: string;
+    id_nivel: string;
     codigo: string;
     nombre: string;
-    status:boolean;
+    status: boolean;
 }  
 
 export interface Ctrabajo {

@@ -33,7 +33,15 @@ export class CcostoService {
 		return this.constants.getRequest(`/get_ccostos`, 'get', false);
 	}
 
-	getUnidades(id:number) {
+	getUltimoCentro() {
+		return this.constants.getRequest(`/get_ult_centro`, 'get', false);
+	}
+
+	getNiveles() {
+		return this.constants.getRequest(`/get_niveles`, 'get', false);
+	}
+
+	getUnidades(id: number) {
 		return this.constants.getRequest(`/get_unidades_empresa/${id}`, 'get', false);
 	}
 
