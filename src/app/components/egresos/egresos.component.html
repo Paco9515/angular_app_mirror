@@ -96,6 +96,25 @@
                 <div class="card shadow">
                     <div class="card-header">
                         <div class="row">
+                            <div class="col-12 col-md-8 text-center text-sm-left h5 font-weight-bold">
+                                Clasificación por fuente de financiamiento.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-12">
+								<app-cff class="col-6" [primary_keys_cff]="cff_keys" (out)="Data_CFF($event)"></app-cff>
+							</div>
+						</div>
+                    </div>
+                </div>
+			</div>
+
+			<div class="col-md-12">
+                <div class="card shadow">
+                    <div class="card-header">
+                        <div class="row">
                             <div class="col-12 col-md-8 text-center text-sm-left  h5 font-weight-bold">
                                 Clasificación administrativa.
                             </div>
@@ -154,6 +173,7 @@
 											<thead class="thead-dark">
 												<tr>
 													<th scope="col">#</th>
+													<th scope="col">Centro costo</th>
 													<th scope="col">Cod. Partida</th>
 													<th scope="col">Nombre partida</th>
 													<th scope="col">Importe</th>
@@ -163,6 +183,7 @@
 											<tbody *ngIf="partidas.length!=0; else no_data">
 												<tr *ngFor="let item of partidas; let i = index">
 													<td>{{ i+1 }}</td>
+													<td>{{ ca_data.cc_nombre }}</td>
 													<td>{{ item.codigo }}</td>
 													<td>{{ item.nombre }}</td>
 													<td>{{ item.importe }}</td>
@@ -202,24 +223,7 @@
                 </div>
             </div>
 
-			<div class="col-md-12">
-                <div class="card shadow">
-                    <div class="card-header">
-                        <div class="row">
-                            <div class="col-12 col-md-8 text-center text-sm-left h5 font-weight-bold">
-                                Clasificación por fuente de financiamiento.
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-12">
-								<app-cff class="col-6" [primary_keys_cff]="cff_keys" (out)="Data_CFF($event)"></app-cff>
-							</div>
-						</div>
-                    </div>
-                </div>
-            </div>
+
 
         </div>
     </div>

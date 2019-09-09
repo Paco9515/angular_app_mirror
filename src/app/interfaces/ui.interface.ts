@@ -1,6 +1,6 @@
 export interface Infos{
-    id?: string; 
-    nombre:string;   
+    id?: string;
+    nombre:string;
     estado: string;
     municipio: string;
     localidad: string;
@@ -26,12 +26,12 @@ export interface Empresas {
     isste_foviste?:string;
     reg_estatal?:string;
     url_img?:string;
-    status: boolean;    
-} 
+    status: boolean;
+}
 
 export interface InfoEmpresa{
-    nombre:string;  
-    nom_comercial: string; 
+    nombre:string;
+    nom_comercial: string;
     estado: string;
     municipio: string;
     localidad: string;
@@ -46,7 +46,7 @@ export interface InfoEmpresa{
     rfc:string;
     curp: string;
     id_tipo_empresa: number;
-    id_clas_administrativa: number;    
+    id_clas_administrativa: number;
     persona_moral:number;
     imss_sar?:string;
     isste_foviste?:string;
@@ -60,11 +60,11 @@ export interface InfoEmpresa{
 export interface UnidadesAdmin {
     id?: string;
     id_empresa?: any;
-    codigo: number;
+    codigo: string;
     nombre: string;
     desc: string;
     status?:boolean;
-}    
+}
 
 export interface Ccosto {
     id?: string;
@@ -74,7 +74,7 @@ export interface Ccosto {
     codigo: string;
     nombre: string;
     status: boolean;
-}  
+}
 
 export interface Ctrabajo {
     id?: string;
@@ -91,4 +91,4 @@ export interface Ctrabajo {
     dom_interior?: string;
     num_interior?: string;
     status:boolean;
-} 
+}
