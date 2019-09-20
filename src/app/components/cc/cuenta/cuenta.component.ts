@@ -30,8 +30,6 @@ export class CuentaComponent implements OnInit {
 			id_grupo: '',
 			id_rubro: ''
 		};
-
-
 	}
 
 	ngOnInit() {

@@ -9,7 +9,7 @@ import { Subeconomias, Economias, Financieros, Sectores } from '../../../interfa
 	templateUrl: './subeconomia.component.html',
 	styles: []
 })
-export class SubeconomiaComponent  implements OnInit{
+export class SubeconomiaComponent  implements OnInit {
 
 	subeconomia: Subeconomias;
 	economias: Economias[] = [];
@@ -18,8 +18,7 @@ export class SubeconomiaComponent  implements OnInit{
 
   	constructor(
 		private subeconomiaService: SubeconomiaService,
-		private activitedRoute: ActivatedRoute) 
-	{
+		private activitedRoute: ActivatedRoute) {
 		this.subeconomia = {
 			id: '',
 			codigo: '',
@@ -45,7 +44,6 @@ export class SubeconomiaComponent  implements OnInit{
 			}
 		});
 	}
-
 
 	onChangeSector(id_sector) {
 		this.subeconomia.id_financiero = '';

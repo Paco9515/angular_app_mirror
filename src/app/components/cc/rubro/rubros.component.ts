@@ -16,8 +16,8 @@ export class RubrosComponent {
 	constructor(
 		private rubros_service: RubroService
 	) {
-        this.detalle = {
-            id: '',
+		this.detalle = {
+			id: '',
 			codigo: '',
 			nombre: '',
 			status: true,
@@ -36,7 +36,6 @@ export class RubrosComponent {
 				this.rubros = data;
 			});
 	}
-
 
 	eliminarActivar(id: string, type: boolean) {
 		this.rubros_service.activarEliminarRubro(id, type)

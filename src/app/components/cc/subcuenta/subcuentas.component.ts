@@ -7,7 +7,7 @@ import { SubcuentaService } from './../../../services/cc/subcuenta.service';
   templateUrl: './subcuentas.component.html',
   styles: []
 })
-export class SubcuentasComponent{
+export class SubcuentasComponent {
 
 	subcuentas: Subcuentas[];
 	detalle: Subcuentas;

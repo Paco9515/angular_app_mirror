@@ -39,7 +39,7 @@ export class ConceptoService {
 
 	activarEliminarConcepto(id: string, opcion: boolean) {
 		if (opcion) {
-			return this.constants.getRequest(`/activate_concepto/${id}`, 'put', false);
+			return this.constants.getRequest(`/activate_concepto/${id}`, 'get', false);
 		} else {
 			return this.constants.getRequest(`/delete_concepto/${id}`, 'delete', false);
 		}

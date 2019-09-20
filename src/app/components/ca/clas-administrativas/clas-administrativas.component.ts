@@ -7,7 +7,7 @@ import { Clas_admin } from './../../../interfaces/ca.interface';
   templateUrl: './clas-administrativas.component.html',
   styles: []
 })
-export class ClasAdministrativasComponent{
+export class ClasAdministrativasComponent {
 
 	admins: Clas_admin[];
 	detalle: Clas_admin;

@@ -7,7 +7,7 @@ import { Grupos, Generos } from './../../../interfaces/cc.interface';
 	templateUrl: './grupos.component.html',
 	styles: []
 })
-export class GruposComponent{
+export class GruposComponent {
 
 	grupos: Grupos[];
 	generos: Generos[];
@@ -17,7 +17,7 @@ export class GruposComponent{
 		private grupo_service: GrupoService
 	) {
 		this.detalle = {
-            id: '',
+			id: '',
 			codigo: '',
 			nombre: '',
 			status: true,

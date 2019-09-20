@@ -42,8 +42,7 @@ export class GrupoComponent {
 	cargarGrupo(id: string) {
 		this.grupoService.getGrupo(id)
 			.subscribe((obj: Grupos) => {
-				this.grupo = obj
-				console.log(this.grupo);
+				this.grupo = obj;
 			});
 	}
 

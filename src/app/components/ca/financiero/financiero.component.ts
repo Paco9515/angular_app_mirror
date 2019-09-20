@@ -16,8 +16,7 @@ export class FinancieroComponent {
 
 	constructor(
 		private financieroService: FinancieroService,
-		private activitedRoute: ActivatedRoute)
-	{
+		private activitedRoute: ActivatedRoute) {
 		this.financiero = {
 			id: '',
 			codigo: '',

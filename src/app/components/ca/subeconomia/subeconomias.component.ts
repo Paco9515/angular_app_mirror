@@ -8,7 +8,7 @@ import { Subeconomias } from './../../../interfaces/ca.interface';
   templateUrl: './subeconomias.component.html',
   styles: []
 })
-export class SubeconomiasComponent{
+export class SubeconomiasComponent {
 
   subeconomias: Subeconomias[];
   detalle: Subeconomias;

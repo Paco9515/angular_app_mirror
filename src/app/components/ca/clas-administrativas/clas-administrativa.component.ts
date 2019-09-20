@@ -9,7 +9,7 @@ import { Clas_admin, Subeconomias, Economias, Financieros, Sectores } from '../.
 	templateUrl: './clas-administrativa.component.html',
 	styles: []
 })
-export class ClasAdministrativaComponent implements OnInit{
+export class ClasAdministrativaComponent implements OnInit {
 
 	admin: Clas_admin;
 	subeconomias: Subeconomias[];

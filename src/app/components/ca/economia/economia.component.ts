@@ -1,11 +1,10 @@
-import { Component, ChangeDetectionStrategy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { NgForm } from '@angular/forms';
 import { EconomiaService } from 'src/app/services/ca/economia.service';
 import { Economias, Financieros, Sectores } from '../../../interfaces/ca.interface';
 
 @Component({
-	changeDetection: ChangeDetectionStrategy.Default,
 	selector: 'app-economia',
 	templateUrl: './economia.component.html',
 	styles: []
