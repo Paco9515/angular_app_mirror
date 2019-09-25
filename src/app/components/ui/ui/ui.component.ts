@@ -1,7 +1,6 @@
 import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import { UiService } from 'src/app/services/ui/ui.service';
-import { Empresas, UnidadesAdmin, Ccosto, Ctrabajo } from 'src/app/interfaces/ui.interface';
-
+import { UnidadesAdmin, Ccosto } from 'src/app/interfaces/ui.interface';
 
 @Component({
 	selector: 'app-ui',
@@ -9,115 +8,56 @@ import { Empresas, UnidadesAdmin, Ccosto, Ctrabajo } from 'src/app/interfaces/ui
 	styles: []
 })
 export class UiComponent implements OnInit {
+
 	@Input() primary_keys_ui: any;
-	empresas: Empresas[];
+	@Output() out = new EventEmitter<any>();
+
 	unidades: UnidadesAdmin[];
 	ccostos: Ccosto[];
-	ctrabajos: Ctrabajo[];
 	data: any;
-	data2: any;
-	nombre_clas = false;
-
-
-	id_centro_costo: any; /// lkasgdkjasgdkjas
-
-	@Output() out = new EventEmitter<any>();
 
 	constructor(
 		private ui_service: UiService
 	) {
 		this.data = {
-			id_empresa: '',
-			id_unidad: '',
+			id_unidad_adm: '',
 			id_ccosto: '',
-			id_ctrabajo: ''
-		};
-		this.data2 = {
-			id_ctrabajo: '',
-			sub_codigo: '',
-			sub_nombre: '',
-			clas_codigo: '',
-			clas_nombre: ''
+			id_clas_adm: '',
+			id_cfg: '',
+			nombre_cfg: '',
+			nombre_clas_adm: ''
 		};
 	}
 
 	ngOnInit() {
-		this.ui_service.getEmpresa(1)
-			.subscribe((data: any) => {
-				this.empresas = data;
-				console.log(this.empresas);
-			});
-
+		this.ui_service.getUnidadesAdmin()
+			.subscribe((data: any) => this.unidades = data);
 		if (this.primary_keys_ui[0] !== 0) {
-			this.onChangeEmpresa(this.primary_keys_ui[0]);
-			this.onChangeUnidad(this.primary_keys_ui[1]);
-			this.onChangeCcosto(this.primary_keys_ui[2]);
+			this.getCcByUnidad(this.primary_keys_ui[0]);
+			this.getDataByCC(this.primary_keys_ui[1]);
 		}
-		this.onChangeEmpresa(1);
 	}
 
-	onChangeEmpresa(id_empresa) {
-		this.data.id_unidad = '';
-		this.data.id_ccosto = '';
-		this.data.id_ctrabajo = '';
-
-		this.unidades = [];
+	getCcByUnidad(id_unidad: any) {
 		this.ccostos = [];
-		this.ctrabajos = [];
-		if (id_empresa !== '') {
-			this.data.id_empresa = id_empresa;
-			this.ui_service.getUnisEmpresa(id_empresa)
-				.subscribe((data: any) => {
-					this.unidades = data;
-				});
-			this.ui_service.getEmpresa_class(id_empresa)
-				.subscribe((data2: any) => {
-					this.data2.clas_codigo = data2[0].codigo;
-					this.data2.clas_nombre = data2[0].nombre;
-			});
-		}
-		this.nombre_clas = false;
-	}
-
-	onChangeUnidad(id_unidad) {
 		this.data.id_ccosto = '';
-		this.data.id_ctrabajo = '';
-
-		this.ccostos = [];
-		this.ctrabajos = [];
 		if (id_unidad !== '') {
-			// this.data.id_unidad = id_unidad;
-			this.ui_service.getCcsUnidad(id_unidad)
-				.subscribe((data1: any) => {
-					if ( data1.length !== 0) {
-						this.ui_service.getSubfuncion(data1[0].id_subfuncion)
-						.subscribe((data2: any) => {
-							this.data2.sub_codigo = data2.codigo;
-							this.data2.sub_nombre = data2.nombre;
-						});
-					}
-					this.ccostos = data1;
-				});
+			this.ui_service.getCcByUnidad(id_unidad)
+				.subscribe((data: any) => this.ccostos = data);
 		}
-		this.nombre_clas = false;
 	}
 
-	onChangeCcosto(id_ccosto) {
-		this.data.id_ctrabajo = '';
-
-		this.ctrabajos = [];
+	getDataByCC(id_ccosto: any) {
 		if (id_ccosto !== '') {
-			// this.data.id_ccosto = id_ccosto;
-			this.ui_service.getCtsCcosto(id_ccosto)
-				.subscribe((data: any) => {
-					this.ctrabajos = data;
+			this.ui_service.getDataByCC(id_ccosto)
+				.subscribe((data_request: any) => {
+					console.log(data_request);
+					this.data.id_clas_adm = data_request.id_ca;
+					this.data.id_cfg = data_request.id_cfg;
+					this.data.nombre_clas_adm = data_request.codigo_ca + ' - ' + data_request.nombre_ca;
+					this.data.nombre_cfg = data_request.codigo_cfg + ' - ' + data_request.nombre_cfg;
 				});
-			this.id_centro_costo = id_ccosto;
-			this.data2.id_ccosto = this.id_centro_costo;
-
-			this.out.emit(this.data2);
+			this.out.emit(this.data);
 		}
-		this.nombre_clas = true;
 	}
-
 }

@@ -32,7 +32,13 @@ export class CapituloComponent {
 
 	cargarCapitulos(id: string) {
 		this.capituloService.getCapitulo(id)
-			.subscribe((obj: Capitulos) => this.capitulo = obj);
+			.subscribe((obj: Capitulos) => {
+				this.capitulo = obj;
+				console.log('error: ', obj);
+			},
+			error => {
+				console.log(error.statusText);
+			});
 	}
 
 	guardar(f: NgForm) {
@@ -40,9 +46,7 @@ export class CapituloComponent {
 			this.capituloService.createUpdateCapitulo(this.capitulo)
 				.subscribe((response: any) => {
 					console.log(response);
-				}, error => {
-					console.log(error.error);
-			});
+				});
 		}
 	}
 

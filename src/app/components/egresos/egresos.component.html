@@ -17,7 +17,7 @@
 									<label>
 										Programa
 									</label>
-                                    <select class="form-control" name="programa" (change)="onChangePrograma($event.target.value)">
+                                    <select class="form-control" name="programa" (change)="getSubprogramasByPrograma($event.target.value)">
 										<option value=''>
 											Seleccione un programa
 										</option>
@@ -32,7 +32,7 @@
 									<label>
 										Subprograma
 									</label>
-                                    <select class="form-control" name="subprograma" [(ngModel)]="id_sub">
+                                    <select class="form-control" name="subprograma" [(ngModel)]="id_subprograma">
 										<option value=''>
 											Seleccione un programa
 										</option>
@@ -62,7 +62,7 @@
 									<label>
 										Proyecto
 									</label>
-                                    <select class="form-control" name="proyecto" (change)="onChangeProyecto($event.target.value)">
+                                    <select class="form-control" name="proyecto" (change)="getFasesByProyecto($event.target.value)">
                                         <option value=''>
                                             Seleccione un proyecto
                                         </option>
@@ -104,7 +104,7 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="col-12">
-								<app-cff class="col-6" [primary_keys_cff]="cff_keys" (out)="Data_CFF($event)"></app-cff>
+								<app-cff class="col-6" [primary_keys_cff]="cff_keys" (out)="getDataCFF($event)"></app-cff>
 							</div>
 						</div>
                     </div>
@@ -123,7 +123,7 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="col-12">
-                                <app-ui [primary_keys_ui]="ui_keys" (out)="Data_UI($event)"></app-ui>
+                                <app-ui [primary_keys_ui]="ui_keys" (out)="getDataUI($event)"></app-ui>
                             </div>
                         </div>
                     </div>
@@ -142,7 +142,7 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="col-12">
-								<app-cog [primary_keys_cog]="cog_keys" (out)="Data_COG($event)"></app-cog>
+								<app-cog [primary_keys_cog]="cog_keys" (out)="getDataCOG($event)"></app-cog>
                                 <div class="row">
                                     <div class="col-6 mt-2">
                                         <label for="cantidad">
@@ -167,7 +167,7 @@
 									</div>
 								</div>
 
-								<ng-container *ngIf="show">
+								<!-- <ng-container *ngIf="show"> -->
 									<div class="table-responsive mt-3">
 										<table class="table table-striped">
 											<thead class="thead-dark">
@@ -180,15 +180,15 @@
 													<th class="text-center" scope="col">Eliminar</th>
 												</tr>
 											</thead>
-											<tbody *ngIf="partidas.length!=0; else no_data">
+											<tbody>
 												<tr *ngFor="let item of partidas; let i = index">
 													<td>{{ i+1 }}</td>
-													<td>{{ ca_data.cc_nombre }}</td>
+													<td>CC</td>
 													<td>{{ item.codigo }}</td>
 													<td>{{ item.nombre }}</td>
 													<td>{{ item.importe }}</td>
 													<td>
-														<button type="button" class="btn btn-danger btn-sm w-auto mb-1 ml-1" (click)="eliminar(i,item.importe)">
+														<button type="button" class="btn btn-danger btn-sm w-auto mb-1 ml-1" (click)="eliminarPartida(i,item.importe)">
 															<i class="fas fa-trash"></i>
 															Eliminar
 														</button>
@@ -197,7 +197,7 @@
 											</tbody>
 											<tfoot class="bg-black">
 												<tr>
-													<td colspan="3" align="right">
+													<td colspan="4" align="right">
 														Total
 													</td>
 													<td colspan="2" align="left">
@@ -205,26 +205,37 @@
 													</td>
 												</tr>
 											</tfoot>
-                                            <ng-template #no_data>
+                                            <!-- <ng-template #no_data>
                                                 <tbody>
                                                     <tr>
-                                                        <td colspan="5" align="center">
+                                                        <td colspan="6" align="center">
                                                             No hay datos para mostrar.
                                                         </td>
                                                     </tr>
                                                 </tbody>
-                                            </ng-template>
+                                            </ng-template> -->
 										</table>
 									</div>
-								</ng-container>
+								<!-- </ng-container> -->
+								<div class="row">
+									<div class="col-6 text-right">
+										<button class="btn btn-primary"
+											(click)="savePartidasCC()"
+										>
+											Guardar centros de costo con sus partidas
+										</button>
+									</div>
+									<div class="col-6 text-left">
+										<button class="btn btn-info">
+											Ver centros de costo con sus partidas
+										</button>
+									</div>
+								</div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-
-
-
         </div>
     </div>
 </div>
@@ -233,7 +244,7 @@
 	<div class="row">
 		<div class="col-12">
 			<button class="btn btn-success mb-3 btn-block" (click)="guardarInfo()">
-				Guardar información
+				Guardar presupuesto de egreso
 			</button>
 		</div>
 	</div>

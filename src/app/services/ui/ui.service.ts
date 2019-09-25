@@ -55,8 +55,12 @@ export class UiService {
 		return this.constants.getRequest(`/get_unidades_empresa/${id}`, 'get', false);
 	  }
 
-	getCcsUnidad(id: number) {
-		return this.constants.getRequest(`/get_ccostosXuni/${id}`, 'get', false);
+	getCcByUnidad(id: number) { // get centros de costo por unidad administrativa.
+		return this.constants.getRequest(`/getCcByUnidad/${id}`, 'get', false);
+	}
+
+	getDataByCC(id: number) {
+		return this.constants.getRequest(`/getDataByCC/${id}`, 'get', false);
 	}
 
 	getCtsCcosto(id: number) {
