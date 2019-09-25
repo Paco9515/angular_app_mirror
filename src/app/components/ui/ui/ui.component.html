@@ -1,37 +1,22 @@
-<!-- <div>
-    <label>
-		Empresas
+<div class="col-sm-12 mb-2">
+	<label>
+		Unidad administrativa
 	</label>
-    <div class="col-sm-10">
-        <select class="form-control" name="empresa" [(ngModel)]="data.id_empresa" (change)="onChangeEmpresa($event.target.value)">
-			<option value="">Seleccione una Empresa</option>
-			<option *ngFor="let empresa of empresas" [value]="empresa.id">
-				{{ empresa.nom_comercial }}
-			</option>
-		</select>
-    </div>
-</div> -->
-
-
-    <div class="col-sm-12 mb-2">
-			<label>
-				Unidad administrativa
-			</label>
-        <select class="form-control" name="unidad" [(ngModel)]="data.id_unidad" (change)="onChangeUnidad($event.target.value)">
-			<option value="">Seleccione una unidad administrativa</option>
-			<option *ngFor="let unidad of unidades"	[value]="unidad.id">
-				{{ unidad.codigo }} - {{ unidad.nombre }}
-			</option>
-		</select>
-    </div>
-
-
+	<select class="form-control" name="unidad" [(ngModel)]="data.id_unidad_adm"
+		(change)="getCcByUnidad($event.target.value)">
+		<option value="">Seleccione una unidad administrativa</option>
+		<option *ngFor="let unidad of unidades" [value]="unidad.id">
+			{{ unidad.codigo }} - {{ unidad.nombre }}
+		</option>
+	</select>
+</div>
 
 <div class="col-sm-12 mb-2">
 	<label>
 		Centro de costo
 	</label>
-	<select class="form-control" name="ccosto" [(ngModel)]="data.id_ccosto" (change)="onChangeCcosto($event.target.value)">
+	<select class="form-control" name="ccosto" [(ngModel)]="data.id_ccosto"
+		(change)="getDataByCC($event.target.value)">
 		<option value="">Seleccione una centro de costo</option>
 		<option *ngFor="let ccosto of ccostos" [value]="ccosto.id">
 			{{ ccosto.codigo }} - {{ ccosto.nombre }}
@@ -39,34 +24,23 @@
 	</select>
 </div>
 
-
 <div class="col-sm-12 mb-2">
 	<label>
 		Clasificación administrativa
 	</label>
-    <textarea *ngIf="!nombre_clas" type="text" class="form-control" disabled>Esperando centro de costo.</textarea>
-    <textarea *ngIf="nombre_clas" type="text" class="form-control" value="{{ data2.clas_codigo }} - {{ data2.clas_nombre }}" disabled></textarea>
+	<textarea *ngIf="data.id_ccosto==''; else else_id_ccosto" type="text" class="form-control" disabled>Esperando centro de costo.</textarea>
+	<ng-template #else_id_ccosto>
+		<textarea type="text" class="form-control" value="{{ data.nombre_clas_adm }}" disabled></textarea>
+	</ng-template>
+
 </div>
 
 <div class="col-sm-12">
 	<label>
 		Clasificación funcional del gasto
 	</label>
-    <textarea *ngIf="!nombre_clas" type="text" class="form-control" disabled>Esperando centro de costo.</textarea>
-    <textarea *ngIf="nombre_clas" type="text" class="form-control" value="{{ data2.sub_codigo }} - {{ data2.sub_nombre }}" disabled></textarea>
+	<textarea *ngIf="data.id_ccosto==''; else else_id_ccosto2" type="text" class="form-control" disabled>Esperando centro de costo.</textarea>
+	<ng-template #else_id_ccosto2>
+		<textarea type="text" class="form-control" value="{{ data.nombre_cfg }}" disabled></textarea>
+	</ng-template>
 </div>
-
-
-<!-- <div>
-    <label>
-		Centros de trabajo
-	</label>
-    <div class="col-sm-10">
-        <select class="form-control" name="ctrabajo" [(ngModel)]="data.id_ctrabajo" (change)="onChangeCtrabajo($event.target.value)">
-			<option value="">Seleccione un ctrabajo</option>
-			<option *ngFor="let ctrabajo of ctrabajos" [value]="ctrabajo.id">
-				{{ ctrabajo.nombre }}
-			</option>
-		</select>
-    </div>
-</div> -->

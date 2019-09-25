@@ -55,7 +55,7 @@ export class UnidadAdminComponent  {
 			this.emps_unidades = empresas;
 		});
 		this.unidadesService.getUltimaUnidad().subscribe((unidad: any) => {
-			 //this.unidad.codigo = parseInt(unidad.codigo, 10) + 1;
+			 this.unidad.codigo = (parseInt(unidad.codigo, 10) + 1) + '';
 		});
 		this.unidad = obj;
 	}

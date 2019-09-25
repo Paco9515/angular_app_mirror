@@ -1,6 +1,6 @@
 import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import { CogService } from 'src/app/services/cog/cog.service';
-import { Capitulos, Conceptos, Partidas } from 'src/app/interfaces/cog.interface';
+import { Capitulos, Conceptos } from 'src/app/interfaces/cog.interface';
 
 @Component({
 	selector: 'app-cog',
@@ -10,17 +10,13 @@ import { Capitulos, Conceptos, Partidas } from 'src/app/interfaces/cog.interface
 export class CogComponent implements OnInit {
 
 	@Input() primary_keys_cog: any;
-	capitulos: Capitulos[];
-	conceptos: Conceptos[];
-	nombre_clas: any;
-	partidas: any;
-	data: any;
-
-	var_trash: any;
-
 	@Output() out = new EventEmitter<any>();
 
-	cc;
+	/* - Variables locales - */
+	capitulos: Capitulos[];
+	conceptos: Conceptos[];
+	partidas: any;
+	data: any;
 
 	constructor(
 		private cog_service: CogService
@@ -29,36 +25,30 @@ export class CogComponent implements OnInit {
 			id_capitulo: '',
 			id_concepto: '',
 			id_partida: '',
-			nombre_partida: '',
-			codigo_partida: '',
-			codigo_cuenta: '',
-			nombre_cuenta: '',
+			id_tipogasto: '',
+			id_clas_cont: '',
+			codigo_clas_cont: '',
+			nombre_clas_cont: '',
 			codigo_tipogasto: '',
-			nombre_tipogasto: '',
-			id_tgasto: ''
+			nombre_tipogasto: ''
 		};
-		this.out.emit(this.data);
 	}
 
 	ngOnInit() {
 		this.cog_service.getCapitulos()
-			.subscribe((data: any) => {
-				this.capitulos = data;
-			});
-		// console.log(this.primary_keys);
-		this.cc = this.primary_keys_cog[3];
+			.subscribe((data: any) => this.capitulos = data);
 
 		if (this.primary_keys_cog[0] !== 0) {
-			this.onChangeCapitulo(this.primary_keys_cog[0]);
-			this.onChangeConcepto(this.primary_keys_cog[1]);
-			this.onChangePartida(this.primary_keys_cog[2]);
+			this.getConceptosByCapitulo(this.primary_keys_cog[0]);
+			this.getPartidasByConcepto(this.primary_keys_cog[1]);
+			this.getDataByPartidas(this.primary_keys_cog[2]);
 		}
 	}
 
-	onChangeCapitulo(id_capitulo) {
-		this.data.id_capitulo = id_capitulo;
-		this.data.id_concepto = '';
-		this.data.id_partida = '';
+	getConceptosByCapitulo(id_capitulo: string) {
+		// this.data.id_capitulo = id_capitulo;
+		// this.data.id_concepto = '';
+		// this.data.id_partida = '';
 		this.conceptos = [];
 		this.partidas = [];
 		if (id_capitulo !== '') {
@@ -70,7 +60,7 @@ export class CogComponent implements OnInit {
 		}
 	}
 
-	onChangeConcepto(id_concepto) {
+	getPartidasByConcepto(id_concepto: string) {
 		this.data.id_partida = '';
 		this.partidas = [];
 		if (id_concepto !== '') {
@@ -78,18 +68,18 @@ export class CogComponent implements OnInit {
 			this.cog_service.get_partidas_concepto(id_concepto)
 				.subscribe((data: any) => {
 					this.partidas = data;
-					console.log('CHILD: ', this.partidas);
+					// console.log('CHILD: ', this.partidas);
 				});
 		}
 	}
 
-	onChangePartida(id_partida) {
+	getDataByPartidas(id_partida: string) {
 		// tslint:disable-next-line:triple-equals
 		if (id_partida !== '') {
 			const partida_temporal = this.partidas.find(e => e.id == id_partida);
 
 			this.data.id_partida = partida_temporal.id;
-			console.log('AASKGDH: ', partida_temporal);
+			// console.log('AASKGDH: ', partida_temporal);
 			this.data.codigo_tipogasto = partida_temporal.codigo_tipogasto;
 			this.data.nombre_tipogasto = partida_temporal.nombre_tipogasto;
 			this.data.codigo_partida = partida_temporal.codigo;
