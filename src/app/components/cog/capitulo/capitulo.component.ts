@@ -37,7 +37,7 @@ export class CapituloComponent {
 				console.log('error: ', obj);
 			},
 			error => {
-				console.log(error.statusText);
+				console.log(error);
 			});
 	}
 

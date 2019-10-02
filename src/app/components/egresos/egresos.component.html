@@ -158,71 +158,60 @@
 											Agregar partida
 										</button>
 									</div>
-									<div class="col-6 text-right">
-										<button class="btn btn-primary mt-2"
-											(click)="show=!show"
-											>
-											Ocultar tabla
-										</button>
-									</div>
 								</div>
 
-								<!-- <ng-container *ngIf="show"> -->
-									<div class="table-responsive mt-3">
-										<table class="table table-striped">
-											<thead class="thead-dark">
-												<tr>
-													<th scope="col">#</th>
-													<th scope="col">Centro costo</th>
-													<th scope="col">Cod. Partida</th>
-													<th scope="col">Nombre partida</th>
-													<th scope="col">Importe</th>
-													<th class="text-center" scope="col">Eliminar</th>
-												</tr>
-											</thead>
+								<div class="table-responsive mt-3">
+									<table class="table table-striped">
+										<thead class="thead-dark">
+											<tr>
+												<th scope="col">#</th>
+												<th scope="col">Centro costo</th>
+												<th scope="col">Cod. Partida</th>
+												<th scope="col">Nombre partida</th>
+												<th scope="col">Importe</th>
+												<th class="text-center" scope="col">Eliminar</th>
+											</tr>
+										</thead>
+										<tbody *ngIf="partidas.length>0; else tableEmpty">
+											<tr *ngFor="let item of partidas; let i = index">
+												<td>{{ i+1 }}</td>
+												<td>{{ item.nombre_cc }}</td>
+												<td>{{ item.codigo_partida }}</td>
+												<td>{{ item.nombre_partida }}</td>
+												<td>{{ item.importe }}</td>
+												<td>
+													<button type="button" class="btn btn-danger btn-sm w-auto mb-1 ml-1" (click)="eliminarPartida(i,item.importe)">
+														<i class="fas fa-trash"></i>
+														Eliminar
+													</button>
+												</td>
+											</tr>
+										</tbody>
+										<ng-template #tableEmpty>
 											<tbody>
-												<tr *ngFor="let item of partidas; let i = index">
-													<td>{{ i+1 }}</td>
-													<td>CC</td>
-													<td>{{ item.codigo }}</td>
-													<td>{{ item.nombre }}</td>
-													<td>{{ item.importe }}</td>
-													<td>
-														<button type="button" class="btn btn-danger btn-sm w-auto mb-1 ml-1" (click)="eliminarPartida(i,item.importe)">
-															<i class="fas fa-trash"></i>
-															Eliminar
-														</button>
-													</td>
-												</tr>
+												<td colspan="6" align="center">
+													No hay datos que mostrar.
+												</td>
 											</tbody>
-											<tfoot class="bg-black">
-												<tr>
-													<td colspan="4" align="right">
-														Total
-													</td>
-													<td colspan="2" align="left">
-														${{ total }}
-													</td>
-												</tr>
-											</tfoot>
-                                            <!-- <ng-template #no_data>
-                                                <tbody>
-                                                    <tr>
-                                                        <td colspan="6" align="center">
-                                                            No hay datos para mostrar.
-                                                        </td>
-                                                    </tr>
-                                                </tbody>
-                                            </ng-template> -->
-										</table>
-									</div>
-								<!-- </ng-container> -->
+										</ng-template>
+										<tfoot class="">
+											<tr>
+												<td colspan="4" align="right">
+													Total
+												</td>
+												<td colspan="2" align="left">
+													${{ total }}
+												</td>
+											</tr>
+										</tfoot>
+									</table>
+								</div>
 								<div class="row">
 									<div class="col-6 text-right">
 										<button class="btn btn-primary"
 											(click)="savePartidasCC()"
 										>
-											Guardar centros de costo con sus partidas
+											Guardar centro de costo con sus partidas
 										</button>
 									</div>
 									<div class="col-6 text-left">

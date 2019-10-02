@@ -19,43 +19,32 @@ export class EgresosComponent {
 	programas: any;
 	subprogramas: any;
 
-	/* -- Proyectos de egreso -- */
+	/* -- Proyectos y fases -- */
 	proyectos: any;
 	fases: any;
 
 	/* -- Clasificación por fuente de financiamiento -- */
-	cff_keys = [0, 0, 0];
+	cff_keys = ['0', '0', '0'];
 	cff_data: any;
 
-	/* -- Clasificación por objeto del gasto -- */
-	cog_keys = [0, 0, 0];
-	cog_data: any;
-
-	/* -- Unidades internas -- */
-	ui_keys = [0, 0, 0];
+	/* -- Unidades internas | clas administrativa -- */
+	ui_keys = ['0', '0'];
 	ui_data: any;
+
+	/* -- Clasificación por objeto del gasto -- */
+	cog_keys = ['0', '0', '0'];
+	cog_data: any;
 
 	/* -- Variables locales -- */
 	cc_partidas: any;
-
-	// show: boolean;
-	// mensaje: any;
-	total: number;
-
 	partidas: any;
+	total: number;
 	cantidad: any;
 
-	cfg_keys = [0, 0, 0];
-	cfg_data: any;
+	/* -- VARIABLES A ELIMINAR | PROYECTOS Y FASE, PROGRAMA Y SUPBRPGRAMA */
 
 	id_subprograma: any;
 	id_fase: any;
-	id_gasto: any;
-
-	// gastos: any;
-
-	anio: any;
-	desc: any;
 
 	constructor(
 		private subprograma_service: SubprogramaService,
@@ -86,7 +75,7 @@ export class EgresosComponent {
 		this.cc_partidas = [];
 
 
-		this.id_gasto = '';
+		// this.id_gasto = '';
 
 		// this.show = true;
 		// this.mensaje = 'Ocultar tabla';
@@ -143,40 +132,23 @@ export class EgresosComponent {
 		console.log('COG: ', data);
 	}
 
-	guardarInfo() {
-		const data = {
-			id_subprograma: this.id_subprograma,
-			id_fase: this.id_fase,
-			id_centro_costo: this.ui_data.id_ccosto,
-			id_tipo_financ: this.cff_data.id_tipo,
-			id_gasto: this.cog_data.id_tgasto,
-			desc: this.desc
-		};
-		console.log('data:', data);
-		console.log('partidas:', this.partidas);
-		this.proyecto_service.setPresEgreso(data, this.partidas)
-			.subscribe((response: any) => {
-				console.log(response);
-			});
-	}
-
 	agregarPartida() {
-		this.total += this.cantidad;
-		this.partidas.push({
-			id_partida: this.cog_data.id_partida,
-			codigo_partida: this.cog_data.codigo_partida,
-			nombre_partida: this.cog_data.nombre_partida,
-			importe: this.cantidad
-		});
-		this.cantidad = 0;
-		// this.cog_data = {
-		// 	id_partida: '',
-		// 	nombre_partida: '',
-		// 	codigo_partida: '',
-		// 	codigo_cuenta: '',
-		// 	nombre_cuenta: ''
-		// };
-		// this.cog_component.onChangePartida('');
+		if (this.cantidad >= 0) {
+			this.total += this.cantidad;
+			this.partidas.push({
+				// id_cc: this.ui_data.id_ccosto,
+				// nombre_cc: this.ui_data.nombre_cc,
+				id_partida: this.cog_data.id_partida,
+				codigo_partida: this.cog_data.codigo_partida,
+				nombre_partida: this.cog_data.nombre_partida,
+				importe: this.cantidad
+			});
+			this.cantidad = 0;
+			this.cog_component.getPartidasByConcepto('');
+		} else {
+			console.log('La cantidad no puede ser menor o igual a 0.');
+		}
+		console.log('Check: ', this.cog_data);
 	}
 
 	eliminarPartida(id: any, importe: number) {
@@ -184,28 +156,29 @@ export class EgresosComponent {
 		this.partidas.splice(id, 1);
 	}
 
-	// Data_CC(data: any) {
-	// 	this.cc_data = data;
-	// 	console.log('CC ', data);
-	// }
-
-	// Data_CA(data: any) {
-	// 	this.ca_data = data;
-	// 	console.log('CA ', data);
-	// }
-
-	// Data_CFG(data: any) {
-	// 	this.cff_data = data;
-	// 	console.log('CFG ', data);
-	// }
-
 	savePartidasCC() {
 		this.cc_partidas.push(this.partidas);
 		this.partidas = [];
 		this.total = 0;
-		// this.cog_component.onChangeCapitulo('');
-		this.ui_component.getCcByUnidad('');
+		this.cog_component.restartVariables();
+		this.ui_component.restartVariables();
 		console.log('CC_partidas: ', this.cc_partidas);
+	}
+
+	guardarInfo() {
+		const data = {
+			id_subprograma: this.id_subprograma,
+			id_fase: this.id_fase,
+			id_centro_costo: this.ui_data.id_ccosto,
+			id_tipo_financ: this.cff_data.id_tipo,
+			id_gasto: this.cog_data.id_tgasto
+		};
+		console.log('data:', data);
+		console.log('partidas:', this.partidas);
+		this.proyecto_service.setPresEgreso(data, this.partidas)
+			.subscribe((response: any) => {
+				console.log(response);
+			});
 	}
 
 }

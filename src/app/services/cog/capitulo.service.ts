@@ -28,7 +28,7 @@ export class CapituloService {
 
 	getCapitulo(id: string) {
 		return this.constants.getRequest(`/get_capitulo/${id}`, 'get', false);
-	} 
+	}
 
 	activarEliminarCapitulo(id: string, opcion: boolean) {
 		if (opcion) {
