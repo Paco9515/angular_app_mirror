@@ -12,7 +12,6 @@ export class RubrosComponent {
 	rubros: Rubros[];
 	detalle: Rubros;
 
-
 	constructor(
 		private rubros_service: RubroService
 	) {
@@ -40,10 +39,10 @@ export class RubrosComponent {
 	eliminarActivar(id: string, type: boolean) {
 		this.rubros_service.activarEliminarRubro(id, type)
 			.subscribe((response: any) => {
-				console.log(response.message);
+				// console.log(response);
 				this.getRubros();
 			}, error => {
-				console.log('ERROR: ', error);
+				// console.log('ERROR: ', error);
 			});
 	}
 

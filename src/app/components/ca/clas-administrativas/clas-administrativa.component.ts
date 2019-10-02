@@ -17,6 +17,10 @@ export class ClasAdministrativaComponent implements OnInit {
 	financieros: Financieros[];
 	sectores: Sectores[];
 
+	financiero = true;
+	economia = true;
+	subeconomia = true;
+
 	constructor(
 		private adminService: ClasAdministrativaService,
 		private activitedRoute: ActivatedRoute) {
@@ -54,11 +58,14 @@ export class ClasAdministrativaComponent implements OnInit {
 		this.economias = [];
 		this.admin.id_subeconomia = '';
 		this.subeconomias = [];
+		this.financiero = false;
+		this.economia = true;
+		this.subeconomia = true;
 		if (id_sector !== '') {
 			this.admin.id_sector = id_sector;
 			this.adminService.getFinancierosSector(id_sector)
 			.subscribe((obj: any) => {
-				this.financieros = obj;
+				this.financieros = obj.data;
 			});
 		}
 	}
@@ -68,11 +75,13 @@ export class ClasAdministrativaComponent implements OnInit {
 		this.economias = [];
 		this.admin.id_subeconomia = '';
 		this.subeconomias = [];
+		this.economia = false;
+		this.subeconomia = true;
 		if (id_financiero !== '') {
 			this.admin.id_financiero = id_financiero;
 			this.adminService.getEconomiasFinanciero(id_financiero)
 			.subscribe((obj: any) => {
-				this.economias = obj;
+				this.economias = obj.data;
 			});
 		}
 	}
@@ -80,11 +89,12 @@ export class ClasAdministrativaComponent implements OnInit {
 	onChangeEconomia(id_economia) {
 		this.admin.id_subeconomia = '';
 		this.subeconomias = [];
+		this.subeconomia = false;
 		if (id_economia !== '') {
 			this.admin.id_economia = id_economia;
 			this.adminService.getSubeconomiasEconomia(id_economia)
 			.subscribe((obj: any) => {
-				this.subeconomias = obj;
+				this.subeconomias = obj.data;
 			});
 		}
 	}
@@ -94,8 +104,8 @@ export class ClasAdministrativaComponent implements OnInit {
 	}
 
 	cargarAdmin(id: string) {
-		this.adminService.getClasAdmin(id).subscribe((obj: Clas_admin) => {
-			this.admin = obj;
+		this.adminService.getClasAdmin(id).subscribe((obj: any) => {
+			this.admin = obj.data;
 			const FINANCIERO = this.admin.id_financiero;
 			const ECONOMIA = this.admin.id_economia;
 			const SUBECONOMIA = this.admin.id_subeconomia;
@@ -103,6 +113,9 @@ export class ClasAdministrativaComponent implements OnInit {
 			this.onChangeFinanciero(FINANCIERO);
 			this.onChangeEconomia(ECONOMIA);
 			this.onChangeSubeconomia(SUBECONOMIA);
+		},
+		error => {
+			console.log(error.statusText);
 		});
 	}
 

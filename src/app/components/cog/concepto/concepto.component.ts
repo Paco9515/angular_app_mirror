@@ -33,7 +33,6 @@ import { ActivatedRoute } from '@angular/router';
 
 		this.activitedRoute.params.subscribe((data: any) => {
 			if (data.id !== 'nuevo') {
-				console.log(data.id);
 				this.cargarCapitulos(data.id);
 			}
 		});
@@ -51,16 +50,21 @@ import { ActivatedRoute } from '@angular/router';
 
 	cargarCapitulos(id: string) {
 		this.conceptoService.getConcepto(id)
-			.subscribe((obj: Conceptos) => this.concepto = obj);
+			.subscribe((obj: any) => {
+				this.concepto = obj.data;
+			},
+			error => {
+				// console.log(error.error);
+			});
 	}
 
 	guardar(f: NgForm) {
 		if (f.valid) {
 			this.conceptoService.createUpdateConcepto(this.concepto)
 				.subscribe((response: any) => {
-					console.log(response);
+					// console.log(response);
 				}, error => {
-					console.log(error.error);
+					// console.log(error.error);
 			});
 		}
 	}

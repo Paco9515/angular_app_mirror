@@ -42,10 +42,10 @@ export class CuentasComponent {
 	eliminarActivar(id: string, type: boolean) {
 		this.cuentas_service.activarEliminarCuenta(id, type)
 			.subscribe((response: any) => {
-				console.log(response.message);
+				// console.log(response);
 				this.getCuentas();
 			}, error => {
-				console.log('ERROR: ', error);
+				// console.log('ERROR: ', error);
 			});
 	}
 

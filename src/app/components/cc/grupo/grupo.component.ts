@@ -41,8 +41,11 @@ export class GrupoComponent {
 
 	cargarGrupo(id: string) {
 		this.grupoService.getGrupo(id)
-			.subscribe((obj: Grupos) => {
-				this.grupo = obj;
+			.subscribe((obj: any) => {
+				this.grupo = obj.data;
+			},
+			error => {
+				console.log(error.error);
 			});
 	}
 

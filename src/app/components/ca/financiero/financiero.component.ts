@@ -39,15 +39,18 @@ export class FinancieroComponent {
 
 	cargarFinanciero(id: string) {
 		this.financieroService.getFinanciero(id).subscribe((obj: any) => {
-			this.financiero = obj;
+			this.financiero = obj.data;
+		},
+		error => {
+			console.log(error.error);
 		});
 	}
 
 	guardar(f: NgForm) {
 		if (f.valid) {
 			this.financieroService.createUpdateFinanciero(this.financiero)
-				.subscribe((response: any) => {
-					console.log(response);
+				.subscribe((obj: any) => {
+					console.log(obj);
 				},
 				error => {
 					console.log(error.error);

@@ -35,11 +35,11 @@ export class SectoresComponent {
 
 	eliminarActivar(id: string, type: boolean) {
 		this.sectores_service.activarEliminarSector(id, type)
-			.subscribe((response: any) => {
-				console.log(response.message);
+			.subscribe((obj: any) => {
+				console.log(obj);
 				this.getSectores();
 			}, error => {
-				console.log('ERROR: ', error);
+				console.log('ERROR: ', error.error);
 			});
 	}
 }

@@ -10,14 +10,13 @@ import { ActivatedRoute } from '@angular/router';
 	styles: []
 })
 export class PartidaComponent implements OnInit {
-
 	capitulos: Capitulos[];
 	conceptos: Conceptos[];
 	partidas: Partidas[];
 	partida: Partidas;
 
-	concepto:boolean = true;
-	genero: boolean = true;
+	concepto = true;
+	genero = true;
 
 
 	constructor(
@@ -32,8 +31,7 @@ export class PartidaComponent implements OnInit {
 			id_capitulo: '',
 			nombre_capitulo: '',
 			id_concepto: '',
-			nombre_concepto: '',
-
+			nombre_concepto: ''
 		};
 	}
 
@@ -42,11 +40,6 @@ export class PartidaComponent implements OnInit {
 		.subscribe((data: any) => {
 			this.capitulos = data;
 		});
-
-		this.partidaService.getGeneros()
-			.subscribe((data: any) => {
-				// this.generos = data;
-			});
 
 		this.activitedRoute.params.subscribe((data: any) => {
 			if (data.id !== 'nuevo') {
@@ -64,8 +57,8 @@ export class PartidaComponent implements OnInit {
 		if (id_capitulo !== '') {
 			this.partida.id_capitulo = id_capitulo;
 			this.partidaService.get_conceptos_capitulo(id_capitulo)
-				.subscribe((data: any) => {
-					this.conceptos = data;
+				.subscribe((obj: any) => {
+					this.conceptos = obj.data;
 				});
 		}
 	}
@@ -76,11 +69,14 @@ export class PartidaComponent implements OnInit {
 
 	cargarPartida(id: string) {
 		this.partidaService.getPartidaId(id)
-			.subscribe((obj: Partidas) => {
-			this.partida = obj;
+			.subscribe((obj: any) => {
+			this.partida = obj.data;
 			const CONCEPTO = this.partida.id_concepto;
 			this.onChangeCapitulo(this.partida.id_capitulo);
 			this.onChangeConcepto(CONCEPTO);
+		},
+		error => {
+			// console.log(error.error);
 		});
 	}
 

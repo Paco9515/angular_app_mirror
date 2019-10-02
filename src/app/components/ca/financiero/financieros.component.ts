@@ -29,18 +29,18 @@ export class FinancierosComponent {
 
 	 getFinancieros() {
 		this.financiero_service.getFinancieros()
-			.subscribe((data: any) => {
-				this.financieros = data;
+			.subscribe((obj: any) => {
+				this.financieros = obj;
 		});
 	}
 
 	eliminarActivar(id: string, type: boolean) {
 		this.financiero_service.activarEliminarFinanciero (id, type)
-			.subscribe((response: any) => {
-				console.log(response.message);
+			.subscribe((obj: any) => {
+				// console.log(obj);
 				this.getFinancieros();
 			}, error => {
-				console.log('ERROR: ', error);
+				// console.log('ERROR: ', error);
 			});
 	}
 

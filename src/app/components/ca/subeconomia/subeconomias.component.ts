@@ -43,10 +43,10 @@ export class SubeconomiasComponent {
 	eliminarActivar(id: string, type: boolean) {
 		this.subeconomia_service.activarEliminarSubeconomia(id, type)
 			.subscribe((response: any) => {
-				console.log(response.message);
+				// console.log(response.message);
 				this.getSubeconomias();
 			}, error => {
-				console.log('ERROR: ', error);
+				// console.log('ERROR: ', error);
 			});
 	}
 

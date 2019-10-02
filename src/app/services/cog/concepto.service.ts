@@ -7,13 +7,11 @@ import { ConstantsService } from '../shared/constants.service';
 })
 export class ConceptoService {
 
-    constructor(
-
-    private constants: ConstantsService
-    ) {}
+	constructor(
+		private constants: ConstantsService
+	) {}
 
 	createUpdateConcepto(concepto: Conceptos) {
-
 		if (concepto.id === '') {
 			return this.constants.getRequest(`/create_concepto`, 'post', concepto);
 		} else {

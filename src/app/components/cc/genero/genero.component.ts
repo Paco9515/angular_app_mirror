@@ -31,14 +31,19 @@ export class GeneroComponent {
 
 	cargarGenero(id: string) {
 		this.generoService.getGenero(id)
-			.subscribe((obj: Generos) => this.genero = obj);
+			.subscribe((obj: any) => {
+				this.genero = obj.data;
+			},
+			error => {
+				console.log(error.error);
+			});
 	}
 
 	guardar(f: NgForm) {
 		if (f.valid) {
 			this.generoService.createUpdateGenero(this.genero)
-				.subscribe((response: any) => {
-					console.log(response);
+				.subscribe((obj: any) => {
+					console.log(obj);
 				}, error => {
 					console.log(error.error);
 			});

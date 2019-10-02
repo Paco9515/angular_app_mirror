@@ -45,11 +45,11 @@ export class GruposComponent {
 
 	eliminarActivar(id: string, type: boolean) {
 		this.grupo_service.activarEliminarGrupo(id, type)
-			.subscribe((response: any) => {
-				console.log(response.message);
+			.subscribe((obj: any) => {
+				console.log(obj);
 				this.getGrupos();
 			}, error => {
-				console.log('ERROR: ', error);
+				console.log('ERROR: ', error.error);
 			});
 	}
 

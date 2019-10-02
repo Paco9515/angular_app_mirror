@@ -75,7 +75,8 @@
 									<select class="form-control"  name="grupo" 
 									[(ngModel)]="subcuenta.id_grupo"
 									(change)="onChangeGrupo($event.target.value)"
-									required>
+										[(disabled)]="grupo"
+										required>
 										<option value="">Seleccione un grupo</option>
 										<option *ngFor="let grupo of grupos" [value]="grupo.id">
 											{{ grupo.codigo + ' ' +grupo.nombre }}
@@ -91,7 +92,8 @@
 									<select class="form-control"  name="rubro" 
 									[(ngModel)]="subcuenta.id_rubro"
 									(change)="onChangeRubro($event.target.value)"
-									required>
+										[(disabled)]="rubro"
+										required>
 										<option value="">Seleccione un rubro</option>
 										<option *ngFor="let rubro of rubros" [value]="rubro.id">
 											{{ rubro.codigo + ' ' +rubro.nombre }}
@@ -107,7 +109,8 @@
 									<select class="form-control"  name="cuenta" 
 									[(ngModel)]="subcuenta.id_cuenta"
 									(change)="onChangeCuenta($event.target.value)"
-									required>
+										[(disabled)]="cuenta"
+										required>
 										<option value="">Seleccione un cuenta</option>
 										<option *ngFor="let cuenta of cuentas" [value]="cuenta.id">
 											{{ cuenta.codigo + ' ' +cuenta.nombre }}

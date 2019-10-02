@@ -34,11 +34,11 @@ export class GenerosComponent {
 
 	eliminarActivar(id: string, type: boolean) {
 		this.genero_service.activarEliminarGenero(id, type)
-			.subscribe((response: any) => {
-				console.log(response.message);
+			.subscribe((obj: any) => {
+				// console.log(obj);
 				this.getGeneros();
 			}, error => {
-				console.log('ERROR: ', error);
+				// console.log('ERROR: ', error);
 			});
 	}
 

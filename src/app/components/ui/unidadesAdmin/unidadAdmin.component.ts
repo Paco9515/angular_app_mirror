@@ -50,7 +50,6 @@ export class UnidadAdminComponent  {
 	}
 
 	createForma(obj: UnidadesAdmin) {
-
 		this.unidadesService.getEmpresas().subscribe((empresas: any) => {
 			this.emps_unidades = empresas;
 		});
@@ -59,7 +58,6 @@ export class UnidadAdminComponent  {
 		});
 		this.unidad = obj;
 	}
-
 
 	guardar(f: NgForm) {
 		if (f.valid) {

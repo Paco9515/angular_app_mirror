@@ -33,14 +33,17 @@ export class SectorComponent {
 	cargarSector(id: string) {
 		this.sectorservice.getSector(id).subscribe((obj: any) => {
 			this.sector = obj;
+		},
+		error => {
+			console.log(error.error);
 		});
 	}
 
 	guardar(f: NgForm) {
 		if (f.valid) {
 			this.sectorservice.createUpdateSector(this.sector)
-				.subscribe((response: any) => {
-					console.log(response);
+				.subscribe((obj: any) => {
+					console.log(obj);
 				},
 				error => {
 					console.log(error.error);

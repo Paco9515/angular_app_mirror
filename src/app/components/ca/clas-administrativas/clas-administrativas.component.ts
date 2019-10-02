@@ -43,11 +43,11 @@ export class ClasAdministrativasComponent {
 
 	eliminarActivar(id: string, type: boolean) {
 		this.administrativa_service.activarEliminarClasAdmin(id, type)
-			.subscribe((response: any) => {
-				console.log(response.message);
+			.subscribe((obj: any) => {
+				console.log(obj);
 				this.getAdministrativas();
 			}, error => {
-				console.log('ERROR: ', error);
+				console.log('ERROR: ', error.error);
 			});
 	}
 }

@@ -15,6 +15,8 @@ export class EconomiaComponent implements OnInit {
 	financieros: Financieros[];
 	sectores: Sectores[];
 
+	financiero = true;
+
   constructor(
 	private economiaService: EconomiaService,
 	private activitedRoute: ActivatedRoute) {
@@ -45,11 +47,12 @@ export class EconomiaComponent implements OnInit {
 	onChangeSector(id_sector) {
 		this.economia.id_financiero = '';
 		this.financieros = [];
+		this.financiero = false;
 		if (id_sector !== '') {
 			this.economia.id_sector = id_sector;
 			this.economiaService.getFinancierosSector(id_sector)
 			.subscribe((obj: any) => {
-				this.financieros = obj;
+				this.financieros = obj.data;
 			});
 		}
 	}
@@ -60,10 +63,13 @@ export class EconomiaComponent implements OnInit {
 
 	cargarEconomia(id: string) {
 		this.economiaService.getEconomia(id).subscribe((obj: any) => {
-			this.economia = obj;
+			this.economia = obj.data;
 			const FINANCIERO = this.economia.id_financiero;
 			this.onChangeSector(this.economia.id_sector);
 			this.onChangeFinanciero(FINANCIERO);
+		},
+		error => {
+			console.log(error.error);
 		});
 	}
 
