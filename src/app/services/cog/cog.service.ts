@@ -35,15 +35,15 @@ export class CogService {
 		return this.constants.getRequest(`/get_partidas`, 'get', false);
 	}
 
-	getPartida(id: string, sub: boolean) {
-		return this.constants.getRequest(`/get_partida/${id}`, 'get', false)
-			.pipe(map(data => {
-				if (sub) {
-					return data['codigo_subcuenta'];
-				}
-				return data['codigo_cuenta'];
-			}));
-	}
+	// getPartida(id: string, sub: boolean) {
+	// 	return this.constants.getRequest(`/get_partida/${id}`, 'get', false)
+	// 		.pipe(map((data: any) => {
+	// 			if (sub) {
+	// 				return data.codigo_subcuenta;
+	// 			}
+	// 			return data.codigo_cuenta;
+	// 		}));
+	// }
 
 	get_partidas_concepto(id: string) {
 		return this.constants.getRequest(`/get_partidas_concepto/${id}`, 'get', false);

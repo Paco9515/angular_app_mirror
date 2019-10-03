@@ -35,10 +35,12 @@ export class CffComponent implements OnInit {
 				this.fuentes = data;
 			});
 
-		if (this.primary_keys_cff[0] !== 0) {
+		if (this.primary_keys_cff[0] !== '0') {
 			this.onChangeFuente(this.primary_keys_cff[0]);
 			this.onChangeSubfuente(this.primary_keys_cff[1]);
 			this.onChangeTipo(this.primary_keys_cff[2]);
+		} else {
+			this.out.emit(this.data);
 		}
 	}
 

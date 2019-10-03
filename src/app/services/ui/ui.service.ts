@@ -55,19 +55,19 @@ export class UiService {
 		return this.constants.getRequest(`/get_unidades_empresa/${id}`, 'get', false);
 	  }
 
-	getCcByUnidad(id: number) { // get centros de costo por unidad administrativa.
+	getCcByUnidad(id: string) { // get centros de costo por unidad administrativa.
 		return this.constants.getRequest(`/getCcByUnidad/${id}`, 'get', false);
 	}
 
-	getDataByCC(id: number) {
+	getDataByCC(id: string) {
 		return this.constants.getRequest(`/getDataByCC/${id}`, 'get', false);
 	}
 
-	getCtsCcosto(id: number) {
+	getCtsCcosto(id: string) {
 		return this.constants.getRequest(`/get_ctrabajos_ccosto/${id}`, 'get', false);
 	}
 
-	getSubfuncion(id: number) {
+	getSubfuncion(id: string) {
 		return this.constants.getRequest(`/get_subfuncion/${id}`, 'get', false);
 	}
 }
