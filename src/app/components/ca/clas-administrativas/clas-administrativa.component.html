@@ -75,6 +75,7 @@
 									<select class="form-control"  name="financiero"
 									[(ngModel)]="admin.id_financiero"
 									(change)="onChangeFinanciero($event.target.value)"
+									[(disabled)]="financiero"
 									required>
 										<option value="">Seleccione un financiero</option>
 										<option *ngFor="let financiero of financieros" [value]="financiero.id">
@@ -91,6 +92,7 @@
 									<select class="form-control" name="economia"
 									[(ngModel)]="admin.id_economia"
 									(change)="onChangeEconomia($event.target.value)"
+									[(disabled)]="economia"
 									required>
 										<option value="">Seleccione una economía</option>
 										<option *ngFor="let economia of economias" [value]="economia.id">
@@ -107,7 +109,8 @@
 									<select class="form-control"  name="subeconomia" 
 									[(ngModel)]="admin.id_subeconomia"
 									(change)="onChangeSubeconomia($event.target.value)"
-									required>
+									[(disabled)]="subeconomia"
+										required>
 										<option value="">Seleccione una subeconomía</option>
 										<option *ngFor="let subeconomia of subeconomias" [value]="subeconomia.id">
 											{{ subeconomia.codigo + ' ' + subeconomia.nombre }}

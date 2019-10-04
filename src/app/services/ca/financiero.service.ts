@@ -21,7 +21,7 @@ export class FinancieroService {
 
 	activarEliminarFinanciero(id: string, opcion: boolean) {
 		if (opcion) {
-			return this.constants.getRequest(`/activate_financiero/${id}`, 'put', false);
+			return this.constants.getRequest(`/activate_financiero/${id}`, 'get', false);
 		} else {
 			return this.constants.getRequest(`/delete_financiero/${id}`, 'delete', false);
 		}
@@ -32,7 +32,7 @@ export class FinancieroService {
 	}
 
 	getFinanciero(id: string) {
-		return this.constants.getRequest(`/get_financieros/${id}`, 'get', false);
+		return this.constants.getRequest(`/get_financiero/${id}`, 'get', false);
 	}
 
 	getSectores() {

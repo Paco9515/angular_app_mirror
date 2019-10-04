@@ -29,7 +29,7 @@ export class GeneroService {
 
 	activarEliminarGenero(id: string, opcion: boolean) {
 		if (opcion) {
-			return this.constants.getRequest(`/activate_genero/${id}`, 'put', false);
+			return this.constants.getRequest(`/activate_genero/${id}`, 'get', false);
 		} else {
 			return this.constants.getRequest(`/delete_genero/${id}`, 'delete', false);
 		}

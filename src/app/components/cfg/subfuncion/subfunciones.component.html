@@ -31,7 +31,7 @@
                                 <thead class="thead-dark">
                                     <tr>
                                         <th scope="col">#</th>
-                                        <th scope="col">Codigo</th>
+                                        <th scope="col">Código</th>
                                         <th scope="col">Nombre</th>
                                         <th scope="col">Estado</th>
                                         <th class="text-center" scope="col">Opciones</th>
@@ -62,19 +62,19 @@
                                                 </ng-template>
                                             </td>
                                             <td class="text-center">
-                                                <button type="button" class="btn btn-info btn-sm text-white" data-toggle="modal" data-target="#unidadModal" (click)="info(subfuncion)">
+                                                <button type="button" class="btn btn-info btn-sm text-white w-auto mb-1 ml-1" data-toggle="modal" data-target="#unidadModal" (click)="info(subfuncion)">
                                                     <i class="fa fa-eye"></i>
                                                     Ver detalle
                                                 </button>
-                                                <button type="button" class="btn btn-primary btn-sm ml-3" [routerLink]="['/panel-adm/subfuncion', subfuncion.id]" [disabled]="!subfuncion.status">
+                                                <button type="button" class="btn btn-primary btn-sm w-auto mb-1 ml-1" [routerLink]="['/panel-adm/subfuncion', subfuncion.id]" [disabled]="!subfuncion.status">
                                                     <i class="fa fa-edit"></i>
                                                     Editar
                                                 </button>
-                                                <button *ngIf="subfuncion.status" type="button" class="btn btn-danger btn-sm ml-3" (click)="eliminarActivar(subfuncion.id, false)">
+                                                <button *ngIf="subfuncion.status" type="button" class="btn btn-danger btn-sm w-auto mb-1 ml-1" (click)="eliminarActivar(subfuncion.id, false)">
                                                     <i class="fa fa-trash"></i>
                                                     Eliminar
                                                 </button>
-                                                <button *ngIf="!subfuncion.status" class="btn btn-success btn-sm ml-3" type="button" (click)="eliminarActivar(subfuncion.id, true)">
+                                                <button *ngIf="!subfuncion.status" class="btn btn-success btn-sm w-auto mb-1 ml-1" type="button" (click)="eliminarActivar(subfuncion.id, true)">
                                                     <i class="fa fa-arrow-circle-up"></i>
                                                     Activar
                                                 </button>
@@ -98,37 +98,37 @@
                                             <div class="row">
                                                 <div class="col-12">
                                                     <div class="form-group row">
-                                                        <label for="staticEmail" class="col-sm-3 col-form-label">
+                                                        <label for="staticEmail" class="col-sm-2 col-form-label font-weight-bold">
                                                             Finalidad:
                                                         </label>
-                                                        <div class="col-9">
-                                                            <input type="text" readonly class="form-control-plaintext" [(ngModel)]="detalle.nom_funcion">
+                                                        <div class="col-sm-10">
+                                                            <p>{{ detalle.nom_funcion }}</p>
                                                         </div>
                                                     </div>
                                                     <div class="form-group row">
-                                                        <label for="staticEmail" class="col-sm-3 col-form-label">
-                                                            Codigo:
+                                                        <label for="staticEmail" class="col-sm-2 col-form-label font-weight-bold">
+                                                            Código:
                                                         </label>
-                                                        <div class="col-9">
-                                                            <input type="text" readonly class="form-control-plaintext" [(ngModel)]="detalle.codigo">
+                                                        <div class="col-sm-10">
+                                                            <p>{{ detalle.codigo }}</p>
                                                         </div>
                                                     </div>
                                                     <div class="form-group row">
-                                                        <label for="staticEmail" class="col-sm-3 col-form-label">
-                                                                Nombre de Funcion:
-                                                            </label>
-                                                        <div class="col-9">
-                                                            <input type="text" readonly class="form-control-plaintext" [(ngModel)]="detalle.nombre">
+                                                        <label for="staticEmail" class="col-sm-2 col-form-label font-weight-bold">
+                                                            Nombre de Funcion:
+                                                        </label>
+                                                        <div class="col-sm-10">
+                                                            <p>{{ detalle.nombre }}</p>
                                                         </div>
                                                     </div>
                                                     <div class="form-group row">
-                                                        <label for="staticEmail" class="col-sm-3 col-form-label">
+                                                        <label for="staticEmail" class="col-sm-2 col-form-label font-weight-bold">
                                                             Estado
                                                         </label>
-                                                        <div class="col-9">
+                                                        <div class="col-sm-10">
                                                             <span *ngIf="detalle.status; else inactiveBlock" class="badge badge-success">
-                                                                            Activo
-                                                                        </span>
+                                                                Activo
+                                                            </span>
                                                             <ng-template #inactiveBlock>
                                                                 <span class="badge badge-secondary">Inactivo</span>
                                                             </ng-template>

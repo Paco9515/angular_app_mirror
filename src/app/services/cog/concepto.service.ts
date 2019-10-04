@@ -7,13 +7,11 @@ import { ConstantsService } from '../shared/constants.service';
 })
 export class ConceptoService {
 
-    constructor(
-
-    private constants: ConstantsService
-    ) {}
+	constructor(
+		private constants: ConstantsService
+	) {}
 
 	createUpdateConcepto(concepto: Conceptos) {
-
 		if (concepto.id === '') {
 			return this.constants.getRequest(`/create_concepto`, 'post', concepto);
 		} else {
@@ -39,7 +37,7 @@ export class ConceptoService {
 
 	activarEliminarConcepto(id: string, opcion: boolean) {
 		if (opcion) {
-			return this.constants.getRequest(`/activate_concepto/${id}`, 'put', false);
+			return this.constants.getRequest(`/activate_concepto/${id}`, 'get', false);
 		} else {
 			return this.constants.getRequest(`/delete_concepto/${id}`, 'delete', false);
 		}

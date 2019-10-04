@@ -38,7 +38,7 @@
 									Código
 								</label>
 								<div class="col-sm-10">
-									<input type="text" class="form-control" placeholder="Ingresa el código" required
+									<input type="text" class="form-control" placeholder="Ingresa el código"
 									name="codigo" [(ngModel)]="partida.codigo" required>
 								</div>
 							</div>
@@ -47,7 +47,7 @@
 									Nombre
 								</label>
 								<div class="col-sm-10">
-									<input type="text" class="form-control" placeholder="Ingresa el nombre" required name="nombre"
+									<input type="text" class="form-control" placeholder="Ingresa el nombre" name="nombre"
 									[(ngModel)]="partida.nombre" required>
 								</div>
 							</div>
@@ -73,7 +73,9 @@
 								<div class="col-sm-10">
 									<select class="form-control" name="concepto"
 										[(ngModel)]="partida.id_concepto"
-										(change)="onChangeConcepto($event.target.value)" required>
+										(change)="onChangeConcepto($event.target.value)"
+										[(disabled)]="concepto"
+										required>
 										<option value="">Seleccione un concepto</option>
 										<option *ngFor="let concepto of conceptos" [value]="concepto.id">
 											{{ concepto.codigo + ' ' + concepto.nombre }}
@@ -91,84 +93,6 @@
 									</span>
 								</div>
 							</div>
-
-							<!--div class="form-group row">
-							<label for=status class="col-sm-2 col-form-label">
-								Cuenta o Subcuenta
-							</label>
-						</div>
-						<div class="form-group row">
-							<label for="genero" class="col-sm-2 col-form-label">
-								Generos
-							</label>
-							<div class="col-sm-10">
-								<select class="form-control"  name="genero" 
-								[(ngModel)]="partida.id_genero"
-								#genero>
-									<option value="">Seleccione un genero</option>
-									<option *ngFor="let genero of generos" [value]="genero.id">
-										{{ genero.nombre }}
-									</option>
-								</select>
-							</div>
-						</div>
-						<div class="form-group row">
-							<label for="grupo" class="col-sm-2 col-form-label">
-								Grupo
-							</label>
-							<div class="col-sm-10">
-								<select class="form-control"  name="grupo" 
-								[(ngModel)]="partida.id_grupo" #grupo>
-									<option value="">Seleccione un grupo</option>
-									<option *ngFor="let grupo of grupos | filter: genero.value:'id_genero'" [value]="grupo.id">
-										{{ grupo.nombre }}
-									</option>
-								</select>
-							</div>
-						</div>
-						<div class="form-group row">
-							<label for="rubro" class="col-sm-2 col-form-label">
-								Rubro
-							</label>
-							<div class="col-sm-10">
-								<select class="form-control"  name="rubro" 
-								[(ngModel)]="partida.id_rubro" #rubro>
-									<option value="">Seleccione un rubro</option>
-									<option *ngFor="let rubro of rubros | filter: grupo.value:'id_grupo'" [value]="rubro.id">
-										{{ rubro.nombre }}
-									</option>
-								</select>
-							</div>
-						</div>
-						<div class="form-group row">
-							<label for="cuenta" class="col-sm-2 col-form-label">
-								Cuenta
-							</label>
-							<div class="col-sm-10">
-								<select class="form-control"  name="cuenta" 
-								[(ngModel)]="partida.id_cuenta" #cuenta (change)="sub" >
-									<option value="">Seleccione una cuenta</option>
-									<option *ngFor="let cuenta of cuentas | filter: rubro.value:'id_rubro'" [value]="cuenta.id">
-										{{ cuenta.nombre }}
-									</option>
-								</select>
-							</div>
-						</div>
-
-						<div class="form-group row">
-							<label for="subcuenta" class="col-sm-2 col-form-label">
-								Subuenta
-							</label>
-							<div class="col-sm-10">
-								<select class="form-control"  name="subcuenta" 
-								[(ngModel)]="partida.id_subcuenta" >
-									<option value="">Seleccione una subcuenta</option>
-									<option *ngFor="let subcuenta of subcuentas | filter: cuenta.value:'id_cuenta'" [value]="cuenta.id">
-										{{ subcuenta.nombre }}
-									</option>
-								</select>
-							</div>
-						</div-->
 						</div>
 						<div class="card-footer">
 							<div class="form-group row">

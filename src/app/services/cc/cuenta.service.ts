@@ -20,7 +20,7 @@ export class CuentaService {
 
 	activarEliminarCuenta(id: string, opcion: boolean) {
 		if (opcion) {
-			return this.constants.getRequest(`/activate_cuenta/${id}`, 'put', false);
+			return this.constants.getRequest(`/activate_cuenta/${id}`, 'get', false);
 		} else {
 			return this.constants.getRequest(`/delete_cuenta/${id}`, 'delete', false);
 		}

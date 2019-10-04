@@ -35,6 +35,7 @@ import { ClasAdministrativasComponent } from './ca/clas-administrativas/clas-adm
 import { ClasAdministrativaComponent } from './ca/clas-administrativas/clas-administrativa.component';
 import { SubeconomiaComponent } from './ca/subeconomia/subeconomia.component';
 import { SubeconomiasComponent } from './ca/subeconomia/subeconomias.component';
+
 import { FilterPipe } from '../pipes/filter.pipe';
 
 
@@ -67,7 +68,7 @@ import { FilterPipe } from '../pipes/filter.pipe';
 		ClasAdministrativaComponent,
 		SubeconomiaComponent,
 		SubeconomiasComponent,
-		FilterPipe,
+		FilterPipe
 	],
 	exports: [
 		CapitulosComponent,

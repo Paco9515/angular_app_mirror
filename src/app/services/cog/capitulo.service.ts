@@ -13,13 +13,11 @@ export class CapituloService {
 
 
 	createUpdateCapitulo(capitulo: Capitulos) {
-
 		if (capitulo.id === '') {
 			return this.constants.getRequest(`/create_capitulo`, 'post', capitulo);
 		} else {
 			return this.constants.getRequest(`/update_capitulo`, 'put', capitulo);
 		}
-
 	}
 
 	getCapitulos() {
@@ -32,7 +30,7 @@ export class CapituloService {
 
 	activarEliminarCapitulo(id: string, opcion: boolean) {
 		if (opcion) {
-			return this.constants.getRequest(`/activate_capitulo/${id}`, 'put', false);
+			return this.constants.getRequest(`/activate_capitulo/${id}`, 'get', false);
 		} else {
 			return this.constants.getRequest(`/delete_capitulo/${id}`, 'delete', false);
 		}

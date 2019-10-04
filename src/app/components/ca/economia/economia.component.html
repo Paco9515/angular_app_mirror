@@ -75,6 +75,7 @@
 									<select class="form-control" name="financiero" 
 									[(ngModel)]="economia.id_financiero"
 									(change)="onChangeFinanciero($event.target.value)"
+									[(disabled)]="financiero"
 									required>
 										<option value="">Seleccione un financiero</option>
 										<option *ngFor="let financiero of financieros" [value]="financiero.id">

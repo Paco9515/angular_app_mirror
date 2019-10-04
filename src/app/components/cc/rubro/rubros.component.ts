@@ -12,19 +12,20 @@ export class RubrosComponent {
 	rubros: Rubros[];
 	detalle: Rubros;
 
-
 	constructor(
 		private rubros_service: RubroService
 	) {
-        this.detalle = {
-            id: '',
+		this.detalle = {
+			id: '',
 			codigo: '',
 			nombre: '',
 			status: true,
 			id_genero: '',
 			nombre_genero: '',
+			status_genero: true,
 			id_grupo: '',
-			nombre_grupo: ''
+			nombre_grupo: '',
+			status_grupo: true
 		};
 		this.rubros = [];
 		this.getRubros();
@@ -37,14 +38,13 @@ export class RubrosComponent {
 			});
 	}
 
-
 	eliminarActivar(id: string, type: boolean) {
 		this.rubros_service.activarEliminarRubro(id, type)
 			.subscribe((response: any) => {
-				console.log(response.message);
+				// console.log(response);
 				this.getRubros();
 			}, error => {
-				console.log('ERROR: ', error);
+				// console.log('ERROR: ', error);
 			});
 	}
 

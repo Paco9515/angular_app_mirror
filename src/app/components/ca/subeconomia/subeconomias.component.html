@@ -107,55 +107,74 @@
 										<div class="row">
 											<div class="col-12">
 												<div class="form-group row">
-													<label for="" class="col-sm-2 col-form-label">
+													<label for="" class="col-sm-2 col-form-label font-weight-bold">
 														Código:
 													</label>
-													<div class="col-10">
-														<input type="text" readonly class="form-control-plaintext"
-															[(ngModel)]="detalle.codigo">
+													<div class="col-sm-10">
+														<p>{{ detalle.codigo }}</p>
 													</div>
 												</div>
 												<div class="form-group row">
-													<label for="" class="col-sm-2 col-form-label">
+													<label for="" class="col-sm-2 col-form-label font-weight-bold">
 														Nombre:
 													</label>
-													<div class="col-10">
-														<input type="text" readonly class="form-control-plaintext"
-															[(ngModel)]="detalle.nombre">
+													<div class="col-sm-10">
+														<p>{{ detalle.nombre }}</p>
 													</div>
 												</div>
 												<div class="form-group row">
-													<label for="" class="col-sm-2 col-form-label">
+													<label for="" class="col-sm-2 col-form-label font-weight-bold">
 														Sector:
 													</label>
-													<div class="col-10">
-														<input type="text" readonly class="form-control-plaintext"
-															[(ngModel)]="detalle.nombre_sector">
+													<div class="col-sm-10">
+														<p>{{ detalle.nombre_sector}}
+															<span *ngIf="detalle.status_sector; else inactiveSector"
+																class="badge badge-success">
+																Activo
+															</span>
+															<ng-template #inactiveSector>
+																<span class="badge badge-secondary">Inactivo</span>
+															</ng-template>
+														</p>
 													</div>
 												</div>
 												<div class="form-group row">
-													<label for="" class="col-sm-2 col-form-label">
+													<label for="" class="col-sm-2 col-form-label font-weight-bold">
 														Financiero:
 													</label>
-													<div class="col-10">
-														<input type="text" readonly class="form-control-plaintext"
-															[(ngModel)]="detalle.nombre_financiero">
+													<div class="col-sm-10">
+														<p>{{ detalle.nombre_financiero}}
+															<span *ngIf="detalle.status_financiero; else inactiveFinanciero"
+																class="badge badge-success">
+																Activo
+															</span>
+															<ng-template #inactiveFinanciero>
+																<span class="badge badge-secondary">Inactivo</span>
+															</ng-template>
+														</p>
 													</div>
 												</div>
 												<div class="form-group row">
-													<label for="" class="col-sm-2 col-form-label">
+													<label for="" class="col-sm-2 col-form-label font-weight-bold">
 														Economía:
 													</label>
-													<div class="col-10">
-														<input type="text" readonly class="form-control-plaintext"
-															[(ngModel)]="detalle.nombre_economia">
+													<div class="col-sm-10">
+														<p>{{ detalle.nombre_economia}}
+															<span *ngIf="detalle.status_economia; else inactiveEconomia"
+																class="badge badge-success">
+																Activo
+															</span>
+															<ng-template #inactiveEconomia>
+																<span class="badge badge-secondary">Inactivo</span>
+															</ng-template>
+														</p>
 													</div>
 												</div>
 												<div class="form-group row">
-													<label for="" class="col-sm-2 col-form-label">
+													<label for="" class="col-sm-2 col-form-label font-weight-bold">
 														Estado:
 													</label>
-													<div class="col-10">
+													<div class="col-sm-10">
 														<span *ngIf="detalle.status; else inactiveBlock"
 															class="badge badge-success">
 															Activo

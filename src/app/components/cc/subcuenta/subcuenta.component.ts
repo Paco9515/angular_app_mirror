@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { SubcuentaService } from 'src/app/services/cc/subcuenta.service';
 import { Grupos, Generos, Rubros, Cuentas, Subcuentas } from '../../../interfaces/cc.interface';
 
@@ -9,7 +9,7 @@ import { Grupos, Generos, Rubros, Cuentas, Subcuentas } from '../../../interface
   templateUrl: './subcuenta.component.html',
   styles: []
 })
-export class SubcuentaComponent implements OnInit{
+export class SubcuentaComponent implements OnInit {
 
 	subcuenta: Subcuentas;
 	cuentas: Cuentas[];
@@ -17,9 +17,14 @@ export class SubcuentaComponent implements OnInit{
 	grupos: Grupos[];
 	generos: Generos[];
 
+	grupo = true;
+	rubro = true;
+	cuenta = true;
+
 	constructor(
 		private subcuentaService: SubcuentaService,
-		private activitedRoute: ActivatedRoute
+		private activitedRoute: ActivatedRoute,
+		private router: Router
 	) {
 		this.subcuenta = {
 			id: '',
@@ -52,11 +57,14 @@ export class SubcuentaComponent implements OnInit{
 		this.rubros = [];
 		this.subcuenta.id_cuenta = '';
 		this.cuentas = [];
+		this.grupo = false;
+		this.rubro = true;
+		this.cuenta = true;
 		if (id_genero !== '') {
 			this.subcuenta.id_genero = id_genero;
 			this.subcuentaService.getGruposGenero(id_genero)
 			.subscribe((obj: any) => {
-				this.grupos = obj;
+				this.grupos = obj.data;
 			});
 		}
 	}
@@ -66,23 +74,26 @@ export class SubcuentaComponent implements OnInit{
 		this.rubros = [];
 		this.subcuenta.id_cuenta = '';
 		this.cuentas = [];
+		this.rubro = false;
+		this.cuenta = true;
 		if (id_grupo !== '') {
 			this.subcuenta.id_grupo = id_grupo;
 			this.subcuentaService.getRubrosGrupo(id_grupo)
 			.subscribe((obj: any) => {
-				this.rubros = obj;
+				this.rubros = obj.data;
 			});
 		}
 	}
 
 	onChangeRubro(id_rubro) {
-		this.subcuenta.id_rubro = '';
-		this.rubros = [];
+		this.subcuenta.id_cuenta = '';
+		this.cuentas = [];
+		this.cuenta = false;
 		if (id_rubro !== '') {
 			this.subcuenta.id_rubro = id_rubro;
 			this.subcuentaService.getCuentasRubro(id_rubro)
 			.subscribe((obj: any) => {
-				this.cuentas = obj;
+				this.cuentas = obj.data;
 			});
 		}
 	}
@@ -93,7 +104,8 @@ export class SubcuentaComponent implements OnInit{
 
 	cargarSubcuenta(id: string) {
 		this.subcuentaService.getSubcuenta(id).subscribe((obj: any) => {
-			this.subcuenta = obj;
+			// console.log(obj);
+			this.subcuenta = obj.data;
 			const GRUPO = this.subcuenta.id_grupo;
 			const RUBRO = this.subcuenta.id_rubro;
 			const CUENTA = this.subcuenta.id_cuenta;
@@ -101,17 +113,21 @@ export class SubcuentaComponent implements OnInit{
 			this.onChangeGrupo(GRUPO);
 			this.onChangeRubro(RUBRO);
 			this.onChangeCuenta(CUENTA);
+		},
+		error => {
+			this.router.navigate(['panel-adm/subcuentas']);
+			alert(error.error.messaje);
 		});
 	}
 
 	guardar(f: NgForm) {
 		if (f.valid) {
 			this.subcuentaService.createUpdateSubcuenta(this.subcuenta)
-				.subscribe((response: any) => {
-					console.log(response);
+				.subscribe((obj: any) => {
+					console.log(obj);
 				},
 				error => {
-					console.log(error.error);
+					// console.log(error.error);
 				});
 		}
 	}

@@ -37,10 +37,10 @@ export class CapitulosComponent {
 	eliminarActivar(id: string, type: boolean) {
 		this.capitulo_service.activarEliminarCapitulo(id, type)
 			.subscribe((response: any) => {
-				console.log(response.message);
+				// console.log(response);
 				this.getCapitulos();
 			}, error => {
-				console.log('ERROR: ', error);
+				console.log('ERROR: ', error.error);
 			});
 	}
 
