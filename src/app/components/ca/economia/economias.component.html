@@ -128,7 +128,15 @@
 														Sector:
 													</label>
 													<div class="col-sm-10">
-														<p>{{ detalle.nombre_sector }}</p>
+														<p>{{ detalle.nombre_sector}}
+															<span *ngIf="detalle.status_sector; else inactiveSector"
+																class="badge badge-success">
+																Activo
+															</span>
+															<ng-template #inactiveSector>
+																<span class="badge badge-secondary">Inactivo</span>
+															</ng-template>
+														</p>
 													</div>
 												</div>
 												<div class="form-group row">
@@ -136,7 +144,15 @@
 														Financiero:
 													</label>
 													<div class="col-sm-10">
-														<p>{{ detalle.nombre_financiero }}</p>
+														<p>{{ detalle.nombre_financiero}}
+															<span *ngIf="detalle.status_financiero; else inactiveFinanciero"
+																class="badge badge-success">
+																Activo
+															</span>
+															<ng-template #inactiveFinanciero>
+																<span class="badge badge-secondary">Inactivo</span>
+															</ng-template>
+														</p>
 													</div>
 												</div>
 												<div class="form-group row">

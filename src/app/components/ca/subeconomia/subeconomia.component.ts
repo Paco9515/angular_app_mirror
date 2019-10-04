@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { NgForm } from '@angular/forms';
 import { SubeconomiaService } from 'src/app/services/ca/subeconomia.service';
 import { Subeconomias, Economias, Financieros, Sectores } from '../../../interfaces/ca.interface';
@@ -21,7 +21,8 @@ export class SubeconomiaComponent  implements OnInit {
 
   	constructor(
 		private subeconomiaService: SubeconomiaService,
-		private activitedRoute: ActivatedRoute) {
+		private activitedRoute: ActivatedRoute,
+		private router: Router) {
 		this.subeconomia = {
 			id: '',
 			codigo: '',
@@ -91,7 +92,8 @@ export class SubeconomiaComponent  implements OnInit {
 			this.onChangeEconomia(ECONOMIA);
 		},
 		error => {
-			// console.log(error.error);
+			this.router.navigate(['panel-adm/subeconomias']);
+			alert(error.error.messaje);
 		});
 	}
 

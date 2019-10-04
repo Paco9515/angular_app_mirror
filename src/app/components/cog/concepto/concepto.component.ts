@@ -3,7 +3,7 @@ import { NgForm } from '@angular/forms';
 import { ConceptoService } from 'src/app/services/cog/concepto.service';
 import { Conceptos, Capitulos } from 'src/app/interfaces/cog.interface';
 import { TipoGasto } from 'src/app/interfaces/ctg.interface';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
 	selector: 'app-concepto',
@@ -18,7 +18,8 @@ import { ActivatedRoute } from '@angular/router';
 
 	constructor(
 		private conceptoService: ConceptoService,
-		private activitedRoute: ActivatedRoute
+		private activitedRoute: ActivatedRoute,
+		private router: Router
 		) {
 		this.concepto = {
 			id: '',
@@ -54,7 +55,8 @@ import { ActivatedRoute } from '@angular/router';
 				this.concepto = obj.data;
 			},
 			error => {
-				// console.log(error.error);
+				this.router.navigate(['panel-adm/conceptos']);
+				alert(error.error.messaje);
 			});
 	}
 

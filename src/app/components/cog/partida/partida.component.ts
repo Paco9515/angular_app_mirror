@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { PartidaService } from 'src/app/services/cog/partida.service';
 import { Conceptos, Partidas, Capitulos } from 'src/app/interfaces/cog.interface';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
 	selector: 'app-partida',
@@ -21,7 +21,8 @@ export class PartidaComponent implements OnInit {
 
 	constructor(
 		private partidaService: PartidaService,
-		private activitedRoute: ActivatedRoute
+		private activitedRoute: ActivatedRoute,
+		private router: Router
 		) {
 		this.partida = {
 			id: '',
@@ -76,7 +77,8 @@ export class PartidaComponent implements OnInit {
 			this.onChangeConcepto(CONCEPTO);
 		},
 		error => {
-			// console.log(error.error);
+			this.router.navigate(['panel-adm/partidas']);
+			alert(error.error.messaje);
 		});
 	}
 

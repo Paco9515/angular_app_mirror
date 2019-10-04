@@ -22,8 +22,10 @@ export class EconomiasComponent {
 			status: true,
 			id_financiero: '',
 			nombre_financiero: '',
+			status_financiero: true,
 			id_sector: '',
-			nombre_sector: ''
+			nombre_sector: '',
+			status_sector: true
 		};
 
 		this.economias = [];

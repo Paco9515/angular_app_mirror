@@ -125,10 +125,19 @@
 												</div>
 												<div class="form-group row">
 													<label for="" class="col-sm-2 col-form-label font-weight-bold">
-														Nombre del genero:
+														Genero:
 													</label>
 													<div class="col-sm-10">
-														<p>{{ detalle.nombre_genero }}</p>
+														<p>
+															{{ detalle.nombre_genero }}
+															<span *ngIf="detalle.status_genero; else inactiveGenero"
+																class="badge badge-success">
+																Activo
+															</span>
+															<ng-template #inactiveGenero>
+																<span class="badge badge-secondary">Inactivo</span>
+															</ng-template>
+														</p>
 													</div>
 												</div>
 												<div class="form-group row">

@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { GeneroService } from 'src/app/services/cc/genero.service';
 import { Generos } from 'src/app/interfaces/cc.interface';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 @Component({
 	selector: 'app-genero',
 	templateUrl: './genero.component.html',
@@ -14,7 +14,8 @@ export class GeneroComponent {
 
 	constructor(
 		private generoService: GeneroService,
-		private activitedRoute: ActivatedRoute
+		private activitedRoute: ActivatedRoute,
+		private router: Router
 	) {
 		this.genero = {
 			id: '',
@@ -35,7 +36,8 @@ export class GeneroComponent {
 				this.genero = obj.data;
 			},
 			error => {
-				console.log(error.error);
+				this.router.navigate(['panel-adm/generos']);
+				alert(error.error.messaje);
 			});
 	}
 

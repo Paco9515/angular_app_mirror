@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Grupos, Generos, Rubros, Cuentas } from '../../../interfaces/cc.interface';
 import { CuentaService } from 'src/app/services/cc/cuenta.service';
 
@@ -22,7 +22,8 @@ export class CuentaComponent implements OnInit {
 
 	constructor(
 		private cuentaService: CuentaService,
-		private activitedRoute: ActivatedRoute
+		private activitedRoute: ActivatedRoute,
+		private router: Router
 	) {
 		this.cuenta = {
 			id: '',
@@ -96,7 +97,8 @@ export class CuentaComponent implements OnInit {
 				this.onChangeRubro(RUBRO);
 			},
 			error => {
-				// console.log(error.error);
+				this.router.navigate(['panel-adm/cuentas']);
+				alert(error.error.messaje);
 			});
 	}
 

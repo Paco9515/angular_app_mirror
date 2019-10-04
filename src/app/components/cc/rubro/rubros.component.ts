@@ -22,8 +22,10 @@ export class RubrosComponent {
 			status: true,
 			id_genero: '',
 			nombre_genero: '',
+			status_genero: true,
 			id_grupo: '',
-			nombre_grupo: ''
+			nombre_grupo: '',
+			status_grupo: true
 		};
 		this.rubros = [];
 		this.getRubros();

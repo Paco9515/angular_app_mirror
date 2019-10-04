@@ -22,7 +22,8 @@ export class GruposComponent {
 			nombre: '',
 			status: true,
 			id_genero: '',
-			nombre_genero: ''
+			nombre_genero: '',
+			status_genero: true
 		};
 
 		this.grupos = [];

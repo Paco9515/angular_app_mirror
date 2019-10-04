@@ -121,28 +121,55 @@
 															<p>{{ detalle.nombre }}</p>
 														</div>
 													</div>
+													
 													<div class="form-group row">
 														<label for="" class="col-sm-2 col-form-label font-weight-bold">
-															Nombre del genero:
+															Genero:
 														</label>
 														<div class="col-sm-10">
-															<p>{{ detalle.nombre_genero }}</p>
+															<p>{{ detalle.nombre_genero }}
+																<span *ngIf="detalle.status_genero; else inactiveGenero"
+																	class="badge badge-success">
+																	Activo
+																</span>
+																<ng-template #inactiveGenero>
+																	<span class="badge badge-secondary">Inactivo</span>
+																</ng-template>
+															</p>
 														</div>
 													</div>
 													<div class="form-group row">
 														<label for="" class="col-sm-2 col-form-label font-weight-bold">
-															Nombre del grupo:
+															Grupo:
 														</label>
 														<div class="col-sm-10">
-															<p>{{ detalle.nombre_grupo }}</p>
+															<p>
+																{{ detalle.nombre_grupo }}
+																<span *ngIf="detalle.status_grupo; else inactiveGrupo"
+																	class="badge badge-success">
+																	Activo
+																</span>
+																<ng-template #inactiveGrupo>
+																	<span class="badge badge-secondary">Inactivo</span>
+																</ng-template>
+															</p>
 														</div>
 													</div>
 													<div class="form-group row">
 														<label for="" class="col-sm-2 col-form-label font-weight-bold">
-															Nombre del rubro:
+															Rubro:
 														</label>
 														<div class="col-sm-10">
-															<p>{{ detalle.nombre_rubro }}</p>
+															<p>
+																{{ detalle.nombre_rubro }}
+																<span *ngIf="detalle.status_rubro; else inactiveRubro"
+																	class="badge badge-success">
+																	Activo
+																</span>
+																<ng-template #inactiveRubro>
+																	<span class="badge badge-secondary">Inactivo</span>
+																</ng-template>
+															</p>
 														</div>
 													</div>
 													<div class="form-group row">
@@ -150,7 +177,15 @@
 															Nombre del cuenta:
 														</label>
 														<div class="col-sm-10">
-															<p>{{ detalle.nombre_cuenta }}</p>
+															<p>{{ detalle.nombre_cuenta }}
+																<span *ngIf="detalle.status_cuenta; else inactiveCuenta"
+																	class="badge badge-success">
+																	Activo
+																</span>
+																<ng-template #inactiveCuenta>
+																	<span class="badge badge-secondary">Inactivo</span>
+																</ng-template>
+															</p>
 														</div>
 													</div>
 													<div class="form-group row">

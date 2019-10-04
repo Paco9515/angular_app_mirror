@@ -22,6 +22,7 @@ export class FinancierosComponent {
 			status: true,
 			id_sector: '',
 			nombre_sector: '',
+			status_sector: true
 		};
 		this.financieros = [];
 		this.getFinancieros();

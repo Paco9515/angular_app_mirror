@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ClasAdministrativaService } from 'src/app/services/ca/clas-administrativa.service';
 import { Clas_admin, Subeconomias, Economias, Financieros, Sectores } from '../../../interfaces/ca.interface';
 
@@ -23,7 +23,8 @@ export class ClasAdministrativaComponent implements OnInit {
 
 	constructor(
 		private adminService: ClasAdministrativaService,
-		private activitedRoute: ActivatedRoute) {
+		private activitedRoute: ActivatedRoute,
+		private router: Router) {
 
 		this.admin = {
 			id: '',
@@ -115,7 +116,8 @@ export class ClasAdministrativaComponent implements OnInit {
 			this.onChangeSubeconomia(SUBECONOMIA);
 		},
 		error => {
-			console.log(error.statusText);
+			this.router.navigate(['panel-adm/administrativas']);
+			alert(error.error.messaje);
 		});
 	}
 
@@ -123,10 +125,10 @@ export class ClasAdministrativaComponent implements OnInit {
 		if (f.valid) {
 			this.adminService.createUpdateClasAdmin(this.admin)
 				.subscribe((response: any) => {
-					console.log(response);
+					// console.log(response);
 				},
 				error => {
-					console.log(error.error);
+					// console.log(error.error);
 				});
 		}
 	}

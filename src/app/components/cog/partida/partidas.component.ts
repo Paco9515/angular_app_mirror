@@ -23,8 +23,10 @@ export class PartidasComponent {
 			status: true,
 			id_capitulo: '',
 			nombre_capitulo: '',
+			status_capitulo: true,
 			id_concepto: '',
 			nombre_concepto: '',
+			status_concepto: true
 		};
 		this.partidas = [];
 		this.getPartidas();

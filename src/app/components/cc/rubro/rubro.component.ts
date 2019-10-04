@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { RubroService } from 'src/app/services/cc/rubro.service';
 import { Grupos, Generos, Rubros } from '../../../interfaces/cc.interface';
 
@@ -18,7 +18,8 @@ export class RubroComponent implements OnInit {
 
 	constructor(
 		private rubroService: RubroService,
-		private activitedRoute: ActivatedRoute
+		private activitedRoute: ActivatedRoute,
+		private router: Router
 	) {
 		this.rubro = {
 			id: '',
@@ -54,7 +55,8 @@ export class RubroComponent implements OnInit {
 				this.onChangeGrupo(GRUPO);
 			},
 			error => {
-				// console.log(error.error);
+				this.router.navigate(['panel-adm/rubros']);
+				alert(error.error.messaje);
 			});
 	}
 

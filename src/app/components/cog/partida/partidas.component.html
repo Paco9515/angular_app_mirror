@@ -125,18 +125,36 @@
 													</div>
 													<div class="form-group row">
 														<label for="capitulo" class="col-sm-3 col-form-label font-weight-bold">
-															Nombre del capítulo:
+															Capítulo:
 														</label>
 														<div class="col-sm-9">
-															<p>{{ detalle.nombre_capitulo }}</p>
+															<p>
+																{{ detalle.nombre_capitulo }}
+																<span *ngIf="detalle.status_capitulo; else inactiveCapitulo"
+																	class="badge badge-success">
+																	Activo
+																</span>
+																<ng-template #inactiveCapitulo>
+																	<span class="badge badge-secondary">Inactivo</span>
+																</ng-template>
+															</p>
 														</div>
 													</div>
 													<div class="form-group row">
 														<label for="concepto" class="col-sm-3 col-form-label font-weight-bold">
-															Nombre del concepto:
+															Concepto:
 														</label>
 														<div class="col-sm-9">
-															<p>{{ detalle.nombre_concepto }}</p>
+															<p>
+																{{ detalle.nombre_concepto }}
+																<span *ngIf="detalle.status_concepto; else inactiveConcepto"
+																	class="badge badge-success">
+																	Activo
+																</span>
+																<ng-template #inactiveConcepto>
+																	<span class="badge badge-secondary">Inactivo</span>
+																</ng-template>
+															</p>
 														</div>
 													</div>
 													<div class="form-group row">

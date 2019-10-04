@@ -22,15 +22,17 @@ export class CuentasComponent {
 			status: true,
 			id_genero: '',
 			nombre_genero: '',
+			status_genero: true,
 			id_grupo: '',
 			nombre_grupo: '',
+			status_grupo: true,
 			id_rubro: '',
-			nombre_rubro: ''
+			nombre_rubro: '',
+			status_rubro: true
 		};
 		this.cuentas = [];
 		this.getCuentas();
-
-	 }
+	}
 
 	getCuentas() {
 		this.cuentas_service.getCuentas()

@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { CapituloService } from 'src/app/services/cog/capitulo.service';
 import { Capitulos } from 'src/app/interfaces/cog.interface';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
 	selector: 'app-capitulo',
@@ -13,7 +13,8 @@ export class CapituloComponent {
 
 	constructor(
 		private capituloService: CapituloService,
-		private activitedRoute: ActivatedRoute
+		private activitedRoute: ActivatedRoute,
+		private router: Router
 	) {
 		this.capitulo = {
 			id: '',
@@ -35,8 +36,8 @@ export class CapituloComponent {
 			// console.log(obj.data);
 		},
 		error => {
-			// this.router.navigate(['**']);
-			// console.log(error.error);
+			this.router.navigate(['panel-adm/capitulos']);
+			alert(error.error.messaje);
 		});
 	}
 

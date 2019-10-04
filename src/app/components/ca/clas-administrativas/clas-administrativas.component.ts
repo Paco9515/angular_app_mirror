@@ -22,12 +22,16 @@ export class ClasAdministrativasComponent {
 			status: true,
 			id_subeconomia: '',
 			nombre_subeconomia: '',
+			status_subeconomia: true,
 			id_economia: '',
 			nombre_economia: '',
+			status_economia: true,
 			id_financiero: '',
 			nombre_financiero: '',
+			status_financiero: true,
 			id_sector: '',
 			nombre_sector: '',
+			status_sector: true
 		};
 
 		this.admins = [];

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { SubcuentaService } from 'src/app/services/cc/subcuenta.service';
 import { Grupos, Generos, Rubros, Cuentas, Subcuentas } from '../../../interfaces/cc.interface';
 
@@ -23,7 +23,8 @@ export class SubcuentaComponent implements OnInit {
 
 	constructor(
 		private subcuentaService: SubcuentaService,
-		private activitedRoute: ActivatedRoute
+		private activitedRoute: ActivatedRoute,
+		private router: Router
 	) {
 		this.subcuenta = {
 			id: '',
@@ -114,7 +115,8 @@ export class SubcuentaComponent implements OnInit {
 			this.onChangeCuenta(CUENTA);
 		},
 		error => {
-			// console.log(error.error);
+			this.router.navigate(['panel-adm/subcuentas']);
+			alert(error.error.messaje);
 		});
 	}
 
