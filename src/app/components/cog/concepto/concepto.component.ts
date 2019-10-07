@@ -3,7 +3,7 @@ import { NgForm } from '@angular/forms';
 import { ConceptoService } from 'src/app/services/cog/concepto.service';
 import { Conceptos, Capitulos } from 'src/app/interfaces/cog.interface';
 import { TipoGasto } from 'src/app/interfaces/ctg.interface';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
 	selector: 'app-concepto',
@@ -18,7 +18,8 @@ import { ActivatedRoute } from '@angular/router';
 
 	constructor(
 		private conceptoService: ConceptoService,
-		private activitedRoute: ActivatedRoute
+		private activitedRoute: ActivatedRoute,
+		private router: Router
 		) {
 		this.concepto = {
 			id: '',
@@ -33,7 +34,6 @@ import { ActivatedRoute } from '@angular/router';
 
 		this.activitedRoute.params.subscribe((data: any) => {
 			if (data.id !== 'nuevo') {
-				console.log(data.id);
 				this.cargarCapitulos(data.id);
 			}
 		});
@@ -51,16 +51,22 @@ import { ActivatedRoute } from '@angular/router';
 
 	cargarCapitulos(id: string) {
 		this.conceptoService.getConcepto(id)
-			.subscribe((obj: Conceptos) => this.concepto = obj);
+			.subscribe((obj: any) => {
+				this.concepto = obj.data;
+			},
+			error => {
+				this.router.navigate(['panel-adm/conceptos']);
+				alert(error.error.messaje);
+			});
 	}
 
 	guardar(f: NgForm) {
 		if (f.valid) {
 			this.conceptoService.createUpdateConcepto(this.concepto)
 				.subscribe((response: any) => {
-					console.log(response);
+					// console.log(response);
 				}, error => {
-					console.log(error.error);
+					// console.log(error.error);
 			});
 		}
 	}

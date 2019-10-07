@@ -8,7 +8,7 @@ import { Subeconomias } from './../../../interfaces/ca.interface';
   templateUrl: './subeconomias.component.html',
   styles: []
 })
-export class SubeconomiasComponent{
+export class SubeconomiasComponent {
 
   subeconomias: Subeconomias[];
   detalle: Subeconomias;
@@ -23,10 +23,13 @@ export class SubeconomiasComponent{
 			status: true,
 			id_economia: '',
 			nombre_economia: '',
+			status_economia: true,
 			id_financiero: '',
 			nombre_financiero: '',
+			status_financiero: true,
 			id_sector: '',
 			nombre_sector: '',
+			status_sector: true
 		};
 
 		this.subeconomias = [];
@@ -43,10 +46,10 @@ export class SubeconomiasComponent{
 	eliminarActivar(id: string, type: boolean) {
 		this.subeconomia_service.activarEliminarSubeconomia(id, type)
 			.subscribe((response: any) => {
-				console.log(response.message);
+				// console.log(response.message);
 				this.getSubeconomias();
 			}, error => {
-				console.log('ERROR: ', error);
+				// console.log('ERROR: ', error);
 			});
 	}
 

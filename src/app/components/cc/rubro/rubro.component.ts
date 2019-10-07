@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { RubroService } from 'src/app/services/cc/rubro.service';
 import { Grupos, Generos, Rubros } from '../../../interfaces/cc.interface';
 
@@ -14,9 +14,12 @@ export class RubroComponent implements OnInit {
 	grupos: Grupos[];
 	generos: Generos[];
 
+	grupo = true;
+
 	constructor(
 		private rubroService: RubroService,
-		private activitedRoute: ActivatedRoute
+		private activitedRoute: ActivatedRoute,
+		private router: Router
 	) {
 		this.rubro = {
 			id: '',
@@ -45,23 +48,31 @@ export class RubroComponent implements OnInit {
 
 	cargarRubro(id: string) {
 		this.rubroService.getRubro(id)
-			.subscribe((obj: Rubros) => {
-				this.rubro = obj;
+			.subscribe((obj: any) => {
+				this.rubro = obj.data;
 				const GRUPO = this.rubro.id_grupo;
 				this.onChangeGenero(this.rubro.id_genero);
 				this.onChangeGrupo(GRUPO);
+			},
+			error => {
+				this.router.navigate(['panel-adm/rubros']);
+				alert(error.error.messaje);
 			});
 	}
 
 	onChangeGenero(id_genero) {
 		this.rubro.id_grupo = '';
 		this.grupos = [];
+		this.grupo = false;
 		if (id_genero !== '') {
 			this.rubro.id_genero = id_genero;
 			this.rubroService.getGruposGenero(id_genero)
-				.subscribe((obj: any) => {
-	                this.grupos = obj;
-	        	});
+			.subscribe((obj: any) => {
+				this.grupos = obj.data;
+			},
+			error => {
+				// console.log(error.error);
+			});
 		}
 	}
 	onChangeGrupo(id_grupo) {
@@ -71,11 +82,11 @@ export class RubroComponent implements OnInit {
 	guardar(f: NgForm) {
 		if (f.valid) {
 			this.rubroService.createUpdateRubro(this.rubro).subscribe(
-				(response: any) => {
-					console.log(response);
+				(obj: any) => {
+					// console.log(obj);
 				},
 				error => {
-					console.log(error.error);
+					// console.log(error.error);
 				}
 			);
 		}

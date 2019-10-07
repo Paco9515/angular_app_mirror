@@ -75,6 +75,7 @@
 									<select class="form-control" name="grupo"
 										[(ngModel)]="rubro.id_grupo"
 										(change)="onChangeGrupo($event.target.value)"
+										[(disabled)]="grupo"
 										required>
 										<option value="">Seleccione un grupo</option>
 										<option *ngFor="let grupo of grupos" [value]="grupo.id">

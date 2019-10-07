@@ -1,0 +1,30 @@
+<div class="col-sm-12 mb-2">
+	<label>
+		Programa
+	</label>
+	<select class="form-control" name="programa" [ngModel]="data.id_programa"
+		(change)="getSubprogramasByPrograma($event.target.value)">
+		<option value="">
+			Seleccione un programa
+		</option>
+		<option *ngFor="let programa of programas" [value]="programa.id">
+			{{ programa.codigo + ' ' + programa.nombre }}
+		</option>
+	</select>
+</div>
+
+<div class="col-sm-12 mb-2">
+	<label>
+		Subprograma
+	</label>
+	<select class="form-control" name="subprograma" [ngModel]="data.id_subprograma"
+		(change)="getSubprogramas($event.target.value)"
+		[(disabled)] = "subprograma">
+		<option value="">
+			Seleccione un subprograma
+		</option>
+		<option *ngFor="let subprograma of subprogramas" [value]="subprograma.id">
+			{{ subprograma.codigo + ' ' + subprograma.nombre }}
+		</option>
+	</select>
+</div>

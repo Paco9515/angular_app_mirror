@@ -21,7 +21,7 @@ export class ClasAdministrativaService {
 
 	activarEliminarClasAdmin(id: string, opcion: boolean) {
 		if (opcion) {
-			return this.constants.getRequest(`/activate_administrativa/${id}`, 'put', false);
+			return this.constants.getRequest(`/activate_administrativa/${id}`, 'get', false);
 		} else {
 			return this.constants.getRequest(`/delete_administrativa/${id}`, 'delete', false);
 		}
@@ -32,13 +32,13 @@ export class ClasAdministrativaService {
 	}
 
 	getClasAdmin(id: string) {
-		return this.constants.getRequest(`/get_administrativas/${id}`, 'get', false);
+		return this.constants.getRequest(`/get_administrativa/${id}`, 'get', false);
 	}
 
 	getSubeconomiasEconomia(id) {
 		return this.constants.getRequest(`/get_subeconomias_economia/${id}`, 'get', false);
 	}
-	
+
 	getEconomiasFinanciero(id) {
 		return this.constants.getRequest(`/get_economias_financiero/${id}`, 'get', false);
 	}

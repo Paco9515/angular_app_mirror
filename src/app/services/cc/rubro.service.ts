@@ -22,7 +22,7 @@ export class RubroService {
 
 	activarEliminarRubro(id: string, opcion: boolean) {
 		if (opcion) {
-			return this.constants.getRequest(`/activate_rubro/${id}`, 'put', false);
+			return this.constants.getRequest(`/activate_rubro/${id}`, 'get', false);
 		} else {
 			return this.constants.getRequest(`/delete_rubro/${id}`, 'delete', false);
 		}

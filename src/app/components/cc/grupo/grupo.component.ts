@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Grupos, Generos } from 'src/app/interfaces/cc.interface';
 import { GrupoService } from 'src/app/services/cc/grupo.service';
 
@@ -17,6 +17,7 @@ export class GrupoComponent {
 
 	constructor(
 		private activitedRoute: ActivatedRoute,
+		private router: Router,
 		private grupoService: GrupoService) {
 		this.grupo = {
 			id: '',
@@ -41,9 +42,12 @@ export class GrupoComponent {
 
 	cargarGrupo(id: string) {
 		this.grupoService.getGrupo(id)
-			.subscribe((obj: Grupos) => {
-				this.grupo = obj
-				console.log(this.grupo);
+			.subscribe((obj: any) => {
+				this.grupo = obj.data;
+			},
+			error => {
+				this.router.navigate(['panel-adm/grupos']);
+				alert(error.error.messaje);
 			});
 	}
 

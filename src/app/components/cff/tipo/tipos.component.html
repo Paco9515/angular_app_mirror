@@ -31,7 +31,7 @@
                                 <thead class="thead-dark">
                                     <tr>
                                         <th scope="col">#</th>
-                                        <th scope="col">Codigo</th>
+                                        <th scope="col">Código</th>
                                         <th scope="col">Nombre</th>
                                         <th scope="col">Año</th>
                                         <th scope="col">Estado</th>
@@ -64,19 +64,19 @@
                                                 </ng-template>
                                             </td>
                                             <td class="text-center">
-                                                <button type="button" class="btn btn-info btn-sm text-white" data-toggle="modal" data-target="#unidadModal" (click)="info(tipo)">
+                                                <button type="button" class="btn btn-info btn-sm text-white  w-auto mb-1 ml-1" data-toggle="modal" data-target="#unidadModal" (click)="info(tipo)">
                                                         <i class="fa fa-eye"></i>
                                                         Ver detalle
                                                     </button>
-                                                <button type="button" class="btn btn-primary btn-sm ml-3" [routerLink]="['/panel-adm/tipo', tipo.id]" [disabled]="!tipo.status">
+                                                <button type="button" class="btn btn-primary btn-sm  w-auto mb-1 ml-1" [routerLink]="['/panel-adm/tipo', tipo.id]" [disabled]="!tipo.status">
                                                     <i class="fa fa-edit"></i>
                                                     Editar
                                                 </button>
-                                                <button *ngIf="tipo.status" type="button" class="btn btn-danger btn-sm ml-3" (click)="eliminarActivar(tipo.id, false)">
+                                                <button *ngIf="tipo.status" type="button" class="btn btn-danger btn-sm  w-auto mb-1 ml-1" (click)="eliminarActivar(tipo.id, false)">
                                                     <i class="fa fa-trash"></i>
                                                     Eliminar
                                                 </button>
-                                                <button *ngIf="!tipo.status" class="btn btn-success btn-sm ml-3" type="button" (click)="eliminarActivar(tipo.id, true)">
+                                                <button *ngIf="!tipo.status" class="btn btn-success btn-sm  w-auto mb-1 ml-1" type="button" (click)="eliminarActivar(tipo.id, true)">
                                                     <i class="fa fa-arrow-circle-up"></i>
                                                     Activar
                                                 </button>
@@ -100,45 +100,45 @@
                                             <div class="row">
                                                 <div class="col-12">
                                                     <div class="form-group row">
-                                                        <label for="staticEmail" class="col-sm-3 col-form-label">
-                                                                        Subfuente:
-                                                                    </label>
+                                                        <label for="staticEmail" class="col-sm-3 col-form-label font-weight-bold">
+                                                            Subfuente:
+                                                        </label>
                                                         <div class="col-9">
-                                                            <input type="text" readonly class="form-control-plaintext" [(ngModel)]="detalle.nom_subfuente">
+                                                            <p>{{ detalle.nom_subfuente }}</p>
                                                         </div>
                                                     </div>
                                                     <div class="form-group row">
-                                                        <label for="staticEmail" class="col-sm-3 col-form-label">
-                                                                        Codigo:
-                                                                    </label>
-                                                        <div class="col-9">
-                                                            <input type="text" readonly class="form-control-plaintext" [(ngModel)]="detalle.codigo">
+                                                        <label for="staticEmail" class="col-sm-2 col-form-label font-weight-bold">
+                                                            Código:
+                                                        </label>
+                                                        <div class="col-sm-10">
+                                                            <p>{{ detalle.codigo }}</p>
                                                         </div>
                                                     </div>
                                                     <div class="form-group row">
-                                                        <label for="staticEmail" class="col-sm-3 col-form-label">
-                                                                            Nombre de Tipo:
-                                                                        </label>
-                                                        <div class="col-9">
-                                                            <input type="text" readonly class="form-control-plaintext" [(ngModel)]="detalle.nombre">
+                                                        <label for="staticEmail" class="col-sm-2 col-form-label font-weight-bold">
+                                                            Nombre de Tipo:
+                                                        </label>
+                                                        <div class="col-sm-10">
+                                                            <p>{{ detalle.nombre }}</p>
                                                         </div>
                                                     </div>
                                                     <div class="form-group row">
-                                                        <label for="staticEmail" class="col-sm-3 col-form-label">
-                                                                                Año:
-                                                                            </label>
-                                                        <div class="col-9">
-                                                            <input type="text" readonly class="form-control-plaintext" [(ngModel)]="detalle.anio">
+                                                        <label for="staticEmail" class="col-sm-2 col-form-label font-weight-bold">
+                                                            Año:
+                                                        </label>
+                                                        <div class="col-sm-10">
+                                                            <p>{{ detalle.anio }}</p>
                                                         </div>
                                                     </div>
                                                     <div class="form-group row">
-                                                        <label for="staticEmail" class="col-sm-3 col-form-label">
-                                                                        Estado
-                                                                    </label>
-                                                        <div class="col-9">
+                                                        <label for="staticEmail" class="col-sm-2 col-form-label font-weight-bold">
+                                                            Estado
+                                                        </label>
+                                                        <div class="col-sm-10">
                                                             <span *ngIf="detalle.status; else inactiveBlock" class="badge badge-success">
-                                                                            Activo
-                                                                        </span>
+                                                                Activo
+                                                            </span>
                                                             <ng-template #inactiveBlock>
                                                                 <span class="badge badge-secondary">Inactivo</span>
                                                             </ng-template>

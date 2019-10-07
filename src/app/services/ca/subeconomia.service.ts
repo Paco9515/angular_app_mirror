@@ -21,7 +21,7 @@ export class SubeconomiaService {
 
 	activarEliminarSubeconomia(id: string, opcion: boolean) {
 		if (opcion) {
-			return this.constants.getRequest(`/activate_subeconomia/${id}`, 'put', false);
+			return this.constants.getRequest(`/activate_subeconomia/${id}`, 'get', false);
 		} else {
 			return this.constants.getRequest(`/delete_subeconomia/${id}`, 'delete', false);
 		}
@@ -32,7 +32,7 @@ export class SubeconomiaService {
 	}
 
 	getSubeconomia(id: string) {
-		return this.constants.getRequest(`/get_subeconomias/${id}`, 'get', false);
+		return this.constants.getRequest(`/get_subeconomia/${id}`, 'get', false);
 	}
 
 	getEconomiasFinanciero(id) {

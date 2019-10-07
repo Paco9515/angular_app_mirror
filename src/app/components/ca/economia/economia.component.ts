@@ -1,11 +1,10 @@
-import { Component, ChangeDetectionStrategy, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { NgForm } from '@angular/forms';
 import { EconomiaService } from 'src/app/services/ca/economia.service';
 import { Economias, Financieros, Sectores } from '../../../interfaces/ca.interface';
 
 @Component({
-	changeDetection: ChangeDetectionStrategy.Default,
 	selector: 'app-economia',
 	templateUrl: './economia.component.html',
 	styles: []
@@ -16,9 +15,13 @@ export class EconomiaComponent implements OnInit {
 	financieros: Financieros[];
 	sectores: Sectores[];
 
+	financiero = true;
+
   constructor(
 	private economiaService: EconomiaService,
-	private activitedRoute: ActivatedRoute) {
+	private activitedRoute: ActivatedRoute,
+	private router: Router,
+	) {
 
 		this.economia = {
 			id: '',
@@ -46,11 +49,12 @@ export class EconomiaComponent implements OnInit {
 	onChangeSector(id_sector) {
 		this.economia.id_financiero = '';
 		this.financieros = [];
+		this.financiero = false;
 		if (id_sector !== '') {
 			this.economia.id_sector = id_sector;
 			this.economiaService.getFinancierosSector(id_sector)
 			.subscribe((obj: any) => {
-				this.financieros = obj;
+				this.financieros = obj.data;
 			});
 		}
 	}
@@ -61,10 +65,14 @@ export class EconomiaComponent implements OnInit {
 
 	cargarEconomia(id: string) {
 		this.economiaService.getEconomia(id).subscribe((obj: any) => {
-			this.economia = obj;
+			this.economia = obj.data;
 			const FINANCIERO = this.economia.id_financiero;
 			this.onChangeSector(this.economia.id_sector);
 			this.onChangeFinanciero(FINANCIERO);
+		},
+		error => {
+			this.router.navigate(['panel-adm/economias']);
+			alert(error.error.messaje);
 		});
 	}
 
@@ -72,10 +80,10 @@ export class EconomiaComponent implements OnInit {
 		if (f.valid) {
 			this.economiaService.createUpdateEconomia(this.economia)
 			.subscribe((response: any) => {
-				console.log(response);
+				// console.log(response);
 			},
 			error => {
-				console.log(error.error);
+				// console.log(error.error);
 			});
 		}
 	}

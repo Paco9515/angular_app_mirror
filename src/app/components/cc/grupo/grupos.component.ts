@@ -7,7 +7,7 @@ import { Grupos, Generos } from './../../../interfaces/cc.interface';
 	templateUrl: './grupos.component.html',
 	styles: []
 })
-export class GruposComponent{
+export class GruposComponent {
 
 	grupos: Grupos[];
 	generos: Generos[];
@@ -17,12 +17,13 @@ export class GruposComponent{
 		private grupo_service: GrupoService
 	) {
 		this.detalle = {
-            id: '',
+			id: '',
 			codigo: '',
 			nombre: '',
 			status: true,
 			id_genero: '',
-			nombre_genero: ''
+			nombre_genero: '',
+			status_genero: true
 		};
 
 		this.grupos = [];
@@ -45,11 +46,11 @@ export class GruposComponent{
 
 	eliminarActivar(id: string, type: boolean) {
 		this.grupo_service.activarEliminarGrupo(id, type)
-			.subscribe((response: any) => {
-				console.log(response.message);
+			.subscribe((obj: any) => {
+				console.log(obj);
 				this.getGrupos();
 			}, error => {
-				console.log('ERROR: ', error);
+				console.log('ERROR: ', error.error);
 			});
 	}
 

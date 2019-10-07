@@ -21,7 +21,7 @@ export class PartidaService {
 	}
 	activarEliminarPartida(id: string, opcion: boolean) {
 		if (opcion) {
-			return this.constants.getRequest(`/activate_partida/${id}`, 'put', false);
+			return this.constants.getRequest(`/activate_partida/${id}`, 'get', false);
 		} else {
 			return this.constants.getRequest(`/delete_partida/${id}`, 'delete', false);
 		}
@@ -53,28 +53,20 @@ export class PartidaService {
 		return this.constants.getRequest(`/get_generos`, 'get', false);
 	}
 
-	getGrupos() {
-		return this.constants.getRequest(`/get_grupos`, 'get', false);
+	get_grupos_genero(id: string) {
+		return this.constants.getRequest(`/get_grupos_genero/${id}`, 'get', false);
 	}
 
-	getRubros() {
-		return this.constants.getRequest(`/get_rubros`, 'get', false);
+	get_rubros_grupo(id: string) {
+		return this.constants.getRequest(`/get_rubros_grupo/${id}`, 'get', false);
 	}
 
-	getCuentas() {
-		return this.constants.getRequest(`/get_cuentas`, 'get', false);
+	get_cuentas_rubro(id: string) {
+		return this.constants.getRequest(`/get_cuentas_rubro/${id}`, 'get', false);
 	}
 
-	getSubcuentas() {
-		return this.constants.getRequest(`/get_subcuentas`, 'get', false);
-	}
-
-	getSubcuenta() {
-		return this.constants.getRequest(`/get_subcuentas`, 'get', false);
-	}
-
-	getConcepto(id: string) {
-		return this.constants.getRequest(`/get_concepto/${id}`, 'get', false);
+	get_subcuentas_cuenta(id: string) {
+		return this.constants.getRequest(`/get_subcuentas_cuenta/${id}`, 'get', false);
 	}
 
 	get_conceptos_capitulo(id: string) {

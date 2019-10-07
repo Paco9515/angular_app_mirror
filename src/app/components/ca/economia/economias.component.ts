@@ -22,8 +22,10 @@ export class EconomiasComponent {
 			status: true,
 			id_financiero: '',
 			nombre_financiero: '',
+			status_financiero: true,
 			id_sector: '',
-			nombre_sector: ''
+			nombre_sector: '',
+			status_sector: true
 		};
 
 		this.economias = [];
@@ -39,11 +41,11 @@ export class EconomiasComponent {
 
 	eliminarActivar(id: string, type: boolean) {
 		this.economia_service.activarEliminarEconomia(id, type)
-			.subscribe((response: any) => {
-				console.log(response.message);
+			.subscribe((obj: any) => {
+				console.log(obj);
 				this.getEconomias();
 			}, error => {
-				console.log('ERROR: ', error);
+				console.log('ERROR: ', error.error);
 			});
 	}
 

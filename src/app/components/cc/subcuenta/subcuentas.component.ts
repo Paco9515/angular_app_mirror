@@ -7,7 +7,7 @@ import { SubcuentaService } from './../../../services/cc/subcuenta.service';
   templateUrl: './subcuentas.component.html',
   styles: []
 })
-export class SubcuentasComponent{
+export class SubcuentasComponent {
 
 	subcuentas: Subcuentas[];
 	detalle: Subcuentas;
@@ -22,12 +22,16 @@ export class SubcuentasComponent{
 			status: true,
 			id_genero: '',
 			nombre_genero: '',
+			status_genero: true,
 			id_grupo: '',
 			nombre_grupo: '',
+			status_grupo: true,
 			id_rubro: '',
 			nombre_rubro: '',
+			status_rubro: true,
 			id_cuenta: '',
-			nombre_cuenta: ''
+			nombre_cuenta: '',
+			status_cuenta: true
 		};
 		this.subcuentas = [];
 		this.getSubcuentas();
