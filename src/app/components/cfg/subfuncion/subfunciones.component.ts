@@ -10,7 +10,7 @@ import { SubfuncionService } from '../../../services/cfg/subfuncion.service';
 export class SubfuncionesComponent  {
 
   subfunciones: Subfunciones[];
-  detalle:any;
+  detalle: any;
 
   constructor(
 		private subfuncion_service: SubfuncionService
@@ -19,11 +19,11 @@ export class SubfuncionesComponent  {
 		this.detalle = {
 			id: '',
 			id_funcion: null,
-			nom_funcion:'',
+			nom_funcion: '',
 			codigo: '',
 			nombre: '',
 			status: true
-		}
+		};
 		this.getSubfunciones();
 	}
 
@@ -31,12 +31,12 @@ export class SubfuncionesComponent  {
 		this.subfuncion_service.getSubfunciones()
 			.subscribe((data: any) => {
 				this.subfunciones = data;
-				//console.log('Constructor: ', this.subfunciones);
+				// console.log('Constructor: ', this.subfunciones);
 			});
 	}
-	info(subfuncion:any){
-		this.detalle=subfuncion;
-		//console.log('detalle',this.detalle);
+	info(subfuncion: any) {
+		this.detalle = subfuncion;
+		// console.log('detalle',this.detalle);
 		this.subfuncion_service.getFuncion(this.detalle.id_funcion)
 			.subscribe((data: any) => {
 				this.detalle.nom_funcion = data.nombre;
@@ -49,10 +49,10 @@ export class SubfuncionesComponent  {
 
 		this.subfuncion_service.eliminarSubfuncion(id, bandera)
 			.subscribe((response: any) => {
-				if(response.mensaje === 'eliminado'){
+				if (response.mensaje === 'eliminado') {
 					console.log('Subfuncion Eliminada');
 					this.getSubfunciones();
-				}else{
+				} else {
 					console.log('Subfuncion Activada');
 					this.getSubfunciones();
 				}

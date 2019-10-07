@@ -12,7 +12,7 @@ export class ConstantsService {
 
 	readonly headers = new HttpHeaders({
 		'Content-Type': 'application/json'
-	});
+	}); 
 
 	constructor(
 		private http: HttpClient

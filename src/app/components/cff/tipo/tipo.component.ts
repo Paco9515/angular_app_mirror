@@ -10,40 +10,41 @@ import { NgForm } from '@angular/forms';
   styles: []
 })
 export class TipoComponent {
-  id: string;
-	tipo: Tipo = {
-		id: '',
-		id_subfuente: null,
-		codigo: '',
-		nombre: '',
-		anio: '',
-		status: true
-	};
-	subfuentes:[];
-	fuentes=[];
+  	id: string;
+	tipo: Tipo;
+	subfuentes: [];
+	fuentes: [];
 	fuen: any = '';
-	bandera:boolean=false;
-	bandera2:boolean=true;
-  
+	bandera = false;
+	bandera2 = true;
+
   constructor(
 		private tipoService: TipoService,
 		private router: Router,
 		private activatedRoute: ActivatedRoute,
-		//private toastrService: ToastrService
+		// private toastrService: ToastrService
 	) {
+		this.tipo = {
+			id: '',
+			id_subfuente: null,
+			codigo: '',
+			nombre: '',
+			anio: '',
+			status: true
+		};
 		this.activatedRoute.params.subscribe((data: any) => {
 			this.id = data.id;
 			if (this.id !== 'nuevo') {
-				this.bandera2=false;
+				this.bandera2 = false;
 				this.tipoService.getTipo(this.id)
 					.subscribe((obj: Tipo) => {
 						this.createForma(obj);
 					});
 			} else {
-				this.tipoService.getFuentes().subscribe((centros: any) => {	
-					this.fuentes=centros;		
-				});	
-				this.bandera=true;
+				this.tipoService.getFuentes().subscribe((centros: any) => {
+					this.fuentes = centros;
+				});
+				this.bandera = true;
 				this.createForma({
 					id: '',
 					id_subfuente: null,
@@ -59,22 +60,22 @@ export class TipoComponent {
 		});
   }
 
-	inicio(){		
-		this.bandera2=false;
+	inicio() {
+		this.bandera2 = false;
 		this.tipoService.getSubs(this.fuen).subscribe((centros2: any) => {
-			this.subfuentes=centros2;		
+			this.subfuentes = centros2;
 		});
 		this.tipo.id_subfuente = '';
 	}
-  
+
 	createForma(obj: Tipo) {
-		if(this.id != 'nuevo'){
-			var id_emp:number = 0;
+		if (this.id !== 'nuevo') {
+			let id_emp = 0;
 			this.tipoService.getSub(obj.id_subfuente).subscribe((centros: any) => {
-				id_emp = centros.id_fuente;		
-				//console.log('centros de costo',centros);
+				id_emp = centros.id_fuente;
+				// console.log('centros de costo',centros);
 				this.tipoService.getSubs(id_emp).subscribe((centros2: any) => {
-					this.subfuentes=centros2;		
+					this.subfuentes = centros2;
 				});
 			});
 		}

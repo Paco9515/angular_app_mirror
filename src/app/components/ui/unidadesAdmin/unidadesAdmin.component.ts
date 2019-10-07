@@ -3,6 +3,7 @@ import { UnidadesAdminService } from 'src/app/services/ui/unidadesAdmin.service'
 import { UnidadesAdmin } from 'src/app/interfaces/ui.interface';
 
 @Component({
+  // tslint:disable-next-line: component-selector
   selector: 'app-unidadesAdmin',
   templateUrl: './unidadesAdmin.component.html',
   styles: []

@@ -15,11 +15,11 @@ export class UiService {
 		this.url = this.constants.url;
 	}
 
-  	getEmpresa(id: any) {
+  	getEmpresa(id: string) {
 		return this.constants.getRequest(`/get_empresa/${id}`, 'get', null);
 	}
 
-	getEmpresa_class(id: any) {
+	getEmpresa_class(id: string) {
 		return this.constants.getRequest(`/get_empresa_class/${id}`, 'get', null);
 	}
 
@@ -51,9 +51,13 @@ export class UiService {
 		return this.constants.getRequest(`/get_ctrabajos`, 'get', false);
 	}
 
-	getUnisEmpresa(id: number) {
+	getUnisEmpresa(id: string) {
 		return this.constants.getRequest(`/get_unidades_empresa/${id}`, 'get', false);
 	  }
+
+	getCcsUnidad(id: string) {
+		return this.constants.getRequest(`/get_ccostosXuni/${id}`, 'get', false);
+	}
 
 	getCcByUnidad(id: string) { // get centros de costo por unidad administrativa.
 		return this.constants.getRequest(`/getCcByUnidad/${id}`, 'get', false);

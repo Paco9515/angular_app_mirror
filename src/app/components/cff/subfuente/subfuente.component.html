@@ -37,7 +37,8 @@
                                     <label for="staticEmail" class="col-sm-12 col-form-label">Fuente</label>
                                     <div class="col-sm-12">
                                         <select type="text" class="form-control" [(ngModel)]="subfuente.id_fuente" name="id_funcion">
-                                        <option *ngFor="let fuente of fuentes" [value]="fuente.id">{{ fuente.codigo }} - {{ fuente.nombre }} </option>
+                                            <option value="">Seleccione una opción... </option>
+                                            <option *ngFor="let fuente of fuentes" [value]="fuente.id">{{ fuente.codigo }} - {{ fuente.nombre }} </option>
                                     </select>
                                     </div>
                                 </div>

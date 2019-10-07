@@ -12,28 +12,40 @@ import { Ccosto } from 'src/app/interfaces/ui.interface';
 export class CcostoComponent {
 
   	id: string;
-	ccostos: Ccosto = {
-		id: '',
-		id_unidad_adm: '',
-		id_subfuncion: '',
-		id_nivel: '',
-		codigo: '',
-		nombre: '',
-		status: true
-	};
+	ccostos: Ccosto;
 	unidades: [];
 	subs: [];
-	empresas = [];
-	niveles = [];
-	costos = [];
-	emp;
-	bandera = false;
-	bandera2 = true;
+	empresas: [];
+	niveles: [];
+	costos: [];
+	emp: any;
+	bandera: boolean;
+	// bandera 2 es para bloquear la unidad
+	bandera2: boolean;
 
 	constructor(
 		private ccostoService: CcostoService,
 		private activatedRoute: ActivatedRoute,
 	) {
+		this.id = '';
+		this.ccostos = {
+			id: '',
+			id_unidad_adm: '',
+			id_subfuncion: '',
+			id_nivel: '',
+			codigo: '',
+			nombre: '',
+			status: true
+		};
+		this.unidades = [];
+		this.subs = [];
+		this.empresas = [];
+		this.niveles = [];
+		this.costos = [];
+		this.emp = '';
+		this.bandera = false;
+		this.bandera2 = true;
+
 		this.activatedRoute.params.subscribe((data: any) => {
 			this.id = data.id;
 			if (this.id !== 'nuevo') {
@@ -41,7 +53,7 @@ export class CcostoComponent {
 				this.ccostoService.getCcosto(this.id)
 					.subscribe((obj: Ccosto) => {
 						this.createForma(obj);
-						console.log(obj);
+						// console.log(obj);
 					});
 			} else {
 				this.ccostoService.getEmpresas().subscribe((empresas: any) => {
@@ -63,6 +75,12 @@ export class CcostoComponent {
 				this.ccostos.id_subfuncion = '';
 			}
 		});
+		this.ccostoService.getNiveles().subscribe((niveles: any) => {
+			this.niveles = niveles;
+		});
+		this.ccostoService.getUltimoCentro().subscribe((ult_centro: any) => {
+			this.ccostos.codigo = ult_centro.id + 1;
+		});
 	}
 
 	inicio() {
@@ -70,50 +88,31 @@ export class CcostoComponent {
 		this.ccostoService.getUnidades(this.emp).subscribe((centros2: any) => {
 			this.unidades = centros2;
 		});
-
-
 		this.ccostos.id_unidad_adm = '';
 		this.ccostos.id_subfuncion = '';
-
-
 	}
 
-  createForma(obj: Ccosto) {
-
-	this.ccostoService.getNiveles().subscribe((niveles: any) => {
-		this.niveles = niveles;
-	});
-	this.ccostoService.getUltimoCentro().subscribe((ult_centro: any) => {
-		this.ccostos.codigo = ult_centro.id + 1;
-	});
-
-	if (this.id !== 'nuevo') {
-		let id_emp = 0;
-		this.ccostoService.getUnidad(obj.id_unidad_adm).subscribe((centros: any) => {
-			id_emp = centros.id_empresa;
-			// console.log('centros de costo',centros);
-			this.ccostoService.getUnidades(id_emp).subscribe((centros2: any) => {
+  	createForma(obj: Ccosto) {
+		if (this.id !== 'nuevo') {
+			// console.log(obj.id);
+			this.ccostoService.getUnidades(obj.id).subscribe((centros2: any) => {
 				this.unidades = centros2;
 			});
+		}
+		this.ccostoService.getSubfunciones().subscribe((subs: any) => {
+			this.subs = subs;
 		});
+		this.ccostos = obj;
+
 	}
-	this.ccostoService.getSubfunciones().subscribe((subs: any) => {
-		this.subs = subs;
-
-	});
-	this.ccostos = obj;
-
-}
 
 	guardar(f: NgForm) {
 		if (f.valid) {
 			this.ccostoService.createCcosto(this.ccostos)
 			.subscribe((response: any) => {
-				if (response.message === 'creada') {
-					console.log('Centro de Costo creado con exito.');
-				} else {
-					console.log('Centro de Costo editado con exito.');
-				}
+				console.log(response);
+			}, error => {
+				console.log(error.error);
 			});
 		}
 	}

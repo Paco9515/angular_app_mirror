@@ -21,8 +21,6 @@ export class UnidadesAdminService {
 
 
 	createUnidad(unidad: UnidadesAdmin) {
-		// console.log('servicio', unidad);
-
 		if (unidad.id === '') {
 			return this.constants.getRequest(`/create_unidad`, 'post', unidad);
 		} else {

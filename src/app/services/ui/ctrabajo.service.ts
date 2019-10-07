@@ -18,7 +18,6 @@ export class CtrabajoService {
 	}
 
 	createCtrabajo(ctrabajo: Ctrabajo) {
-		
 		if (ctrabajo.id === '') {
 			return this.constants.getRequest(`/create_ctrabajo`, 'post', ctrabajo);
 		} else {
@@ -35,7 +34,11 @@ export class CtrabajoService {
 		return this.constants.getRequest(`/get_ctrabajos`, 'get', false);
 	}
 
-	getCentros(id:number) {
+	getCentro(id: string) {
+		return this.constants.getRequest(`/get_ccosto/${id}`, 'get', false);
+	}
+
+	getCentros(id: string) {
 		return this.constants.getRequest(`/get_ccostosXuni/${id}`, 'get', false);
 	}
 
@@ -43,12 +46,8 @@ export class CtrabajoService {
 		return this.constants.getRequest(`/get_unidades/`, 'get', false);
 	}
 
-	getCentro(id: string) {
-		return this.constants.getRequest(`/get_ccosto/${id}`, 'get', false);
-	}
-
-	eliminarCtrabajo(id: string, bandera:boolean) {
-		if (bandera == true) {
+	eliminarCtrabajo(id: string, bandera: boolean) {
+		if (bandera === true) {
 			return this.constants.getRequest(`/activate_ctrabajo/${id}`, 'put', false);
 		} else {
 			return this.constants.getRequest(`/delete_ctrabajo/${id}`, 'put', false);

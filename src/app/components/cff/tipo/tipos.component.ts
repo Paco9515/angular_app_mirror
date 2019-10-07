@@ -32,7 +32,7 @@ export class TiposComponent {
 		this.tipos_service.getTipos()
 			.subscribe((data: any) => {
 				this.tipos = data;
-				//console.log('Constructor: ', this.tipos);
+				// console.log('Constructor: ', this.tipos);
 			});
 	}
 	info(tipo: any) {
