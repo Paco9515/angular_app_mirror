@@ -37,8 +37,8 @@ import { SubeconomiaComponent } from './ca/subeconomia/subeconomia.component';
 import { SubeconomiasComponent } from './ca/subeconomia/subeconomias.component';
 
 import { FilterPipe } from '../pipes/filter.pipe';
-
-
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
 	declarations: [
@@ -105,7 +105,9 @@ import { FilterPipe } from '../pipes/filter.pipe';
 		FormsModule,
 		ReactiveFormsModule,
 		HttpClientModule,
-		AdminRoutingModule
+		AdminRoutingModule,
+		BrowserAnimationsModule , //  módulo de animaciones requerido
+		ToastrModule.forRoot() //  ToastrModule agregado
 	]
 })
 export class CristiModule { }

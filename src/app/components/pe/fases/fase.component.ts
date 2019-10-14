@@ -43,7 +43,7 @@ export class FaseComponent {
 
 	getFases(id: string) {
 		this.faseService.getFase(id)
-			.subscribe((obj: Fases) => this.fase = obj);
+			.subscribe((obj: any) => this.fase = obj.data);
 	}
 
 	guardar(f: NgForm) {

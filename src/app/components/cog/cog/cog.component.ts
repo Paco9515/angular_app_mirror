@@ -61,7 +61,7 @@ export class CogComponent implements OnInit {
 			this.data.id_capitulo = id_capitulo;
 			this.cog_service.get_conceptos_capitulo(id_capitulo)
 				.subscribe((data: any) => {
-					this.conceptos = data;
+					this.conceptos = data.data;
 				});
 		}
 	}
@@ -73,7 +73,7 @@ export class CogComponent implements OnInit {
 			this.data.id_concepto = id_concepto;
 			this.cog_service.get_partidas_concepto(id_concepto)
 				.subscribe((data: any) => {
-					this.partidas = data;
+					this.partidas = data.data;
 				});
 		}
 	}

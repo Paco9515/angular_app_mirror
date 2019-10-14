@@ -23,14 +23,14 @@ export class ProgramaComponent {
 
 		this.activatedRoute.params.subscribe((data: any) => {
 			if (data.id !== 'nuevo') {
-				this.cargarMedico(data.id);
+				this.cargarprograma(data.id);
 			}
 		});
 	}
 
-	cargarMedico(id: string) {
+	cargarprograma(id: string) {
 		this.programaService.getPrograma(id)
-			.subscribe((obj: Programas) => this.programa = obj);
+			.subscribe((obj: any) => this.programa = obj.data);
 	}
 
 	guardar(f: NgForm) {

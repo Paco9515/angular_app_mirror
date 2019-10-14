@@ -4,6 +4,7 @@ import { ConceptoService } from 'src/app/services/cog/concepto.service';
 import { Conceptos, Capitulos } from 'src/app/interfaces/cog.interface';
 import { TipoGasto } from 'src/app/interfaces/ctg.interface';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
 	selector: 'app-concepto',
@@ -19,7 +20,9 @@ import { ActivatedRoute, Router } from '@angular/router';
 	constructor(
 		private conceptoService: ConceptoService,
 		private activitedRoute: ActivatedRoute,
-		private router: Router
+		private router: Router,
+		private toastr: ToastrService
+
 		) {
 		this.concepto = {
 			id: '',

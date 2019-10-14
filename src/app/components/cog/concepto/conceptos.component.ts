@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Conceptos } from './../../../interfaces/cog.interface';
 import { ConceptoService } from './../../../services/cog/concepto.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
 	selector: 'app-conceptos',
@@ -13,7 +14,8 @@ export class ConceptosComponent {
 	detalle: Conceptos;
 
 	constructor(
-		private concepto_service: ConceptoService
+		private concepto_service: ConceptoService,
+		private toastr: ToastrService
 	) {
 		this.detalle = {
 			id: '',
@@ -39,13 +41,21 @@ export class ConceptosComponent {
 			});
 	}
 
+	private showMessage(data: any) {
+		if ( data.status ) {
+			return this.toastr.success(data.message, data.title);
+		}
+		return this.toastr.error(data.message, data.title);
+	}
+
 	eliminarActivar(id: string, type: boolean) {
 		this.concepto_service.activarEliminarConcepto(id, type)
-			.subscribe((response: any) => {
+			.subscribe((data: any) => {
 				// console.log(response);
+				this.showMessage(data);
 				this.getConceptos();
 			}, error => {
-				// console.log('ERROR: ', error.error);
+				this.showMessage(error.error);
 			});
 	}
 

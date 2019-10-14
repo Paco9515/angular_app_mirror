@@ -45,9 +45,9 @@ export class SubprogramaComponent {
 
 	cargarSubprogramas(id: string) {
 		this.subprogramaService.getSubprograma(id)
-			.subscribe((obj: Subprograma) => {
+			.subscribe((obj: any) => {
 
-				this.subprograma = obj;
+				this.subprograma = obj.data;
 				console.log(this.subprograma);
 			});
 	}

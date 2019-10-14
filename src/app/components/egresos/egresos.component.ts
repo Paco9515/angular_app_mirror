@@ -76,7 +76,6 @@ export class EgresosComponent {
 
 
 		// this.id_gasto = '';
-
 		// this.show = true;
 		// this.mensaje = 'Ocultar tabla';
 		this.cantidad = 0;
@@ -85,6 +84,8 @@ export class EgresosComponent {
 			id_capitulo: '',
 			id_concepto: '',
 			id_partida: '',
+			id_cc: '',
+			nombre_cc: '',
 			nombre_partida: '',
 			codigo_partida: '',
 			codigo_cuenta: '',
@@ -136,8 +137,8 @@ export class EgresosComponent {
 		if (this.cantidad >= 0) {
 			this.total += this.cantidad;
 			this.partidas.push({
-				// id_cc: this.ui_data.id_ccosto,
-				// nombre_cc: this.ui_data.nombre_cc,
+				id_cc: this.ui_data.id_ccosto,
+				nombre_cc: this.ui_data.nombre_cc,
 				id_partida: this.cog_data.id_partida,
 				codigo_partida: this.cog_data.codigo_partida,
 				nombre_partida: this.cog_data.nombre_partida,
@@ -171,7 +172,7 @@ export class EgresosComponent {
 			id_fase: this.id_fase,
 			id_centro_costo: this.ui_data.id_ccosto,
 			id_tipo_financ: this.cff_data.id_tipo,
-			id_gasto: this.cog_data.id_tgasto
+			id_gasto: this.cog_data.id_tipogasto
 		};
 		console.log('data:', data);
 		console.log('partidas:', this.partidas);
