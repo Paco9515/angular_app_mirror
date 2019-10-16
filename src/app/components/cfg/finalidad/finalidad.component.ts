@@ -13,11 +13,11 @@ import { Finalidad } from '../../../interfaces/cfg.interface';
 export class FinalidadComponent {
 
   	id: string;
-	finalidad:Finalidad = {
+	finalidad: Finalidad = {
 		id: '',
 		codigo: '',
 		nombre: '',
-		status:true
+		status: true
 	};
 	// programa: Programas;
 
@@ -25,7 +25,7 @@ export class FinalidadComponent {
 		private finalidadService: FinalidadService,
 		private router: Router,
 		private activatedRoute: ActivatedRoute,
-		//private toastrService: ToastrService
+		// private toastrService: ToastrService
 	) {
 		this.activatedRoute.params.subscribe((data: any) => {
 			this.id = data.id;
@@ -35,20 +35,20 @@ export class FinalidadComponent {
 						this.createForma(obj);
 						// this.programa = obj;
 
-						//console.log(obj);
+						// console.log(obj);
 
 					});
 			} else {
 				this.createForma({
-          id: '',
-          codigo: '',
-          nombre: '',
-          status:true  
-        });
+					id: '',
+					codigo: '',
+					nombre: '',
+					status: true
+				});
 				// this.programa = {nombre: '', status: true};
 			}
 		});
-    // console.log('1');
+	// console.log('1');
   }
 
   createForma(obj: Finalidad) {
@@ -57,7 +57,7 @@ export class FinalidadComponent {
 
 	guardar() {
 		// this.toastrService.success('Programa creado correctamente.', '¡Éxito!');
-		//console.log(this.finalidad);
+		// console.log(this.finalidad);
 		this.finalidadService.createFinalidad(this.finalidad)
 		.subscribe((response: any) => {
 			if (response.message === 'creada') {

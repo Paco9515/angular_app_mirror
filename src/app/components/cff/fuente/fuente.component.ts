@@ -9,19 +9,19 @@ import { Fuente } from '../../../interfaces/cff.interface';
   styles: []
 })
 export class FuenteComponent {
-    id: string;
+	id: string;
 	fuente: Fuente = {
 		id: '',
 		codigo: '',
 		nombre: '',
 		status: true
 	};
-  
+
   constructor(
 		private fuenteService: FuenteService,
 		private router: Router,
 		private activatedRoute: ActivatedRoute,
-		//private toastrService: ToastrService
+		// private toastrService: ToastrService
 	) {
 		this.activatedRoute.params.subscribe((data: any) => {
 			this.id = data.id;
@@ -40,7 +40,7 @@ export class FuenteComponent {
 			}
 		});
   }
-  
+
   createForma(obj: Fuente) {
 		this.fuente = obj;
 	}

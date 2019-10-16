@@ -18,7 +18,7 @@ export class ProyectoService {
 	}
 
 	setPresEgreso(data: any, partidas: any) {
-		return this.constants.createEgreso(`/create_presupuesto/`, data, partidas);
+		return this.constants.createEgreso(`/create_presupuesto`, data, partidas);
 	}
 
 	getFasesProyecto(id) {

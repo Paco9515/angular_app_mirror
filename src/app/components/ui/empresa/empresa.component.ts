@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { FormGroup, FormControl, Validators, NgForm } from '@angular/forms';
-import { ToastrService } from 'ngx-toastr';
+import { NgForm } from '@angular/forms';
+// import { ToastrService } from 'ngx-toastr';
 import { Empresas } from 'src/app/interfaces/ui.interface';
 import { EmpresaService } from 'src/app/services/ui/empresa.service';
 import { Infos } from '../../../interfaces/ui.interface';
@@ -14,137 +14,119 @@ import { Infos } from '../../../interfaces/ui.interface';
 export class EmpresaComponent  {
 
   	id: string;
-	empresa: Empresas = {
-		id: '',
-		id_info_gene:null,
-		id_tipo_empresa: null,
-		id_clas_administrativa: null,		
-		nom_comercial: '',
-		persona_moral: null,
-		imss_sar:'',
-		isste_foviste:'',
-		reg_estatal : '',
-		url_img :'',
-		status: true,		
-	};
-	info:Infos={
-		id: '',
-		nombre: '',
-		//id_info_gene:0,
-		estado:'',
-		municipio: '',
-		localidad: '',
-		cp:null,
-		colonia:'',
-		calle:'',
-		num_exterior:null,
-		dom_interior:'',
-		num_interior:'',
-		telefono:null,
-		correo:'',
-		rfc:'',
-		curp: ''
-	}
+	empresa: Empresas;
+	info: Infos;
 	admins: [];
-	// programa: Programas;
 
 	constructor(
 		private empresaService: EmpresaService,
 		private router: Router,
 		private activatedRoute: ActivatedRoute,
-		//private toastrService: ToastrService
+		// private toastrService: ToastrService
 	) {
+		this.empresa = {
+			id: '',
+			id_info_gene: '',
+			id_tipo_empresa: '',
+			id_clas_administrativa: '',
+			nom_comercial: '',
+			persona_moral: '',
+			imss_sar: '',
+			isste_foviste: '',
+			reg_estatal : '',
+			url_img : '',
+			status: true,
+		};
+		this.info = {
+			id: '',
+			nombre: '',
+			// id_info_gene:0,
+			estado: '',
+			municipio: '',
+			localidad: '',
+			cp: '',
+			colonia: '',
+			calle: '',
+			num_exterior: '',
+			dom_interior: '',
+			num_interior: '',
+			telefono: '',
+			correo: '',
+			rfc: '',
+			curp: ''
+		};
 
 		this.activatedRoute.params.subscribe((data: any) => {
 			this.id = data.id;
-			//console.log(data.id);
 			if (this.id !== 'nuevo') {
 				this.empresaService.getEmpresa(this.id)
 					.subscribe((obj1: Empresas) => {
-						//console.log('id info',obj1[0].id_info_gene);
 						this.empresaService.getInfo(obj1[0].id_info_gene)
 							.subscribe((obj2: Infos) => {
-								this.createForma(obj1[0],obj2[0]);
-		            			//console.log('objeto get empresa',obj[0]);
-							});						
-            			//console.log('objeto get empresa',obj[0]);
+								this.createForma(obj1[0], obj2[0]);
+							});
 					});
-				
 			} else {
 				this.createForma({
 					id: '',
-					id_info_gene:null,
-					id_tipo_empresa: 1,
-					id_clas_administrativa: 1,
+					id_info_gene: '',
+					id_tipo_empresa: '',
+					id_clas_administrativa: '',
 					nom_comercial: '',
-					persona_moral: 0,
-					imss_sar:'',
-					isste_foviste:'',
+					persona_moral: '',
+					imss_sar: '',
+					isste_foviste: '',
 					reg_estatal : '',
-					url_img :'',
+					url_img : '',
 					status: true
 				},
 				{
 					id: '',
 					nombre: '',
-					estado:'',
+					estado: '',
 					municipio: '',
 					localidad: '',
-					cp:null,
-					colonia:'',
-					calle:'',
-					num_exterior:null,
-					dom_interior:'',
-					num_interior:'',
-					telefono:null,
-					correo:'',
-					rfc:'',
+					cp: '',
+					colonia: '',
+					calle: '',
+					num_exterior: '',
+					dom_interior: '',
+					num_interior: '',
+					telefono: '',
+					correo: '',
+					rfc: '',
 					curp: ''
 				});
-				// this.programa = {nombre: '', status: true};
 			}
 		});
-		// console.log('1');
 	}
 
-  createForma(obj1: Empresas,obj2: Infos) {
+  	createForma(obj1: Empresas, obj2: Infos) {
 	  this.empresaService.getClasAdmis().subscribe((admins: any) => {
 		this.admins = admins;
-		//console.log(this.admins);
 	});
-		this.empresa = obj1;
-		this.info = obj2;
 
-		//console.log('Empresa',this.empresa);
-		//console.log('Info',this.info);
+	  this.empresa = obj1;
+	  this.info = obj2;
 
 	}
 
-	guardar() {	  	
-
-		 this.empresaService.createInfo(this.info)
-		    .subscribe((response: any) => {
-			//console.log(response.message);
-			if (response.mensaje === 'creado') {
-				console.log('Informacion creada con exito.');
-				//console.log('id',response.id);
-				this.empresaService.createEmpresa(this.empresa,response.id)
-				    .subscribe((response: any) => {
-					//console.log(response.message);
-					if (response.mensaje === 'creado') {
-						console.log('Empresa creada con exito.');
-					} else {
-						console.log('Empresa editada con exito.');
-					}
-				});
-			} else {
-				console.log('Informacion editada con exito.');
-			}
-		});
-
-		
-
-
+	guardar(f: NgForm) {
+		console.log(this.empresa);
+		if (f.valid) {
+			this.empresaService.createInfo(this.info).subscribe((response1: any) => {
+				if (response1.status === true) {
+					console.log('Informacion creada con exito.');
+					this.empresaService.createEmpresa(this.empresa, response1.id)
+					.subscribe((response: any) => {
+						console.log(response);
+					}, error => {
+						console.log(error.error);
+					});
+				} else {
+					console.log('Informacion editada con exito.');
+				}
+			});
+		}
 	}
-
 }

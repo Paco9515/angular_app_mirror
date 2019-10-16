@@ -10,19 +10,19 @@ import { FuncionService } from '../../../services/cfg/funcion.service';
 export class FuncionesComponent {
 
   funciones: Funciones[];
-  detalle:any;
+  detalle: any;
 
   constructor(
 		private funcion_service: FuncionService
 	) {
 		this.funciones = [];
 		this.detalle = {
-			id:'',  
-			id_finalidad:'',
-			nom_finalidad:'',
-		    codigo: '',
-			nombre: '',		    
-		    status: true
+			id: '',
+			id_finalidad: '',
+			nom_finalidad: '',
+			codigo: '',
+			nombre: '',
+			status: true
 		};
 		this.getFunciones();
 	}
@@ -31,12 +31,11 @@ export class FuncionesComponent {
 		this.funcion_service.getFunciones()
 			.subscribe((data: any) => {
 				this.funciones = data;
-				
 			});
 	}
 
-	info(funcion:any){
-		this.detalle=funcion;
+	info(funcion: any) {
+		this.detalle = funcion;
 		this.funcion_service.getFinalidad(this.detalle.id_finalidad)
 			.subscribe((data: any) => {
 				this.detalle.nom_finalidad = data.nombre;
@@ -47,12 +46,12 @@ export class FuncionesComponent {
 
 		// this.programas = (this.programas.filter(data => data.id === id));
 
-		this.funcion_service.eliminarFuncion(id,bandera)
+		this.funcion_service.eliminarFuncion(id, bandera)
 			.subscribe((response: any) => {
-				if(response.mensaje === 'eliminado'){
+				if (response.mensaje === 'eliminado') {
 					console.log('Funcion Eliminada');
 					this.getFunciones();
-				}else{
+				} else {
 					console.log('Funcion Activada');
 					this.getFunciones();
 				}

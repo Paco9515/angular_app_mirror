@@ -15,3 +15,14 @@ a:hover {
 	margin-left: 20px !important; */
     max-width: 95% !important;
 }
+
+.modal_class_info {
+    /* width: 180% !important;
+	margin-left: 20px !important; */
+    max-width: 80% !important;
+}
+
+
+/*#toast-container>.toast-success {
+     background-image: url('../src/app/shared/images/images.png')!important; 
+}*/

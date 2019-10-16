@@ -4,24 +4,24 @@ export interface Infos {
 	estado: string;
 	municipio: string;
 	localidad: string;
-	cp: number;
+	cp: string;
 	colonia: string;
 	calle: string;
-	num_exterior: number;
+	num_exterior: string;
 	dom_interior?: string;
 	num_interior?: string;
-	telefono: number;
+	telefono: string;
 	correo: string;
 	rfc: string;
 	curp: string;
 }
 export interface Empresas {
 	id?: string;
-	id_info_gene?: number;
-	id_tipo_empresa: number;
-	id_clas_administrativa: number;
+	id_info_gene?: string;
+	id_tipo_empresa: string;
+	id_clas_administrativa: string;
 	nom_comercial: string;
-	persona_moral: number;
+	persona_moral: string;
 	imss_sar?: string;
 	isste_foviste?: string;
 	reg_estatal?: string;
@@ -35,19 +35,19 @@ export interface InfoEmpresa {
 	estado: string;
 	municipio: string;
 	localidad: string;
-	cp: number;
+	cp: string;
 	colonia: string;
 	calle: string;
-	num_exterior: number;
+	num_exterior: string;
 	dom_interior?: string;
 	num_interior?: string;
-	telefono: number;
+	telefono: string;
 	correo: string;
 	rfc: string;
 	curp: string;
-	id_tipo_empresa: number;
-	id_clas_administrativa: number;
-	persona_moral: number;
+	id_tipo_empresa: string;
+	id_clas_administrativa: string;
+	persona_moral: string;
 	imss_sar?: string;
 	isste_foviste?: string;
 	reg_estatal?: string;
@@ -58,9 +58,9 @@ export interface InfoEmpresa {
 export interface UnidadesAdmin {
 	id?: string;
 	id_empresa?: any;
-	codigo: string;
+	codigo: number;
 	nombre: string;
-	desc: string;
+	descripcion: string;
 	status?: boolean;
 }
 

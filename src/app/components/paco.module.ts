@@ -30,6 +30,7 @@ import { FuenteComponent } from './cff/fuente/fuente.component';
 import { SubfuenteComponent } from './cff/subfuente/subfuente.component';
 import { TipoComponent } from './cff/tipo/tipo.component';
 
+
 @NgModule({
 	declarations: [
 		EmpresaComponent,

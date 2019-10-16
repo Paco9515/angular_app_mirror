@@ -9,7 +9,7 @@ import { Router, ActivatedRoute } from '@angular/router';
   styles: []
 })
 export class SubfuenteComponent {
-    id: string;
+	id: string;
 	subfuente: Subfuente = {
 		id: '',
 		id_fuente: null,
@@ -17,13 +17,13 @@ export class SubfuenteComponent {
 		nombre: '',
 		status: true
 	};
-	fuentes:[];
-  
+	fuentes: [];
+
   constructor(
 		private subfuenteService: SubfuenteService,
 		private router: Router,
 		private activatedRoute: ActivatedRoute,
-		//private toastrService: ToastrService
+		// private toastrService: ToastrService
 	) {
 		this.activatedRoute.params.subscribe((data: any) => {
 			this.id = data.id;
@@ -35,7 +35,7 @@ export class SubfuenteComponent {
 			} else {
 				this.createForma({
 					id: '',
-					id_fuente: 1,
+					id_fuente: '',
 					codigo: '',
 					nombre: '',
 					status: true
@@ -43,7 +43,7 @@ export class SubfuenteComponent {
 			}
 		});
   }
-  
+
   createForma(obj: Subfuente) {
 		this.subfuenteService.getFuentes().subscribe((fuentes: any) => {
 			this.fuentes = fuentes;

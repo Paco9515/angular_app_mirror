@@ -19,6 +19,7 @@ export class CcostoService {
 
 	createCcosto(ccosto: Ccosto) {
 		if (ccosto.id === '') {
+			console.log('id_centro', ccosto.id);
 			return this.constants.getRequest(`/create_ccosto`, 'post', ccosto);
 		} else {
 			return this.constants.getRequest(`/update_ccosto`, 'put', ccosto);
@@ -41,7 +42,7 @@ export class CcostoService {
 		return this.constants.getRequest(`/get_niveles`, 'get', false);
 	}
 
-	getUnidades(id: number) {
+	getUnidades(id: string) {
 		return this.constants.getRequest(`/get_unidades_empresa/${id}`, 'get', false);
 	}
 
@@ -49,7 +50,7 @@ export class CcostoService {
 		return this.constants.getRequest(`/get_unidad/${id}`, 'get', false);
 	}
 
-	getEmpresas(){
+	getEmpresas() {
 		return this.constants.getRequest(`/get_empresas`, 'get', false);
 	}
 
@@ -57,20 +58,17 @@ export class CcostoService {
 		return this.constants.getRequest(`/get_subfunciones`, 'get', false);
 	}
 
-	getSubfuncion(id:string) {
+	getSubfuncion(id: string) {
 		return this.constants.getRequest(`/get_subfuncion/${id}`, 'get', false);
 	}
 
 
-	eliminarCcosto(id: string, bandera:boolean) {
-		if (bandera == true) {
+	eliminarCcosto(id: string, bandera: boolean) {
+		if (bandera === true) {
 			return this.constants.getRequest(`/activate_ccosto/${id}`, 'put', false);
 		} else {
 			return this.constants.getRequest(`/delete_ccosto/${id}`, 'put', false);
 		}
 	}
-
-
-
 
 }

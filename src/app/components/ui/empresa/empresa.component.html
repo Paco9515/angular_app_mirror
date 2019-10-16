@@ -53,6 +53,7 @@
                                     <label class="col-sm-12 col-form-label">Tipo Empresa: </label>
                                     <div class="col-sm-12">
                                         <select class="form-control" [(ngModel)]="empresa.id_tipo_empresa" name="id_tipo_empresa">
+                                            <option value="">Seleccione una opción...</option>
                                             <option value="1">Publica</option>
                                             <option value="2">Privada</option>
                                         </select>
@@ -62,6 +63,7 @@
                                     <label class="col-sm-12 col-form-label">Clas Administrativa: </label>
                                     <div class="col-sm-12">
                                         <select class="form-control" [(ngModel)]="empresa.id_clas_administrativa" name="id_clas_administrativa">
+                                            <option value="">Seleccione una opción...</option>
                                             <option *ngFor="let admin of admins; let i = index" [value]="i">{{ admin.nombre }}</option>
                                         </select>
                                     </div>
@@ -70,6 +72,7 @@
                                     <label class="col-sm-12 col-form-label">Tipo Persona:</label>
                                     <div class="col-sm-12">
                                         <select class="form-control" [(ngModel)]="empresa.persona_moral" name="persona_moral">
+                                            <option value="">Seleccione una opción...</option>
                                             <option value="0">Moral</option>
                                             <option value="1">Fisica</option>
                                         </select>

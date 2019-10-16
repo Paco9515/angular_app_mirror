@@ -4,6 +4,8 @@ import { SubprogramaService } from 'src/app/services/cp/subprograma.service';
 import { ProgramaService } from '../../services/cp/programa.service';
 import { ProyectoService } from '../../services/proyecto/proyecto.service';
 import { UiComponent } from '../ui/ui/ui.component';
+import { forEach } from '@angular/router/src/utils/collection';
+import { count } from 'rxjs/operators';
 
 @Component({
 	selector: 'app-egresos',
@@ -37,6 +39,7 @@ export class EgresosComponent {
 
 	/* -- Variables locales -- */
 	cc_partidas: any;
+	info: any;
 	partidas: any;
 	total: number;
 	cantidad: any;
@@ -73,6 +76,8 @@ export class EgresosComponent {
 
 		/* -- Variables locales -- */
 		this.cc_partidas = [];
+		this.info = [];
+
 
 
 		// this.id_gasto = '';
@@ -118,19 +123,19 @@ export class EgresosComponent {
 	/* -- Clasificación por fuente de financiamiento -- */
 	getDataCFF(data: any) {
 		this.cff_data = data;
-		console.log('CFF: ', data);
+		// console.log('CFF: ', data);
 	}
 
 	/* -- Unidades internas -- */
 	getDataUI(data: any) {
 		this.ui_data = data;
-		console.log('UI: ', data);
+		// console.log('UI: ', data);
 	}
 
 	/* -- Clasificación por objeto de gastos -- */
 	getDataCOG(data: any) {
 		this.cog_data = data;
-		console.log('COG: ', data);
+		// console.log('COG: ', data);
 	}
 
 	agregarPartida() {
@@ -142,14 +147,15 @@ export class EgresosComponent {
 				id_partida: this.cog_data.id_partida,
 				codigo_partida: this.cog_data.codigo_partida,
 				nombre_partida: this.cog_data.nombre_partida,
+				id_gasto: this.cog_data.id_tipogasto,
 				importe: this.cantidad
 			});
 			this.cantidad = 0;
 			this.cog_component.getPartidasByConcepto('');
 		} else {
-			console.log('La cantidad no puede ser menor o igual a 0.');
+			// console.log('La cantidad no puede ser menor o igual a 0.');
 		}
-		console.log('Check: ', this.cog_data);
+		// console.log('Check: ', this.partidas);
 	}
 
 	eliminarPartida(id: any, importe: number) {
@@ -163,7 +169,23 @@ export class EgresosComponent {
 		this.total = 0;
 		this.cog_component.restartVariables();
 		this.ui_component.restartVariables();
-		console.log('CC_partidas: ', this.cc_partidas);
+		// console.log('CC_partidas: ', this.cc_partidas);
+	}
+
+	mostrarPartidas() {
+		this.info = [];
+		for (const item of this.cc_partidas) {
+			for (const item2 of item) {
+				this.info.push({
+					id_cc: item2.id_ccosto,
+					nombre_cc: item2.nombre_cc,
+					id_partida: item2.id_partida,
+					codigo_partida: item2.codigo_partida,
+					nombre_partida: item2.nombre_partida,
+					importe: item2.importe
+				});
+			}
+		}
 	}
 
 	guardarInfo() {
@@ -171,12 +193,9 @@ export class EgresosComponent {
 			id_subprograma: this.id_subprograma,
 			id_fase: this.id_fase,
 			id_centro_costo: this.ui_data.id_ccosto,
-			id_tipo_financ: this.cff_data.id_tipo,
-			id_gasto: this.cog_data.id_tipogasto
+			id_tipo_financ: this.cff_data.id_tipo
 		};
-		console.log('data:', data);
-		console.log('partidas:', this.partidas);
-		this.proyecto_service.setPresEgreso(data, this.partidas)
+		this.proyecto_service.setPresEgreso(data, this.cc_partidas)
 			.subscribe((response: any) => {
 				console.log(response);
 			});

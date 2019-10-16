@@ -10,18 +10,18 @@ import { FuenteService } from '../../../services/cff/fuente.service';
 export class FuentesComponent {
 
   fuentes: Fuente[];
-  detalle:any;
+  detalle: any;
 
   constructor(
 		private fuente_service: FuenteService
 	) {
 		this.fuentes = [];
 		this.detalle = {
-			id:'',  
-		    codigo: '',
-			nombre: '',		    
-		    status: true
-		}
+			id: '',
+			codigo: '',
+			nombre: '',
+			status: true
+		};
 		this.getFuentes();
 	}
 
@@ -29,12 +29,12 @@ export class FuentesComponent {
 		this.fuente_service.getFuentes()
 			.subscribe((data: any) => {
 				this.fuentes = data;
-				//console.log('Constructor: ', this.fuentes);
+				// console.log('Constructor: ', this.fuentes);
 			});
 	}
 
-	info(fuente:any){
-		this.detalle=fuente;
+	info(fuente: any) {
+		this.detalle = fuente;
 	}
 
 	eliminarActivar(id: string, bandera: boolean) {
@@ -43,10 +43,10 @@ export class FuentesComponent {
 
 		this.fuente_service.eliminarFuente(id, bandera)
 			.subscribe((response: any) => {
-				if(response.mensaje === 'eliminado'){
+				if (response.mensaje === 'eliminado') {
 					console.log('Fuente Eliminada');
 					this.getFuentes();
-				}else{
+				} else {
 					console.log('Fuente Activada');
 					this.getFuentes();
 				}

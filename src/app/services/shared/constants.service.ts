@@ -12,7 +12,7 @@ export class ConstantsService {
 
 	readonly headers = new HttpHeaders({
 		'Content-Type': 'application/json'
-	});
+	}); 
 
 	constructor(
 		private http: HttpClient
@@ -27,6 +27,7 @@ export class ConstantsService {
 			data: _data,
 			partidas: _partidas
 		};
+		console.log(data);
 		return this.http.post(this._url + url, data);
 	}
 

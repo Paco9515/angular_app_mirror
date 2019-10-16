@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-//import { ToastrService } from 'ngx-toastr';
+// import { ToastrService } from 'ngx-toastr';
 import { FuncionService } from '../../../services/cfg/funcion.service';
 import { Funciones } from '../../../interfaces/cfg.interface';
 
@@ -19,7 +19,7 @@ export class FuncionComponent {
 		nombre: '',
 		status: true
 	};
-	finalidades:[];
+	finalidades: [];
 
 	constructor(
 		private funcionService: FuncionService,
