@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { UnidadesAdminService } from 'src/app/services/ui/unidadesAdmin.service';
 import { UnidadesAdmin } from 'src/app/interfaces/ui.interface';
+import { MensajesService } from 'src/app/services/shared/mensajes.service';
 
 @Component({
   // tslint:disable-next-line: component-selector
@@ -14,7 +15,8 @@ export class UnidadesAdminComponent {
   detalle: any;
 
   constructor(
-		private unidad_service: UnidadesAdminService
+		private unidad_service: UnidadesAdminService,
+		private mensajes: MensajesService
 	) {
 		this.unidades = [];
 		this.detalle = {
@@ -49,15 +51,15 @@ export class UnidadesAdminComponent {
 		// this.programas = (this.programas.filter(data => data.id === id));
 
 		this.unidad_service.activarEliminarUnidad(id, bandera)
-			.subscribe((response: any) => {
-				if (response.mensaje === 'eliminado') {
-					console.log('Unidad Eliminada');
-					this.getUnidades();
-				} else {
-					console.log('Unidad Activada');
-					this.getUnidades();
-				}
-			});
+		.subscribe((response: any) => {
+			console.log(response);
+			this.mensajes.success(response);
+			this.getUnidades();
+		}, error => {
+			console.log(error);
+			this.mensajes.warning(error);
+			this.getUnidades();
+		});
 	}
 
 }

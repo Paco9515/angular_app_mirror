@@ -27,6 +27,7 @@ export class ConstantsService {
 			data: _data,
 			partidas: _partidas
 		};
+		console.log(data);
 		return this.http.post(this._url + url, data);
 	}
 

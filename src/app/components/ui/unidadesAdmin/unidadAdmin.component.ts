@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { NgForm } from '@angular/forms';
 import { UnidadesAdminService } from 'src/app/services/ui/unidadesAdmin.service';
+import { MensajesService } from 'src/app/services/shared/mensajes.service';
 import { UnidadesAdmin } from 'src/app/interfaces/ui.interface';
 
 @Component({
@@ -28,6 +29,7 @@ export class UnidadAdminComponent  {
 	constructor(
 		private unidadesService: UnidadesAdminService,
 		private activatedRoute: ActivatedRoute,
+		private mensajes: MensajesService
 	) {
 		this.activatedRoute.params.subscribe((data: any) => {
 			this.id = data.id;
@@ -65,8 +67,10 @@ export class UnidadAdminComponent  {
 			this.unidadesService.createUnidad(this.unidad)
 			.subscribe((response: any) => {
 				console.log(response);
+				this.mensajes.success(response);
 			}, error => {
-				console.log(error.error);
+				console.log(error);
+				this.mensajes.warning(error);
 			});
 		}
 	}
