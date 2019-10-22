@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Subprograma } from 'src/app/interfaces/cp.interface';
 import { SubprogramaService } from 'src/app/services/cp/subprograma.service';
-
+import { MensajesService } from './../../../services/shared/mensajes.service';
 @Component({
   selector: 'app-subprogramas',
   templateUrl: './subprogramas.component.html',
@@ -13,7 +13,8 @@ export class SubprogramasComponent {
 	detalle: Subprograma;
 
 	constructor(
-		private subprograma_service: SubprogramaService
+		private subprograma_service: SubprogramaService,
+		private mensaje: MensajesService
 	) {
 		this.detalle = {
 			id: '',
@@ -37,11 +38,11 @@ export class SubprogramasComponent {
 
 	eliminarActivar(id: string, type: boolean) {
 		this.subprograma_service.activarEliminarSubprograma(id, type)
-			.subscribe((response: any) => {
-				console.log(response.message);
+			.subscribe((data: any) => {
 				this.getSubprogramas();
+				this.mensaje.success(data);
 			}, error => {
-				console.log('ERROR: ', error);
+				this.mensaje.danger(error.error);
 			});
 	}
 }

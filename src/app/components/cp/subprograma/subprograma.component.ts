@@ -4,7 +4,7 @@ import { SubprogramaService } from 'src/app/services/cp/subprograma.service';
 import { ActivatedRoute } from '@angular/router';
 import { NgForm } from '@angular/forms';
 import { Programas } from '../../../interfaces/cp.interface';
-
+import { MensajesService } from './../../../services/shared/mensajes.service';
 @Component({
 	selector: 'app-subprograma',
 	templateUrl: './subprograma.component.html',
@@ -18,6 +18,7 @@ export class SubprogramaComponent {
 	constructor(
 		private subprogramaService: SubprogramaService,
 		private activatedRoute: ActivatedRoute,
+		private mensaje: MensajesService
 	) {
 		this.subprograma = {
 			id: '',
@@ -38,9 +39,7 @@ export class SubprogramaComponent {
 			.subscribe((data: any) => {
 				this.programas = data;
 			});
-
 	}
-
 
 
 	cargarSubprogramas(id: string) {
@@ -48,19 +47,17 @@ export class SubprogramaComponent {
 			.subscribe((obj: any) => {
 
 				this.subprograma = obj.data;
-				console.log(this.subprograma);
 			});
 	}
 
 	guardar(f: NgForm) {
 		// console.log(f.dirty);
 		if (f.valid) {
-			console.log(this.subprograma);
 			this.subprogramaService.createUpdateSubprograma(this.subprograma)
-				.subscribe((response: any) => {
-					console.log(response);
+				.subscribe((data: any) => {
+					this.mensaje.success(data);
 				}, error => {
-					console.log(error.error);
+					this.mensaje.danger(error.error);
 				});
 		}
 	}

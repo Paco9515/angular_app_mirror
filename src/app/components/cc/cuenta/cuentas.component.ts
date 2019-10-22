@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { CuentaService } from './../../../services/cc/cuenta.service';
 import { Cuentas } from './../../../interfaces/cc.interface';
+import { MensajesService } from '../../../services/shared/mensajes.service';
 
 @Component({
   selector: 'app-cuentas',
@@ -13,7 +14,8 @@ export class CuentasComponent {
 	detalle: Cuentas;
 
 	constructor(
-		private cuentas_service: CuentaService
+		private cuentas_service: CuentaService,
+		private mensaje: MensajesService
 	) {
 		this.detalle = {
 			id: '',
@@ -43,11 +45,11 @@ export class CuentasComponent {
 
 	eliminarActivar(id: string, type: boolean) {
 		this.cuentas_service.activarEliminarCuenta(id, type)
-			.subscribe((response: any) => {
-				// console.log(response);
+			.subscribe((data: any) => {
 				this.getCuentas();
+				this.mensaje.success(data);
 			}, error => {
-				// console.log('ERROR: ', error);
+				this.mensaje.danger(error.error);
 			});
 	}
 

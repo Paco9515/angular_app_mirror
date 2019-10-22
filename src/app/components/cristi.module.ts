@@ -39,6 +39,8 @@ import { SubeconomiasComponent } from './ca/subeconomia/subeconomias.component';
 import { FilterPipe } from '../pipes/filter.pipe';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
+import { TipoGastoComponent } from './ctg/tipo-gasto/tipo-gasto.component';
+import { TipoGastosComponent } from './ctg/tipo-gasto/tipo-gastos.component';
 
 @NgModule({
 	declarations: [
@@ -68,7 +70,9 @@ import { ToastrModule } from 'ngx-toastr';
 		ClasAdministrativaComponent,
 		SubeconomiaComponent,
 		SubeconomiasComponent,
-		FilterPipe
+		FilterPipe,
+		TipoGastoComponent,
+		TipoGastosComponent
 	],
 	exports: [
 		CapitulosComponent,

@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { EconomiaService } from './../../../services/ca/economia.service';
 import { Economias } from './../../../interfaces/ca.interface';
+import { MensajesService } from './../../../services/shared/mensajes.service';
+
 
 @Component({
 	selector: 'app-economias',
@@ -13,7 +15,8 @@ export class EconomiasComponent {
 	detalle: Economias;
 
 	constructor(
-		private economia_service: EconomiaService
+		private economia_service: EconomiaService,
+		private mensaje: MensajesService
 	) {
 		this.detalle = {
 			id: '',
@@ -27,7 +30,6 @@ export class EconomiasComponent {
 			nombre_sector: '',
 			status_sector: true
 		};
-
 		this.economias = [];
 		this.getEconomias();
 	 }
@@ -41,11 +43,11 @@ export class EconomiasComponent {
 
 	eliminarActivar(id: string, type: boolean) {
 		this.economia_service.activarEliminarEconomia(id, type)
-			.subscribe((obj: any) => {
-				console.log(obj);
+			.subscribe((data: any) => {
 				this.getEconomias();
+				this.mensaje.success(data);
 			}, error => {
-				console.log('ERROR: ', error.error);
+				this.mensaje.danger(error.error);
 			});
 	}
 

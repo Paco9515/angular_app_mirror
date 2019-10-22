@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Capitulos } from 'src/app/interfaces/cog.interface';
 import { CapituloService } from 'src/app/services/cog/capitulo.service';
+import { MensajesService } from './../../../services/shared/mensajes.service';
 
 @Component({
 	selector: 'app-capitulos',
@@ -13,7 +14,8 @@ export class CapitulosComponent {
 	detalle: Capitulos;
 
 	constructor(
-		private capitulo_service: CapituloService
+		private capitulo_service: CapituloService,
+		private mensaje: MensajesService
 	) {
 
 		this.detalle = {
@@ -22,7 +24,6 @@ export class CapitulosComponent {
 			nombre: '',
 			status: true
 		};
-
 		this.capitulos = [];
 		this.getCapitulos();
 	}
@@ -36,11 +37,11 @@ export class CapitulosComponent {
 
 	eliminarActivar(id: string, type: boolean) {
 		this.capitulo_service.activarEliminarCapitulo(id, type)
-			.subscribe((response: any) => {
-				// console.log(response);
+			.subscribe((data: any) => {
 				this.getCapitulos();
+				this.mensaje.success(data);
 			}, error => {
-				console.log('ERROR: ', error.error);
+				this.mensaje.danger(error.error);
 			});
 	}
 

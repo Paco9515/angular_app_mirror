@@ -3,6 +3,7 @@ import { NgForm } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ClasAdministrativaService } from 'src/app/services/ca/clas-administrativa.service';
 import { Clas_admin, Subeconomias, Economias, Financieros, Sectores } from '../../../interfaces/ca.interface';
+import { MensajesService } from './../../../services/shared/mensajes.service';
 
 @Component({
 	selector: 'app-clas-administrativa',
@@ -24,7 +25,7 @@ export class ClasAdministrativaComponent implements OnInit {
 	constructor(
 		private adminService: ClasAdministrativaService,
 		private activitedRoute: ActivatedRoute,
-		private router: Router) {
+		private mensaje: MensajesService) {
 
 		this.admin = {
 			id: '',
@@ -37,7 +38,6 @@ export class ClasAdministrativaComponent implements OnInit {
 			id_sector: ''
 		};
 	}
-
 
 	ngOnInit() {
 		this.adminService.getSectores()
@@ -114,21 +114,18 @@ export class ClasAdministrativaComponent implements OnInit {
 			this.onChangeFinanciero(FINANCIERO);
 			this.onChangeEconomia(ECONOMIA);
 			this.onChangeSubeconomia(SUBECONOMIA);
-		},
-		error => {
-			this.router.navigate(['panel-adm/administrativas']);
-			alert(error.error.messaje);
+		}, error => {
+			this.mensaje.danger(error.error, 'panel-adm/administrativas');
 		});
 	}
 
 	guardar(f: NgForm) {
 		if (f.valid) {
 			this.adminService.createUpdateClasAdmin(this.admin)
-				.subscribe((response: any) => {
-					// console.log(response);
-				},
-				error => {
-					// console.log(error.error);
+				.subscribe((data: any) => {
+					this.mensaje.success(data);
+				}, error => {
+					this.mensaje.danger(error.error);
 				});
 		}
 	}

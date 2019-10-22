@@ -10,11 +10,11 @@ export class CuentaService {
 	private constants: ConstantsService
 	) {}
 
-	createUpdateCuenta(cuneta: Cuentas) {
-		if (cuneta.id === '') {
-			return this.constants.getRequest(`/create_cuenta`, 'post', cuneta);
+	createUpdateCuenta(cuenta: Cuentas) {
+		if (cuenta.id === '') {
+			return this.constants.getRequest(`/create_cuenta`, 'post', cuenta);
 		} else {
-			return this.constants.getRequest(`/update_cuenta`, 'put', cuneta);
+			return this.constants.getRequest(`/update_cuenta`, 'put', cuenta);
 		}
 	}
 

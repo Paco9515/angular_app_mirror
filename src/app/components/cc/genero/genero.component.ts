@@ -3,6 +3,8 @@ import { NgForm } from '@angular/forms';
 import { GeneroService } from 'src/app/services/cc/genero.service';
 import { Generos } from 'src/app/interfaces/cc.interface';
 import { ActivatedRoute, Router } from '@angular/router';
+import { MensajesService } from './../../../services/shared/mensajes.service';
+
 @Component({
 	selector: 'app-genero',
 	templateUrl: './genero.component.html',
@@ -15,7 +17,7 @@ export class GeneroComponent {
 	constructor(
 		private generoService: GeneroService,
 		private activitedRoute: ActivatedRoute,
-		private router: Router
+		private mensaje: MensajesService
 	) {
 		this.genero = {
 			id: '',
@@ -36,19 +38,18 @@ export class GeneroComponent {
 				this.genero = obj.data;
 			},
 			error => {
-				this.router.navigate(['panel-adm/generos']);
-				alert(error.error.messaje);
+				this.mensaje.danger(error.error, 'panel-adm/generos');
 			});
 	}
 
 	guardar(f: NgForm) {
 		if (f.valid) {
 			this.generoService.createUpdateGenero(this.genero)
-				.subscribe((obj: any) => {
-					console.log(obj);
+				.subscribe((data: any) => {
+					this.mensaje.success(data);
 				}, error => {
-					console.log(error.error);
-			});
+					this.mensaje.danger(error.error);
+				});
 		}
 	}
 

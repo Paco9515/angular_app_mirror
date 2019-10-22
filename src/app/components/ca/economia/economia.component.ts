@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
+import { MensajesService } from './../../../services/shared/mensajes.service';
 import { NgForm } from '@angular/forms';
 import { EconomiaService } from 'src/app/services/ca/economia.service';
 import { Economias, Financieros, Sectores } from '../../../interfaces/ca.interface';
@@ -20,7 +21,8 @@ export class EconomiaComponent implements OnInit {
   constructor(
 	private economiaService: EconomiaService,
 	private activitedRoute: ActivatedRoute,
-	private router: Router,
+	private mensaje: MensajesService
+
 	) {
 
 		this.economia = {
@@ -71,19 +73,17 @@ export class EconomiaComponent implements OnInit {
 			this.onChangeFinanciero(FINANCIERO);
 		},
 		error => {
-			this.router.navigate(['panel-adm/economias']);
-			alert(error.error.messaje);
+			this.mensaje.danger(error.error, 'panel-adm/economias');
 		});
 	}
 
 	guardar(f: NgForm) {
 		if (f.valid) {
 			this.economiaService.createUpdateEconomia(this.economia)
-			.subscribe((response: any) => {
-				// console.log(response);
-			},
-			error => {
-				// console.log(error.error);
+			.subscribe((data: any) => {
+				this.mensaje.success(data);
+			}, error => {
+				this.mensaje.danger(error.error);
 			});
 		}
 	}

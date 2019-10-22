@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { ProyectoService } from 'src/app/services/pe/proyecto.service';
 import { Proyectos } from 'src/app/interfaces/pe.interface';
+import { MensajesService } from './../../../services/shared/mensajes.service';
 
 @Component({
 	selector: 'app-proyectos',
@@ -8,11 +9,27 @@ import { Proyectos } from 'src/app/interfaces/pe.interface';
 })
 export class ProyectosComponent {
 
+	detalle: Proyectos;
 	proyectos: Proyectos[];
 
 	constructor(
-		private proyecto_service: ProyectoService
+		private proyecto_service: ProyectoService,
+		private mensaje: MensajesService
 	) {
+
+		this.detalle = {
+			id_empresa: '',
+			codigo: '',
+			nombre: '',
+			descripcion: '',
+			anio: '',
+			cp: '',
+			entidad: '',
+			municipio: '',
+			colonia: '',
+			status: true
+		};
+
 		this.proyectos = [];
 		this.getProyectos();
 	}
@@ -24,11 +41,11 @@ export class ProyectosComponent {
 
 	eliminarActivar(id: string, type: boolean) {
 		this.proyecto_service.activarEliminarProyecto(id, type)
-			.subscribe((response: any) => {
-				console.log(response.message);
+			.subscribe((data: any) => {
 				this.getProyectos();
+				this.mensaje.success(data);
 			}, error => {
-				console.log('ERROR: ', error.error.message);
+				this.mensaje.danger(error.error);
 			});
 	}
 }

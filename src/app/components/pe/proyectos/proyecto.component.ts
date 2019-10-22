@@ -3,11 +3,13 @@ import { ProyectoService } from 'src/app/services/pe/proyecto.service';
 import { ActivatedRoute } from '@angular/router';
 import { NgForm } from '@angular/forms';
 import { Proyectos } from 'src/app/interfaces/pe.interface';
+import { MensajesService } from './../../../services/shared/mensajes.service';
 
 @Component({
 	selector: 'app-proyecto',
 	templateUrl: './proyecto.component.html'
 })
+
 export class ProyectoComponent {
 	proyecto: Proyectos;
 	direccion: any;
@@ -15,6 +17,7 @@ export class ProyectoComponent {
 	constructor(
 		private proyectoService: ProyectoService,
 		private activatedRoute: ActivatedRoute,
+		private mensaje: MensajesService
 	) {
 
 		this.colonia = '';
@@ -48,24 +51,34 @@ export class ProyectoComponent {
 	}
 
 	getDireccion() {
-		console.log(this.proyecto);
 		if (this.proyecto.cp !== '') {
 			this.proyectoService.getDireccionCP(this.proyecto.cp)
 				.subscribe((response: any) => {
-					this.direccion = response;
-					this.proyecto.colonia = '';
-					// console.log(response);
+					if (response.colonias !== [] && response.municipio !== ''  && response.estado !== '' ) {
+
+						this.direccion = response;
+						this.proyecto.colonia = '';
+
+					} else {
+						const MENSAJE: any = {
+							'message': 'El codigo postal no es valido',
+							'title': 'Advertencia'
+						};
+						this.mensaje.warning(MENSAJE);
+					}
 				});
 		}
 	}
 
 	getProyectos(id: string) {
 		this.proyectoService.getProyecto(id)
-			.subscribe((obj: any) => {
-				this.proyecto = obj;
+			.subscribe((data: any) => {
+				console.log(data)
+				this.proyecto = data.data;
 				this.getDireccion();
+			}, error => {
+				this.mensaje.danger(error.error);
 			});
-
 	}
 
 	guardar(f: NgForm) {
@@ -73,11 +86,12 @@ export class ProyectoComponent {
 			this.proyecto.entidad = this.direccion.estado;
 			this.proyecto.municipio = this.direccion.municipio;
 			this.proyectoService.createUpdateProyecto(this.proyecto)
-				.subscribe((response: any) => {
-					console.log(response);
+				.subscribe((data: any) => {
+					this.mensaje.success(data);
 				}, error => {
-					console.log(error.error);
+					this.mensaje.danger(error.error);
 				});
+
 			this.proyecto = {
 				id: '',
 				id_empresa: '1',
