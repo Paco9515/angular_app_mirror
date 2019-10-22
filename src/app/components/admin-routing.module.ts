@@ -2,11 +2,14 @@ import { Routes, RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
 
 import { AdminComponent } from './admin.component';
-import { ProgramasComponent } from './cp/programa/programas.component';
+
 import { EscritorioComponent } from './escritorio/escritorio.component';
+import { ProgramasComponent } from './cp/programa/programas.component';
 import { ProgramaComponent } from './cp/programa/programa.component';
 import { ProgressComponent } from './progress/progress.component';
 
+import { TipoGastosComponent } from './ctg/tipo-gasto/tipo-gastos.component';
+import { TipoGastoComponent } from './ctg/tipo-gasto/tipo-gasto.component';
 import { CapitulosComponent } from './cog/capitulo/capitulos.component';
 import { CapituloComponent } from './cog/capitulo/capitulo.component';
 import { PartidaComponent } from './cog/partida/partida.component';
@@ -82,6 +85,8 @@ const admin_routes: Routes = [
 			{ path: 'fases', component: FasesComponent },
 			{ path: 'fase/:id', component: FaseComponent },
 
+			{ path: 'tipos-gastos', component: TipoGastosComponent },
+			{ path: 'tipos-gastos/:id', component: TipoGastoComponent },
 			{ path: 'capitulos', component: CapitulosComponent },
 			{ path: 'capitulos/:id', component: CapituloComponent },
 			{ path: 'conceptos', component: ConceptosComponent },

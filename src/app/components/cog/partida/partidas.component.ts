@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { Partidas } from './../../../interfaces/cog.interface';
 import { PartidaService } from './../../../services/cog/partida.service';
+import { MensajesService } from './../../../services/shared/mensajes.service';
+
 
 @Component({
   selector: 'app-partidas',
@@ -13,7 +15,8 @@ export class PartidasComponent {
 	detalle: Partidas;
 
 	constructor(
-		private partida_service: PartidaService
+		private partida_service: PartidaService,
+		private mensaje: MensajesService
 	) {
 
 		this.detalle = {
@@ -41,11 +44,11 @@ export class PartidasComponent {
 
 	eliminarActivar(id: string, type: boolean) {
 		this.partida_service.activarEliminarPartida(id, type)
-			.subscribe((obj: any) => {
-				// console.log(obj);
+			.subscribe((data: any) => {
 				this.getPartidas();
+				this.mensaje.success(data);
 			}, error => {
-				// console.log('ERROR: ', error.error);
+				this.mensaje.danger(error.error);
 			});
 	}
 

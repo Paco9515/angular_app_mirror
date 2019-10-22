@@ -3,6 +3,7 @@ import { NgForm } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Grupos, Generos, Rubros, Cuentas } from '../../../interfaces/cc.interface';
 import { CuentaService } from 'src/app/services/cc/cuenta.service';
+import { MensajesService } from '../../../services/shared/mensajes.service';
 
 @Component({
 	selector: 'app-cuenta',
@@ -23,7 +24,7 @@ export class CuentaComponent implements OnInit {
 	constructor(
 		private cuentaService: CuentaService,
 		private activitedRoute: ActivatedRoute,
-		private router: Router
+		private mensaje: MensajesService
 	) {
 		this.cuenta = {
 			id: '',
@@ -97,20 +98,18 @@ export class CuentaComponent implements OnInit {
 				this.onChangeRubro(RUBRO);
 			},
 			error => {
-				this.router.navigate(['panel-adm/cuentas']);
-				alert(error.error.messaje);
+				this.mensaje.danger(error.error,'panel-adm/cuentas');
 			});
 	}
 
 	guardar(f: NgForm) {
 		if (f.valid) {
 			this.cuentaService.createUpdateCuenta(this.cuenta)
-				.subscribe((response: any) => {
-					// console.log(response);
-				},
-				error => {
-					// console.log(error.error);
-				});
+				.subscribe((data: any) => {
+					this.mensaje.success(data);
+			}, error => {
+				this.mensaje.danger(error.error);
+			});
 		}
 	}
 

@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { NgForm } from '@angular/forms';
 import { SectorService } from 'src/app/services/ca/sector.service';
 import { Sectores } from './../../../interfaces/ca.interface';
+import { MensajesService } from './../../../services/shared/mensajes.service';
 
 @Component({
 	selector: 'app-sector',
@@ -15,8 +16,8 @@ export class SectorComponent {
 	constructor(
 		private sectorservice: SectorService,
 		private activitedRoute: ActivatedRoute,
-		private router: Router) {
-
+		private mensaje: MensajesService
+	) {
 			this.sector = {
 				id: '',
 				codigo: '',
@@ -33,22 +34,20 @@ export class SectorComponent {
 
 	cargarSector(id: string) {
 		this.sectorservice.getSector(id).subscribe((obj: any) => {
-			this.sector = obj;
+			this.sector = obj.data;
 		},
 		error => {
-			this.router.navigate(['panel-adm/sectores']);
-			alert(error.error.messaje);
+			this.mensaje.danger(error.error, 'panel-adm/sectores');
 		});
 	}
 
 	guardar(f: NgForm) {
 		if (f.valid) {
 			this.sectorservice.createUpdateSector(this.sector)
-				.subscribe((obj: any) => {
-					console.log(obj);
-				},
-				error => {
-					console.log(error.error);
+				.subscribe((data: any) => {
+					this.mensaje.success(data);
+				}, error => {
+					this.mensaje.danger(error.error);
 				});
 		}
 	}

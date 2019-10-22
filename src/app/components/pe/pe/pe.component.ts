@@ -6,6 +6,7 @@ import { PeService } from 'src/app/services/pe/pe.service';
   selector: 'app-pe',
   templateUrl: './pe.component.html'
 })
+
 export class PeComponent implements OnInit {
   	@Input() primary_keys_pe: any;
   	@Output() pe = new EventEmitter<any>();
@@ -48,7 +49,7 @@ export class PeComponent implements OnInit {
 			this.data.id_proyecto = id_proyecto;
 			this.pe_service.get_fases(id_proyecto)
 				.subscribe((data: any) => {
-					this.fases = data;
+					this.fases = data.data;
 				});
 		}
 	}

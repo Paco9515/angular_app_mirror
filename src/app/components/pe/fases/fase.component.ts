@@ -3,6 +3,7 @@ import { FaseService } from 'src/app/services/pe/fase.service';
 import { ActivatedRoute } from '@angular/router';
 import { Fases } from 'src/app/interfaces/pe.interface';
 import { NgForm } from '@angular/forms';
+import { MensajesService } from './../../../services/shared/mensajes.service';
 
 @Component({
 	selector: 'app-fase',
@@ -16,6 +17,7 @@ export class FaseComponent {
 	constructor(
 		private faseService: FaseService,
 		private activatedRoute: ActivatedRoute,
+		private mensaje: MensajesService
 	) {
 		this.fase = {
 			id: '',
@@ -43,16 +45,16 @@ export class FaseComponent {
 
 	getFases(id: string) {
 		this.faseService.getFase(id)
-			.subscribe((obj: Fases) => this.fase = obj);
+			.subscribe((obj: any) => this.fase = obj.data);
 	}
 
 	guardar(f: NgForm) {
 		if (f.valid) {
 			this.faseService.createUpdateFase(this.fase)
-				.subscribe((response: any) => {
-					console.log(response);
+				.subscribe((data: any) => {
+					this.mensaje.success(data);
 				}, error => {
-					console.log(error.error);
+					this.mensaje.danger(error.error);
 				});
 		}
 	}

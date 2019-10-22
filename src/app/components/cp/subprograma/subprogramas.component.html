@@ -1,165 +1,158 @@
 <!-- Breadcrumb-->
 <div class="d-none d-sm-block">
-	<ol class="breadcrumb">
-		<li class="breadcrumb-item"><i class="fa fa-folder-open"></i> Clasificación programática</li>
-		<li class="breadcrumb-item active"> Subprogramas</li>
-	</ol>
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><i class="fa fa-folder-open"></i> Clasificación programática</li>
+        <li class="breadcrumb-item active"> Subprogramas</li>
+    </ol>
 </div>
-	
+
 <div class="container-fluid p-3">
-	<div class="animated fadeIn">
-		<div class="row justify-content-center">
-			<div class="col-md-12">
-				<div class="card shadow">
-					<div class="card-header">
-						<div class="row">
-							<div class="col-12 col-md-8 text-center text-sm-left  h5 font-weight-bold">
-								<i class="fa fa-list"></i> Listado de Subprogramas
-							</div>
-							<div class="col-12 col-md-4 text-center text-sm-right">
-								<button type="button" class="btn btn-success btn-sm mb-2"
-									[routerLink]="['/panel-adm/subprograma', 'nuevo']">
+    <div class="animated fadeIn">
+        <div class="row justify-content-center">
+            <div class="col-md-12">
+                <div class="card shadow">
+                    <div class="card-header">
+                        <div class="row">
+                            <div class="col-12 col-md-8 text-center text-sm-left  h5 font-weight-bold">
+                                <i class="fa fa-list"></i> Listado de Subprogramas
+                            </div>
+                            <div class="col-12 col-md-4 text-center text-sm-right">
+                                <button type="button" class="btn btn-success btn-sm mb-2" [routerLink]="['/panel-adm/subprograma', 'nuevo']">
 									<i class="fa fa-plus-circle"></i>
 									Agregar nuevo subprograma
 								</button>
-							</div>
-						</div>
-					</div>
-					<div class="card-body">
-						<div class="table-responsive">
-							<table class="table table-striped table-sm">
-								<thead class="thead-dark">
-									<tr>
-										<th scope="col">#</th>
-										<th scope="col">Nombre</th>
-										<th scope="col">Estado</th>
-										<th class="text-center" scope="col">Opciones</th>
-									</tr>
-								</thead>
-								<tbody>
-									<tr *ngIf="subprogramas.length==0; else tableBlock">
-										<td colspan="4" class="text-center">
-											<span class="badge badge-info">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-striped table-sm">
+                                <thead class="thead-dark">
+                                    <tr>
+                                        <th scope="col">#</th>
+                                        <th scope="col">Código</th>
+                                        <th scope="col">Nombre</th>
+                                        <th scope="col">Estado</th>
+                                        <th class="text-center" scope="col">Opciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngIf="subprogramas.length==0; else tableBlock">
+                                        <td colspan="5" class="text-center">
+                                            <span class="badge badge-info">
 												<h5>
 													<i class="far fa-frown"></i>
 													No hay elementos para mostrar.
 												</h5>
 											</span>
-										</td>
-									</tr>
-									<ng-template #tableBlock>
-										<tr *ngFor="let subprograma of subprogramas; let i = index">
-											<td>{{ i+1 }}</td>
-											<td>{{ subprograma.nombre }}</td>
-											<td>
-												<span *ngIf="subprograma.status; else inactiveBlock"
-													class="badge badge-success">
+                                        </td>
+                                    </tr>
+                                    <ng-template #tableBlock>
+                                        <tr *ngFor="let subprograma of subprogramas; let i = index">
+                                            <td>{{ i+1 }}</td>
+                                            <td>{{ subprograma.codigo }}</td>
+                                            <td>{{ subprograma.nombre }}</td>
+                                            <td>
+                                                <span *ngIf="subprograma.status; else inactiveBlock" class="badge badge-success">
 													Activo
 												</span>
-												<ng-template #inactiveBlock>
-													<span class="badge badge-secondary">Inactivo</span>
-												</ng-template>
-											</td>
-											<td class="text-center">
-												<button type="button" class="btn btn-info btn-sm text-white w-auto mb-1 ml-1"
-													data-toggle="modal" data-target="#subprogramaModal"
-													(click)="detalle=subprograma">
+                                                <ng-template #inactiveBlock>
+                                                    <span class="badge badge-secondary">Inactivo</span>
+                                                </ng-template>
+                                            </td>
+                                            <td class="text-center">
+                                                <button type="button" class="btn btn-info btn-sm text-white w-auto mb-1 ml-1" data-toggle="modal" data-target="#subprogramaModal" (click)="detalle=subprograma">
 													<i class="fa fa-eye"></i>
 													Ver detalle
 												</button>
-												<button type="button" class="btn btn-primary btn-sm w-auto mb-1 ml-1"
-													[routerLink]="['/panel-adm/subprograma', subprograma.id]"
-													[disabled]="!subprograma.status">
+                                                <button type="button" class="btn btn-primary btn-sm w-auto mb-1 ml-1" [routerLink]="['/panel-adm/subprograma', subprograma.id]" [disabled]="!subprograma.status">
 													<i class="fa fa-edit"></i>
 													Editar
 												</button>
-												<button *ngIf="subprograma.status"
-													class="btn btn-danger btn-sm ml-1 mb-1 w-auto" type="button"
-													(click)="eliminarActivar(subprograma.id, false)">
+                                                <button *ngIf="subprograma.status" class="btn btn-danger btn-sm ml-1 mb-1 w-auto" type="button" (click)="eliminarActivar(subprograma.id, false)">
 													<i class="fa fa-trash"></i>
 													Eliminar
 												</button>
-												<button *ngIf="!subprograma.status"
-													class="btn btn-success btn-sm w-auto mb-1" type="button"
-													(click)="eliminarActivar(subprograma.id, true)">
+                                                <button *ngIf="!subprograma.status" class="btn btn-success btn-sm w-auto mb-1" type="button" (click)="eliminarActivar(subprograma.id, true)">
 													<i class="fa fa-arrow-circle-up"></i>
 													Activar
 												</button>
-											</td>
-										</tr>
-									</ng-template>
-								</tbody>
-							</table>
-							<div class="modal fade" id="subprogramaModal" tabindex="-1" role="dialog"
-								aria-labelledby="exampleModalLabel" aria-hidden="true">
-								<div class="modal-dialog modal_class" role="document">
-									<div class="modal-content ">
-										<div class="modal-header">
-											<h5 class="modal-title" id="exampleModalLabel">
-												Información detallada del subprograma
-											</h5>
-											<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            </td>
+                                        </tr>
+                                    </ng-template>
+                                </tbody>
+                            </table>
+                            <div class="modal fade" id="subprogramaModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog modal_class" role="document">
+                                    <div class="modal-content ">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">
+                                                Información detallada del subprograma
+                                            </h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
 												<span aria-hidden="true">&times;</span>
 											</button>
-										</div>
-										<div class="modal-body">
-											<div class="row">
-												<div class="col-12">
-													<div class="form-group row">
-														<label for="staticEmail" class="col-sm-2 col-form-label font-weight-bold">
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class="row">
+                                                <div class="col-12">
+                                                    <div class="form-group row">
+                                                        <label for="staticEmail" class="col-sm-2 col-form-label font-weight-bold">
 															Código:
 														</label>
-														<div class="col-sm-10">
-															<p>{{ detalle.codigo }}</p>
-														</div>
-													</div>
-													<div class="form-group row">
-														<label for="staticEmail" class="col-sm-2 col-form-label font-weight-bold">
+                                                        <div class="col-sm-10">
+                                                            <p>{{ detalle.codigo }}</p>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group row">
+                                                        <label for="staticEmail" class="col-sm-2 col-form-label font-weight-bold">
 															Nombre:
 														</label>
-														<div class="col-sm-10">
-															<p>{{ detalle.nombre }}</p>
-														</div>
-													</div>
-													<div class="form-group row">
-														<label for="staticEmail" class="col-sm-2 col-form-label font-weight-bold">
+                                                        <div class="col-sm-10">
+                                                            <p>{{ detalle.nombre }}</p>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group row">
+                                                        <label for="staticEmail" class="col-sm-2 col-form-label font-weight-bold">
 															Nombre del programa:
 														</label>
-														<div class="col-sm-10">
-															<p>{{ detalle.nombre_programa }}</p>
-														</div>
-													</div>
-													<div class="form-group row">
-														<label for="staticEmail" class="col-sm-2 col-form-label font-weight-bold">
+                                                        <div class="col-sm-10">
+                                                            <p>{{ detalle.nombre_programa }}</p>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group row">
+                                                        <label for="staticEmail" class="col-sm-2 col-form-label font-weight-bold">
 															Estado:
 														</label>
-														<div class="col-sm-10">
-															<span *ngIf="detalle.status; else inactiveBlock"
-																class="badge badge-success">
+                                                        <div class="col-sm-10">
+                                                            <span *ngIf="detalle.status; else inactiveBlock" class="badge badge-success">
 																Activo
 															</span>
-															<ng-template #inactiveBlock>
-																<span class="badge badge-secondary">Inactivo</span>
-															</ng-template>
-														</div>
-													</div>
-												</div>
-											</div>
-										</div>
-										<div class="modal-footer">
-											<button type="button" class="btn btn-secondary" data-dismiss="modal">
+                                                            <ng-template #inactiveBlock>
+                                                                <span class="badge badge-secondary">Inactivo</span>
+                                                            </ng-template>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">
 												Cerrar
 											</button>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="card-footer">
-					</div>
-				</div><!-- /.card-->
-			</div><!-- /.col-->
-		</div><!-- /.row-->
-	</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                    </div>
+                </div>
+                <!-- /.card-->
+            </div>
+            <!-- /.col-->
+        </div>
+        <!-- /.row-->
+    </div>
 </div>

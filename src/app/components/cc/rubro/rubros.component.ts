@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Rubros } from './../../../interfaces/cc.interface';
 import { RubroService } from './../../../services/cc/rubro.service';
+import { MensajesService } from './../../../services/shared/mensajes.service';
 
 @Component({
 	selector: 'app-rubros',
@@ -13,7 +14,8 @@ export class RubrosComponent {
 	detalle: Rubros;
 
 	constructor(
-		private rubros_service: RubroService
+		private rubros_service: RubroService,
+		private mensaje: MensajesService
 	) {
 		this.detalle = {
 			id: '',
@@ -40,11 +42,12 @@ export class RubrosComponent {
 
 	eliminarActivar(id: string, type: boolean) {
 		this.rubros_service.activarEliminarRubro(id, type)
-			.subscribe((response: any) => {
+			.subscribe((data: any) => {
 				// console.log(response);
 				this.getRubros();
+				this.mensaje.success(data);
 			}, error => {
-				// console.log('ERROR: ', error);
+				this.mensaje.danger(error.error);
 			});
 	}
 

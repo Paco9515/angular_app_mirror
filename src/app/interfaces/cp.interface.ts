@@ -1,5 +1,6 @@
 export interface Programas {
 	id?: string;
+	codigo: string;
 	nombre: string;
 	status: boolean;
 }

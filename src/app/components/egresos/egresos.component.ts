@@ -81,7 +81,6 @@ export class EgresosComponent {
 
 
 		// this.id_gasto = '';
-
 		// this.show = true;
 		// this.mensaje = 'Ocultar tabla';
 		this.cantidad = 0;
@@ -90,6 +89,8 @@ export class EgresosComponent {
 			id_capitulo: '',
 			id_concepto: '',
 			id_partida: '',
+			id_cc: '',
+			nombre_cc: '',
 			nombre_partida: '',
 			codigo_partida: '',
 			codigo_cuenta: '',

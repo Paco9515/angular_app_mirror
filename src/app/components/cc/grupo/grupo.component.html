@@ -1,94 +1,92 @@
 <!-- Breadcrumb-->
 <div class="d-none d-sm-block">
-	<ol class="breadcrumb">
-		<li class="breadcrumb-item"><i class="fa fa-folder-open"></i> Clasificación contable</li>
-		<li class="breadcrumb-item"><a [routerLink]="['/panel-adm/grupos']"> Grupos</a></li>
-		<li class="breadcrumb-item active"> Grupo</li>
-	</ol>
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><i class="fa fa-folder-open"></i> Clasificación contable</li>
+        <li class="breadcrumb-item"><a [routerLink]="['/panel-adm/grupos']"> Grupos</a></li>
+        <li class="breadcrumb-item active"> Grupo</li>
+    </ol>
 </div>
 
 <div class="container-fluid p-3">
-	<div class="animated fadeIn">
-		<div class="row justify-content-center">
-			<div class="col-md-12">
-				<div class="card shadow">
-					<form #f="ngForm" (ngSubmit)="guardar(f)">
-						<div class="card-header">
-							<div class="row text-center text-sm-left">
-								<div class="col-12 col-md-8 text-md-left h5 font-weight-bold">
-									<span *ngIf="grupo.id!=''">
+    <div class="animated fadeIn">
+        <div class="row justify-content-center">
+            <div class="col-md-12">
+                <div class="card shadow">
+                    <form #f="ngForm" (ngSubmit)="guardar(f)">
+                        <div class="card-header">
+                            <div class="row text-center text-sm-left">
+                                <div class="col-12 col-md-8 text-md-left h5 font-weight-bold">
+                                    <span *ngIf="grupo.id!=''">
 										<i class="fa fa-edit"></i><strong> Editar un grupo</strong>
 									</span>
-									<span *ngIf="grupo.id==''">
+                                    <span *ngIf="grupo.id==''">
 										<i class="fa fa-plus-circle"></i><strong> Crear un grupo</strong>
 									</span>
-								</div>
-								<div class="col-12 col-md-4 text-center text-sm-right">
-									<button class="btn btn-outline-primary mt-2 btn-sm" type="button"
-										[routerLink]="['/panel-adm/grupos']">
+                                </div>
+                                <div class="col-12 col-md-4 text-center text-sm-right">
+                                    <button class="btn btn-outline-primary mt-2 btn-sm" type="button" [routerLink]="['/panel-adm/grupos']">
 										<i class="fa fa-arrow-circle-left"></i>
 										Regresar
 									</button>
-								</div>
-							</div>
-						</div>
-						<div class="card-body">
-							<div class="form-group row">
-								<label for="codigo" class="col-sm-2 col-form-label">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="form-group row">
+                                <label for="codigo" class="col-sm-2 col-form-label">
 									Código
 								</label>
-								<div class="col-sm-10">
-									<input type="text" class="form-control" placeholder="Ingresa el código" name="codigo" [(ngModel)]="grupo.codigo"
-									required>
-								</div>
-							</div>
-							<div class="form-group row">
-								<label for="nombre" class="col-sm-2 col-form-label">
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" placeholder="Ingresa el código" name="codigo" [(ngModel)]="grupo.codigo" required>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="nombre" class="col-sm-2 col-form-label">
 									Nombre
 								</label>
-								<div class="col-sm-10">
-									<input type="text" class="form-control" placeholder="Ingresa el nombre"
-									[(ngModel)]="grupo.nombre"
-									name="nombre" required>
-								</div>
-							</div>
-							<div class="form-group row">
-								<label for="genero" class="col-sm-2 col-form-label">
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" placeholder="Ingresa el nombre" [(ngModel)]="grupo.nombre" name="nombre" required>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="genero" class="col-sm-2 col-form-label">
 									Genero
 								</label>
-								<div class="col-sm-10">
-									<select class="form-control"  name="genero" [(ngModel)]="grupo.id_genero" required>
+                                <div class="col-sm-10">
+                                    <select class="form-control" name="genero" [(ngModel)]="grupo.id_genero" required>
 										<option value="">Seleccione un genero</option>
 										<option *ngFor="let genero of generos" [value]="genero.id">
-											{{ genero.codigo + ' ' + genero.nombre }}
+											{{ genero.codigo + ' - ' + genero.nombre }}
 										</option>
 									</select>
-								</div>
-							</div>
-							<div class="form-group row">
-								<label for="status" class="col-sm-2 col-form-label">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="status" class="col-sm-2 col-form-label">
 									Estado
 								</label>
-								<div class="col-sm-10">
-									<span class="badge badge-success">
+                                <div class="col-sm-10">
+                                    <span class="badge badge-success">
 									Activo
 									</span>
-								</div>
-							</div>
-						</div>
-						<div class="card-footer">
-							<div class="form-group row">
-								<div class="col-12">
-									<button class="btn btn-primary btn-sm pull-right" type="submit" [disabled]="f.invalid || !f.dirty">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <div class="form-group row">
+                                <div class="col-12">
+                                    <button class="btn btn-primary btn-sm pull-right" type="submit" [disabled]="f.invalid || !f.dirty">
 										<i class="fa fa-save"></i>
 										Guardar
 									</button>
-								</div>
-							</div>
-						</div>
-					</form>
-				</div>
-			</div><!-- /.col-->
-		</div><!-- /.row-->
-	</div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <!-- /.col-->
+        </div>
+        <!-- /.row-->
+    </div>
 </div>

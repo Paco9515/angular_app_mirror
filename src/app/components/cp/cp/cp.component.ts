@@ -8,6 +8,7 @@ import { CpService } from 'src/app/services/cp/cp.service';
   templateUrl: './cp.component.html',
   styleUrls: []
 })
+
 export class CpComponent implements OnInit {
 	@Input() primary_keys_cp: any;
 	@Output() cp = new EventEmitter<any>();
