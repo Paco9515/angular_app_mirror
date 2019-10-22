@@ -44,6 +44,7 @@ export class UnidadesAdminService {
 	getEmpresas() {
 		return this.constants.getRequest(`/get_empresas`, 'get', false);
 	}
+
 	getEmpresa(id: string) {
 		return this.constants.getRequest(`/get_empresa/${id}`, 'get', false);
 	}

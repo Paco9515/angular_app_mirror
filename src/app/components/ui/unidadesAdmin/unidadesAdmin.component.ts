@@ -42,7 +42,7 @@ export class UnidadesAdminComponent {
 	info(unidad: any) {
 		this.detalle = unidad;
 		this.unidad_service.getEmpresa(unidad.id_empresa).subscribe((data: any) => {
-			this.detalle.nom_emp = data[0].nom_comercial;
+			this.detalle.nom_emp = data.data[0].nom_comercial;
 		});
 	}
 
@@ -52,11 +52,17 @@ export class UnidadesAdminComponent {
 
 		this.unidad_service.activarEliminarUnidad(id, bandera)
 		.subscribe((response: any) => {
-			console.log(response);
-			this.mensajes.success(response);
-			this.getUnidades();
+			// console.log(response);
+			if (bandera === false) {
+				this.mensajes.danger(response);
+				this.getUnidades();
+			} else {
+				this.mensajes.success(response);
+				this.getUnidades();
+			}
+
 		}, error => {
-			console.log(error);
+			// console.log(error);
 			this.mensajes.warning(error);
 			this.getUnidades();
 		});
