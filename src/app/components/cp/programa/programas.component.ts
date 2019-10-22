@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { ProgramaService } from 'src/app/services/cp/programa.service';
 import { Programas } from 'src/app/interfaces/cp.interface';
+import { MensajesService } from '../../../services/shared/mensajes.service';
 
 @Component({
 	selector: 'app-programas',
@@ -11,7 +12,8 @@ export class ProgramasComponent {
 	programas: Programas[];
 
 	constructor(
-		private programa_service: ProgramaService
+		private programa_service: ProgramaService,
+		private mensaje: MensajesService
 	) {
 		this.programas = [];
 		this.getProgramas();
@@ -24,11 +26,11 @@ export class ProgramasComponent {
 
 	eliminarActivar(id: string, type: boolean) {
 		this.programa_service.activarEliminarPrograma(id, type)
-			.subscribe((response: any) => {
-				console.log(response.message);
+			.subscribe((data: any) => {
 				this.getProgramas();
+				this.mensaje.success(data);
 			}, error => {
-				console.log('ERROR: ', error.error.message);
+				this.mensaje.danger(error.error);
 			});
 	}
 }

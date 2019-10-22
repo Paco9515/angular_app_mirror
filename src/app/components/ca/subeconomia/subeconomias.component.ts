@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { SubeconomiaService } from './../../../services/ca/subeconomia.service';
 import { Subeconomias } from './../../../interfaces/ca.interface';
-
+import { MensajesService } from './../../../services/shared/mensajes.service';
 
 @Component({
   selector: 'app-subeconomias',
@@ -14,7 +14,8 @@ export class SubeconomiasComponent {
   detalle: Subeconomias;
 
 	constructor(
-		private subeconomia_service: SubeconomiaService
+		private subeconomia_service: SubeconomiaService,
+		private mensaje: MensajesService
 	) {
 		this.detalle = {
 			id: '',
@@ -45,11 +46,11 @@ export class SubeconomiasComponent {
 
 	eliminarActivar(id: string, type: boolean) {
 		this.subeconomia_service.activarEliminarSubeconomia(id, type)
-			.subscribe((response: any) => {
-				// console.log(response.message);
+			.subscribe((data: any) => {
 				this.getSubeconomias();
+				this.mensaje.success(data);
 			}, error => {
-				// console.log('ERROR: ', error);
+				this.mensaje.danger(error.error);
 			});
 	}
 

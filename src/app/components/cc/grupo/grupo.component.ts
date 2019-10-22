@@ -3,7 +3,7 @@ import { NgForm } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Grupos, Generos } from 'src/app/interfaces/cc.interface';
 import { GrupoService } from 'src/app/services/cc/grupo.service';
-
+import { MensajesService } from './../../../services/shared/mensajes.service';
 
 @Component({
   selector: 'app-grupo',
@@ -17,7 +17,7 @@ export class GrupoComponent {
 
 	constructor(
 		private activitedRoute: ActivatedRoute,
-		private router: Router,
+		private mensaje: MensajesService,
 		private grupoService: GrupoService) {
 		this.grupo = {
 			id: '',
@@ -46,8 +46,7 @@ export class GrupoComponent {
 				this.grupo = obj.data;
 			},
 			error => {
-				this.router.navigate(['panel-adm/grupos']);
-				alert(error.error.messaje);
+				this.mensaje.danger(error.error, 'panel-adm/grupos');
 			});
 	}
 
@@ -55,10 +54,10 @@ export class GrupoComponent {
 		console.log(f);
 		if (f.valid) {
 			this.grupoService.createUpdateGrupo(this.grupo)
-				.subscribe((response: any) => {
-					console.log(response);
-				}, error => {
-					console.log(error.error);
+				.subscribe((data: any) => {
+					this.mensaje.success(data);
+			}, error => {
+				this.mensaje.danger(error.error);
 			});
 		}
 	}

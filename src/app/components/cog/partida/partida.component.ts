@@ -2,7 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { PartidaService } from 'src/app/services/cog/partida.service';
 import { Conceptos, Partidas, Capitulos } from 'src/app/interfaces/cog.interface';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
+import { MensajesService } from './../../../services/shared/mensajes.service';
+
 
 @Component({
 	selector: 'app-partida',
@@ -18,12 +20,11 @@ export class PartidaComponent implements OnInit {
 	concepto = true;
 	genero = true;
 
-
 	constructor(
 		private partidaService: PartidaService,
 		private activitedRoute: ActivatedRoute,
-		private router: Router
-		) {
+		private mensaje: MensajesService
+	) {
 		this.partida = {
 			id: '',
 			codigo: '',
@@ -75,20 +76,18 @@ export class PartidaComponent implements OnInit {
 			const CONCEPTO = this.partida.id_concepto;
 			this.onChangeCapitulo(this.partida.id_capitulo);
 			this.onChangeConcepto(CONCEPTO);
-		},
-		error => {
-			this.router.navigate(['panel-adm/partidas']);
-			alert(error.error.messaje);
+		}, error => {
+			this.mensaje.danger(error.error, 'panel-adm/partidas');
 		});
 	}
 
 	guardar(f: NgForm) {
 		if (f.valid) {
 			this.partidaService.createUpdatePartida(this.partida)
-				.subscribe((response: any) => {
-					// console.log(response);
-				}, error => {
-					// console.log(error.error);
+				.subscribe((data: any) => {
+					this.mensaje.success(data);
+			}, error => {
+				this.mensaje.danger(error.error);
 			});
 		}
 	}

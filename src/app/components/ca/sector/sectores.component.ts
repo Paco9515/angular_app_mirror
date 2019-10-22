@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { SectorService } from './../../../services/ca/sector.service';
 import { Sectores } from './../../../interfaces/ca.interface';
+import { MensajesService } from './../../../services/shared/mensajes.service';
 
 @Component({
   selector: 'app-sectores',
@@ -13,7 +14,8 @@ export class SectoresComponent {
 	detalle: Sectores;
 
 	constructor(
-		private sectores_service: SectorService
+		private sectores_service: SectorService,
+		private mensaje: MensajesService
 	) {
 		this.detalle = {
 			id: '',
@@ -35,11 +37,11 @@ export class SectoresComponent {
 
 	eliminarActivar(id: string, type: boolean) {
 		this.sectores_service.activarEliminarSector(id, type)
-			.subscribe((obj: any) => {
-				console.log(obj);
+			.subscribe((data: any) => {
 				this.getSectores();
+				this.mensaje.success(data);
 			}, error => {
-				console.log('ERROR: ', error.error);
+				this.mensaje.danger(error.error);
 			});
 	}
 }

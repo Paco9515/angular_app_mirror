@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { GrupoService } from './../../../services/cc/grupo.service';
 import { Grupos, Generos } from './../../../interfaces/cc.interface';
+import { MensajesService } from './../../../services/shared/mensajes.service';
 
 @Component({
 	selector: 'app-grupos',
@@ -14,7 +15,8 @@ export class GruposComponent {
 	detalle: Grupos;
 
 	constructor(
-		private grupo_service: GrupoService
+		private grupo_service: GrupoService,
+		private mensaje: MensajesService
 	) {
 		this.detalle = {
 			id: '',
@@ -46,11 +48,11 @@ export class GruposComponent {
 
 	eliminarActivar(id: string, type: boolean) {
 		this.grupo_service.activarEliminarGrupo(id, type)
-			.subscribe((obj: any) => {
-				console.log(obj);
+			.subscribe((data: any) => {
 				this.getGrupos();
+				this.mensaje.success(data);
 			}, error => {
-				console.log('ERROR: ', error.error);
+				this.mensaje.danger(error.error);
 			});
 	}
 

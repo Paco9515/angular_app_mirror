@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { NgForm } from '@angular/forms';
 import { FinancieroService } from 'src/app/services/ca/financiero.service';
 import { Financieros, Sectores } from '../../../interfaces/ca.interface';
+import { MensajesService } from './../../../services/shared/mensajes.service';
 
 @Component({
   selector: 'app-financiero',
@@ -17,7 +18,8 @@ export class FinancieroComponent {
 	constructor(
 		private financieroService: FinancieroService,
 		private activitedRoute: ActivatedRoute,
-		private router: Router) {
+		private mensaje: MensajesService
+	) {
 		this.financiero = {
 			id: '',
 			codigo: '',
@@ -41,21 +43,18 @@ export class FinancieroComponent {
 	cargarFinanciero(id: string) {
 		this.financieroService.getFinanciero(id).subscribe((obj: any) => {
 			this.financiero = obj.data;
-		},
-		error => {
-			this.router.navigate(['panel-adm/financieros']);
-			alert(error.error.messaje);
+		}, error => {
+			this.mensaje.danger(error.error, 'panel-adm/financieros');
 		});
 	}
 
 	guardar(f: NgForm) {
 		if (f.valid) {
 			this.financieroService.createUpdateFinanciero(this.financiero)
-				.subscribe((obj: any) => {
-					// console.log(obj);
-				},
-				error => {
-					// console.log(error.error);
+				.subscribe((data: any) => {
+					this.mensaje.success(data);
+				}, error => {
+					this.mensaje.danger(error.error);
 				});
 		}
 	}

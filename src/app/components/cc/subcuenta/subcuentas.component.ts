@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Subcuentas } from './../../../interfaces/cc.interface';
 import { SubcuentaService } from './../../../services/cc/subcuenta.service';
+import { MensajesService } from './../../../services/shared/mensajes.service';
 
 @Component({
   selector: 'app-subcuentas',
@@ -13,7 +14,8 @@ export class SubcuentasComponent {
 	detalle: Subcuentas;
 
 	constructor(
-		private subcuentas_service: SubcuentaService
+		private subcuentas_service: SubcuentaService,
+		private mensaje: MensajesService
 	) {
 		this.detalle = {
 			id: '',
@@ -46,11 +48,11 @@ export class SubcuentasComponent {
 
 	eliminarActivar(id: string, type: boolean) {
 		this.subcuentas_service.activarEliminarSubcuenta(id, type)
-			.subscribe((response: any) => {
-				console.log(response.message);
+			.subscribe((data: any) => {
 				this.getSubcuentas();
+				this.mensaje.success(data);
 			}, error => {
-				console.log('ERROR: ', error);
+				this.mensaje.danger(error.error);
 			});
 	}
 

@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FinancieroService } from './../../../services/ca/financiero.service';
 import { Financieros } from './../../../interfaces/ca.interface';
+import { MensajesService } from './../../../services/shared/mensajes.service';
 
 @Component({
   selector: 'app-financieros',
@@ -13,7 +14,8 @@ export class FinancierosComponent {
 	detalle: Financieros;
 
 	constructor(
-		private financiero_service: FinancieroService
+		private financiero_service: FinancieroService,
+		private mensaje: MensajesService
 	) {
 		this.detalle = {
 			id: '',
@@ -37,11 +39,11 @@ export class FinancierosComponent {
 
 	eliminarActivar(id: string, type: boolean) {
 		this.financiero_service.activarEliminarFinanciero (id, type)
-			.subscribe((obj: any) => {
-				// console.log(obj);
+			.subscribe((data: any) => {
 				this.getFinancieros();
+				this.mensaje.success(data);
 			}, error => {
-				// console.log('ERROR: ', error);
+				this.mensaje.danger(error.error);
 			});
 	}
 

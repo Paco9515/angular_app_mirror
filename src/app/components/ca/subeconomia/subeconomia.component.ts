@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { NgForm } from '@angular/forms';
 import { SubeconomiaService } from 'src/app/services/ca/subeconomia.service';
 import { Subeconomias, Economias, Financieros, Sectores } from '../../../interfaces/ca.interface';
+import { MensajesService } from '../../../services/shared/mensajes.service';
 
 @Component({
 	selector: 'app-subeconomia',
@@ -22,7 +23,7 @@ export class SubeconomiaComponent  implements OnInit {
   	constructor(
 		private subeconomiaService: SubeconomiaService,
 		private activitedRoute: ActivatedRoute,
-		private router: Router) {
+		private mensaje: MensajesService) {
 		this.subeconomia = {
 			id: '',
 			codigo: '',
@@ -92,20 +93,18 @@ export class SubeconomiaComponent  implements OnInit {
 			this.onChangeEconomia(ECONOMIA);
 		},
 		error => {
-			this.router.navigate(['panel-adm/subeconomias']);
-			alert(error.error.messaje);
+			this.mensaje.danger(error.error, 'panel-adm/subeconomias');
 		});
 	}
 
 	guardar(f: NgForm) {
 		if (f.valid) {
 			this.subeconomiaService.createUpdateSubeconomia(this.subeconomia)
-				.subscribe((obj: any) => {
-					// console.log(obj);
-				},
-				error => {
-					// console.log(error.error);
-				});
+				.subscribe((data: any) => {
+					this.mensaje.success(data);
+			}, error => {
+				this.mensaje.danger(error.error);
+			});
 		}
 	}
 

@@ -1,62 +1,57 @@
 <div class="col-sm-12 mb-2">
-	<label>
+    <label>
 		Capitulo
 	</label>
-	<select class="form-control" name="capitulo" [ngModel]="data.id_capitulo"
-		(change)="getConceptosByCapitulo($event.target.value)">
+    <select class="form-control" name="capitulo" [ngModel]="data.id_capitulo" (change)="getConceptosByCapitulo($event.target.value)">
 		<option value="">
 			Seleccione un capitulo
 		</option>
 		<option *ngFor="let capitulo of capitulos" [value]="capitulo.id">
-			{{ capitulo.codigo + ' ' + capitulo.nombre }}
+			{{ capitulo.codigo + ' - ' + capitulo.nombre }}
 		</option>
 	</select>
 </div>
 
 <div class="col-sm-12 mb-2">
-	<label>
+    <label>
 		Concepto
 	</label>
-	<select class="form-control" name="concepto" [ngModel]="data.id_concepto"
-		(change)="getPartidasByConcepto($event.target.value)">
+    <select class="form-control" name="concepto" [ngModel]="data.id_concepto" (change)="getPartidasByConcepto($event.target.value)">
 		<option value="">
 			Seleccione un concepto
 		</option>
 		<option *ngFor="let concepto of conceptos" [value]="concepto.id">
-			{{ concepto.codigo + ' ' + concepto.nombre }}
+			{{ concepto.codigo + ' - ' + concepto.nombre }}
 		</option>
 	</select>
 </div>
 
 <div class="col-sm-12 mb-2">
-	<label>
+    <label>
 		Partidas
 	</label>
-	<select class="form-control" name="partida" [ngModel]="data.id_partida"
-		(change)="getDataByPartidas($event.target.value)">
+    <select class="form-control" name="partida" [ngModel]="data.id_partida" (change)="getDataByPartidas($event.target.value)">
 		<option value="">
 			Seleccione una partida
 		</option>
 		<option *ngFor="let partida of partidas" [value]="partida.id">
-			{{ partida.codigo + ' ' + partida.nombre }}
+			{{ partida.codigo + ' - ' + partida.nombre }}
 		</option>
 	</select>
 </div>
 
 <div class="col-sm-12 mb-2">
-	<label>
+    <label>
 		Clasificación contable
 	</label>
-	<textarea *ngIf="!data.id_partida" type="text" class="form-control" disabled>Esperando la partida.</textarea>
-	<textarea *ngIf="data.id_partida" type="text" class="form-control"
-		value="{{ data.codigo_clas_cont }} - {{ data.nombre_clas_cont }}" disabled></textarea>
+    <textarea *ngIf="!data.id_partida" type="text" class="form-control" disabled>Esperando la partida.</textarea>
+    <textarea *ngIf="data.id_partida" type="text" class="form-control" value="{{ data.codigo_clas_cont }} - {{ data.nombre_clas_cont }}" disabled></textarea>
 </div>
 
 <div class="col-sm-12">
-	<label>
+    <label>
 		Clasificación por tipo de gasto
 	</label>
-	<textarea *ngIf="!data.id_partida" type="text" class="form-control" disabled>Esperando la partida.</textarea>
-	<textarea *ngIf="data.id_partida" type="text" class="form-control"
-		value="{{ data.codigo_tipogasto }} - {{ data.nombre_tipogasto }}" disabled></textarea>
+    <textarea *ngIf="!data.id_partida" type="text" class="form-control" disabled>Esperando la partida.</textarea>
+    <textarea *ngIf="data.id_partida" type="text" class="form-control" value="{{ data.codigo_tipogasto }} - {{ data.nombre_tipogasto }}" disabled></textarea>
 </div>

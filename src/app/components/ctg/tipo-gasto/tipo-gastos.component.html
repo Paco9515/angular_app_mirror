@@ -1,8 +1,8 @@
 <!-- Breadcrumb-->
 <div class="d-none d-sm-block">
     <ol class="breadcrumb">
-        <li class="breadcrumb-item"><i class="fa fa-folder-open"></i> Clasificación programática</li>
-        <li class="breadcrumb-item active"> Programas</li>
+        <li class="breadcrumb-item"><i class="fa fa-folder-open"></i> Clasificación por tipo de gasto</li>
+        <li class="breadcrumb-item active"> Tipos de gastos</li>
     </ol>
 </div>
 
@@ -14,13 +14,13 @@
                     <div class="card-header">
                         <div class="row">
                             <div class="col-12 col-md-8 text-center text-sm-left  h5 font-weight-bold">
-                                <i class="fa fa-list"></i> Listado de los programas
+                                <i class="fa fa-list"></i> Listado de los tipos de gastos
                             </div>
                             <div class="col-12 col-md-4 text-center text-sm-right">
-                                <button type="button" class="btn btn-success btn-sm mb-2 pull" [routerLink]="['/panel-adm/programa', 'nuevo']">
-									<i class="fa fa-plus-circle"></i>
-									Agregar nuevo programa
-								</button>
+                                <button type="button" class="btn btn-success btn-sm mb-2 pull" [routerLink]="['/panel-adm/tipos-gastos', 'nuevo']">
+                                        <i class="fa fa-plus-circle"></i>
+                                        Agregar nuevo tipo de gasto
+                                    </button>
                             </div>
                         </div>
                     </div>
@@ -37,42 +37,42 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr *ngIf="programas.length==0; else tableBlock">
+                                    <tr *ngIf="tiposGastos.length==0; else tableBlock">
                                         <td colspan="5" class="text-center">
                                             <span class="badge badge-info">
-												<h5>
-													<i class="far fa-frown"></i>
-													No hay elementos para mostrar.
-												</h5>
-											</span>
+                                                    <h5>
+                                                        <i class="far fa-frown"></i>
+                                                        No hay elementos para mostrar.
+                                                    </h5>
+                                                </span>
                                         </td>
                                     </tr>
                                     <ng-template #tableBlock>
-                                        <tr *ngFor="let programa of programas; let i = index">
+                                        <tr *ngFor="let tiposGastos of tiposGastos; let i = index">
                                             <td>{{ i+1 }}</td>
-                                            <td>{{ programa.codigo }}</td>
-                                            <td>{{ programa.nombre }}</td>
+                                            <td>{{ tiposGastos.codigo }}</td>
+                                            <td>{{ tiposGastos.nombre }}</td>
                                             <td class="text-center">
-                                                <span *ngIf="programa.status; else inactiveBlock" class="badge badge-success">
-													Activo
-												</span>
+                                                <span *ngIf="tiposGastos.status; else inactiveBlock" class="badge badge-success">
+                                                        Activo
+                                                    </span>
                                                 <ng-template #inactiveBlock>
                                                     <span class="badge badge-secondary">Inactivo</span>
                                                 </ng-template>
                                             </td>
                                             <td class="text-center" nowrap>
-                                                <button type="button" class="btn btn-primary btn-sm" [routerLink]="['/panel-adm/programa', programa.id]" [disabled]="!programa.status">
-													<i class="fa fa-edit"></i>
-													Editar
-												</button>
-                                                <button *ngIf="programa.status" type="button" class="btn btn-danger btn-sm ml-3" (click)="eliminarActivar(programa.id, false)">
-													<i class="fa fa-trash"></i>
-													Eliminar
-												</button>
-                                                <button *ngIf="!programa.status" type="button" class="btn btn-success btn-sm ml-3" (click)="eliminarActivar(programa.id, true)">
-													<i class="fa fa-arrow-circle-up"></i>
-													Activar
-												</button>
+                                                <button type="button" class="btn btn-primary btn-sm" [routerLink]="['/panel-adm/tipos-gastos', tiposGastos.id]" [disabled]="!tiposGastos.status">
+                                                    <i class="fa fa-edit"></i>
+                                                    Editar
+                                                </button>
+                                                <button *ngIf="tiposGastos.status" type="button" class="btn btn-danger btn-sm ml-3" (click)="eliminarActivar(tiposGastos.id, false)">
+                                                    <i class="fa fa-trash"></i>
+                                                    Eliminar
+                                                </button>
+                                                <button *ngIf="!tiposGastos.status" type="button" class="btn btn-success btn-sm ml-3" (click)="eliminarActivar(tiposGastos.id, true)">
+                                                    <i class="fa fa-arrow-circle-up"></i>
+                                                    Activar
+                                                </button>
                                             </td>
                                         </tr>
                                     </ng-template>

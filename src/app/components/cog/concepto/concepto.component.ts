@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { ConceptoService } from 'src/app/services/cog/concepto.service';
+import { MensajesService } from './../../../services/shared/mensajes.service';
 import { Conceptos, Capitulos } from 'src/app/interfaces/cog.interface';
 import { TipoGasto } from 'src/app/interfaces/ctg.interface';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
 	selector: 'app-concepto',
@@ -19,7 +20,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 	constructor(
 		private conceptoService: ConceptoService,
 		private activitedRoute: ActivatedRoute,
-		private router: Router
+		private mensaje: MensajesService
+
 		) {
 		this.concepto = {
 			id: '',
@@ -53,21 +55,19 @@ import { ActivatedRoute, Router } from '@angular/router';
 		this.conceptoService.getConcepto(id)
 			.subscribe((obj: any) => {
 				this.concepto = obj.data;
-			},
-			error => {
-				this.router.navigate(['panel-adm/conceptos']);
-				alert(error.error.messaje);
+			}, error => {
+				this.mensaje.danger(error.error, 'panel-adm/conceptos');
 			});
 	}
 
 	guardar(f: NgForm) {
 		if (f.valid) {
 			this.conceptoService.createUpdateConcepto(this.concepto)
-				.subscribe((response: any) => {
-					// console.log(response);
+				.subscribe((data: any) => {
+					this.mensaje.success(data);
 				}, error => {
-					// console.log(error.error);
-			});
+					this.mensaje.danger(error.error);
+				});
 		}
 	}
 }

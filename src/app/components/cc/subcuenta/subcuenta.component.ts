@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { SubcuentaService } from 'src/app/services/cc/subcuenta.service';
 import { Grupos, Generos, Rubros, Cuentas, Subcuentas } from '../../../interfaces/cc.interface';
+import { MensajesService } from './../../../services/shared/mensajes.service';
 
 @Component({
   selector: 'app-subcuenta',
@@ -24,7 +25,7 @@ export class SubcuentaComponent implements OnInit {
 	constructor(
 		private subcuentaService: SubcuentaService,
 		private activitedRoute: ActivatedRoute,
-		private router: Router
+		private mensaje: MensajesService
 	) {
 		this.subcuenta = {
 			id: '',
@@ -115,19 +116,17 @@ export class SubcuentaComponent implements OnInit {
 			this.onChangeCuenta(CUENTA);
 		},
 		error => {
-			this.router.navigate(['panel-adm/subcuentas']);
-			alert(error.error.messaje);
+			this.mensaje.danger(error.error, 'panel-adm/subcuentas');
 		});
 	}
 
 	guardar(f: NgForm) {
 		if (f.valid) {
 			this.subcuentaService.createUpdateSubcuenta(this.subcuenta)
-				.subscribe((obj: any) => {
-					console.log(obj);
-				},
-				error => {
-					// console.log(error.error);
+				.subscribe((data: any) => {
+					this.mensaje.success(data);
+				}, error => {
+					this.mensaje.danger(error.error);
 				});
 		}
 	}

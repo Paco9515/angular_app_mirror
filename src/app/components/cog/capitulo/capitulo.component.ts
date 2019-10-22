@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { CapituloService } from 'src/app/services/cog/capitulo.service';
 import { Capitulos } from 'src/app/interfaces/cog.interface';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
+import { CapituloService } from 'src/app/services/cog/capitulo.service';
+import { MensajesService } from './../../../services/shared/mensajes.service';
 
 @Component({
 	selector: 'app-capitulo',
@@ -14,7 +15,7 @@ export class CapituloComponent {
 	constructor(
 		private capituloService: CapituloService,
 		private activitedRoute: ActivatedRoute,
-		private router: Router
+		private mensaje: MensajesService
 	) {
 		this.capitulo = {
 			id: '',
@@ -33,22 +34,18 @@ export class CapituloComponent {
 		this.capituloService.getCapitulo(id)
 		.subscribe((obj: any) => {
 			this.capitulo = obj.data;
-			// console.log(obj.data);
-		},
-		error => {
-			this.router.navigate(['panel-adm/capitulos']);
-			alert(error.error.messaje);
+		}, error => {
+			this.mensaje.danger(error.error, 'panel-adm/capitulos');
 		});
 	}
 
 	guardar(f: NgForm) {
 		if (f.valid) {
 			this.capituloService.createUpdateCapitulo(this.capitulo)
-				.subscribe((response: any) => {
-					// console.log(response);
-				},
-				error => {
-					// console.log(error.error);
+				.subscribe((data: any) => {
+					this.mensaje.success(data);
+				}, error => {
+					this.mensaje.danger(error.error);
 				});
 		}
 	}

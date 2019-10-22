@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { GeneroService } from './../../../services/cc/genero.service';
 import { Generos } from '../../../interfaces/cc.interface';
-
+import { MensajesService } from './../../../services/shared/mensajes.service';
 @Component({
 	selector: 'app-generos',
 	templateUrl: './generos.component.html',
@@ -13,7 +13,8 @@ export class GenerosComponent {
 	detalle: Generos;
 
 	constructor(
-		private genero_service: GeneroService
+		private genero_service: GeneroService,
+		private mensaje: MensajesService
 	) {
 		this.detalle = {
 			id: '',
@@ -34,11 +35,12 @@ export class GenerosComponent {
 
 	eliminarActivar(id: string, type: boolean) {
 		this.genero_service.activarEliminarGenero(id, type)
-			.subscribe((obj: any) => {
+			.subscribe((data: any) => {
 				// console.log(obj);
 				this.getGeneros();
+				this.mensaje.success(data);
 			}, error => {
-				// console.log('ERROR: ', error);
+				this.mensaje.danger(error.error);
 			});
 	}
 

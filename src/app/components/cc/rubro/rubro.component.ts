@@ -3,6 +3,7 @@ import { NgForm } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { RubroService } from 'src/app/services/cc/rubro.service';
 import { Grupos, Generos, Rubros } from '../../../interfaces/cc.interface';
+import { MensajesService } from './../../../services/shared/mensajes.service';
 
 @Component({
 	selector: 'app-rubro',
@@ -19,7 +20,7 @@ export class RubroComponent implements OnInit {
 	constructor(
 		private rubroService: RubroService,
 		private activitedRoute: ActivatedRoute,
-		private router: Router
+		private mensaje: MensajesService
 	) {
 		this.rubro = {
 			id: '',
@@ -55,8 +56,7 @@ export class RubroComponent implements OnInit {
 				this.onChangeGrupo(GRUPO);
 			},
 			error => {
-				this.router.navigate(['panel-adm/rubros']);
-				alert(error.error.messaje);
+				this.mensaje.danger(error.error, 'panel-adm/rubros');
 			});
 	}
 
@@ -69,9 +69,6 @@ export class RubroComponent implements OnInit {
 			this.rubroService.getGruposGenero(id_genero)
 			.subscribe((obj: any) => {
 				this.grupos = obj.data;
-			},
-			error => {
-				// console.log(error.error);
 			});
 		}
 	}
@@ -81,14 +78,12 @@ export class RubroComponent implements OnInit {
 
 	guardar(f: NgForm) {
 		if (f.valid) {
-			this.rubroService.createUpdateRubro(this.rubro).subscribe(
-				(obj: any) => {
-					// console.log(obj);
-				},
-				error => {
-					// console.log(error.error);
-				}
-			);
+			this.rubroService.createUpdateRubro(this.rubro)
+			.subscribe((data: any) => {
+					this.mensaje.success(data);
+				}, error => {
+					this.mensaje.danger(error.error);
+				});
 		}
 	}
 }
