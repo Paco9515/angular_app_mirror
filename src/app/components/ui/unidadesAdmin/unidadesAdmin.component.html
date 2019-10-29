@@ -32,7 +32,7 @@
                                         <th scope="col">#</th>
                                         <th scope="col">Código</th>
                                         <th scope="col">Nombre</th>
-                                        <th scope="col">Descripción</th>
+                                        <!-- <th scope="col">Descripción</th> -->
                                         <th scope="col">Estado</th>
                                         <th class="text-center" scope="col">Opciones</th>
                                     </tr>
@@ -53,7 +53,7 @@
                                             <td>{{ i+1 }}</td>
                                             <td>{{ unidad.codigo }}</td>
                                             <td>{{ unidad.nombre }}</td>
-                                            <td>{{ unidad.desc }}</td>
+                                            <!-- <td>{{ unidad.descripcion }}</td> -->
                                             <td>
                                                 <span *ngIf="unidad.status; else inactiveBlock" class="badge badge-success">
                                                     Activo
@@ -100,7 +100,7 @@
                                                 <div class="col-12">
                                                     <div class="form-group row">
                                                         <label for="staticEmail" class="col-sm-3 col-form-label">
-                                                            Empresa:
+                                                            <b>Empresa:</b>
                                                         </label>
                                                         <div class="col-9">
                                                             <input type="text" readonly class="form-control-plaintext" [(ngModel)]="detalle.nom_emp">
@@ -108,31 +108,34 @@
                                                     </div>
                                                     <div class="form-group row">
                                                         <label for="staticEmail" class="col-sm-3 col-form-label">
-                                                                Código:
-                                                            </label>
+                                                            <b>Código:</b>      
+                                                        </label>
                                                         <div class="col-9">
                                                             <input type="text" readonly class="form-control-plaintext" [(ngModel)]="detalle.codigo">
                                                         </div>
                                                     </div>
                                                     <div class="form-group row">
                                                         <label for="staticEmail" class="col-sm-3 col-form-label">
-                                                                Nombre Unidad:
-                                                            </label>
+                                                            <b>Nombre Unidad:</b>
+                                                        </label>
                                                         <div class="col-9">
                                                             <input type="text" readonly class="form-control-plaintext" [(ngModel)]="detalle.nombre">
                                                         </div>
                                                     </div>
                                                     <div class="form-group row">
                                                         <label for="staticEmail" class="col-sm-3 col-form-label">
-                                                                Descripción:
-                                                            </label>
-                                                        <div class="col-9">
-                                                            <input type="text" readonly class="form-control-plaintext" [(ngModel)]="detalle.desc">
+                                                            <b>Descripción:</b>
+                                                        </label>
+                                                        <div class="col-9" *ngIf="detalle.descripcion == ''">
+                                                            <input type="text" readonly class="form-control-plaintext" value="Sin descripción...">
+                                                        </div>
+                                                        <div class="col-9" *ngIf="detalle.descripcion != ''">
+                                                            <input type="text" readonly class="form-control-plaintext" [(ngModel)]="detalle.descripcion">
                                                         </div>
                                                     </div>
                                                     <div class="form-group row">
                                                         <label for="staticEmail" class="col-sm-3 col-form-label">
-                                                            Estado:
+                                                            <b>Estado:</b>
                                                         </label>
                                                         <div class="col-9">
                                                             <span *ngIf="detalle.status; else inactiveBlock" class="badge badge-success">
@@ -156,10 +159,13 @@
                             </div>
                         </div>
                     </div>
-					<div class="card-footer">
-					</div>
-				</div><!-- /.card-->
-            </div><!-- /.col-->
-        </div><!-- /.row-->
+                    <div class="card-footer">
+                    </div>
+                </div>
+                <!-- /.card-->
+            </div>
+            <!-- /.col-->
+        </div>
+        <!-- /.row-->
     </div>
 </div>

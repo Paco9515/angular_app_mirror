@@ -35,8 +35,8 @@ export class UnidadAdminComponent  {
 			this.id = data.id;
 			if (this.id !== 'nuevo') {
 				this.unidadesService.getUnidadAdmin(this.id)
-					.subscribe((obj: UnidadesAdmin) => {
-						this.createForma(obj);
+					.subscribe((obj: any) => {
+						this.createForma(obj.data);
 					});
 			} else {
 				this.createForma({
@@ -53,6 +53,7 @@ export class UnidadAdminComponent  {
 	}
 
 	createForma(obj: UnidadesAdmin) {
+		// console.log(obj);
 		this.unidadesService.getEmpresas().subscribe((empresas: any) => {
 			this.emps_unidades = empresas;
 		});
@@ -63,6 +64,7 @@ export class UnidadAdminComponent  {
 	}
 
 	guardar(f: NgForm) {
+		console.log(this.unidad);
 		if (f.valid) {
 			this.unidadesService.createUnidad(this.unidad)
 			.subscribe((response: any) => {
@@ -70,7 +72,7 @@ export class UnidadAdminComponent  {
 				this.mensajes.success(response);
 			}, error => {
 				console.log(error);
-				this.mensajes.warning(error);
+				this.mensajes.warning(error.error);
 			});
 		}
 	}
