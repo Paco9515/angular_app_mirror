@@ -72,7 +72,7 @@ import { TipoGastosComponent } from './ctg/tipo-gasto/tipo-gastos.component';
 		SubeconomiasComponent,
 		FilterPipe,
 		TipoGastoComponent,
-		TipoGastosComponent
+		TipoGastosComponent,
 	],
 	exports: [
 		CapitulosComponent,
