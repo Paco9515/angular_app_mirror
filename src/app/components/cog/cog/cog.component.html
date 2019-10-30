@@ -2,7 +2,7 @@
     <label>
 		Capitulo
 	</label>
-    <select class="form-control" name="capitulo" [ngModel]="data.id_capitulo" (change)="getConceptosByCapitulo($event.target.value)">
+    <select class="form-control" name="capitulo" [ngModel]="data.id_capitulo" (change)="getConceptosByCapitulo($event.target.value)" required>
 		<option value="">
 			Seleccione un capitulo
 		</option>
@@ -16,7 +16,7 @@
     <label>
 		Concepto
 	</label>
-    <select class="form-control" name="concepto" [ngModel]="data.id_concepto" (change)="getPartidasByConcepto($event.target.value)">
+    <select class="form-control" name="concepto" [ngModel]="data.id_concepto" (change)="getPartidasByConcepto($event.target.value)" required>
 		<option value="">
 			Seleccione un concepto
 		</option>
@@ -30,7 +30,7 @@
     <label>
 		Partidas
 	</label>
-    <select class="form-control" name="partida" [ngModel]="data.id_partida" (change)="getDataByPartidas($event.target.value)">
+    <select class="form-control" name="partida" [ngModel]="data.id_partida" (change)="getDataByPartidas($event.target.value)" required>
 		<option value="">
 			Seleccione una partida
 		</option>

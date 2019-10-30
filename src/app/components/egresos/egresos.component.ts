@@ -6,6 +6,8 @@ import { ProyectoService } from '../../services/proyecto/proyecto.service';
 import { UiComponent } from '../ui/ui/ui.component';
 import { forEach } from '@angular/router/src/utils/collection';
 import { count } from 'rxjs/operators';
+import { MensajesService } from '../../services/shared/mensajes.service';
+import { NgForm } from '@angular/forms';
 
 @Component({
 	selector: 'app-egresos',
@@ -52,7 +54,8 @@ export class EgresosComponent {
 	constructor(
 		private subprograma_service: SubprogramaService,
 		private programa_service: ProgramaService,
-		private proyecto_service: ProyectoService
+		private proyecto_service: ProyectoService,
+		private mensaje: MensajesService
 	) {
 		/* -- Clasificación programática -- */
 		this.programa_service.getProgramas()
@@ -104,7 +107,9 @@ export class EgresosComponent {
 		if (id_programa !== '') {
 			this.subprograma_service.getSubprogramaPRograma(id_programa)
 				.subscribe((data: any) => {
-					this.subprogramas = data;
+					this.subprogramas = data.data;
+				}, error => {
+					this.mensaje.danger(error.error);
 				});
 		}
 	}
@@ -115,7 +120,9 @@ export class EgresosComponent {
 		if (id_proyecto !== '') {
 			this.proyecto_service.getFasesProyecto(id_proyecto)
 				.subscribe((data: any) => {
-					this.fases = data;
+					this.fases = data.data;
+				}, error => {
+					this.mensaje.danger(error.error);
 				});
 		}
 	}
@@ -188,17 +195,27 @@ export class EgresosComponent {
 		}
 	}
 
-	guardarInfo() {
-		const data = {
-			id_subprograma: this.id_subprograma,
-			id_fase: this.id_fase,
-			id_centro_costo: this.ui_data.id_ccosto,
-			id_tipo_financ: this.cff_data.id_tipo
-		};
-		this.proyecto_service.setPresEgreso(data, this.cc_partidas)
-			.subscribe((response: any) => {
-				console.log(response);
-			});
+	guardarInfo(f: NgForm) {
+		console.log(f);
+		/*if (f.valid) {
+			const data = {
+				id_subprograma: this.id_subprograma,
+				id_fase: this.id_fase,
+				id_centro_costo: this.ui_data.id_ccosto,
+				id_tipo_financ: this.cff_data.id_tipo
+			};
+			this.proyecto_service.setPresEgreso(data, this.cc_partidas)
+				.subscribe((data: any) => {
+					this.mensaje.success(data);
+					this.clear();
+				}, error => {
+					this.mensaje.danger(error.error);
+				});
+		}*/
+	}
+
+	clear() {
+		this.cc_partidas = [];
 	}
 
 }
