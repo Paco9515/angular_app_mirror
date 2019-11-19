@@ -195,9 +195,9 @@ export class EgresosComponent {
 		}
 	}
 
-	guardarInfo(f: NgForm) {
-		console.log(f);
-		/*if (f.valid) {
+	guardarInfo() {// f: NgForm) {
+		// console.log(f);
+		// if ( f.valid) {
 			const data = {
 				id_subprograma: this.id_subprograma,
 				id_fase: this.id_fase,
@@ -205,13 +205,13 @@ export class EgresosComponent {
 				id_tipo_financ: this.cff_data.id_tipo
 			};
 			this.proyecto_service.setPresEgreso(data, this.cc_partidas)
-				.subscribe((data: any) => {
+				.subscribe(( data: any) => {
 					this.mensaje.success(data);
 					this.clear();
 				}, error => {
 					this.mensaje.danger(error.error);
 				});
-		}*/
+		// }
 	}
 
 	clear() {
