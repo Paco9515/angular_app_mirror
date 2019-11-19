@@ -1,7 +1,7 @@
 <div class="container-fluid p-3">
     <div class="animated fadeIn">
         <div class="row justify-content-center">
-            <form #f="ngForm" (ngSubmit)="guardarInfo(f)" class="col-12">
+            <form class="col-12">
 
                 <div class="col-md-12">
                     <div class="card shadow">
@@ -226,7 +226,7 @@
                     </div>
                 </div>
                 <div class="col-12">
-                    <button class="btn btn-success mb-3 btn-block" type="submit" [disabled]="f.invalid || !f.dirty">
+                    <button class="btn btn-success mb-3 btn-block" type="submit" (click)="guardarInfo()">
                         Guardar presupuesto de egreso
                     </button>
                 </div>

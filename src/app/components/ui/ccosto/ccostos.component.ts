@@ -10,21 +10,21 @@ import { Ccosto } from 'src/app/interfaces/ui.interface';
 export class CcostosComponent  {
 
   ccostos: Ccosto[];
-  detalle:any;
+  detalle: any;
 
   constructor(
 		private ccosto_service: CcostoService
 	) {
 		this.ccostos = [];
 		this.detalle = {
-			id:'',  
-			id_unidad_adm: '', 
+			id: '',
+			id_unidad_adm: '',
 			nom_unidad: '',
-			id_subfuncion:'',
-			nom_subfuncion:'',
-		    codigo: '',
-			nombre: '',		    
-		    status: true
+			id_subfuncion: '',
+			nom_subfuncion: '',
+			codigo: '',
+			nombre: '',
+			status: true
 		};
 		this.getCcostos();
 	}
@@ -33,14 +33,14 @@ export class CcostosComponent  {
 		this.ccosto_service.getCcostos()
 			.subscribe((data: any) => {
 				this.ccostos = data;
-				//console.log('Constructor: ', this.ccostos);
+				// console.log('Constructor: ', this.ccostos);
 			});
 	}
 
-	info(ccosto:any){
-		this.detalle=ccosto;
+	info(ccosto: any) {
+		this.detalle = ccosto;
 		this.ccosto_service.getUnidad(ccosto.id_unidad_adm).subscribe((data: any) => {
-			this.detalle.nom_unidad = data.nombre;
+			this.detalle.nom_unidad = data.data.nombre;
 		});
 		this.ccosto_service.getSubfuncion(ccosto.id_subfuncion).subscribe((data: any) => {
 			this.detalle.nom_subfuncion = data.nombre;
@@ -51,10 +51,10 @@ export class CcostosComponent  {
 		// this.programas = (this.programas.filter(data => data.id === id));
 		this.ccosto_service.eliminarCcosto(id, bandera)
 			.subscribe((response: any) => {
-				if(response.mensaje === 'eliminado'){
+				if (response.mensaje === 'eliminado') {
 					console.log('Centro Eliminado');
 					this.getCcostos();
-				}else{
+				} else {
 					console.log('Centro Activadao');
 					this.getCcostos();
 				}
