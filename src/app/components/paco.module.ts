@@ -9,26 +9,26 @@ import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 
-import { CcostoComponent } from './ui/ccosto/ccosto.component';
-import { CcostosComponent } from './ui/ccosto/ccostos.component';
-import { EmpresaComponent } from './ui/empresa/empresa.component';
-import { EmpresasComponent } from './ui/empresa/empresas.component';
-import { UnidadesAdminComponent } from './ui/unidadesAdmin/unidadesAdmin.component';
-import { UnidadAdminComponent } from './ui/unidadesAdmin/unidadAdmin.component';
-import { CtrabajosComponent } from './ui/ctrabajo/ctrabajos.component';
-import { CtrabajoComponent } from './ui/ctrabajo/ctrabajo.component';
-import { FinalidadesComponent } from './cfg/finalidad/finalidades.component';
-import { FinalidadComponent } from './cfg/finalidad/finalidad.component';
-import { FuncionComponent } from './cfg/funcion/funcion.component';
-import { FuncionesComponent } from './cfg/funcion/funciones.component';
-import { SubfuncionComponent } from './cfg/subfuncion/subfuncion.component';
-import { SubfuncionesComponent } from './cfg/subfuncion/subfunciones.component';
-import { FuentesComponent } from './cff/fuente/fuentes.component';
-import { SubfuentesComponent } from './cff/subfuente/subfuentes.component';
-import { TiposComponent } from './cff/tipo/tipos.component';
-import { FuenteComponent } from './cff/fuente/fuente.component';
-import { SubfuenteComponent } from './cff/subfuente/subfuente.component';
-import { TipoComponent } from './cff/tipo/tipo.component';
+import { CcostoComponent } from '../pages/client/ui/ccosto/ccosto.component';
+import { CcostosComponent } from '../pages/client/ui/ccosto/ccostos.component';
+import { EmpresaComponent } from '../pages/admin/empresa/empresa.component';
+import { EmpresasComponent } from '../pages/admin/empresa/empresas.component';
+import { UnidadesAdminComponent } from '../pages/client/ui/unidadesAdmin/unidadesAdmin.component';
+import { UnidadAdminComponent } from '../pages/client/ui/unidadesAdmin/unidadAdmin.component';
+import { CtrabajosComponent } from '../pages/client/ui/ctrabajo/ctrabajos.component';
+import { CtrabajoComponent } from '../pages/client/ui/ctrabajo/ctrabajo.component';
+import { FinalidadesComponent } from '../pages/admin/classification/cfg/finalidad/finalidades.component';
+import { FinalidadComponent } from '../pages/admin/classification/cfg/finalidad/finalidad.component';
+import { FuncionComponent } from '../pages/admin/classification/cfg/funcion/funcion.component';
+import { FuncionesComponent } from '../pages/admin/classification/cfg/funcion/funciones.component';
+import { SubfuncionComponent } from '../pages/admin/classification/cfg/subfuncion/subfuncion.component';
+import { SubfuncionesComponent } from '../pages/admin/classification/cfg/subfuncion/subfunciones.component';
+import { FuentesComponent } from '../pages/admin/classification/cff/fuente/fuentes.component';
+import { SubfuentesComponent } from '../pages/admin/classification/cff/subfuente/subfuentes.component';
+import { TiposComponent } from '../pages/admin/classification/cff/tipo/tipos.component';
+import { FuenteComponent } from '../pages/admin/classification/cff/fuente/fuente.component';
+import { SubfuenteComponent } from '../pages/admin/classification/cff/subfuente/subfuente.component';
+import { TipoComponent } from '../pages/admin/classification/cff/tipo/tipo.component';
 
 
 @NgModule({
