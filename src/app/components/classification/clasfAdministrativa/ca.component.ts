@@ -1,5 +1,5 @@
 import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
-import { Clas_admin, Subeconomias, Economias, Financieros, Sectores } from '../../../../../common/interfaces/ca.interface';
+import { Clas_admin, Subeconomias, Economias, Financieros, Sectores } from '../../../common/interfaces/ca.interface';
 import { CaService } from 'src/app/common/services/ca/ca.service';
 
 @Component({

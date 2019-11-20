@@ -1,6 +1,6 @@
 import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import { CcService } from 'src/app/common/services/cc/cc.service';
-import { Grupos, Generos, Rubros, Cuentas, Subcuentas } from '../../../../../common/interfaces/cc.interface';
+import { Grupos, Generos, Rubros, Cuentas, Subcuentas } from '../../../common/interfaces/cc.interface';
 
 @Component({
   selector: 'app-cc',

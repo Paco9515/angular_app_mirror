@@ -98,7 +98,7 @@ export class CuentaComponent implements OnInit {
 				this.onChangeRubro(RUBRO);
 			},
 			error => {
-				this.mensaje.danger(error.error,'panel-adm/cuentas');
+				this.mensaje.danger(error.error, 'panel-adm/cuentas');
 			});
 	}
 
