@@ -9,38 +9,38 @@ import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 
-import { CapitulosComponent } from './cog/capitulo/capitulos.component';
-import { CapituloComponent } from './cog/capitulo/capitulo.component';
-import { ConceptoComponent } from './cog/concepto/concepto.component';
-import { PartidaComponent } from './cog/partida/partida.component';
-import { ConceptosComponent } from './cog/concepto/conceptos.component';
-import { PartidasComponent } from './cog/partida/partidas.component';
-import { GeneroComponent } from './cc/genero/genero.component';
-import { GenerosComponent } from './cc/genero/generos.component';
-import { GrupoComponent } from './cc/grupo/grupo.component';
-import { GruposComponent } from './cc/grupo/grupos.component';
-import { RubroComponent } from './cc/rubro/rubro.component';
-import { RubrosComponent } from './cc/rubro/rubros.component';
-import { CuentaComponent } from './cc/cuenta/cuenta.component';
-import { CuentasComponent } from './cc/cuenta/cuentas.component';
-import { SubcuentaComponent } from './cc/subcuenta/subcuenta.component';
-import { SubcuentasComponent } from './cc/subcuenta/subcuentas.component';
-import { SectorComponent } from './ca/sector/sector.component';
-import { SectoresComponent } from './ca/sector/sectores.component';
-import { FinancieroComponent } from './ca/financiero/financiero.component';
-import { FinancierosComponent } from './ca/financiero/financieros.component';
-import { EconomiaComponent } from './ca/economia/economia.component';
-import { EconomiasComponent } from './ca/economia/economias.component';
-import { ClasAdministrativasComponent } from './ca/clas-administrativas/clas-administrativas.component';
-import { ClasAdministrativaComponent } from './ca/clas-administrativas/clas-administrativa.component';
-import { SubeconomiaComponent } from './ca/subeconomia/subeconomia.component';
-import { SubeconomiasComponent } from './ca/subeconomia/subeconomias.component';
+import { CapitulosComponent } from '../pages/admin/classification/cog/capitulo/capitulos.component';
+import { CapituloComponent } from '../pages/admin/classification/cog/capitulo/capitulo.component';
+import { ConceptoComponent } from '../pages/admin/classification/cog/concepto/concepto.component';
+import { PartidaComponent } from '../pages/admin/classification/cog/partida/partida.component';
+import { ConceptosComponent } from '../pages/admin/classification/cog/concepto/conceptos.component';
+import { PartidasComponent } from '../pages/admin/classification/cog/partida/partidas.component';
+import { GeneroComponent } from '../pages/admin/classification/cc/genero/genero.component';
+import { GenerosComponent } from '../pages/admin/classification/cc/genero/generos.component';
+import { GrupoComponent } from '../pages/admin/classification/cc/grupo/grupo.component';
+import { GruposComponent } from '../pages/admin/classification/cc/grupo/grupos.component';
+import { RubroComponent } from '../pages/admin/classification/cc/rubro/rubro.component';
+import { RubrosComponent } from '../pages/admin/classification/cc/rubro/rubros.component';
+import { CuentaComponent } from '../pages/admin/classification/cc/cuenta/cuenta.component';
+import { CuentasComponent } from '../pages/admin/classification/cc/cuenta/cuentas.component';
+import { SubcuentaComponent } from '../pages/admin/classification/cc/subcuenta/subcuenta.component';
+import { SubcuentasComponent } from '../pages/admin/classification/cc/subcuenta/subcuentas.component';
+import { SectorComponent } from '../pages/admin/classification/ca/sector/sector.component';
+import { SectoresComponent } from '../pages/admin/classification/ca/sector/sectores.component';
+import { FinancieroComponent } from '../pages/admin/classification/ca/financiero/financiero.component';
+import { FinancierosComponent } from '../pages/admin/classification/ca/financiero/financieros.component';
+import { EconomiaComponent } from '../pages/admin/classification/ca/economia/economia.component';
+import { EconomiasComponent } from '../pages/admin/classification/ca/economia/economias.component';
+import { ClasAdministrativasComponent } from '../pages/admin/classification/ca/clas-administrativas/clas-administrativas.component';
+import { ClasAdministrativaComponent } from '../pages/admin/classification/ca/clas-administrativas/clas-administrativa.component';
+import { SubeconomiaComponent } from '../pages/admin/classification/ca/subeconomia/subeconomia.component';
+import { SubeconomiasComponent } from '../pages/admin/classification/ca/subeconomia/subeconomias.component';
 
-import { FilterPipe } from '../pipes/filter.pipe';
+// import { FilterPipe } from '../pipes/filter.pipe';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
-import { TipoGastoComponent } from './ctg/tipo-gasto/tipo-gasto.component';
-import { TipoGastosComponent } from './ctg/tipo-gasto/tipo-gastos.component';
+import { TipoGastoComponent } from '../pages/admin/classification/clasfTipoGasto/tipo-gasto.component';
+import { TipoGastosComponent } from '../pages/admin/classification/clasfTipoGasto/tipo-gastos.component';
 
 @NgModule({
 	declarations: [
@@ -70,7 +70,6 @@ import { TipoGastosComponent } from './ctg/tipo-gasto/tipo-gastos.component';
 		ClasAdministrativaComponent,
 		SubeconomiaComponent,
 		SubeconomiasComponent,
-		FilterPipe,
 		TipoGastoComponent,
 		TipoGastosComponent,
 	],

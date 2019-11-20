@@ -2,7 +2,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
 
 import { NopagefoundComponent } from './shared/nopagefound/nopagefound.component';
-import { LoginComponent } from './components/login/login.component';
+import { LoginComponent } from './pages/login/login.component';
 
 const routes: Routes = [
 	{ path: 'login', component: LoginComponent },

@@ -3,69 +3,67 @@ import { NgModule } from '@angular/core';
 
 import { AdminComponent } from './admin.component';
 
-import { EscritorioComponent } from './escritorio/escritorio.component';
-import { ProgramasComponent } from './cp/programa/programas.component';
-import { ProgramaComponent } from './cp/programa/programa.component';
-import { ProgressComponent } from './progress/progress.component';
+import { EscritorioComponent } from '../pages/escritorio/escritorio.component';
+import { ProgramasComponent } from '../pages/admin/classification/cp/programa/programas.component';
+import { ProgramaComponent } from '../pages/admin/classification/cp/programa/programa.component';
 
-import { TipoGastosComponent } from './ctg/tipo-gasto/tipo-gastos.component';
-import { TipoGastoComponent } from './ctg/tipo-gasto/tipo-gasto.component';
-import { CapitulosComponent } from './cog/capitulo/capitulos.component';
-import { CapituloComponent } from './cog/capitulo/capitulo.component';
-import { PartidaComponent } from './cog/partida/partida.component';
-import { PartidasComponent } from './cog/partida/partidas.component';
-import { ConceptosComponent } from './cog/concepto/conceptos.component';
-import { ConceptoComponent } from './cog/concepto/concepto.component';
-import { GenerosComponent } from './cc/genero/generos.component';
-import { GeneroComponent } from './cc/genero/genero.component';
-import { GruposComponent } from './cc/grupo/grupos.component';
-import { GrupoComponent } from './cc/grupo/grupo.component';
-import { RubrosComponent } from './cc/rubro/rubros.component';
-import { RubroComponent } from './cc/rubro/rubro.component';
-import { CuentasComponent } from './cc/cuenta/cuentas.component';
-import { CuentaComponent } from './cc/cuenta/cuenta.component';
-import { SubcuentasComponent } from './cc/subcuenta/subcuentas.component';
-import { SubcuentaComponent } from './cc/subcuenta/subcuenta.component';
-import { ClasAdministrativasComponent } from './ca/clas-administrativas/clas-administrativas.component';
-import { ClasAdministrativaComponent } from './ca/clas-administrativas/clas-administrativa.component';
-import { EconomiasComponent } from './ca/economia/economias.component';
-import { EconomiaComponent } from './ca/economia/economia.component';
-import { FinancierosComponent } from './ca/financiero/financieros.component';
-import { FinancieroComponent } from './ca/financiero/financiero.component';
-import { SectoresComponent } from './ca/sector/sectores.component';
-import { SectorComponent } from './ca/sector/sector.component';
-import { SubeconomiasComponent } from './ca/subeconomia/subeconomias.component';
-import { SubeconomiaComponent } from './ca/subeconomia/subeconomia.component';
+import { TipoGastosComponent } from '../pages/admin/classification/clasfTipoGasto/tipo-gastos.component';
+import { TipoGastoComponent } from '../pages/admin/classification/clasfTipoGasto/tipo-gasto.component';
+import { CapitulosComponent } from '../pages/admin/classification/cog/capitulo/capitulos.component';
+import { CapituloComponent } from '../pages/admin/classification/cog/capitulo/capitulo.component';
+import { PartidaComponent } from '../pages/admin/classification/cog/partida/partida.component';
+import { PartidasComponent } from '../pages/admin/classification/cog/partida/partidas.component';
+import { ConceptosComponent } from '../pages/admin/classification/cog/concepto/conceptos.component';
+import { ConceptoComponent } from '../pages/admin/classification/cog/concepto/concepto.component';
+import { GenerosComponent } from '../pages/admin/classification/cc/genero/generos.component';
+import { GeneroComponent } from '../pages/admin/classification/cc/genero/genero.component';
+import { GruposComponent } from '../pages/admin/classification/cc/grupo/grupos.component';
+import { GrupoComponent } from '../pages/admin/classification/cc/grupo/grupo.component';
+import { RubrosComponent } from '../pages/admin/classification/cc/rubro/rubros.component';
+import { RubroComponent } from '../pages/admin/classification/cc/rubro/rubro.component';
+import { CuentasComponent } from '../pages/admin/classification/cc/cuenta/cuentas.component';
+import { CuentaComponent } from '../pages/admin/classification/cc/cuenta/cuenta.component';
+import { SubcuentasComponent } from '../pages/admin/classification/cc/subcuenta/subcuentas.component';
+import { SubcuentaComponent } from '../pages/admin/classification/cc/subcuenta/subcuenta.component';
+import { ClasAdministrativasComponent } from '../pages/admin/classification/ca/clas-administrativas/clas-administrativas.component';
+import { ClasAdministrativaComponent } from '../pages/admin/classification/ca/clas-administrativas/clas-administrativa.component';
+import { EconomiasComponent } from '../pages/admin/classification/ca/economia/economias.component';
+import { EconomiaComponent } from '../pages/admin/classification/ca/economia/economia.component';
+import { FinancierosComponent } from '../pages/admin/classification/ca/financiero/financieros.component';
+import { FinancieroComponent } from '../pages/admin/classification/ca/financiero/financiero.component';
+import { SectoresComponent } from '../pages/admin/classification/ca/sector/sectores.component';
+import { SectorComponent } from '../pages/admin/classification/ca/sector/sector.component';
+import { SubeconomiasComponent } from '../pages/admin/classification/ca/subeconomia/subeconomias.component';
+import { SubeconomiaComponent } from '../pages/admin/classification/ca/subeconomia/subeconomia.component';
 
-import { EmpresaComponent } from './ui/empresa/empresa.component';
-import { EmpresasComponent } from './ui/empresa/empresas.component';
-import { UnidadAdminComponent } from './ui/unidadesAdmin/unidadAdmin.component';
-import { UnidadesAdminComponent } from './ui/unidadesAdmin/unidadesAdmin.component';
-import { CcostoComponent } from './ui/ccosto/ccosto.component';
-import { CcostosComponent } from './ui/ccosto/ccostos.component';
-import { CtrabajoComponent } from './ui/ctrabajo/ctrabajo.component';
-import { CtrabajosComponent } from './ui/ctrabajo/ctrabajos.component';
-import { FinalidadComponent } from './cfg/finalidad/finalidad.component';
-import { FinalidadesComponent } from './cfg/finalidad/finalidades.component';
-import { FuncionComponent } from './cfg/funcion/funcion.component';
-import { FuncionesComponent } from './cfg/funcion/funciones.component';
-import { SubfuncionComponent } from './cfg/subfuncion/subfuncion.component';
-import { SubfuncionesComponent } from './cfg/subfuncion/subfunciones.component';
-import { FuentesComponent } from './cff/fuente/fuentes.component';
-import { FuenteComponent } from './cff/fuente/fuente.component';
-import { SubfuentesComponent } from './cff/subfuente/subfuentes.component';
-import { SubfuenteComponent } from './cff/subfuente/subfuente.component';
-import { TiposComponent } from './cff/tipo/tipos.component';
-import { TipoComponent } from './cff/tipo/tipo.component';
-import { PromesasComponent } from './promesas/promesas.component';
-import { SubprogramasComponent } from './cp/subprograma/subprogramas.component';
-import { SubprogramaComponent } from './cp/subprograma/subprograma.component';
-import { EgresosComponent } from './egresos/egresos.component';
+import { EmpresaComponent } from '../pages/admin/empresa/empresa.component';
+import { EmpresasComponent } from '../pages/admin/empresa/empresas.component';
+import { UnidadAdminComponent } from '../pages/client/ui/unidadesAdmin/unidadAdmin.component';
+import { UnidadesAdminComponent } from '../pages/client/ui/unidadesAdmin/unidadesAdmin.component';
+import { CcostoComponent } from '../pages/client/ui/ccosto/ccosto.component';
+import { CcostosComponent } from '../pages/client/ui/ccosto/ccostos.component';
+import { CtrabajoComponent } from '../pages/client/ui/ctrabajo/ctrabajo.component';
+import { CtrabajosComponent } from '../pages/client/ui/ctrabajo/ctrabajos.component';
+import { FinalidadComponent } from '../pages/admin/classification/cfg/finalidad/finalidad.component';
+import { FinalidadesComponent } from '../pages/admin/classification/cfg/finalidad/finalidades.component';
+import { FuncionComponent } from '../pages/admin/classification/cfg/funcion/funcion.component';
+import { FuncionesComponent } from '../pages/admin/classification/cfg/funcion/funciones.component';
+import { SubfuncionComponent } from '../pages/admin/classification/cfg/subfuncion/subfuncion.component';
+import { SubfuncionesComponent } from '../pages/admin/classification/cfg/subfuncion/subfunciones.component';
+import { FuentesComponent } from '../pages/admin/classification/cff/fuente/fuentes.component';
+import { FuenteComponent } from '../pages/admin/classification/cff/fuente/fuente.component';
+import { SubfuentesComponent } from '../pages/admin/classification/cff/subfuente/subfuentes.component';
+import { SubfuenteComponent } from '../pages/admin/classification/cff/subfuente/subfuente.component';
+import { TiposComponent } from '../pages/admin/classification/cff/tipo/tipos.component';
+import { TipoComponent } from '../pages/admin/classification/cff/tipo/tipo.component';
+import { SubprogramasComponent } from '../pages/admin/classification/cp/subprograma/subprogramas.component';
+import { SubprogramaComponent } from '../pages/admin/classification/cp/subprograma/subprograma.component';
+import { EgresosComponent } from '../pages/client/egresos/egresos.component';
 // import { ProyectoComponent } from './proyecto/proyecto.component';
-import { ProyectosComponent } from './pe/proyectos/proyectos.component';
-import { ProyectoComponent } from './pe/proyectos/proyecto.component';
-import { FasesComponent } from './pe/fases/fases.component';
-import { FaseComponent } from './pe/fases/fase.component';
+import { ProyectosComponent } from '../pages/client/pe/proyectos/proyectos.component';
+import { ProyectoComponent } from '../pages/client/pe/proyectos/proyecto.component';
+import { FasesComponent } from '../pages/client/pe/fases/fases.component';
+import { FaseComponent } from '../pages/client/pe/fases/fase.component';
 
 const admin_routes: Routes = [
 	{
@@ -73,9 +71,7 @@ const admin_routes: Routes = [
 		component: AdminComponent,
 		children: [
 			{ path: 'programas', component: ProgramasComponent },
-			{ path: 'progress', component: ProgressComponent },
 			{ path: 'escritorio', component: EscritorioComponent },
-			{ path: 'promesas', component: PromesasComponent },
 			{ path: 'programa/:id', component: ProgramaComponent },
 			{ path: 'subprogramas', component: SubprogramasComponent },
 			{ path: 'subprograma/:id', component: SubprogramaComponent },
