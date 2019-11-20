@@ -1,11 +1,9 @@
 import { Component, ViewChild } from '@angular/core';
-import { CogComponent } from '../../admin/catalog/cog/cog/cog.component';
+import { CogComponent } from '../../../components/classification/clasfObjetoGasto/cog.component';
 import { SubprogramaService } from 'src/app/common/services/cp/subprograma.service';
 import { ProgramaService } from '../../../common/services/cp/programa.service';
 import { ProyectoService } from '../../../common/services/proyecto/proyecto.service';
-import { UiComponent } from '../ui/ui/ui.component';
-import { forEach } from '@angular/router/src/utils/collection';
-import { count } from 'rxjs/operators';
+import { UiComponent } from '../../../components/classification/unidadesInternas/ui.component';
 import { MensajesService } from '../../../common/services/shared/mensajes.service';
 import { NgForm } from '@angular/forms';
 
