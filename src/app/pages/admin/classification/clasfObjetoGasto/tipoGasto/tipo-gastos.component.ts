@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { MensajesService } from '../../../../common/services/shared/mensajes.service';
+import { MensajesService } from '../../../../../common/services/shared/mensajes.service';
 import { TipoGasto } from 'src/app/common/interfaces/ctg.interface';
 import { TipoGastoService } from 'src/app/common/services/ctg/TipoGastoService';
 

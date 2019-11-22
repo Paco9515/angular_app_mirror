@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
-import { TipoGasto } from '../../../../common/interfaces/ctg.interface';
-import { TipoGastoService } from '../../../../common/services/ctg/TipoGastoService';
-import { MensajesService } from '../../../../common/services/shared/mensajes.service';
+import { TipoGasto } from '../../../../../common/interfaces/ctg.interface';
+import { TipoGastoService } from '../../../../../common/services/ctg/TipoGastoService';
+import { MensajesService } from '../../../../../common/services/shared/mensajes.service';
 import { ActivatedRoute } from '@angular/router';
 import { NgForm } from '@angular/forms';
 

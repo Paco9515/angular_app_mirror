@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
-import { AdminModule } from './components/admin.module';
+import { AdminModule } from './pages/admin/admin.module';
 import { AppComponent } from './app.component';
 
 import { LoginComponent } from './pages/login/login.component';
