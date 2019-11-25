@@ -10,6 +10,7 @@ import { LoginComponent } from './pages/login/login.component';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
+import { ClientModule } from './pages/client/client.module';
 
 @NgModule({
 	declarations: [
@@ -18,6 +19,7 @@ import { ToastrModule } from 'ngx-toastr';
 	],
 	imports: [
 		AdminModule,
+		ClientModule,
 		FormsModule,
 		AppRoutingModule,
 		BrowserAnimationsModule,
