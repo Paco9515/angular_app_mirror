@@ -1,23 +1,20 @@
 import { Routes, RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
 
-import { AdminComponent } from './admin.component';
+import { ClientComponent } from './client.component';
 
 import { EscritorioComponent } from '../escritorio/escritorio.component';
+import { EgresosComponent } from './egresos/egresos.component';
 
-import { EmpresaComponent } from './empresa/empresa.component';
-import { EmpresasComponent } from './empresa/empresas.component';
 
 
 const admin_routes: Routes = [
 	{
 		path: 'panel-adm',
-		component: AdminComponent,
+		component: ClientComponent,
 		children: [
 			{ path: 'escritorio', component: EscritorioComponent },
-
-			{ path: 'empresas', component: EmpresasComponent },
-			{ path: 'empresa/:id', component: EmpresaComponent },
+			{ path: 'pres_egresos', component: EgresosComponent },
 
 			{ path: '', pathMatch: 'full', redirectTo: 'escritorio' }
 		]
@@ -33,4 +30,4 @@ const admin_routes: Routes = [
 	]
 })
 
-export class AdminRoutingModule { }
+export class ClientRoutingModule { }
