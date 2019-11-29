@@ -18,16 +18,24 @@ export class ProyectosComponent {
 	) {
 
 		this.detalle = {
-			id_empresa: '',
+			id: '',
+			id_centro_costo: '',
+			id_subprograma: '',
 			codigo: '',
 			nombre: '',
 			descripcion: '',
-			anio: '',
-			cp: '',
-			entidad: '',
-			municipio: '',
-			colonia: '',
-			status: true
+			anio: null,
+			fecha_inicio: null,
+			fecha_final: null,
+			codigo_subprograma: '',
+	        nombre_subprograma: '',
+	        codigo_programa: '',
+	        nombre_programa: '',
+	        codigo_centro_costo: '',
+			nombre_centro_costo: '',
+			codigo_unidad_admin: '',
+			nombre_unidad_admin: '',
+			status: false
 		};
 
 		this.proyectos = [];

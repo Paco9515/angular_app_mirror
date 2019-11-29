@@ -28,16 +28,18 @@ export class PeComponent implements OnInit {
 	}
 
 	ngOnInit() {
-		this.pe_service.get_proyectos()
-			.subscribe((data: any) => {
-				this.proyectos = data;
-			});
 
-		if (this.primary_keys_pe[0] !== 0) {
-			console.log(this.getFasesByProyecto(this.primary_keys_pe[0])
-			);
-			console.log(this.getFases(this.primary_keys_pe[1]));
+		if (this.primary_keys_pe[0] !== null && this.primary_keys_pe[0] !== 0 && this.primary_keys_pe[0] !== '') {
+			this.getProyectosByCCostos(this.primary_keys_pe[0]);
+			this.getFasesByProyecto(this.primary_keys_pe[1]);
+			this.getFases(this.primary_keys_pe[2]);
+			this.pe.emit(this.data);
+		} else {
 
+			this.pe_service.get_proyectos()
+				.subscribe((data: any) => {
+					this.proyectos = data;
+				});
 		}
 	}
 
@@ -48,15 +50,31 @@ export class PeComponent implements OnInit {
 		if (id_proyecto !== '') {
 			this.data.id_proyecto = id_proyecto;
 			this.pe_service.get_fases(id_proyecto)
-				.subscribe((data: any) => {
-					this.fases = data.data;
-				});
+			.subscribe((data: any) => {
+				this.fases = data.data;
+			});
 		}
+	}
+
+	getProyectosByCCostos($id_ccosto) {
+		this.pe_service.get_proyectos_ccostos($id_ccosto)
+		.subscribe((data: any) => {
+			this.proyectos = data.data;
+		});
 	}
 
 	getFases(id_fase) {
 		this.data.id_fase = id_fase;
 		this.pe.emit(this.data);
 	}
+
+	// get_programatica($id_proyecto) {
+	// 	if ($id_proyecto) {
+	// 	this.pe_service.get_programatica($id_proyecto)
+	// 		.subscribe((data: any) => {
+	// 			this.programatica = data.data;
+	// 		});
+	// 	}
+	// }
 
 }

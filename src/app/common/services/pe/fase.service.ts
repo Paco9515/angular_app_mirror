@@ -38,4 +38,8 @@ export class FaseService {
 			return this.constants.getRequest(`/delete_fase/${id}`, 'delete', false);
 		}
 	}
+
+	getDireccionCP(cp: string) {
+		return this.constants.getDireccionCP(cp);
+	}
 }

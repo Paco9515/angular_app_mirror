@@ -21,12 +21,7 @@ export class CffComponent implements OnInit {
 	constructor(
 		private cff_service: CffService
 	) {
-		this.data = {
-			id_fuente: '',
-			id_subfuente: '',
-			id_tipo: ''
-		};
-		this.out.emit(this.data);
+		this.restartVariables();
 	}
 
 	ngOnInit() {
@@ -42,6 +37,15 @@ export class CffComponent implements OnInit {
 		} else {
 			this.out.emit(this.data);
 		}
+	}
+
+	restartVariables() {
+		this.data = {
+			id_fuente: '',
+			id_subfuente: '',
+			id_tipo: '',
+			nombre_tipo: '',
+		};
 	}
 
 	onChangeFuente(id_fuente) {
@@ -71,6 +75,8 @@ export class CffComponent implements OnInit {
 	}
 
 	onChangeTipo(id_tipo) {
+		const input_tipo = document.getElementById('tipo') as HTMLInputElement;
+		this.data.nombre_tipo = input_tipo.options[input_tipo.selectedIndex].innerText;
 		this.data.id_tipo = id_tipo;
 		this.out.emit(this.data);
 	}

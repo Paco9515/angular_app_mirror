@@ -1,8 +1,6 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { ConstantsService } from '../shared/constants.service';
-import { Proyecto } from 'src/app/common/interfaces/proyectos.interface';
-import { Partidas } from '../../interfaces/cog.interface';
 
 @Injectable({
 	providedIn: 'root'
@@ -17,8 +15,8 @@ export class ProyectoService {
 		this.url = this.constants.url;
 	}
 
-	setPresEgreso(data: any, partidas: any) {
-		return this.constants.createEgreso(`/create_presupuesto`, data, partidas);
+	postPresEgreso(data: any) {
+		return this.constants.getRequest(`/create_presupuesto`, 'post', data);
 	}
 
 	getFasesProyecto(id) {

@@ -25,3 +25,36 @@
 		</option>
 	</select>
 </div>
+
+<div class="col-sm-12 mb-2">
+    <label>
+		Clasificación programática
+	</label>
+    <div class="row" *ngIf="data.id_proyecto==''; else clasfProgramatica">
+        <div class="col-sm-12 col-md-6">
+            <label>Programa</label>
+            <textarea type=" text " class="form-control" disabled>Esperando la seleccion de proyecto</textarea>
+        </div>
+
+        <div class="col-sm-12 col-md-6">
+            <label>Subprograma</label>
+            <textarea type="text " class="form-control" disabled>Esperando la seleccion de proyecto</textarea>
+
+        </div>
+    </div>
+    <!-- 
+    <ng-template #clasfProgramatica>
+        <div class="row">
+            <div class="col-sm-12 col-md-6">
+                <label>Programa</label>
+                <textarea type=" text " class="form-control" value="{{ programatica.codigo_programa + ' - ' + programatica.nombre_programa }}" disabled></textarea>
+            </div>
+
+            <div class="col-sm-12 col-md-6">
+                <label>Subprograma</label>
+                <textarea type="text " class="form-control" value="{{ programatica.codigo_subprograma + ' - ' + programatica.nombre_subprograma }}" disabled></textarea>
+
+            </div>
+        </div>
+    </ng-template> -->
+</div>

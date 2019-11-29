@@ -144,34 +144,45 @@
                         </div>
                         <div class="form-group row">
                             <label for="" class="col-sm-2 col-form-label font-weight-bold">
-								Código Postal:
+								Fecha inico:
 							</label>
                             <div class="col-sm-10">
-                                <p>{{ detalle.cp }}</p>
+                                <p>{{ detalle.fecha_inicio }}</p>
                             </div>
                         </div>
                         <div class="form-group row">
                             <label for="" class="col-sm-2 col-form-label font-weight-bold">
-								Entidad:
+								Fecha final:
 							</label>
                             <div class="col-sm-10">
-                                <p>{{ detalle.entidad }}</p>
+                                <p>{{ detalle.fecha_final }}</p>
                             </div>
                         </div>
+
                         <div class="form-group row">
                             <label for="" class="col-sm-2 col-form-label font-weight-bold">
-								Municipio:
-							</label>
+                                        Unidad Administrativa
+                                    </label>
                             <div class="col-sm-10">
-                                <p>{{ detalle.municipio }}</p>
+                                <p>{{ detalle.codigo_unidades_admin + ' - ' + detalle.nombre_unidades_admin }}</p>
                             </div>
                         </div>
+
                         <div class="form-group row">
                             <label for="" class="col-sm-2 col-form-label font-weight-bold">
-								Colonia:
-							</label>
+                                    Centro costo:
+                                </label>
                             <div class="col-sm-10">
-                                <p>{{ detalle.colonia }}</p>
+                                <p>{{ detalle.codigo_programa + ' - ' + detalle.nombre_centro_costo }}</p>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="" class="col-sm-2 col-form-label font-weight-bold">
+                                    Programa:
+                                </label>
+                            <div class="col-sm-10">
+                                <p>{{ detalle.codigo_centro_costo + ' - ' + detalle.nombre_programa }}</p>
                             </div>
                         </div>
                         <div class="form-group row">
