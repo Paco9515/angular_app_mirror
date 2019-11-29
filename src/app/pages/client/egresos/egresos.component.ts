@@ -1,11 +1,11 @@
 import { Component, ViewChild } from '@angular/core';
 import { CogComponent } from '../../../components/classification/clasfObjetoGasto/cog.component';
-import { SubprogramaService } from 'src/app/common/services/cp/subprograma.service';
-import { ProgramaService } from '../../../common/services/cp/programa.service';
-import { ProyectoService } from '../../../common/services/proyecto/proyecto.service';
 import { UiComponent } from '../../../components/classification/unidadesInternas/ui.component';
 import { MensajesService } from '../../../common/services/shared/mensajes.service';
 import { NgForm } from '@angular/forms';
+import { PeService } from 'src/app/common/services/pe/pe.service';
+import { CffComponent } from '../../../components/classification/clasfFuenteFinanciamiento/cff.component';
+import { ProyectoService } from '../../../common/services/proyecto/proyecto.service';
 
 @Component({
 	selector: 'app-egresos',
@@ -13,79 +13,43 @@ import { NgForm } from '@angular/forms';
 	styles: []
 })
 export class EgresosComponent {
-
 	@ViewChild(CogComponent) cog_component: CogComponent;
 	@ViewChild(UiComponent) ui_component: UiComponent;
-
-	/* -- Clasificación programatica -- */
-	programas: any;
-	subprogramas: any;
-
-	/* -- Proyectos y fases -- */
-	proyectos: any;
-	fases: any;
-
+	@ViewChild(CffComponent) cff_component: CffComponent;
 	/* -- Clasificación por fuente de financiamiento -- */
 	cff_keys = ['0', '0', '0'];
 	cff_data: any;
-
 	/* -- Unidades internas | clas administrativa -- */
 	ui_keys = ['0', '0'];
 	ui_data: any;
-
 	/* -- Clasificación por objeto del gasto -- */
 	cog_keys = ['0', '0', '0'];
 	cog_data: any;
 
 	/* -- Variables locales -- */
-	cc_partidas: any;
-	info: any;
-	partidas: any;
-	total: number;
-	cantidad: any;
+	proyectos: any = [];
+	fases: any = [];
+	conjuntoDatos: any = [];
+	info: any = [];
+	partidas: any = [];
 
-	/* -- VARIABLES A ELIMINAR | PROYECTOS Y FASE, PROGRAMA Y SUPBRPGRAMA */
+	mostrarFormProyecto: boolean = false;
+	mostrarFormCffCog: boolean = false;
 
-	id_subprograma: any;
-	id_fase: any;
+	total: number = 0;
+	importe: number = null;
+
+	id_fase: string;
+	nombre_fase: string;
+	id_proyecto: string;
+	nombre_proyecto: string;
+	nombre_tipo: string;
 
 	constructor(
-		private subprograma_service: SubprogramaService,
-		private programa_service: ProgramaService,
-		private proyecto_service: ProyectoService,
-		private mensaje: MensajesService
-	) {
-		/* -- Clasificación programática -- */
-		this.programa_service.getProgramas()
-			.subscribe((data: any) => {
-				this.programas = data;
-			});
-		this.id_subprograma = '';
-
-		/* -- Proyectos de egreso -- */
-		this.proyecto_service.getProyectos()
-			.subscribe((data: any) => {
-				this.proyectos = data;
-			});
-		this.id_fase = '';
-
-		this.total = 0;
-		// this.subprograma_service.get_gastos()
-		// 	.subscribe((data: any) => {
-		// 		this.gastos = data;
-		// 	});
-
-		/* -- Variables locales -- */
-		this.cc_partidas = [];
-		this.info = [];
-
-
-
-		// this.id_gasto = '';
-		// this.show = true;
-		// this.mensaje = 'Ocultar tabla';
-		this.cantidad = 0;
-		this.partidas = [];
+		private mensaje: MensajesService,
+		private pe_service: PeService,
+		private proyecto_service: ProyectoService
+		) {
 		this.cog_data = {
 			id_capitulo: '',
 			id_concepto: '',
@@ -97,66 +61,50 @@ export class EgresosComponent {
 			codigo_cuenta: '',
 			nombre_cuenta: ''
 		};
-	}
 
-	/* -- Clasificación programática -- */
-	getSubprogramasByPrograma(id_programa: string) {
-		this.id_subprograma = '';
-		if (id_programa !== '') {
-			this.subprograma_service.getSubprogramaPRograma(id_programa)
-				.subscribe((data: any) => {
-					this.subprogramas = data.data;
-				}, error => {
-					this.mensaje.danger(error.error);
-				});
-		}
-	}
-
-	/* -- Proyectos de egreso -- */
-	getFasesByProyecto(id_proyecto: string) {
-		this.id_fase = '';
-		if (id_proyecto !== '') {
-			this.proyecto_service.getFasesProyecto(id_proyecto)
-				.subscribe((data: any) => {
-					this.fases = data.data;
-				}, error => {
-					this.mensaje.danger(error.error);
-				});
-		}
-	}
-
-	/* -- Clasificación por fuente de financiamiento -- */
-	getDataCFF(data: any) {
-		this.cff_data = data;
-		// console.log('CFF: ', data);
 	}
 
 	/* -- Unidades internas -- */
 	getDataUI(data: any) {
+		this.id_proyecto = '';
+		this.id_fase = '';
+		this.proyectos = '';
+		this.fases = '';
 		this.ui_data = data;
-		// console.log('UI: ', data);
+		this.mostrarFormProyecto = false;
+		if (this.ui_data.id_ccosto) {
+			this.getProyectosByCCosto(this.ui_data.id_ccosto);
+		}
+	}
+
+	getDataCFF(data: any) {
+		this.cff_data = data;
 	}
 
 	/* -- Clasificación por objeto de gastos -- */
 	getDataCOG(data: any) {
 		this.cog_data = data;
-		// console.log('COG: ', data);
 	}
 
 	agregarPartida() {
-		if (this.cantidad >= 0) {
-			this.total += this.cantidad;
+		if (this.importe >= 0) {
+			this.total += this.importe;
 			this.partidas.push({
-				id_cc: this.ui_data.id_ccosto,
-				nombre_cc: this.ui_data.nombre_cc,
+				nombre_proyecto: this.nombre_proyecto,
+				id_fase: this.id_fase,
+				nombre_fase: this.nombre_fase,
 				id_partida: this.cog_data.id_partida,
-				codigo_partida: this.cog_data.codigo_partida,
-				nombre_partida: this.cog_data.nombre_partida,
-				id_gasto: this.cog_data.id_tipogasto,
-				importe: this.cantidad
+				nombre_partida: this.cog_data.codigo_partida + ' - ' + this.cog_data.nombre_partida   ,
+				id_tipo_financ: this.cff_data.id_tipo,
+				nombre_tipo_financ: this.cff_data.nombre_tipo,
+				importe: this.importe
 			});
-			this.cantidad = 0;
-			this.cog_component.getPartidasByConcepto('');
+
+			this.importe = null;
+			this.id_fase = '';
+			this.cff_component.restartVariables();
+			this.cog_component.restartVariables();
+
 		} else {
 			// console.log('La cantidad no puede ser menor o igual a 0.');
 		}
@@ -169,51 +117,86 @@ export class EgresosComponent {
 	}
 
 	savePartidasCC() {
-		this.cc_partidas.push(this.partidas);
-		this.partidas = [];
+		this.conjuntoDatos.push(this.partidas);
 		this.total = 0;
+		this.importe = 0;
 		this.cog_component.restartVariables();
-		this.ui_component.restartVariables();
+		this.cff_component.restartVariables();
 		// console.log('CC_partidas: ', this.cc_partidas);
+		this.mostrarPartidas();
 	}
 
-	mostrarPartidas() {
+	private mostrarPartidas() {
 		this.info = [];
-		for (const item of this.cc_partidas) {
-			for (const item2 of item) {
+		for (const partida of this.conjuntoDatos) {
+			for (const item of partida) {
 				this.info.push({
-					id_cc: item2.id_ccosto,
-					nombre_cc: item2.nombre_cc,
-					id_partida: item2.id_partida,
-					codigo_partida: item2.codigo_partida,
-					nombre_partida: item2.nombre_partida,
-					importe: item2.importe
+					nombre_proyecto: item.nombre_proyecto,
+					nombre_fase: item.nombre_fase,
+					id_partida: item.id_partida,
+					codigo_partida: item.codigo_partida,
+					nombre_partida: item.nombre_partida,
+					nombre_tipo_financ: item.nombre_tipo_financ,
+					importe: item.importe
 				});
 			}
 		}
 	}
 
-	guardarInfo() {// f: NgForm) {
-		// console.log(f);
-		// if ( f.valid) {
-			const data = {
-				id_subprograma: this.id_subprograma,
-				id_fase: this.id_fase,
-				id_centro_costo: this.ui_data.id_ccosto,
-				id_tipo_financ: this.cff_data.id_tipo
-			};
-			this.proyecto_service.setPresEgreso(data, this.cc_partidas)
-				.subscribe(( data: any) => {
-					this.mensaje.success(data);
-					this.clear();
+	/* -- Proyectos de egreso -- */
+	getFasesByProyecto($id_proyecto: string) {
+		const input_proyecto = document.getElementById('proyecto');
+		const input : HTMLInputElement = <HTMLInputElement>input_proyecto;
+		this.nombre_proyecto = input.options[input.selectedIndex].innerText;
+		this.id_proyecto = $id_proyecto;
+		this.id_fase = '';
+		this.mostrarFormCffCog = false;
+
+		if ($id_proyecto !== '') {
+			this.pe_service.get_fases($id_proyecto)
+				.subscribe((data: any) => {
+					this.fases = data.data;
 				}, error => {
 					this.mensaje.danger(error.error);
 				});
-		// }
+		}
 	}
 
-	clear() {
-		this.cc_partidas = [];
+	getFase() {
+		const input_fase = document.getElementById('fase');
+		this.nombre_fase = input_fase.options[input_fase.selectedIndex].innerText;
+		if (this.mostrarFormProyecto) {
+			this.mostrarFormCffCog = true;
+		}
 	}
+
+	getProyectosByCCosto($id_ccosto) {
+		this.pe_service.get_proyectos_ccostos($id_ccosto)
+		.subscribe((data: any) => {
+			this.proyectos = data.data;
+			this.mostrarFormProyecto = true;
+
+		},
+		error => {
+			this.mensaje.warning(error.error);
+			this.mostrarFormProyecto = false;
+		});
+	}
+
+	guardarInfo() {// f: NgForm) {
+		// console.log(f);
+		// if ( f.valid) {
+
+			this.proyecto_service.postPresEgreso(this.conjuntoDatos)
+				.subscribe(( data: any) => {
+
+					this.mensaje.success(data);
+				}, error => {
+					this.mensaje.danger(error.error);
+				});
+		// // }
+	}
+
+
 
 }

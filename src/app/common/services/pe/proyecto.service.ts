@@ -15,15 +15,6 @@ export class ProyectoService {
 		private constants: ConstantsService
 	) { }
 
-
-
-	getDireccionCP(cp: string) {
-		// var data: any;
-		return this.constants.getDireccionCP(cp);
-		// console.log('data: ', this.data);
-		// return this.data;
-	}
-
 	createUpdateProyecto(proyecto: Proyectos) {
 
 		if (proyecto.id === '') {

@@ -4,6 +4,8 @@ import { ActivatedRoute } from '@angular/router';
 import { NgForm } from '@angular/forms';
 import { Proyectos } from 'src/app/common/interfaces/pe.interface';
 import { MensajesService } from '../../../../common/services/shared/mensajes.service';
+import { UiService } from '../../../../common/services/ui/ui.service';
+import { CpService } from '../../../../common/services/cp/cp.service';
 
 @Component({
 	selector: 'app-proyecto',
@@ -11,80 +13,112 @@ import { MensajesService } from '../../../../common/services/shared/mensajes.ser
 })
 
 export class ProyectoComponent {
-	proyecto: Proyectos;
-	direccion: any;
-	colonia: any;
+	proyecto: Proyectos = {
+		id: '',
+		id_unidad_admin: '',
+		id_centro_costo: '',
+		id_programa: '',
+		id_subprograma: '',
+		codigo: '',
+		nombre: '',
+		descripcion: '',
+		anio: null,
+		fecha_inicio: null,
+		fecha_final: null,
+		status: false
+	};
+
+	direccion: any = {
+		codigo_postal: '',
+		municipio: '',
+		estado: '',
+		colonias: []
+	};
+	colonia = '';
+
+	udsAdministrativas: any[];
+	ctrCostos: any[];
+	programas: any[];
+	subprogramas: any[];
+
 	constructor(
 		private proyectoService: ProyectoService,
+		private uiService: UiService,
+		private cpService: CpService,
 		private activatedRoute: ActivatedRoute,
 		private mensaje: MensajesService
 	) {
 
-		this.colonia = '';
-
-		this.direccion = {
-			codigo_postal: '',
-			municipio: '',
-			estado: '',
-			colonias: []
-		};
-
-		this.proyecto = {
-			id: '',
-			id_empresa: '1',
-			codigo: '',
-			nombre: '',
-			descripcion: '',
-			anio: '2019',
-			cp: '',
-			entidad: '',
-			municipio: '',
-			colonia: '',
-			status: false
-		};
 
 		this.activatedRoute.params.subscribe((data: any) => {
 			if (data.id !== 'nuevo') {
-				this.getProyectos(data.id);
+				this.cargarProyecto(data.id);
 			}
 		});
+
+		this.getUdsAdministrativas();
+		this.getProgramas();
+
 	}
 
-	getDireccion() {
-		if (this.proyecto.cp !== '') {
-			this.proyectoService.getDireccionCP(this.proyecto.cp)
-				.subscribe((response: any) => {
-					if (response.colonias !== [] && response.municipio !== ''  && response.estado !== '' ) {
-
-						this.direccion = response;
-						this.proyecto.colonia = '';
-
-					} else {
-						const MENSAJE: any = {
-							'message': 'El codigo postal no es valido',
-							'title': 'Advertencia'
-						};
-						this.mensaje.warning(MENSAJE);
-					}
-				});
-		}
-	}
-
-	getProyectos(id: string) {
+	cargarProyecto(id: string) {
 		this.proyectoService.getProyecto(id)
 			.subscribe((data: any) => {
-				console.log(data)
 				this.proyecto = data.data;
-				this.getDireccion();
+				const ADMIN = this.proyecto.id_unidad_admin;
+				const CCOSTO = this.proyecto.id_centro_costo;
+				const PROGRAMA = this.proyecto.id_programa;
+				const SUBPROGRAMA = this.proyecto.id_subprograma;
+				this.getCCostoByUdsAdmin(ADMIN);
+				this.getCCosto(CCOSTO);
+				this.getSubprogramaByPrograma(PROGRAMA);
+				this.getSubprograma(SUBPROGRAMA);
+
 			}, error => {
 				this.mensaje.danger(error.error);
 			});
 	}
 
+	getUdsAdministrativas() {
+		this.uiService.getUnidadesAdmin()
+			.subscribe((data: any) => {
+				this.udsAdministrativas = data;
+			});
+	}
+
+	getCCostoByUdsAdmin($id_uds_admin) {
+		this.ctrCostos = [];
+		if ($id_uds_admin) {
+			this.uiService.getCcByUnidad($id_uds_admin)
+			.subscribe((data: any) => this.ctrCostos = data);
+		}
+	}
+
+	getCCosto($id_ccosto) {
+		if ($id_ccosto) {
+			this.proyecto.id_centro_costo = $id_ccosto;
+		}
+	}
+
+	getProgramas() {
+		this.cpService.get_programas()
+			.subscribe((data: any) => this.programas = data);
+	}
+
+	getSubprogramaByPrograma($id_programa) {
+		this.cpService.get_subprogramas($id_programa)
+			.subscribe((data: any) => this.subprogramas = data.data);
+	}
+
+	getSubprograma($id_subprograma) {
+		if ($id_subprograma) {
+			this.proyecto.id_subprograma = $id_subprograma;
+		}
+	}
+
 	guardar(f: NgForm) {
+		console.log(this.proyecto);
 		if (f.valid) {
-			this.proyecto.entidad = this.direccion.estado;
-			this.proyecto.municipio = this.direccion.municipio;
 			this.proyectoService.createUpdateProyecto(this.proyecto)
 				.subscribe((data: any) => {
 					this.mensaje.success(data);
@@ -92,25 +126,9 @@ export class ProyectoComponent {
 					this.mensaje.danger(error.error);
 				});
 
-			this.proyecto = {
-				id: '',
-				id_empresa: '1',
-				codigo: '',
-				nombre: '',
-				descripcion: '',
-				anio: '2019',
-				cp: '',
-				entidad: '',
-				municipio: '',
-				colonia: '',
-				status: false
-			};
-			this.direccion = {
-				codigo_postal: '',
-				municipio: '',
-				estado: '',
-				colonias: []
-			};
+			// this.resetVariable();
 		}
 	}
+
+
 }

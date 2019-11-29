@@ -10,9 +10,9 @@ import { MensajesService } from '../../../../common/services/shared/mensajes.ser
 	templateUrl: './fase.component.html'
 })
 export class FaseComponent {
-
-	fase: Fases;
 	proyectos: any[];
+	fase: Fases;
+	colonias: any;
 
 	constructor(
 		private faseService: FaseService,
@@ -25,6 +25,11 @@ export class FaseComponent {
 			codigo: '',
 			nombre: '',
 			descripcion: '',
+			externo: false,
+			cp: '',
+			entidad: '',
+			municipio: '',
+			colonia: '',
 			status: false
 		};
 
@@ -34,27 +39,52 @@ export class FaseComponent {
 
 		this.activatedRoute.params.subscribe((data: any) => {
 			if (data.id !== 'nuevo') {
-				this.getFases(data.id);
+				this.getFase(data.id);
 			}
 		});
 	}
 
-	onChangeFase(id_proyecto) {
-		this.fase.id_proyecto = id_proyecto;
-	}
-
-	getFases(id: string) {
+	getFase(id: string) {
 		this.faseService.getFase(id)
-			.subscribe((obj: any) => this.fase = obj.data);
+			.subscribe((obj: any) => {
+				this.fase = obj.data;
+				if (this.fase.externo) {
+					this.getDireccion(this.fase.cp);
+				}
+			});
 	}
 
 	guardar(f: NgForm) {
+		console.log(this.fase);
+
 		if (f.valid) {
 			this.faseService.createUpdateFase(this.fase)
 				.subscribe((data: any) => {
 					this.mensaje.success(data);
 				}, error => {
 					this.mensaje.danger(error.error);
+				});
+		}
+	}
+
+
+	getDireccion($cp) {
+		if ($cp !== '') {
+			this.faseService.getDireccionCP($cp)
+				.subscribe((response: any) => {
+					if (response.colonias !== [] && response.municipio !== ''  && response.estado !== '' ) {
+
+						this.fase.entidad = response.estado;
+						this.fase.municipio = response.municipio;
+						this.colonias = response.colonias;
+
+					} else {
+						const MENSAJE: any = {
+							'message': 'El codigo postal no es valido',
+							'title': 'Advertencia'
+						};
+						this.mensaje.warning(MENSAJE);
+					}
 				});
 		}
 	}
