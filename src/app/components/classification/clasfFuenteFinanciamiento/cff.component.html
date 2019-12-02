@@ -1,54 +1,34 @@
 <!-- <div> -->
-<div class="col-sm-12 mb-2">
-    <label>
-					Fuente
-				</label>
-    <select class="form-control" name="fuente" [ngModel]="data.id_fuente" (change)="onChangeFuente($event.target.value)">
-			<option value="">
-				Seleccione una fuente
-			</option>
-			<option *ngFor="let fuente of fuentes"
-				[value]="fuente.id"
-			>
+<div class="row">
+
+    <div class="col-md-6 mb-2">
+        <label>Fuente</label>
+        <select class="form-control" name="fuente" [ngModel]="data.id_fuente" (change)="onChangeFuente($event.target.value)">
+			<option value="">Seleccione una fuente</option>
+			<option *ngFor="let fuente of fuentes" [value]="fuente.id">
 				{{ fuente.codigo }} - {{ fuente.nombre }}
 			</option>
 		</select>
-</div>
-<!-- </div> -->
-<!-- <div> -->
+    </div>
 
-<div class="col-sm-12 mb-2">
-    <label>
-					Subfuente
-				</label>
-    <select class="form-control" name="subfuente" [ngModel]="data.id_subfuente" (change)="onChangeSubfuente($event.target.value)">
-			<option value="">
-				Seleccione una subfuente
-			</option>
-			<option *ngFor="let subfuente of subfuentes"
-				[value]="subfuente.id"
-			>
+    <div class="col-md-6 mb-2">
+        <label>Subfuente</label>
+        <select class="form-control" name="subfuente" [ngModel]="data.id_subfuente" (change)="onChangeSubfuente($event.target.value)">
+			<option value="">Seleccione una subfuente</option>
+			<option *ngFor="let subfuente of subfuentes" [value]="subfuente.id">
 				{{ subfuente.codigo }} - {{ subfuente.nombre }}
 			</option>
 		</select>
+    </div>
 </div>
-<!-- </div> -->
-
-<!-- <div> -->
-
-<div class="col-sm-12">
-    <label>
-					Tipos
-				</label>
-    <select class="form-control" name="tipo" id="tipo" [ngModel]="data.id_tipo" (change)="onChangeTipo($event.target.value)">
-			<option value="">
-				Seleccione un tipo
-			</option>
-			<option *ngFor="let tipo of tipos"
-				[value]="tipo.id"
-			>
+<div class="row">
+    <div class="col-12 mb-2">
+        <label>Tipos</label>
+        <select class="form-control" name="tipo" id="tipo" [ngModel]="data.id_tipo" (change)="onChangeTipo($event.target)">
+			<option value="">Seleccione un tipo</option>
+			<option *ngFor="let tipo of tipos" [value]="tipo.id">
 				{{ tipo.codigo }} - {{ tipo.nombre }}
 			</option>
 		</select>
+    </div>
 </div>
-<!-- </div> -->

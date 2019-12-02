@@ -144,17 +144,14 @@ export class EgresosComponent {
 	}
 
 	/* -- Proyectos de egreso -- */
-	getFasesByProyecto($id_proyecto: string) {
-		const input_proyecto = document.getElementById('proyecto');
-		const input : HTMLInputElement = <HTMLInputElement>input_proyecto;
-		this.nombre_proyecto = input.options[input.selectedIndex].innerText;
-		this.id_proyecto = $id_proyecto;
+	getFasesByProyecto(args) {
+		this.nombre_proyecto = args.options[args.selectedIndex].innerText;
 		this.id_fase = '';
 		this.mostrarFormCffCog = false;
-
-		if ($id_proyecto !== '') {
-			this.pe_service.get_fases($id_proyecto)
-				.subscribe((data: any) => {
+		if (args.value !== '') {
+			this.pe_service.get_fases(args.value)
+			.subscribe((data: any) => {
+					this.id_proyecto = args.value;
 					this.fases = data.data;
 				}, error => {
 					this.mensaje.danger(error.error);
@@ -162,16 +159,15 @@ export class EgresosComponent {
 		}
 	}
 
-	getFase() {
-		const input_fase = document.getElementById('fase');
-		this.nombre_fase = input_fase.options[input_fase.selectedIndex].innerText;
+	getFase(args) {
+		this.nombre_fase = args.options[args.selectedIndex].innerText;
 		if (this.mostrarFormProyecto) {
 			this.mostrarFormCffCog = true;
 		}
 	}
 
-	getProyectosByCCosto($id_ccosto) {
-		this.pe_service.get_proyectos_ccostos($id_ccosto)
+	getProyectosByCCosto(id_ccosto) {
+		this.pe_service.get_proyectos_ccostos(id_ccosto)
 		.subscribe((data: any) => {
 			this.proyectos = data.data;
 			this.mostrarFormProyecto = true;
@@ -189,7 +185,7 @@ export class EgresosComponent {
 
 			this.proyecto_service.postPresEgreso(this.conjuntoDatos)
 				.subscribe(( data: any) => {
-
+					this.partidas = '';
 					this.mensaje.success(data);
 				}, error => {
 					this.mensaje.danger(error.error);

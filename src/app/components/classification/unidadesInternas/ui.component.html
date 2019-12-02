@@ -1,46 +1,39 @@
-<div class="col-sm-12 mb-2">
-	<label>
-		Unidad administrativa
-	</label>
-	<select class="form-control" name="unidad" [(ngModel)]="data.id_unidad_adm"
-		(change)="getCcByUnidad($event.target.value)">
-		<option value="">Seleccione una unidad administrativa</option>
-		<option *ngFor="let unidad of unidades" [value]="unidad.id">
-			{{ unidad.codigo }} - {{ unidad.nombre }}
-		</option>
-	</select>
+<div class="row">
+    <div class="col-md-6 mb-2">
+        <label>Unidad administrativa</label>
+        <select class="form-control" name="unidad" [(ngModel)]="data.id_unidad_adm" (change)="getCcByUnidad($event.target.value)">
+			<option value="">Seleccione una unidad administrativa</option>
+			<option *ngFor="let unidad of unidades" [value]="unidad.id">
+				{{ unidad.codigo }} - {{ unidad.nombre }}
+			</option>
+		</select>
+    </div>
+
+    <div class="col-md-6 mb-2">
+        <label>Centro de costo</label>
+        <select class="form-control" name="ccosto" [(ngModel)]="data.id_ccosto" (change)="getDataByCC($event.target.value)">
+			<option value="">Seleccione una centro de costo</option>
+			<option *ngFor="let ccosto of ccostos" [value]="ccosto.id">
+				{{ ccosto.codigo }} - {{ ccosto.nombre }}
+			</option>
+		</select>
+    </div>
 </div>
+<div class="row">
+    <div class="col-sm-6 mb-2">
+        <label>Clasificación administrativa</label>
+        <textarea *ngIf="data.id_ccosto==''; else else_id_ccosto" type="text" class="form-control" disabled>Esperando centro de costo.</textarea>
+        <ng-template #else_id_ccosto>
+            <textarea type="text" class="form-control" value="{{ data.nombre_clas_adm }}" disabled></textarea>
+        </ng-template>
 
-<div class="col-sm-12 mb-2">
-	<label>
-		Centro de costo
-	</label>
-	<select class="form-control" name="ccosto" [(ngModel)]="data.id_ccosto"
-		(change)="getDataByCC($event.target.value)">
-		<option value="">Seleccione una centro de costo</option>
-		<option *ngFor="let ccosto of ccostos" [value]="ccosto.id">
-			{{ ccosto.codigo }} - {{ ccosto.nombre }}
-		</option>
-	</select>
-</div>
+    </div>
 
-<div class="col-sm-12 mb-2">
-	<label>
-		Clasificación administrativa
-	</label>
-	<textarea *ngIf="data.id_ccosto==''; else else_id_ccosto" type="text" class="form-control" disabled>Esperando centro de costo.</textarea>
-	<ng-template #else_id_ccosto>
-		<textarea type="text" class="form-control" value="{{ data.nombre_clas_adm }}" disabled></textarea>
-	</ng-template>
-
-</div>
-
-<div class="col-sm-12">
-	<label>
-		Clasificación funcional del gasto
-	</label>
-	<textarea *ngIf="data.id_ccosto==''; else else_id_ccosto2" type="text" class="form-control" disabled>Esperando centro de costo.</textarea>
-	<ng-template #else_id_ccosto2>
-		<textarea type="text" class="form-control" value="{{ data.nombre_cfg }}" disabled></textarea>
-	</ng-template>
+    <div class="col-sm-6 mb-2">
+        <label>Clasificación funcional del gasto</label>
+        <textarea *ngIf="data.id_ccosto==''; else else_id_ccosto2" type="text" class="form-control" disabled>Esperando centro de costo.</textarea>
+        <ng-template #else_id_ccosto2>
+            <textarea type="text" class="form-control" value="{{ data.nombre_cfg }}" disabled></textarea>
+        </ng-template>
+    </div>
 </div>
