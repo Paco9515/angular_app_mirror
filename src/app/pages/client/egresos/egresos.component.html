@@ -7,185 +7,162 @@
     </ol>
 </div>
 
-<div class="container-fluid p-3">
-    <div class="animated fadeIn">
-        <div class="row justify-content-center">
-            <form class="col-12">
-
-                <!-- Card Clasificacion Administrativa -->
-                <div class="col-md-12">
-                    <div class="card shadow">
-                        <div class="card-header">
-                            <div class="row">
-                                <div class="col-12 col-md-8 text-center text-sm-left  h5 font-weight-bold">
-                                    Clasificación administrativa.
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-12">
-                                    <app-ui [primary_keys_ui]="ui_keys" (out)="getDataUI($event)"></app-ui>
-                                </div>
-                            </div>
+<div class="container-fluid">
+    <div class="row ">
+        <!-- Card Clasificacion Administrativa -->
+        <div class="col-md-12">
+            <div class="card shadow">
+                <div class="card-header">
+                    <div class="row">
+                        <div class="col-12 text-center text-sm-left  h5 font-weight-bold">
+                            Clasificación administrativa.
                         </div>
                     </div>
                 </div>
-                <div class="col-md-12" *ngIf="mostrarFormProyecto">
-                    <div class="card shadow">
-                        <div class="card-header">
-                            <div class="row">
-                                <div class="col-12 col-md-8 text-center text-sm-left  h5 font-weight-bold">
-                                    Proyectos de presupuestos
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-6">
-                                    <div class="col-sm-12">
-                                        <label>
-										Proyecto
-									</label>
-                                        <select class="form-control" id="proyecto" name="id_proyecto" [(ngModel)]="id_proyecto" (change)="getFasesByProyecto($event.target.value)" required>
-                                            <option value=''>Seleccione un proyecto</option>
-                                            <option *ngFor="let proyecto of proyectos" [value]="proyecto.id">
-                                                {{ proyecto.codigo + ' - ' + proyecto.nombre }}
-                                            </option>
-                                    </select>
-                                    </div>
-                                </div>
-                                <div class="col-6">
-                                    <div class="col-sm-12">
-                                        <label>
-										Fase
-									</label>
-                                        <select class="form-control" id="fase" name="id_fase" [(ngModel)]="id_fase" (change)="getFase($event.target.value)" required>
-                                            <option value=''>
-                                                Seleccione un fase
-                                            </option>
-                                            <option *ngFor="let fase of fases" [ngValue]="fase.id">
-                                                {{ fase.codigo }} - {{ fase.nombre }}
-                                            </option>
-                                    </select>
-                                    </div>
-                                </div>
-                            </div>
+                <div class="card-body">
+                    <app-ui [primary_keys_ui]="ui_keys" (out)="getDataUI($event)"></app-ui>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12" *ngIf="mostrarFormProyecto">
+            <div class="card shadow">
+                <div class="card-header">
+                    <div class="row">
+                        <div class="col-12 col-md-8 text-center text-sm-left  h5 font-weight-bold">
+                            Proyectos de presupuestos
                         </div>
                     </div>
                 </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label>Proyecto</label>
+                            <select class="form-control" id="proyecto" name="id_proyecto" [(ngModel)]="id_proyecto" (change)="getFasesByProyecto($event.target)" required>
+                                <option value=''>Seleccione un proyecto</option>
+                                <option *ngFor="let proyecto of proyectos" [value]="proyecto.id">
+                                    {{ proyecto.codigo + ' - ' + proyecto.nombre }}
+                                </option>
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label>Fase</label>
+                            <select class="form-control" id="fase" name="id_fase" [(ngModel)]="id_fase" (change)="getFase($event.target)" required>
+                                <option value=''>Seleccione un fase</option>
+                                <option *ngFor="let fase of fases" [ngValue]="fase.id">
+                                    {{ fase.codigo }} - {{ fase.nombre }}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-                <!-- Card Clasificacion Objeto de Gasto -->
-                <div class="col-md-12" *ngIf="mostrarFormCffCog">
-                    <div class="card shadow">
-                        <div class="card-header">
-                            <div class="row">
-                                <div class="col-12 col-md-8 text-center text-sm-left  h5 font-weight-bold">
-                                    Posicion presupuestal.
-                                </div>
-                            </div>
+        <!-- Card Clasificacion Objeto de Gasto -->
+        <div class="col-md-12" *ngIf="mostrarFormCffCog">
+            <div class="card shadow">
+                <div class="card-header">
+                    <div class="row">
+                        <div class="col-12 col-md-8 text-center text-sm-left  h5 font-weight-bold">
+                            Posicion presupuestal.
                         </div>
-                        <div class="card-body">
-                            <app-cog [primary_keys_cog]="cog_keys" (out)="getDataCOG($event)"></app-cog>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <app-cog [primary_keys_cog]="cog_keys" (out)="getDataCOG($event)"></app-cog>
+                </div>
+                <div class="card-header">
+                    <div class="row">
+                        <div class="col-12 col-md-8 text-center text-sm-left  h5 font-weight-bold">
+                            Clasificación por fuente de financiamiento.
                         </div>
-                        <div class="card-header">
-                            <div class="row">
-                                <div class="col-12 col-md-8 text-center text-sm-left  h5 font-weight-bold">
-                                    Clasificación por fuente de financiamiento.
-                                </div>
-                            </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <app-cff [primary_keys_cff]="cff_keys" (out)="getDataCFF($event)"></app-cff>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label for="cantidad">Cantidad</label>
+                            <input class="form-control" name="cantidad" type="number" placeholder="Ingresa la cantidad" minlength="0" [(ngModel)]="importe" required>
                         </div>
-                        <div class="card-body">
-                            <app-cff [primary_keys_cff]="cff_keys" (out)="getDataCFF($event)"></app-cff>
-                        </div>
-                        <div class="card-body">
-                            <div class="col-12">
-                                <div class="row">
-                                    <div class="col-6">
-                                        <label for="cantidad">
-                                            Cantidad
-                                        </label>
-                                        <input class="form-control" name="cantidad" type="number" placeholder="Ingresa la cantidad" minlength="0" [(ngModel)]="importe" required>
-                                    </div>
-                                </div>
+                    </div>
 
-                                <div class="row">
-                                    <div class="col-6">
-                                        <button class="btn btn-success mt-2" (click)="agregarPartida()" [disabled]="cog_data.id_partida===''">
-											Agregar partida
-										</button>
-                                    </div>
-                                </div>
-                            </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <button class="btn btn-success mt-2" (click)="agregarPartida()" [disabled]="cog_data.id_partida===''">
+                                Agregar partida
+                            </button>
                         </div>
-                        <div class="card-header">
-                            <div class="row">
-                                <div class="col-12 col-md-8 text-center text-sm-left  h5 font-weight-bold">
-                                    Presupuesto del proyecto
-                                </div>
-                            </div>
+                    </div>
+                </div>
+                <div class="card-header">
+                    <div class="row">
+                        <div class="col-12 col-md-8 text-center text-sm-left  h5 font-weight-bold">
+                            Presupuesto del proyecto
                         </div>
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="table-responsive mt-3">
-                                    <table class="table table-striped">
-                                        <thead class="thead-dark">
-                                            <tr>
-                                                <th scope="col">#</th>
-                                                <th scope="col">Proyecto</th>
-                                                <th scope="col">Fase</th>
-                                                <th scope="col">Posicion presupuestal</th>
-                                                <th scope="col">Fuente de financiamiento</th>
-                                                <th scope="col">Importe</th>
-                                                <th class="text-center" scope="col">Eliminar</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody *ngIf="partidas.length>0; else tableEmpty">
-                                            <tr *ngFor="let item of partidas; let i = index">
-                                                <td>{{ i+1 }}</td>
-                                                <td>{{ item.nombre_proyecto }}</td>
-                                                <td>{{ item.nombre_fase }}</td>
-                                                <td>{{ item.nombre_partida }}</td>
-                                                <td>{{ item.nombre_tipo_financ }}</td>
-                                                <td>{{ item.importe }}</td>
-                                                <td>
-                                                    <button type="button" class="btn btn-danger btn-sm w-auto mb-1 ml-1" (click)="eliminarPartida(i,item.importe)">
-                                                    <i class="fas fa-trash"></i>
-                                                    Eliminar
-                                                </button>
-                                                </td>
-                                            </tr>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="table-responsive mt-3">
+                                <table class="table table-striped">
+                                    <thead class="thead-dark">
+                                        <tr>
+                                            <th scope="col">#</th>
+                                            <th scope="col">Proyecto</th>
+                                            <th scope="col">Fase</th>
+                                            <th scope="col">Posicion presupuestal</th>
+                                            <th scope="col">Fuente de financiamiento</th>
+                                            <th scope="col">Importe</th>
+                                            <th class="text-center" scope="col">Eliminar</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody *ngIf="partidas.length>0; else tableEmpty">
+                                        <tr *ngFor="let item of partidas; let i = index">
+                                            <td>{{ i+1 }}</td>
+                                            <td>{{ item.nombre_proyecto }}</td>
+                                            <td>{{ item.nombre_fase }}</td>
+                                            <td>{{ item.nombre_partida }}</td>
+                                            <td>{{ item.nombre_tipo_financ }}</td>
+                                            <td>{{ item.importe }}</td>
+                                            <td>
+                                                <button type="button" class="btn btn-danger btn-sm w-auto mb-1 ml-1" (click)="eliminarPartida(i,item.importe)">
+                                                <i class="fas fa-trash"></i>
+                                                Eliminar
+                                            </button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                    <ng-template #tableEmpty>
+                                        <tbody>
+                                            <td colspan="7" class="text-center">
+                                                No hay datos que mostrar.
+                                            </td>
                                         </tbody>
-                                        <ng-template #tableEmpty>
-                                            <tbody>
-                                                <td colspan="7" class="text-center">
-                                                    No hay datos que mostrar.
-                                                </td>
-                                            </tbody>
-                                        </ng-template>
-                                        <tfoot class="">
-                                            <tr>
-                                                <td colspan="5" class="text-right">
-                                                    Total
-                                                </td>
-                                                <td colspan="2" class="text-left">
-                                                    ${{ total }}
-                                                </td>
-                                            </tr>
-                                        </tfoot>
-                                    </table>
-                                </div>
+                                    </ng-template>
+                                    <tfoot class="">
+                                        <tr>
+                                            <td colspan="5" class="text-right">
+                                                Total
+                                            </td>
+                                            <td colspan="2" class="text-left">
+                                                ${{ total }}
+                                            </td>
+                                        </tr>
+                                    </tfoot>
+                                </table>
                             </div>
                         </div>
                     </div>
-
-                    <div class="col-12">
-                        <button class="btn btn-success mb-3 btn-block" type="submit" (click)="guardarInfo()">
-                            Guardar presupuesto de egreso
-                        </button>
-                    </div>
                 </div>
-            </form>
+            </div>
+
+            <div class="col-12">
+                <button class="btn btn-success mb-3 btn-block" type="submit" (click)="guardarInfo()">
+                    Guardar presupuesto de egreso
+                </button>
+            </div>
         </div>
     </div>
 </div>

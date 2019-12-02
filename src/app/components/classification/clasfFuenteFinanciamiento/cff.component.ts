@@ -74,10 +74,9 @@ export class CffComponent implements OnInit {
 		}
 	}
 
-	onChangeTipo(id_tipo) {
-		const input_tipo = document.getElementById('tipo') as HTMLInputElement;
-		this.data.nombre_tipo = input_tipo.options[input_tipo.selectedIndex].innerText;
-		this.data.id_tipo = id_tipo;
+	onChangeTipo(args) {
+		this.data.nombre_tipo = args.options[args.selectedIndex].innerText;
+		this.data.id_tipo = args.value;
 		this.out.emit(this.data);
 	}
 }
