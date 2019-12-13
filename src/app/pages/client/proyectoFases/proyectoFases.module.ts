@@ -12,19 +12,30 @@ import { FasesComponent } from './fases/fases.component';
 import { FaseComponent } from './fases/fase.component';
 import { ProyectosComponent } from './proyectos/proyectos.component';
 import { ProyectoComponent } from './proyectos/proyecto.component';
-import { PROYECTO_FASES_ROUTES } from './proyectoFases-routing.module';
+import { CogComponent } from '../../../components/classification/clasfObjetoGasto/cog.component';
+import { CffComponent } from '../../../components/classification/clasfFuenteFinanciamiento/cff.component';
 
 // Route
+import { PROYECTO_FASES_ROUTES } from './proyectoFases-routing.module';
+import { SharedModule } from '../../../shared/shared.module';
 
 @NgModule({
 	declarations: [
 		FaseComponent,
 		FasesComponent,
 		ProyectoComponent,
-		ProyectosComponent
+		ProyectosComponent,
+		CogComponent,
+		CffComponent
+	],
+	exports: [
+		FaseComponent,
+		FasesComponent,
 	],
 	imports: [
+		SharedModule,
 		BrowserModule,
+		SharedModule,
 		FormsModule,
 		ReactiveFormsModule,
 		HttpClientModule,
@@ -33,9 +44,7 @@ import { PROYECTO_FASES_ROUTES } from './proyectoFases-routing.module';
 		CommonModule,
 		BrowserAnimationsModule , //  módulo de animaciones requerido
 		ToastrModule.forRoot(), //  ToastrModule agregado
-		PROYECTO_FASES_ROUTES
-	],
-	exports: [
+		PROYECTO_FASES_ROUTES,
 	]
 })
 export class ProyectoFasesModule { }

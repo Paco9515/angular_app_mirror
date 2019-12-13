@@ -5,7 +5,7 @@ import { Fases } from '../../interfaces/pe.interface';
 @Injectable({
 	providedIn: 'root'
 })
-export class FaseService {
+export class FaseService  {
 
 	constructor(
 		private constants: ConstantsService
@@ -27,8 +27,8 @@ export class FaseService {
 		return this.constants.getRequest(`/get_fase/${id}`, 'get', false);
 	}
 
-	getFases() {
-		return this.constants.getRequest(`/get_fases`, 'get', false);
+	getFases(id_proyecto) {
+		return this.constants.getRequest(`/get_fases/${id_proyecto}`, 'get', false);
 	}
 
 	activarEliminarFase(id: string, opcion: boolean) {

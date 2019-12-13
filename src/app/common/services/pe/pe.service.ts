@@ -11,6 +11,10 @@ export class PeService {
 		private constants: ConstantsService
 	) { }
 
+	get_presupuestos() {
+		return this.constants.getRequest(`/get_presupuestos`, 'get', false);
+	}
+
 	get_proyectos() {
 		return this.constants.getRequest(`/get_proyectos`, 'get', false);
 	}

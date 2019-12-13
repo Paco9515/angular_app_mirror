@@ -1,10 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ProyectoService } from 'src/app/common/services/pe/proyecto.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { NgForm } from '@angular/forms';
 import { Proyectos } from 'src/app/common/interfaces/pe.interface';
 import { MensajesService } from '../../../../common/services/shared/mensajes.service';
-import { UiService } from '../../../../common/services/ui/ui.service';
 import { CpService } from '../../../../common/services/cp/cp.service';
 
 @Component({
@@ -12,92 +11,72 @@ import { CpService } from '../../../../common/services/cp/cp.service';
 	templateUrl: './proyecto.component.html'
 })
 
-export class ProyectoComponent {
+export class ProyectoComponent implements OnInit {
+
+	fechaFinal: boolean = true;
+	limiteFechaInicio: Date;
+	limiteFechaFinal: Date;
+
+	presupuesto: any = {
+		id_presupuesto: '',
+		anio: ''
+	};
+
 	proyecto: Proyectos = {
 		id: '',
-		id_unidad_admin: '',
-		id_centro_costo: '',
+		id_presupuesto: '',
 		id_programa: '',
 		id_subprograma: '',
-		codigo: '',
+		anio: '',
 		nombre: '',
 		descripcion: '',
-		anio: null,
 		fecha_inicio: null,
 		fecha_final: null,
 		status: false
 	};
 
-	direccion: any = {
-		codigo_postal: '',
-		municipio: '',
-		estado: '',
-		colonias: []
-	};
-	colonia = '';
-
-	udsAdministrativas: any[];
-	ctrCostos: any[];
 	programas: any[];
 	subprogramas: any[];
 
 	constructor(
 		private proyectoService: ProyectoService,
-		private uiService: UiService,
 		private cpService: CpService,
 		private activatedRoute: ActivatedRoute,
-		private mensaje: MensajesService
+		private mensaje: MensajesService,
+		private router: Router
 	) {
-
-
 		this.activatedRoute.params.subscribe((data: any) => {
-			if (data.id !== 'nuevo') {
+			if (data.id_proyecto !== 'nuevo') {
 				this.cargarProyecto(data.id);
 			}
 		});
+		this.presupuesto = this.activatedRoute.params
+			.subscribe( params => this.presupuesto = params['id_presupuesto']);
 
-		this.getUdsAdministrativas();
+		// if (!this.presupuesto) {
+		// 	this.router.navigate([`/panel-adm/pres_egresos/${this.presupuesto}`]);
+		// }
+		// console.log(this.proyecto.anio = this.fecha.getFullYear());
+	}
+
+	ngOnInit() {
 		this.getProgramas();
-
+		this.limiteFechaInicio = new Date(`01-01-${this.presupuesto.anio}`);
+		this.limiteFechaFinal = new Date(`12-31-${this.presupuesto.anio}`);
 	}
 
 	cargarProyecto(id: string) {
 		this.proyectoService.getProyecto(id)
 			.subscribe((data: any) => {
 				this.proyecto = data.data;
-				const ADMIN = this.proyecto.id_unidad_admin;
-				const CCOSTO = this.proyecto.id_centro_costo;
 				const PROGRAMA = this.proyecto.id_programa;
 				const SUBPROGRAMA = this.proyecto.id_subprograma;
-				this.getCCostoByUdsAdmin(ADMIN);
-				this.getCCosto(CCOSTO);
 				this.getSubprogramaByPrograma(PROGRAMA);
 				this.getSubprograma(SUBPROGRAMA);
 
 			}, error => {
 				this.mensaje.danger(error.error);
 			});
-	}
-
-	getUdsAdministrativas() {
-		this.uiService.getUnidadesAdmin()
-			.subscribe((data: any) => {
-				this.udsAdministrativas = data;
-			});
-	}
-
-	getCCostoByUdsAdmin($id_uds_admin) {
-		this.ctrCostos = [];
-		if ($id_uds_admin) {
-			this.uiService.getCcByUnidad($id_uds_admin)
-			.subscribe((data: any) => this.ctrCostos = data);
-		}
-	}
-
-	getCCosto($id_ccosto) {
-		if ($id_ccosto) {
-			this.proyecto.id_centro_costo = $id_ccosto;
-		}
 	}
 
 	getProgramas() {
@@ -116,8 +95,22 @@ export class ProyectoComponent {
 		}
 	}
 
+	activarFechaFinal() {
+		this.proyecto.fecha_final = this.limiteFechaInicio;
+		this.fechaFinal = false;
+	}
+
+	evaluarFechaFinal(data) {
+		const fecha = new Date(data);
+		if (fecha.getFullYear() !== this.presupuesto.anio) {
+			console.log('Error de fecha');
+		}
+	}
 	guardar(f: NgForm) {
+		this.proyecto.id_presupuesto = this.presupuesto.id_presupuesto;
+		this.proyecto.anio = this.presupuesto.anio;
 		console.log(this.proyecto);
+
 		if (f.valid) {
 			this.proyectoService.createUpdateProyecto(this.proyecto)
 				.subscribe((data: any) => {

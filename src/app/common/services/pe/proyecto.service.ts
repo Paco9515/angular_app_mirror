@@ -2,14 +2,10 @@ import { Injectable } from '@angular/core';
 import { ConstantsService } from '../shared/constants.service';
 import { Proyectos } from '../../interfaces/pe.interface';
 
-
 @Injectable({
 	providedIn: 'root'
 })
 export class ProyectoService {
-
-
-	// data: any;
 
 	constructor(
 		private constants: ConstantsService
@@ -29,8 +25,8 @@ export class ProyectoService {
 		return this.constants.getRequest(`/get_proyecto/${id}`, 'get', false);
 	}
 
-	getProyectos() {
-		return this.constants.getRequest(`/get_proyectos`, 'get', false);
+	getProyectos(id_presupuesto: string) {
+		return this.constants.getRequest(`/get_proyectos/${id_presupuesto}`, 'get', false);
 	}
 
 	activarEliminarProyecto(id: string, opcion: boolean) {

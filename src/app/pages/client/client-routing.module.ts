@@ -5,8 +5,10 @@ import { ClientComponent } from './client.component';
 
 import { EscritorioComponent } from '../escritorio/escritorio.component';
 import { EgresosComponent } from './egresos/egresos.component';
-
-
+import { FasesComponent } from './proyectoFases/fases/fases.component';
+import { FaseComponent } from './proyectoFases/fases/fase.component';
+import { ProyectosComponent } from './proyectoFases/proyectos/proyectos.component';
+import { ProyectoComponent } from './proyectoFases/proyectos/proyecto.component';
 
 const admin_routes: Routes = [
 	{
@@ -15,6 +17,10 @@ const admin_routes: Routes = [
 		children: [
 			{ path: 'escritorio', component: EscritorioComponent },
 			{ path: 'pres_egresos', component: EgresosComponent },
+			{ path: 'pres_egresos/:id_presupuesto/proyectos', component: ProyectosComponent },
+			{ path: 'pres_egresos/:id_presupuesto/proyectos/:id_proyecto', component: ProyectoComponent },
+			{ path: 'pres_egresos/:id_presupuesto/proyectos/:id_proyecto/fases', component: FasesComponent },
+			{ path: 'pres_egresos/:id_presupuesto/proyectos/:id_proyecto/fases/:id_fase', component: FaseComponent },
 
 			{ path: '', pathMatch: 'full', redirectTo: 'escritorio' }
 		]

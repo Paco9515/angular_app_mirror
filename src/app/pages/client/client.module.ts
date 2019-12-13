@@ -9,6 +9,8 @@ import { ProyectoFasesModule } from './proyectoFases/proyectoFases.module';
 import { UnidadesInternasModule } from './unidadesInternas/unidadesInternas.module';
 import { SharedModule } from '../../shared/shared.module';
 
+// Servicios
+import { DataPresupuestoEgresoService } from '../../common/services/dataPresupuestoEgresoService.service';
 
 // Rutas
 import { ClientRoutingModule } from './client-routing.module';
@@ -18,9 +20,7 @@ import { ClientComponent } from './client.component';
 import { EgresosComponent } from './egresos/egresos.component';
 import { CaComponent } from '../../components/classification/clasfAdministrativa/ca.component';
 import { CcComponent } from '../../components/classification/clasfContable/cc.component';
-import { CffComponent } from '../../components/classification/clasfFuenteFinanciamiento/cff.component';
 import { CfgComponent } from '../../components/classification/clasfFuncionalGasto/cfg.component';
-import { CogComponent } from '../../components/classification/clasfObjetoGasto/cog.component';
 import { CpComponent } from '../../components/classification/clasfProgramatica/cp.component';
 import { PeComponent } from '../../components/classification/proyectoFases/pe.component';
 import { UiComponent } from '../../components/classification/unidadesInternas/ui.component';
@@ -32,9 +32,7 @@ import { UiComponent } from '../../components/classification/unidadesInternas/ui
 		EgresosComponent,
 		CaComponent,
 		CcComponent,
-		CffComponent,
 		CfgComponent,
-		CogComponent,
 		CpComponent,
 		PeComponent,
 		UiComponent
@@ -45,9 +43,7 @@ import { UiComponent } from '../../components/classification/unidadesInternas/ui
 		EgresosComponent,
 		CaComponent,
 		CcComponent,
-		CffComponent,
 		CfgComponent,
-		CogComponent,
 		CpComponent,
 		PeComponent,
 		UiComponent
@@ -62,6 +58,9 @@ import { UiComponent } from '../../components/classification/unidadesInternas/ui
 		BrowserModule,
 		FormsModule,
 		ReactiveFormsModule
+	],
+	providers:[
+		DataPresupuestoEgresoService
 	]
 })
 export class ClientModule { }
