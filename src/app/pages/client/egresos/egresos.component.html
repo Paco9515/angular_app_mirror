@@ -25,6 +25,7 @@
                 </div>
             </div>
 
+
             <div class="card shadow">
                 <div class="card-header">
                     <div class="row">
@@ -32,7 +33,7 @@
                             <i class="fa fa-list"></i> Presupuestos de egreso
                         </div>
                         <div class="col-12 col-md-4 text-center text-sm-right">
-                            <button title="Ver detalles" type="button" class="btn btn-success btn-sm text-white ml-3" data-toggle="modal" data-target="#myModal" (click)="showModel()">
+                            <button title="Ver detalles" type="button" class="btn btn-success btn-sm text-white ml-3" data-toggle="modal" data-target="#myModal" (click)="showModel()" [disabled]="!this.ui_data.id_ccosto">
                                 <i class="fa fa-plus-circle"></i>
                                 Agregar 
                             </button>
@@ -68,10 +69,10 @@
                                         <td>{{ presupuesto.nombre }}</td>
                                         <td class="text-center">
                                             <span *ngIf="presupuesto.status; else inactiveBlock" class="badge badge-success">
-                                                    Activo
+                                                    Finalizado
                                                 </span>
                                             <ng-template #inactiveBlock>
-                                                <span class="badge badge-secondary">Inactivo</span>
+                                                <span class="badge badge-secondary">En Proceso</span>
                                             </ng-template>
                                         </td>
                                         <td class="text-center" nowrap>
@@ -83,6 +84,9 @@
                                             </button>
                                             <button type="button" class="btn btn-danger btn-sm ml-3  pull" (click)="mostrarProyectos(presupuesto.id, presupuesto.anio)">
                                                 <i class="fa fa-project-diagram fa-lg"></i> Proyectos
+                                            </button>
+                                            <button type="button" class="btn btn-info btn-sm text-white ml-3" [disabled]="!presupuesto.status">
+                                                <i class="fa fa-thumbs-up"></i> Finalizar
                                             </button>
                                         </td>
                                     </tr>
