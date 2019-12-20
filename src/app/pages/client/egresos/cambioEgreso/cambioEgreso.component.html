@@ -1,0 +1,84 @@
+<div class="container-fluid p-3">
+    <div class="animated fadeIn">
+        <div class="row justify-content-center">
+            <form class="col-12">
+                <div class="col-md-12">
+                    <div class="card shadow">
+                        <div class="card-header">
+                            <div class="row">
+                                <div class="col-12 col-md-8 text-center text-sm-left  h5 font-weight-bold">
+                                    - Presupuesto de Egreso 2019.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-12">
+                                    <div id="accordion">
+                                        <div *ngFor="let proyecto of array">
+                                            <hr>
+                                            <div class="mb-0">
+                                                <a data-toggle="collapse" href="#" class="text-dark" [attr.data-target]="'#fase'+proyecto.id" aria-expanded="false">
+                                                    <p class="col-sm-12">
+                                                        <i class="fas fa-arrow-circle-right"></i>&nbsp;
+                                                        <b>Proyecto:</b> {{ proyecto.id }} &nbsp;&nbsp; <b>Nombre:</b> {{ proyecto.nombre }}.
+                                                    </p>
+                                                </a>
+                                            </div>
+                                            <div [id]="'fase'+proyecto.id" class="collapse ">
+                                                <div *ngFor="let fase of proyecto.fases" class="col-sm-12">
+                                                    <hr>
+                                                    <div class="ml-2">
+                                                        <a data-toggle="collapse" class="brown-lighter-hover" [attr.data-target]="'#partida'+proyecto.id+fase.id" aria-expanded="false">
+                                                            <p class="col-sm-12">
+                                                                <i class="fas fa-arrow-circle-right"></i>&nbsp;
+                                                                <b>Fase:</b> {{ fase.id }} &nbsp;&nbsp; <b>Nombre:</b> {{ fase.nombre }}.
+                                                            </p>
+                                                        </a>
+                                                    </div>
+                                                    <div [id]="'partida'+proyecto.id+fase.id" class="collapse ">
+                                                        <div *ngFor="let partida of fase.partidas" class="col-sm-12">
+                                                            <hr>
+                                                            <div class="ml-4">
+                                                                <div class="row">
+                                                                    <div class="ml-3 mt-2" style="width: 13%;">
+                                                                        <i class="fas fa-dot-circle"></i>&nbsp;
+                                                                        <b>Partida:</b> {{ partida.id }}
+                                                                    </div>
+                                                                    <div style="width: 55%;" class="mt-2">
+                                                                        <b>Nombre:</b> {{ partida.nombre }}.
+                                                                    </div>
+                                                                    <div style="width: 30%;">
+                                                                        <div class="form-inline">
+                                                                            <label><b>$:</b></label>&nbsp;
+                                                                            <input type="text" class="form-control" name="importe" id="importe" [value]="partida.importe" readonly style="width: 50%;">&nbsp;
+                                                                            <button class="btn btn-success" title="Transferir"><i class="fas fa-exchange-alt"></i></button>&nbsp;
+                                                                            <button class="btn btn-primary" title="Aumentar o Disminuir">
+                                                                                <i class="fas fa-long-arrow-alt-up"></i>
+                                                                                <i class="fas fa-long-arrow-alt-down"></i>
+                                                                            </button>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <hr>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12">
+                    <button class="btn btn-success mb-3 btn-block" type="submit" (click)="guardarInfo()">
+                        Guardar presupuesto de egreso
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

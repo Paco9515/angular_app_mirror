@@ -27,4 +27,8 @@ export class PeService {
 		return this.constants.getRequest(`/get_proyectos_ccostos/${id}`, 'get', false);
 	}
 
+	// cambios de egresos
+	get_pe(id: string) {
+		return this.constants.getRequest(`/get_presupuesto/${id}`, 'get', false);
+	}
 }
