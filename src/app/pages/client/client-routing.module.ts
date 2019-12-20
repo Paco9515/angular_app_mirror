@@ -5,6 +5,7 @@ import { ClientComponent } from './client.component';
 
 import { EscritorioComponent } from '../escritorio/escritorio.component';
 import { EgresosComponent } from './egresos/egresos.component';
+import { CambioEgresoComponent } from './egresos/cambioEgreso/cambioEgreso.component';
 
 
 
@@ -15,6 +16,7 @@ const admin_routes: Routes = [
 		children: [
 			{ path: 'escritorio', component: EscritorioComponent },
 			{ path: 'pres_egresos', component: EgresosComponent },
+			{ path: 'modificar_egreso', component: CambioEgresoComponent },
 
 			{ path: '', pathMatch: 'full', redirectTo: 'escritorio' }
 		]

@@ -24,12 +24,14 @@ import { CogComponent } from '../../components/classification/clasfObjetoGasto/c
 import { CpComponent } from '../../components/classification/clasfProgramatica/cp.component';
 import { PeComponent } from '../../components/classification/proyectoFases/pe.component';
 import { UiComponent } from '../../components/classification/unidadesInternas/ui.component';
+import { CambioEgresoComponent } from './egresos/cambioEgreso/cambioEgreso.component';
 
 @NgModule({
 	declarations: [
 		// EscritorioComponent,
 		ClientComponent,
 		EgresosComponent,
+		CambioEgresoComponent,
 		CaComponent,
 		CcComponent,
 		CffComponent,
@@ -43,6 +45,7 @@ import { UiComponent } from '../../components/classification/unidadesInternas/ui
 		// EscritorioComponent,
 		ClientComponent,
 		EgresosComponent,
+		CambioEgresoComponent,
 		CaComponent,
 		CcComponent,
 		CffComponent,

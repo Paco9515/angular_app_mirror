@@ -183,7 +183,7 @@ export class EgresosComponent {
 		// console.log(f);
 		// if ( f.valid) {
 
-			this.proyecto_service.postPresEgreso(this.conjuntoDatos)
+			this.proyecto_service.postPresEgreso(this.partidas)
 				.subscribe(( data: any) => {
 					this.partidas = '';
 					this.mensaje.success(data);

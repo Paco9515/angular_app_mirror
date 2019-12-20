@@ -14,52 +14,209 @@
             <div class="card shadow">
                 <div class="card-header">
                     <div class="row">
-                        <div class="col-12 text-center text-sm-left  h5 font-weight-bold">
-                            Clasificación administrativa.
-                        </div>
-                    </div>
-                </div>
-                <div class="card-body">
-                    <app-ui [primary_keys_ui]="ui_keys" (out)="getDataUI($event)"></app-ui>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-12" *ngIf="mostrarFormProyecto">
-            <div class="card shadow">
-                <div class="card-header">
-                    <div class="row">
                         <div class="col-12 col-md-8 text-center text-sm-left  h5 font-weight-bold">
                             Proyectos de presupuestos
                         </div>
                     </div>
                 </div>
                 <div class="card-body">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <label>Proyecto</label>
-                            <select class="form-control" id="proyecto" name="id_proyecto" [(ngModel)]="id_proyecto" (change)="getFasesByProyecto($event.target)" required>
-                                <option value=''>Seleccione un proyecto</option>
-                                <option *ngFor="let proyecto of proyectos" [value]="proyecto.id">
-                                    {{ proyecto.codigo + ' - ' + proyecto.nombre }}
-                                </option>
+                    <div class="form-group row">
+                        <label for="staticEmail" class="col-sm-2 col-form-label">
+                            Nombre
+                        </label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" placeholder="Ingresa el nombre" required name="nombre">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="staticEmail" class="col-sm-2 col-form-label">
+                            Descripción
+                        </label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" placeholder="Ingresa la descripción" required name="descripcion">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="staticEmail" class="col-sm-2 col-form-label">
+                            Año
+                        </label>
+                        <div class="col-sm-10">
+                            <input type="number" class="form-control" placeholder="Ingresa el año" required name="anio">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="fecha_inicio" class="col-sm-2 col-form-label">
+                            Fecha inicio
+                        </label>
+                        <div class="col-sm-4">
+                            <input type="date" class="form-control" required name="fecha_inicio">
+                        </div>
+                        <label for="fecha_final" class="col-sm-2 col-form-label text-right">
+                            Fecha final
+                        </label>
+                        <div class="col-sm-4">
+                            <input type="date" class="form-control" required name="fecha_final">
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="udsInternas" class="col-sm-12 col-form-label">
+                            <strong>Unidades Internas</strong>
+                        </label>
+                    </div>
+                    <div class="form-group row">
+                        <label for="udsAdmins" class="col-sm-2 col-form-label">
+                            Unidad Administrativa
+                        </label>
+                        <div class="col-sm-10">
+                            <select class="form-control" name="udsAdmins">
+                            <option value=""> Seleccione una opcion... </option>
+                            <option ></option>
+                        </select>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="ccosto" class="col-sm-2 col-form-label">
+                                Centro de costo
+                            </label>
+                        <div class="col-sm-10">
+                            <select class="form-control" name="ccosto">
+                                <option value=""> Seleccione una opcion... </option>
+                                <option></option> 
                             </select>
                         </div>
-                        <div class="col-md-6">
-                            <label>Fase</label>
-                            <select class="form-control" id="fase" name="id_fase" [(ngModel)]="id_fase" (change)="getFase($event.target)" required>
-                                <option value=''>Seleccione un fase</option>
-                                <option *ngFor="let fase of fases" [ngValue]="fase.id">
-                                    {{ fase.codigo }} - {{ fase.nombre }}
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="ClasfProgramatica" class="col-sm-12 col-form-label">
+                            <strong>Clasificación Programática</strong>
+                        </label>
+                    </div>
+                    <div class="form-group row">
+                        <label for="programa" class="col-sm-2 col-form-label">
+                               Programa
+                            </label>
+                        <div class="col-sm-10">
+                            <select class="form-control" name="programa">
+                                <option value=""> Seleccione una opcion... </option>
+                                <option >  </option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="subprograma" class="col-sm-2 col-form-label">
+                                Subprograma
+                            </label>
+                        <div class="col-sm-10">
+                            <select class="form-control" name="subprograma">
+                                    <option value=""> Seleccione una opcion... </option>
+                                    <option>  </option>
+                                </select>
+                        </div>
+                    </div>
+                    <button class="btn btn-success">Guardar</button>
+                </div>
+            </div>
+
+            <!-- Card Clasificacion Administrativa -->
+            <div class="card shadow">
+                <div class="card-header">
+                    <div class="row">
+                        <div class="col-12 text-center text-sm-left  h5 font-weight-bold">
+                            Clasificación administrativa.
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="form-group row">
+                        <label for="nombre" class="col-sm-2 col-form-label">
+                        Nombre
+                    </label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" placeholder="Ingresa el nombre" required name="nombre">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="descripcion" class="col-sm-2 col-form-label">
+                        Descripción
+                    </label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" placeholder="Ingresa la descripción" required name="descripcion">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="proyecto" class="col-sm-2 col-form-label">
+                            Proyecto
+                        </label>
+                        <div class="col-sm-10">
+                            <select class="form-control" name="proyecto" required>
+                            <option value="">Seleccione un proyecto</option>
+                            <option *ngFor="let proyecto of proyectos" [value]="proyecto.id">
+                                {{ proyecto.codigo + ' - ' + proyecto.nombre }}
+                            </option>
+                        </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="externo" class="col-sm-3 col-form-label">
+                        ¿Es una fase externa?
+                    </label>
+                        <div class="col-sm-9">
+                            <div class="form-check form-check-inline">
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" name="externo" [(ngModel)]="fase.externo" type="radio" [value]="true" [checked]="fase.externo" /> Si
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" name="externo" [(ngModel)]="fase.externo" type="radio" [value]="false" [checked]="!fase.externo" /> No
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <div class="form-group row">
+                            <label for="codigo_postal" class="col-sm-2 col-form-label">
+                            Código postal
+                        </label>
+                            <div class="col-sm-8">
+                                <input type="number" class="form-control" required name="cp">
+                            </div>
+                            <input type="button" class="btn btn-primary col-sm-2" value="Obtener dirección">
+                        </div>
+                        <div class="form-group row">
+                            <label for="estado" class="col-sm-2 col-form-label">
+                            Estado
+                        </label>
+                            <div class="col-sm-4">
+                                <input type="text" class="form-control" required name="estado" readonly>
+                            </div>
+                            <label for="municipio" class="col-sm-2 col-form-label">
+                            Municipio
+                        </label>
+                            <div class="col-sm-4">
+                                <input type="text" class="form-control" required name="municipio" readonly>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="colonia" class="col-sm-2 col-form-label">
+                                Colonias
+                            </label>
+                            <div class="col-sm-6">
+                                <select class="form-control" name="colonia" required>
+                                <option value=''>Seleccione una colonia</option>
+                                <option >
                                 </option>
                             </select>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <!-- Card Clasificacion Objeto de Gasto -->
-        <div class="col-md-12" *ngIf="mostrarFormCffCog">
+
+
+            <!-- Card Clasificacion Objeto de Gasto -->
             <div class="card shadow">
                 <div class="card-header">
                     <div class="row">
