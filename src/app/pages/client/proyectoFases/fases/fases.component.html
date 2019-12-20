@@ -20,16 +20,16 @@
                                 <i class="fa fa-list"></i> Listado de las fases
                             </div>
                             <div class="col-12 col-md-3 text-center text-sm-right">
+                                <button class="btn btn-outline-primary btn-sm" title="Regresar a proyectos" type="button" (click)="regresar()">
+                                    <i class="fa fa-arrow-circle-left"></i>
+                                    Regresar
+                                </button>
+                            </div>
+                            <div class="col-12 col-md-3 text-center text-sm-right">
                                 <button type="button" class="btn btn-success btn-sm" (click)="createFase()">
 									<i class="fa fa-plus-circle"></i>
 									Agregar nuevo fase
 								</button>
-                            </div>
-                            <div class="col-12 col-md-3 text-center text-sm-right">
-                                <button class="btn btn-outline-primary mt-2 btn-sm" type="button" routerLink="../">
-                                    <i class="fa fa-arrow-circle-left"></i>
-                                    Regresar
-                                </button>
                             </div>
                         </div>
                     </div>
@@ -68,15 +68,16 @@
                                                 </ng-template>
                                             </td>
                                             <td class="text-center" nowrap>
-                                                <button type="button" class="btn btn-primary btn-sm" (click)="editar(fase.id)" [disabled]="!fase.status">
+                                                <button type="button" title="Detalles de la fase" class="btn btn-info btn-sm text-white ml-3" data-toggle="modal" data-target="#FaseModal" (click)="mostrarDetalle(fase)">
+                                                    <i class="fa fa-eye"></i>
+                                                </button>
+                                                <button type="button" title="editar" class="btn btn-primary btn-sm ml-3" (click)="editar(fase.id)" [disabled]="!fase.status">
 													<i class="fa fa-edit"></i>
-													Editar
 												</button>
-                                                <button *ngIf="fase.status" type="button" class="btn btn-danger btn-sm ml-3" (click)="eliminarActivar(fase.id, false)">
+                                                <button *ngIf="fase.status" title="Eliminar" type="button" class="btn btn-danger btn-sm ml-3" (click)="eliminarActivar(fase.id, false)">
 													<i class="fa fa-trash"></i>
-													Eliminar
 												</button>
-                                                <button *ngIf="!fase.status" type="button" class="btn btn-success btn-sm ml-3" (click)="eliminarActivar(fase.id, true)">
+                                                <button *ngIf="!fase.status" title="Activar" type="button" class="btn btn-success btn-sm ml-3" (click)="eliminarActivar(fase.id, true)">
 													<i class="fa fa-arrow-circle-up"></i>
 													Activar
 												</button>
@@ -85,6 +86,7 @@
                                     </ng-template>
                                 </tbody>
                             </table>
+
                         </div>
                     </div>
                 </div>
@@ -93,5 +95,181 @@
             <!-- /.col-->
         </div>
         <!-- /.row-->
+    </div>
+</div>
+
+<div class="modal fade" id="FaseModal" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+    <div class="modal-dialog modal_class" role="document">
+        <div class="modal-content ">
+            <div class="modal-header">
+                <h5 class="modal-title" id="">
+                    Información de fase
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+
+                <div class="row p-3">
+                    <div class="col-sm-2 border bg-light font-weight-bold p-1 d-none d-sm-block text-center">Fase</div>
+                    <div class="col border bg-light font-weight-bold p-1 d-sm-none">Fase</div>
+                    <div class="col-sm-2 border p-1 text-sm-center">{{ detalle.codigo }}</div>
+                    <div class="col border bg-light font-weight-bold p-1 d-sm-none">Nombre</div>
+                    <div class="col-sm-8 border p-1">{{ detalle.nombre }}</div>
+
+                    <div class="col-sm-2 border bg-light font-weight-bold p-1 d-none d-sm-block text-center">Descripcion</div>
+                    <div class="col border bg-light font-weight-bold p-1 d-sm-none">Descripcion</div>
+                    <div class="col-sm-10 border p-1">{{ detalle.descripcion }}</div>
+
+                    <div class="col-sm-2 border bg-light font-weight-bold p-1 d-none d-sm-block text-center">Proyecto</div>
+                    <div class="col-sm-2 border p-1 text-sm-center">{{ detalle.codigo_proyecto }}</div>
+                    <div class="col border bg-light font-weight-bold p-1 d-sm-none">Proyecto</div>
+                    <div class="col-sm-8 border p-1">{{ detalle.nombre_proyecto }}</div>
+
+                    <div class="col-sm-2 border bg-light font-weight-bold p-1 d-none d-sm-block text-center">Financiamiento</div>
+                    <div class="col-sm-2 border p-1 text-sm-center">{{ detalle.codigo_tipo_financ }}</div>
+                    <div class="col border bg-light font-weight-bold p-1 d-sm-none">Financiamiento</div>
+                    <div class="col-sm-8 border p-1">{{ detalle.nombre_tipo_financ }}</div>
+
+                    <div class="col-sm-2 border bg-light font-weight-bold p-1 d-none d-sm-block text-center">Estado</div>
+                    <div class="col border bg-light font-weight-bold p-1 d-sm-none">Estado</div>
+                    <div class="col-sm-4 border p-1 text-center text-sm-center">
+                        <span *ngIf="detalle.status; else inactiveBlock" class="badge badge-success">
+                            Activo
+                        </span>
+                        <ng-template #inactiveBlock>
+                            <span class="badge badge-secondary">Inactivo</span>
+                        </ng-template>
+                    </div>
+
+                    <div class="col-sm-2 border bg-light font-weight-bold p-1 d-none d-sm-block text-center">Ubicacion</div>
+                    <div class="col border bg-light font-weight-bold p-1 d-sm-none">Ubicacion</div>
+                    <div class="col-sm-4 border p-1 text-center text-sm-left">
+                        <span *ngIf="detalle.externo; else outBlock">
+                            Externo
+                        </span>
+                        <ng-template #outBlock> Interno </ng-template>
+                    </div>
+                </div>
+
+                <div class="row p-3">
+                    <div class="col-sm-2 border bg-light font-weight-bold p-1 d-none d-sm-block text-center">Codigo Postal</div>
+                    <div class="col border bg-light font-weight-bold p-1 d-sm-none">Codigo Postal</div>
+                    <div class="col-sm-4 border p-1">{{ geografia.cp }}</div>
+
+                    <div class="col-sm-2 border bg-light font-weight-bold p-1 d-none d-sm-block text-center">Entidad</div>
+                    <div class="col border bg-light font-weight-bold p-1 d-sm-none">Entidad</div>
+                    <div class="col-sm-4 border p-1">{{ geografia.entidad }}</div>
+
+                    <div class="col-sm-2 border bg-light font-weight-bold p-1 d-none d-sm-block text-center">Municipio</div>
+                    <div class="col border bg-light font-weight-bold p-1 d-sm-none">Municipio</div>
+                    <div class="col-sm-4 border p-1">{{ geografia.municipio }}</div>
+
+                    <div class="col-sm-2 border bg-light font-weight-bold p-1 d-none d-sm-block text-center">Colonia</div>
+                    <div class="col border bg-light font-weight-bold p-1 d-sm-none">Colonia</div>
+                    <div class="col-sm-4 border p-1">{{ geografia.colonia }}</div>
+
+                    <div class="col-sm-2 border bg-light font-weight-bold p-1 d-none d-sm-block text-center">Domicilio</div>
+                    <div class="col border bg-light font-weight-bold p-1 d-sm-none">Domicilio</div>
+                    <div class="col-sm-10 border p-1">{{ geografia.domicilio }}</div>
+                </div>
+
+
+                <div class="row p-3">
+                    <div class="col-1 border bg-light font-weight-bold p-1 d-none d-sm-block text-center">#</div>
+                    <div class="col-11 col-sm-9 border bg-light font-weight-bold p-1 d-none d-sm-block">Partidas</div>
+                    <div class="col-sm-2 border bg-light font-weight-bold p-1 d-none d-sm-block text-center">Importe</div>
+                    <span class="col-12" *ngFor="let partida of detalle.partidas; let i = index">
+                        <div class="row">
+                            <div class="col-12 border bg-light font-weight-bold p-1 d-sm-none">Partida</div>
+                            <div class="col-sm-1 border p-1 text-sm-center">{{ i+1 }}</div>
+                            <div class="col-sm-9 border p-1 ">{{ partida.nombre_partida }}</div>
+                            <div class="col-sm-2 border p-1 text-sm-right">$ {{ partida.importe }}</div>
+                        </div>
+                    </span>
+                    <div class="col-sm-10 border bg-light font-weight-bold p-1 d-none d-sm-block text-right">Total</div>
+                    <div class="col-sm-2 border bg-light font-weight-bold p-1 d-none d-sm-block text-right">$ {{ total }} </div>
+                </div>
+
+                <!-- <div class="row">
+                    <div class="col-12">
+                        <div class="form-group row">
+                            <label for="" class="col-sm-2 col-form-label font-weight-bold">Código:</label>
+                            <div class="col-sm-10">{{ detalle.codigo }}</div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="" class="col-sm-2 col-form-label font-weight-bold">Nombre:</label>
+                            <div class="col-sm-10">{{ detalle.nombre }}</div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="" class="col-sm-2 col-form-label font-weight-bold">Descripcion:</label>
+                            <div class="col-sm-10">{{ detalle.descripcion }}</div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="" class="col-sm-2 col-form-label font-weight-bold">Proyecto:</label>
+                            <div class="col-sm-10">{{ detalle.nombre_proyecto }}</div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="" class="col-sm-2 col-form-label font-weight-bold">Tipo de financiamiento:</label>
+                            <div class="col-sm-10">{{ detalle.nombre_tipo_financ }}</div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="" class="col-sm-2 col-form-label font-weight-bold">Estado:</label>
+                            <div class="col-sm-10">
+                                <span *ngIf="detalle.status; else inactiveBlock" class="badge badge-success">
+                                    Activo
+                                </span>
+                                <ng-template #inactiveBlock>
+                                    <span class="badge badge-secondary">Inactivo</span>
+                                </ng-template>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12 table-responsive">
+                                <table class="table table-responsive-sm table-bordered table-striped table-sm">
+                                    <thead class="thead-dark">
+                                        <tr>
+                                            <th scope="col" class="text-center">#</th>
+                                            <th scope="col">Partida</th>
+                                            <th class="text-center" scope="col">Importe</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngIf="fases.length==0; else tablePartida">
+                                            <td colspan="4" class="text-center">
+                                                <span class="badge badge-info">
+                                                    <h5>
+                                                        <i class="far fa-frown"></i>
+                                                        No hay elementos para mostrar.
+                                                    </h5>
+                                                </span>
+                                            </td>
+                                        </tr>
+                                        <ng-template #tablePartida>
+                                            <tr *ngFor="let partida of detalle.partidas; let i = index">
+                                                <td class="text-center">{{ i+1 }}</td>
+                                                <td>{{ partida.nombre_partida }}</td>
+                                                <td class="text-right">$ {{ partida.importe }}</td>
+                                            </tr>
+                                        </ng-template>
+                                        <tr>
+                                            <td colspan="2" class="text-right font-weight-bold">Total</td>
+                                            <td colspan="1" class="text-right">$ {{ total }}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div> -->
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                    Cerrar
+                </button>
+            </div>
+        </div>
     </div>
 </div>

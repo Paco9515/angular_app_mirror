@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { ProyectoService } from 'src/app/common/services/pe/proyecto.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgForm } from '@angular/forms';
 import { Proyectos } from 'src/app/common/interfaces/pe.interface';
 import { MensajesService } from '../../../../common/services/shared/mensajes.service';
+import { ProyectoService } from 'src/app/common/services/pe/proyecto.service';
 import { CpService } from '../../../../common/services/cp/cp.service';
+import { PeService } from '../../../../common/services/pe/pe.service';
 
 @Component({
 	selector: 'app-proyecto',
@@ -16,20 +17,16 @@ export class ProyectoComponent implements OnInit {
 	fechaFinal: boolean = true;
 	limiteFechaInicio: Date;
 	limiteFechaFinal: Date;
-
-	presupuesto: any = {
-		id_presupuesto: '',
-		anio: ''
-	};
+	anioEgreso: string;
 
 	proyecto: Proyectos = {
 		id: '',
 		id_presupuesto: '',
 		id_programa: '',
 		id_subprograma: '',
-		anio: '',
 		nombre: '',
 		descripcion: '',
+		anio: '',
 		fecha_inicio: null,
 		fecha_final: null,
 		status: false
@@ -43,27 +40,25 @@ export class ProyectoComponent implements OnInit {
 		private cpService: CpService,
 		private activatedRoute: ActivatedRoute,
 		private mensaje: MensajesService,
-		private router: Router
+		private router: Router,
+		private egresos: PeService
 	) {
-		this.activatedRoute.params.subscribe((data: any) => {
-			if (data.id_proyecto !== 'nuevo') {
-				this.cargarProyecto(data.id);
+		this.activatedRoute.params.subscribe((params: any) => {
+			if (params.id_proyecto !== 'nuevo') {
+				this.cargarProyecto(params.id_proyecto);
 			}
+			this.proyecto.id_presupuesto = params['id_presupuesto'];
+			this.egresos.get_presupuesto(this.proyecto.id_presupuesto)
+				.subscribe((data: any) => {
+					this.anioEgreso =  data.data.anio;
+					this.limiteFechaInicio = new Date(`01-01-${this.anioEgreso}`);
+					this.limiteFechaFinal = new Date(`12-31-${this.anioEgreso}`);
+				});
 		});
-		this.presupuesto = this.activatedRoute.params
-			.subscribe( params => this.presupuesto = params['id_presupuesto']);
-
-		// if (!this.presupuesto) {
-		// 	this.router.navigate([`/panel-adm/pres_egresos/${this.presupuesto}`]);
-		// }
-		// console.log(this.proyecto.anio = this.fecha.getFullYear());
-	}
-
-	ngOnInit() {
 		this.getProgramas();
-		this.limiteFechaInicio = new Date(`01-01-${this.presupuesto.anio}`);
-		this.limiteFechaFinal = new Date(`12-31-${this.presupuesto.anio}`);
 	}
+
+	ngOnInit() {}
 
 	cargarProyecto(id: string) {
 		this.proyectoService.getProyecto(id)
@@ -100,18 +95,10 @@ export class ProyectoComponent implements OnInit {
 		this.fechaFinal = false;
 	}
 
-	evaluarFechaFinal(data) {
-		const fecha = new Date(data);
-		if (fecha.getFullYear() !== this.presupuesto.anio) {
-			console.log('Error de fecha');
-		}
-	}
 	guardar(f: NgForm) {
-		this.proyecto.id_presupuesto = this.presupuesto.id_presupuesto;
-		this.proyecto.anio = this.presupuesto.anio;
-		console.log(this.proyecto);
-
+		this.proyecto.anio = this.anioEgreso;
 		if (f.valid) {
+			console.log(this.proyecto);
 			this.proyectoService.createUpdateProyecto(this.proyecto)
 				.subscribe((data: any) => {
 					this.mensaje.success(data);
@@ -123,5 +110,8 @@ export class ProyectoComponent implements OnInit {
 		}
 	}
 
+	regresar() {
+		this.router.navigate([`/panel-adm/pres_egresos/${this.proyecto.id_presupuesto}/proyectos`]);
+	}
 
 }

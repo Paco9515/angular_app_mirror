@@ -28,8 +28,8 @@
 									</span>
                                 </div>
                                 <div class="col-12 col-md-4 text-center text-sm-right">
-                                    <button class="btn btn-outline-primary mt-2 btn-sm" type="button" [routerLink]="['/panel-adm/proyectos']">
-										<i class="fa fa-arrow-circle-left"></i>Regresar
+                                    <button class="btn btn-outline-primary mt-2 btn-sm" type="button" (click)="regresar()">
+										<i class="fa fa-arrow-circle-left"></i> Regresar
 									</button>
                                 </div>
                             </div>
@@ -38,13 +38,13 @@
                             <div class="form-group row">
                                 <label for="staticEmail" class="col-sm-2 col-form-label">Nombre</label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control" placeholder="Ingresa el nombre" required name="nombre" [(ngModel)]="proyecto.nombre">
+                                    <input type="text" class="form-control" placeholder="Ingresa el nombre" required name="nombre" [(ngModel)]="proyecto.nombre" required>
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label for="staticEmail" class="col-sm-2 col-form-label">Descripción</label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control" placeholder="Ingresa la descripción" required name="descripcion" [(ngModel)]="proyecto.descripcion">
+                                    <input type="text" class="form-control" placeholder="Ingresa la descripción" name="descripcion" [(ngModel)]="proyecto.descripcion">
                                 </div>
                             </div>
                             <div class="form-group row">
@@ -54,7 +54,7 @@
                                 </div>
                                 <label for="fecha_final" class="col-sm-2 col-form-label text-right">Fecha final</label>
                                 <div class="col-sm-4">
-                                    <input type="date" class="form-control" required name="fecha_final" [min]="proyecto.fecha_inicio" [max]="limiteFechaFinal| date: 'yyyy-MM-dd'" [(ngModel)]="proyecto.fecha_final" [(disabled)]="fechaFinal">
+                                    <input type="date" class="form-control" name="fecha_final" [min]="proyecto.fecha_inicio" [max]="limiteFechaFinal| date: 'yyyy-MM-dd'" [(ngModel)]="proyecto.fecha_final" [(disabled)]="fechaFinal" required>
                                 </div>
                             </div>
                             <div class="form-group row">
@@ -65,7 +65,7 @@
                             <div class="form-group row">
                                 <label for="programa" class="col-sm-2 col-form-label">Programa</label>
                                 <div class="col-sm-10">
-                                    <select class="form-control" name="programa" [(ngModel)]="proyecto.id_programa" (change)="getSubprogramaByPrograma($event.target.value)">
+                                    <select class="form-control" name="programa" [(ngModel)]="proyecto.id_programa" (change)="getSubprogramaByPrograma($event.target.value)" required>
                                         <option value=""> Seleccione una opcion... </option>
                                         <option *ngFor="let programa of programas" [value]="programa.id"> {{ programa.nombre }} </option>
                                     </select>
@@ -74,7 +74,7 @@
                             <div class="form-group row">
                                 <label for="subprograma" class="col-sm-2 col-form-label">Subprograma</label>
                                 <div class="col-sm-10">
-                                    <select class="form-control" name="subprograma" [(ngModel)]="proyecto.id_subprograma" (click)="getSubprograma($event.target.value)">
+                                    <select class="form-control" name="subprograma" [(ngModel)]="proyecto.id_subprograma" (click)="getSubprograma($event.target.value)" required>
                                         <option value=""> Seleccione una opcion... </option>
                                         <option *ngFor="let subprograma of subprogramas" [value]="subprograma.id"> {{ subprograma.nombre }} </option>
                                     </select>

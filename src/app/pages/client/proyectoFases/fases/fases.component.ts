@@ -3,8 +3,7 @@ import { FaseService } from 'src/app/common/services/pe/fase.service';
 import { Fases } from 'src/app/common/interfaces/pe.interface';
 import { MensajesService } from '../../../../common/services/shared/mensajes.service';
 import { Router, ActivatedRoute } from '@angular/router';
-
-import { DataPresupuestoEgresoService } from 'src/app/common/services/dataPresupuestoEgresoService.service';
+import { PartidaFase } from '../../../../common/interfaces/pe.interface';
 
 @Component({
 	selector: 'app-fases',
@@ -16,6 +15,18 @@ export class FasesComponent implements OnInit {
 	proyecto: string;
 	presupuesto: string;
 
+	detalle: Fases;
+	partidas: any[];
+
+	total = 0;
+	geografia: any = {
+		cp: '',
+		entidad: '',
+		municipio: '',
+		colonia: '',
+		domicilio: ''
+	};
+
 	constructor(
 		private fase_service: FaseService,
 		private mensaje: MensajesService,
@@ -23,6 +34,20 @@ export class FasesComponent implements OnInit {
 		private router: Router
 	) {
 		this.fases = [];
+		this.detalle = {
+			id: '',
+			id_proyecto: '',
+			codigo_proyecto: '',
+			nombre_proyecto: '',
+			nombre_tipo_financ: '',
+			codigo: '',
+			nombre: '',
+			descripcion: '',
+			externo: null,
+			status: false,
+			geografia: null,
+			partidas: null
+		};
 	}
 
 	ngOnInit() {
@@ -58,6 +83,15 @@ export class FasesComponent implements OnInit {
 	}
 
 	regresar() {
-		this.router.navigate([`/panel-adm/pres_egresos/${this.presupuesto}/proyectos/${this.proyecto}/fases`]);
+		this.router.navigate([`/panel-adm/pres_egresos/${this.presupuesto}/proyectos`]);
+	}
+
+	mostrarDetalle( fase ) {
+		this.detalle = fase;
+		this.detalle.partidas.forEach(function(partida) {
+			this.total = this.total + partida.importe;
+		}, this);
+		this.geografia = this.detalle.geografia[0];
+
 	}
 }

@@ -62,6 +62,7 @@ export class FaseComponent {
 			entidad: '',
 			municipio: '',
 			colonia: '',
+			domicilio: '',
 			status: false,
 			partidas: null
 		};
@@ -78,10 +79,23 @@ export class FaseComponent {
 	getFase(id: string) {
 		this.faseService.getFase(id)
 			.subscribe((obj: any) => {
-				this.fase = obj.data;
-				if (this.fase.externo) {
-					this.getDireccion(this.fase.cp);
-				}
+				this.fase = obj.data[0];
+				this.partidas = obj.data[1];
+				this.cff_keys = [this.fase.id_subfuente, this.fase.id_tipo_financ, this.fase.id_fuente];
+		
+				this.partidas.forEach(partida => {
+					this.total += partida.importe;
+				});
+
+				// this.cff_keys[];
+
+				// this.partidas.forEach(function(partida) {
+				// 	this.importe = this.importe + partida.importe;
+				// }, this);
+
+				// if (this.fase.externo) {
+				// 	this.getDireccion(this.fase.cp);
+				// }
 			});
 	}
 
@@ -136,8 +150,10 @@ export class FaseComponent {
 			});
 	}
 
-	cancelar() {
+	regresar() {
 		this.router.navigate([`/panel-adm/pres_egresos/${this.presupuesto}/proyectos/${this.proyecto}/fases`]);
 	}
+
+
 
 }

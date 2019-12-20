@@ -19,17 +19,25 @@ export interface Proyectos {
 export interface Fases {
 	id?: string;
 	id_proyecto?: string;
+	codigo_proyecto?: string;
+	nombre_proyecto?: string;
 	id_tipo_financ?: string;
+	id_subfuente?: string;
+	id_fuente?: string;
+	codigo_tipo_financ?: string;
+	nombre_tipo_financ?: string;
 	codigo: string;
 	nombre: string;
 	descripcion: string;
 	externo: boolean;
-	cp: string;
-	entidad: string;
-	municipio: string;
-	colonia: string;
+	cp?: string;
+	entidad?: string;
+	municipio?: string;
+	colonia?: string;
+	domicilio?: string;
+	geografia?: any;
 	status: boolean;
-	partidas: PartidaFase[];
+	partidas: any;
 }
 
 export interface PartidaFase {
@@ -38,4 +46,5 @@ export interface PartidaFase {
 	nombre_partida?: string;
 	id_fase?: string;
 	nombre_fase?: string;
+	importe: number;
 }
