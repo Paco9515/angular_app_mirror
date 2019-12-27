@@ -5,7 +5,7 @@ import { Proyectos } from 'src/app/common/interfaces/pe.interface';
 import { MensajesService } from '../../../../common/services/shared/mensajes.service';
 import { ProyectoService } from 'src/app/common/services/pe/proyecto.service';
 import { CpService } from '../../../../common/services/cp/cp.service';
-import { PeService } from '../../../../common/services/pe/pe.service';
+import { PresupuestoEgresoService } from '../../../../common/services/presupuesto/egreso.service';
 
 @Component({
 	selector: 'app-proyecto',
@@ -41,7 +41,7 @@ export class ProyectoComponent implements OnInit {
 		private activatedRoute: ActivatedRoute,
 		private mensaje: MensajesService,
 		private router: Router,
-		private egresos: PeService
+		private egresos: PresupuestoEgresoService
 	) {
 		this.activatedRoute.params.subscribe((params: any) => {
 			if (params.id_proyecto !== 'nuevo') {

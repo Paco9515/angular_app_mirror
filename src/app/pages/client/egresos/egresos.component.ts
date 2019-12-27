@@ -1,10 +1,10 @@
-import { Component, ViewChild, Inject } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { MensajesService } from '../../../common/services/shared/mensajes.service';
-import { PeService } from 'src/app/common/services/pe/pe.service';
+import { PresupuestoEgresoService } from 'src/app/common/services/presupuesto/egreso.service';
 import { Router } from '@angular/router';
 import { UiComponent } from '../../../components/classification/unidadesInternas/ui.component';
-import { Presupuesto } from 'src/app/common/interfaces/presupuesto.interface';
-import { DOCUMENT } from '@angular/platform-browser';
+import { PresupuestoEgreso } from 'src/app/common/interfaces/presupuesto.interface';
+// import { DOCUMENT } from '@angular/platform-browser';
 
 
 @Component({
@@ -18,7 +18,7 @@ export class EgresosComponent {
 	ui_keys = ['0', '0'];
 	ui_data: any;
 	presupuestos: any = [];
-	presupuesto: Presupuesto = {
+	presupuesto: PresupuestoEgreso = {
 		id_centro_costo: '',
 		nombre: '',
 		anio: null
@@ -29,9 +29,9 @@ export class EgresosComponent {
 	showModal = false;
 
 	constructor(
-		@Inject(DOCUMENT) private _document,
+		// @Inject(DOCUMENT) private _document,
 		private mensaje: MensajesService,
-		private pe_service: PeService,
+		private egreso_service: PresupuestoEgresoService,
 		private router: Router
 		) {}
 
@@ -41,7 +41,7 @@ export class EgresosComponent {
 	}
 
 	getPresupuestos() {
-		this.pe_service.get_presupuestos_cc(this.ui_data.id_ccosto)
+		this.egreso_service.get_presupuestos_cc(this.ui_data.id_ccosto)
 		.subscribe((presupuestos: any) => {
 			if (presupuestos !== []) {
 				this.presupuestos = presupuestos;
@@ -63,7 +63,7 @@ export class EgresosComponent {
 			anio: anio
 		};
 
-		this.pe_service.create_presupuesto(this.presupuesto)
+		this.egreso_service.create_presupuesto(this.presupuesto)
 			.subscribe((data: any) => {
 				this.mensaje.success(data);
 				this.getPresupuestos();
@@ -71,7 +71,6 @@ export class EgresosComponent {
 				this.mensaje.danger(error.error);
 			});
 	}
-
 
 	showModel() {
 		this.showModal = false;
@@ -89,5 +88,9 @@ export class EgresosComponent {
 		}
 
 		this.getPresupuestos();
+	}
+
+	finalizarPresupuesto(presupuesto) {
+		console.log('Presupuesto finalizado');
 	}
 }

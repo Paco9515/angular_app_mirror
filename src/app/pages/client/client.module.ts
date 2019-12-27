@@ -10,7 +10,6 @@ import { UnidadesInternasModule } from './unidadesInternas/unidadesInternas.modu
 import { SharedModule } from '../../shared/shared.module';
 
 // Servicios
-import { DataPresupuestoEgresoService } from '../../common/services/dataPresupuestoEgresoService.service';
 
 // Rutas
 import { ClientRoutingModule } from './client-routing.module';
@@ -18,19 +17,21 @@ import { ClientRoutingModule } from './client-routing.module';
 // Componentes
 import { ClientComponent } from './client.component';
 import { EgresosComponent } from './egresos/egresos.component';
+import { EgresoComponent } from './egresos/egreso.component';
+import { CambioEgresoComponent } from './egresos/cambioEgreso/cambioEgreso.component';
 import { CaComponent } from '../../components/classification/clasfAdministrativa/ca.component';
 import { CcComponent } from '../../components/classification/clasfContable/cc.component';
 import { CfgComponent } from '../../components/classification/clasfFuncionalGasto/cfg.component';
 import { CpComponent } from '../../components/classification/clasfProgramatica/cp.component';
 import { PeComponent } from '../../components/classification/proyectoFases/pe.component';
 import { UiComponent } from '../../components/classification/unidadesInternas/ui.component';
-import { CambioEgresoComponent } from './egresos/cambioEgreso/cambioEgreso.component';
 
 @NgModule({
 	declarations: [
 		// EscritorioComponent,
 		ClientComponent,
 		EgresosComponent,
+		EgresoComponent,
 		CambioEgresoComponent,
 		CaComponent,
 		CcComponent,
@@ -43,6 +44,7 @@ import { CambioEgresoComponent } from './egresos/cambioEgreso/cambioEgreso.compo
 		// EscritorioComponent,
 		ClientComponent,
 		EgresosComponent,
+		EgresoComponent,
 		CambioEgresoComponent,
 		CaComponent,
 		CcComponent,
@@ -62,8 +64,6 @@ import { CambioEgresoComponent } from './egresos/cambioEgreso/cambioEgreso.compo
 		FormsModule,
 		ReactiveFormsModule
 	],
-	providers:[
-		DataPresupuestoEgresoService
-	]
+	providers:[]
 })
 export class ClientModule { }

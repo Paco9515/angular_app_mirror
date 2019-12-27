@@ -83,6 +83,7 @@ export class ProyectosComponent implements OnInit {
 
 	mostrarDetalle(proyecto) {
 		this.detalle = proyecto;
+		this.total = 0;
 		this.fase_service.getFases(proyecto.id)
 			.subscribe( (data: any) => {
 				this.fases = data;

@@ -25,7 +25,6 @@
                 </div>
             </div>
 
-
             <div class="card shadow">
                 <div class="card-header">
                     <div class="row">
@@ -41,6 +40,7 @@
                     </div>
                 </div>
                 <div class="card-body">
+
 
                     <div class="table-responsive" *ngIf="ui_data.id_ccosto; else selectCC">
                         <table class="table table-striped table-sm">
@@ -69,23 +69,20 @@
                                         <td>{{ presupuesto.nombre }}</td>
                                         <td class="text-center">
                                             <span *ngIf="presupuesto.status; else inactiveBlock" class="badge badge-success">
-                                                    Finalizado
-                                                </span>
+                                                Finalizado
+                                            </span>
                                             <ng-template #inactiveBlock>
-                                                <span class="badge badge-secondary">En Proceso</span>
+                                                <span class="badge badge-secondary"> En Proceso</span>
                                             </ng-template>
                                         </td>
                                         <td class="text-center" nowrap>
-                                            <button type="button" class="btn btn-info btn-sm text-white ml-3">
+                                            <button type="button" class="btn btn-info btn-sm text-white ml-3" [routerLink]="[presupuesto.id]">
                                                 <i class="fa fa-eye"></i>
-                                            </button>
-                                            <button type="button" class="btn btn-primary btn-sm ml-3">
-                                                <i class="fa fa-edit"></i>
                                             </button>
                                             <button type="button" class="btn btn-danger btn-sm ml-3  pull" (click)="mostrarProyectos(presupuesto.id, presupuesto.anio)">
                                                 <i class="fa fa-project-diagram fa-lg"></i> Proyectos
                                             </button>
-                                            <button type="button" class="btn btn-info btn-sm text-white ml-3" [disabled]="!presupuesto.status">
+                                            <button type="button" class="btn btn-info btn-sm text-white ml-3" [hidden]="presupuesto.status" (click)="finalizarPresupuesto(presupuesto.id)">
                                                 <i class="fa fa-thumbs-up"></i> Finalizar
                                             </button>
                                         </td>

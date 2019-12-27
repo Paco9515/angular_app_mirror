@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { ConstantsService } from '../shared/constants.service';
-import { Presupuesto } from '../../interfaces/presupuesto.interface';
 
 @Injectable({
 	providedIn: 'root'
@@ -12,17 +11,7 @@ export class PeService {
 		private constants: ConstantsService
 	) { }
 
-	get_presupuestos() {
-		return this.constants.getRequest(`/get_presupuestos`, 'get', false);
-	}
 
-	get_presupuestos_cc(id: string) {
-		return this.constants.getRequest(`/get_presupuestos_cc/${id}`, 'get', false);
-	}
-
-	get_presupuesto(id: string) {
-		return this.constants.getRequest(`/get_presupuesto/${id}`, 'get', false);
-	}
 
 	get_proyectos() {
 		return this.constants.getRequest(`/get_proyectos`, 'get', false);
@@ -40,12 +29,7 @@ export class PeService {
 		return this.constants.getRequest(`/get_proyectos_ccostos/${id}`, 'get', false);
 	}
 
-	create_presupuesto(presupuesto: Presupuesto) {
-		return this.constants.getRequest(`/create_presupuesto`, 'post', presupuesto);
-	}
 
-	// cambios de egresos
-	get_pe(id: string) {
-		return this.constants.getRequest(`/get_presupuesto/${id}`, 'get', false);
-	}
+
+
 }

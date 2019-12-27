@@ -3,7 +3,6 @@ import { FaseService } from 'src/app/common/services/pe/fase.service';
 import { Fases } from 'src/app/common/interfaces/pe.interface';
 import { MensajesService } from '../../../../common/services/shared/mensajes.service';
 import { Router, ActivatedRoute } from '@angular/router';
-import { PartidaFase } from '../../../../common/interfaces/pe.interface';
 
 @Component({
 	selector: 'app-fases',
@@ -88,6 +87,7 @@ export class FasesComponent implements OnInit {
 
 	mostrarDetalle( fase ) {
 		this.detalle = fase;
+		this.total = 0;
 		this.detalle.partidas.forEach(function(partida) {
 			this.total = this.total + partida.importe;
 		}, this);
