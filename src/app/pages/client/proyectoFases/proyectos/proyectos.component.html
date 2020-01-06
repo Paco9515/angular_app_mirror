@@ -1,7 +1,7 @@
 <!-- Breadcrumb-->
 <div class="d-none d-sm-block">
     <ol class="breadcrumb">
-        <li class="breadcrumb-item"><i class="fa fa-folder-open"></i> Proyectos de egreso
+        <li class="breadcrumb-item"><i class="fa fa-folder-open"></i> Presupuestos de egresos
         </li>
         <li class="breadcrumb-item active"> Proyectos</li>
     </ol>
@@ -14,13 +14,19 @@
                 <div class="card shadow">
                     <div class="card-header">
                         <div class="row">
-                            <div class="col-12 col-md-8 text-center text-sm-left  h5 font-weight-bold">
+                            <div class="col-12 col-md-6 text-center text-sm-left  h5 font-weight-bold">
                                 <i class="fa fa-list"></i> Listado de los proyectos
                             </div>
-                            <div class="col-12 col-md-4 text-center text-sm-right">
-                                <button type="button" class="btn btn-success btn-sm mb-2 pull" [routerLink]="['/panel-adm/proyecto', 'nuevo']">
+                            <div class="col-12 col-md-3 text-center text-sm-right">
+                                <button class="btn btn-outline-primary btn-sm" type="button" (click)="regresar()">
+                                    <i class="fa fa-arrow-circle-left"></i>
+                                    Regresar
+                                </button>
+                            </div>
+                            <div class="col-12 col-md-3 text-center text-sm-right">
+                                <button type="button" class="btn btn-success btn-sm pull" (click)="createProyecto()">
 									<i class="fa fa-plus-circle"></i>
-									Agregar nuevo proyecto
+									Agregar proyecto
 								</button>
                             </div>
                         </div>
@@ -39,7 +45,7 @@
                                 </thead>
                                 <tbody>
                                     <tr *ngIf="proyectos.length==0; else tableBlock">
-                                        <td colspan="4" class="text-center">
+                                        <td colspan="5" class="text-center">
                                             <span class="badge badge-info">
 												<h5>
 													<i class="far fa-frown"></i>
@@ -62,21 +68,21 @@
                                                 </ng-template>
                                             </td>
                                             <td class="text-center" nowrap>
-                                                <button type="button" class="btn btn-info btn-sm text-white ml-3" data-toggle="modal" data-target="#proyectoModal" (click)="detalle=proyecto">
+                                                <button type="button" class="btn btn-primary btn-sm ml-3" (click)="mostrarFases(proyecto.id)">
+													<i class="fa fa-stream"></i>
+                                                    Fases
+                                                </button>
+                                                <button title="Ver detalles" type="button" class="btn btn-info btn-sm text-white ml-3" data-toggle="modal" data-target="#proyectoModal" (click)="mostrarDetalle(proyecto)">
 													<i class="fa fa-eye"></i>
-													Ver detalle
-												</button>
-                                                <button type="button" class="btn btn-primary btn-sm ml-3" [routerLink]="['/panel-adm/proyecto', proyecto.id]" [disabled]="!proyecto.status">
+                                                </button>
+                                                <button title="Editar" type="button" class="btn btn-primary btn-sm ml-3" (click)="editar(proyecto.id)" [disabled]="!proyecto.status">
 													<i class="fa fa-edit"></i>
-													Editar
 												</button>
-                                                <button *ngIf="proyecto.status" type="button" class="btn btn-danger btn-sm ml-3" (click)="eliminarActivar(proyecto.id, false)">
+                                                <button *ngIf="proyecto.status" title="Eliminar" type="button" class="btn btn-danger btn-sm ml-3" (click)="eliminarActivar(proyecto.id, false)">
 													<i class="fa fa-trash"></i>
-													Eliminar
 												</button>
-                                                <button *ngIf="!proyecto.status" type="button" class="btn btn-success btn-sm ml-3" (click)="eliminarActivar(proyecto.id, true)">
+                                                <button *ngIf="!proyecto.status" title="Activar" type="button" class="btn btn-success btn-sm ml-3" (click)="eliminarActivar(proyecto.id, true)">
 													<i class="fa fa-arrow-circle-up"></i>
-													Activar
 												</button>
                                             </td>
                                         </tr>
@@ -100,111 +106,87 @@
     <div class="modal-dialog modal_class" role="document">
         <div class="modal-content ">
             <div class="modal-header">
-                <h5 class="modal-title" id="">
-                    Información detallada del proyecto
-                </h5>
+                <h5 class="modal-title" id="">Información detallada del proyecto</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
 					<span aria-hidden="true">&times;</span>
 				</button>
             </div>
             <div class="modal-body">
-                <div class="row">
-                    <div class="col-12">
-                        <div class="form-group row">
-                            <label for="" class="col-sm-2 col-form-label font-weight-bold">
-								Código:
-							</label>
-                            <div class="col-10">
-                                <input type="text" readonly class="form-control-plaintext" [(ngModel)]="detalle.codigo">
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label for="" class="col-sm-2 col-form-label font-weight-bold">
-								Nombre:
-							</label>
-                            <div class="col-sm-10">
-                                <p>{{ detalle.nombre }}</p>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label for="" class="col-sm-2 col-form-label font-weight-bold">
-								Descripción:
-							</label>
-                            <div class="col-sm-10">
-                                <p>{{ detalle.descripcion }}</p>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label for="" class="col-sm-2 col-form-label font-weight-bold">
-								Año:
-							</label>
-                            <div class="col-sm-10">
-                                <p>{{ detalle.anio }}</p>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label for="" class="col-sm-2 col-form-label font-weight-bold">
-								Fecha inico:
-							</label>
-                            <div class="col-sm-10">
-                                <p>{{ detalle.fecha_inicio }}</p>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label for="" class="col-sm-2 col-form-label font-weight-bold">
-								Fecha final:
-							</label>
-                            <div class="col-sm-10">
-                                <p>{{ detalle.fecha_final }}</p>
-                            </div>
-                        </div>
+                <div class="row p-3">
+                    <div class="col-sm-2 border bg-light font-weight-bold p-1 d-none d-sm-block text-right">Proyecto</div>
+                    <div class="col border bg-light font-weight-bold p-1 d-sm-none">Proyecto</div>
+                    <div class="col-sm-2 border p-1 text-sm-center">{{ detalle.codigo }}</div>
+                    <div class="col border bg-light font-weight-bold p-1 d-sm-none">Nombre</div>
+                    <div class="col-sm-8 border p-1">{{ detalle.nombre }}</div>
 
-                        <div class="form-group row">
-                            <label for="" class="col-sm-2 col-form-label font-weight-bold">
-                                        Unidad Administrativa
-                                    </label>
-                            <div class="col-sm-10">
-                                <p>{{ detalle.codigo_unidades_admin + ' - ' + detalle.nombre_unidades_admin }}</p>
-                            </div>
-                        </div>
+                    <div class="col-sm-2 border bg-light font-weight-bold p-1 d-none d-sm-block text-right">Descripción</div>
+                    <div class="col border bg-light font-weight-bold p-1 d-sm-none">Descripción</div>
+                    <div class="col-sm-10 border p-1">{{ detalle.descripcion }}</div>
 
-                        <div class="form-group row">
-                            <label for="" class="col-sm-2 col-form-label font-weight-bold">
-                                    Centro costo:
-                                </label>
-                            <div class="col-sm-10">
-                                <p>{{ detalle.codigo_programa + ' - ' + detalle.nombre_centro_costo }}</p>
-                            </div>
-                        </div>
+                    <div class="col-sm-2 border bg-light font-weight-bold p-1 d-none d-sm-block text-right">Fecha inicio</div>
+                    <div class="col border bg-light font-weight-bold p-1 d-sm-none">Fecha inicio</div>
+                    <div class="col-sm-4 border p-1 text-sm-center">{{ detalle.fecha_inicio }}</div>
+                    <div class="col-sm-2 border bg-light font-weight-bold p-1 d-none d-sm-block text-center">Fecha final</div>
+                    <div class="col border bg-light font-weight-bold p-1 d-sm-none">Fecha final</div>
+                    <div class="col-sm-4 border p-1 text-sm-center">{{ detalle.fecha_final }}</div>
 
-                        <div class="form-group row">
-                            <label for="" class="col-sm-2 col-form-label font-weight-bold">
-                                    Programa:
-                                </label>
-                            <div class="col-sm-10">
-                                <p>{{ detalle.codigo_centro_costo + ' - ' + detalle.nombre_programa }}</p>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label for="" class="col-sm-2 col-form-label font-weight-bold">
-								Estado:
-							</label>
-                            <div class="col-sm-10">
-                                <span *ngIf="detalle.status; else inactiveBlock" class="badge badge-success">
-									Activo
-								</span>
+                    <div class="col-sm-2 border bg-light font-weight-bold p-1 d-none d-sm-block text-right">Estado</div>
+                    <div class="col border bg-light font-weight-bold p-1 d-sm-none">Estado</div>
+                    <div class="col-sm-4 border p-1 text-center">
+                        <span *ngIf="detalle.status; else inactiveBlock" class="badge badge-success">
+                            Activo
+                        </span>
+                        <ng-template #inactiveBlock>
+                            <span class="badge badge-secondary">Inactivo</span>
+                        </ng-template>
+                    </div>
+
+                    <div class="col-sm-2 border bg-light font-weight-bold p-1 d-none d-sm-block text-center">Total</div>
+                    <div class="col border bg-light font-weight-bold p-1 d-sm-none">Total</div>
+                    <div class="col-sm-4 border p-1 text-center">$ {{ total }}</div>
+                </div>
+                <div *ngIf="fases==0; else fasesBlock">
+                    <div class="col border bg-light font-weight-bold p-1 text-center">Sin Fases</div>
+                </div>
+                <ng-template #fasesBlock>
+                    <div class="col border bg-light font-weight-bold p-1 text-center">Fases del proyecto</div>
+                    <div *ngFor="let fase of fases; let i = index">
+                        <div class="row px-3">
+                            <div class="col-sm-2 border bg-light font-weight-bold p-1 d-none d-sm-block text-right">Fase</div>
+                            <div class="col border bg-light font-weight-bold p-1 d-sm-none">Fase</div>
+                            <div class="col-sm-2 border p-1 text-sm-center">{{ fase.codigo }}</div>
+                            <div class="col border bg-light font-weight-bold p-1 d-sm-none">Nombre</div>
+                            <div class="col-sm-8 border p-1">{{ fase.nombre }}</div>
+
+                            <div class="col-sm-2 border bg-light font-weight-bold p-1 d-none d-sm-block text-right">Descripción</div>
+                            <div class="col border bg-light font-weight-bold p-1 d-sm-none">Descripción</div>
+                            <div class="col-sm-10 border p-1">{{ fase.descripcion }}</div>
+
+                            <div class="col-sm-2 border bg-light font-weight-bold p-1 d-none d-sm-block text-right">Financiamiento</div>
+                            <div class="col-sm-2 border p-1 text-sm-center">{{ fase.codigo_tipo_financ }}</div>
+                            <div class="col border bg-light font-weight-bold p-1 d-sm-none">Financiamiento</div>
+                            <div class="col-sm-8 border p-1">{{ fase.nombre_tipo_financ }}</div>
+
+                            <div class="col-sm-2 border bg-light font-weight-bold p-1 d-none d-sm-block text-right">Estado</div>
+                            <div class="col border bg-light font-weight-bold p-1 d-sm-none">Estado</div>
+                            <div class="col-sm-4 border p-1 text-center text-sm-center">
+                                <span *ngIf="fase.status; else inactiveBlock" class="badge badge-success">Activo</span>
                                 <ng-template #inactiveBlock>
                                     <span class="badge badge-secondary">Inactivo</span>
                                 </ng-template>
                             </div>
+
+                            <div class="col-sm-2 border bg-light font-weight-bold p-1 d-none d-sm-block text-center">Importe</div>
+                            <div class="col border bg-light font-weight-bold p-1 d-sm-none">Importe</div>
+                            <div class="col-sm-4 border p-1 text-center"> $ {{ fase.importe }}</div>
                         </div>
                     </div>
-                </div>
+                </ng-template>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">
-					Cerrar
-				</button>
+                    Cerrar
+                </button>
             </div>
         </div>
     </div>
