@@ -12,6 +12,7 @@ export class EgresoComponent implements OnInit {
 
 	proyectos: any;
 	anioPresEgreso: number;
+	total: number;
 
 	constructor(
 		private presupuestoEgresos: PresupuestoEgresoService,
@@ -26,7 +27,7 @@ export class EgresoComponent implements OnInit {
 		this.presupuestoEgresos.get_presupuesto($id_presupuesto)
 		.subscribe((data: any) => {
 			this.proyectos = data.data;
-			console.log(data);
+			this.total = this.proyectos.reduce(( acc, obj )  => acc + (obj.importe), 0);
 		});
 	}
 

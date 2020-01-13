@@ -28,39 +28,44 @@
                         <table class="table table-striped table-bordered table-sm ">
                             <thead>
                                 <tr>
-                                    <th class="align-middle text-center " rowspan="4 ">#</th>
-                                    <th class="align-middle text-center " rowspan="4 ">Año</th>
-                                    <th class="align-middle text-center " colspan="18 ">Proyectos</th>
+                                    <th class="align-middle text-center h2 font-weight-bold" colspan="22">Presupuesto de egresos</th>
                                 </tr>
                                 <tr>
-                                    <th class="align-middle text-center " rowspan="3 ">Código</th>
-                                    <th class="align-middle text-center " rowspan="3 ">Nombre</th>
-                                    <th class="align-middle text-center " rowspan="3 ">Fecha Inicio</th>
-                                    <th class="align-middle text-center " rowspan="3 ">Fecha Final</th>
-                                    <th class="align-middle text-center " rowspan="3 ">Subprograma</th>
-                                    <th class="align-middle text-center " colspan="13 ">Fase</th>
+                                    <th class="align-middle text-center " rowspan="4">#</th>
+                                    <th class="align-middle text-center " rowspan="4">Año</th>
+                                    <th class="align-middle text-center " colspan="20">Proyectos</th>
                                 </tr>
                                 <tr>
-                                    <th class="align-middle text-center " rowspan="2 ">Código</th>
-                                    <th class="align-middle text-center " rowspan="2 ">Nombre</th>
-                                    <th class="align-middle text-center " rowspan="2 ">Descripción</th>
+                                    <th class="align-middle text-center " rowspan="3">Código</th>
+                                    <th class="align-middle text-center " rowspan="3">Nombre</th>
+                                    <th class="align-middle text-center " rowspan="3">Fecha Inicio</th>
+                                    <th class="align-middle text-center " rowspan="3">Fecha Final</th>
+                                    <th class="align-middle text-center " colspan="2">Subprograma</th>
+                                    <th class="align-middle text-center " colspan="14">Fase</th>
+                                </tr>
+                                <tr>
+                                    <th class="align-middle text-center " rowspan="2">Código</th>
+                                    <th class="align-middle text-center " rowspan="2">Nombre</th>
 
-                                    <th class="align-middle text-center " colspan="2 ">Tipo FF</th>
-                                    <th class="align-middle text-center " colspan="5 ">Ubicación Geográfica</th>
-                                    <th class="align-middle text-center " colspan="3 ">Partida</th>
+                                    <th class="align-middle text-center " rowspan="2">Código</th>
+                                    <th class="align-middle text-center " rowspan="2">Nombre</th>
+                                    <th class="align-middle text-center " rowspan="2">Descripción</th>
+
+                                    <th class="align-middle text-center " colspan="2">Tipo FF</th>
+                                    <th class="align-middle text-center " colspan="6">Ubicación Geográfica</th>
+                                    <th class="align-middle text-center " colspan="3">Partida</th>
 
                                 </tr>
                                 <tr>
                                     <th class="align-middle text-center ">Código</th>
                                     <th class="align-middle text-center ">Nombre</th>
 
-                                    <th class="align-middle text-center ">CP</th>
-                                    <th class="align-middle text-center ">Entidad</th>
+                                    <th class="align-middle text-center ">Estado</th>
                                     <th class="align-middle text-center ">Municipio</th>
-                                    <th class="align-middle text-center ">Colonia</th>
+                                    <th class="align-middle text-center ">Codigo Postal</th>
+                                    <th class="align-middle text-center ">Asentamiento</th>
+                                    <th class="align-middle text-center ">Tipo Asentamiento</th>
                                     <th class="align-middle text-center ">Domicilio</th>
-
-
                                     <th class="align-middle text-center ">Código</th>
                                     <th class="align-middle text-center ">Nombre</th>
                                     <th class="align-middle text-center ">Importe</th>
@@ -68,32 +73,34 @@
                             </thead>
                             <tbody>
                                 <tr *ngFor="let proyecto of proyectos; let i=index ">
-                                    <!-- 18 columnas -->
-                                    <td scope="row ">{{ i + 1 }}</td>
-                                    <td>{{ proyecto.anio }}</td>
-                                    <td>{{ proyecto.codigo_proyecto }}</td>
-                                    <td>{{ proyecto.nombre_proyecto }}</td>
-                                    <td>{{ proyecto.fecha_inicio }}</td>
-                                    <td>{{ proyecto.fecha_final }}</td>
-                                    <td>{{ proyecto.codigo_subprograma }}</td>
-                                    <td>{{ proyecto.codigo_fase }}</td>
-                                    <td>{{ proyecto.nombre_fase }}</td>
-                                    <td>{{ proyecto.descripcion_fase }}</td>
-                                    <td>{{ proyecto.codigo_tipo_financ }}</td>
-                                    <td>{{ proyecto.nombre_tipo_financ }}</td>
-                                    <td>{{ proyecto.ct_cp }}</td>
-                                    <td>{{ proyecto.ct_entidad }}</td>
-                                    <td>{{ proyecto.ct_municipio }}</td>
-                                    <td>{{ proyecto.ct_colonia }}</td>
-                                    <td>{{ proyecto.ct_domicilio }}</td>
-                                    <td>{{ proyecto.codigo_partida }}</td>
-                                    <td>{{ proyecto.nombre_partida }}</td>
-                                    <td>$ {{ proyecto.importe }}</td>
+                                    <!-- 19 columnas -->
+                                    <td class="align-middle text-center" scope="row ">{{ i + 1 }}</td>
+                                    <td class="align-middle text-center">{{ proyecto.anio }}</td>
+                                    <td class="align-middle text-center">{{ proyecto.codigo_proyecto }}</td>
+                                    <td class="align-middle">{{ proyecto.nombre_proyecto }}</td>
+                                    <td class="align-middle text-center" nowrap>{{ proyecto.fecha_inicio }}</td>
+                                    <td class="align-middle text-center" nowrap>{{ proyecto.fecha_final }}</td>
+                                    <td class="align-middle text-center">{{ proyecto.codigo_subprograma }}</td>
+                                    <td class="align-middle">{{ proyecto.nombre_subprograma }}</td>
+                                    <td class="align-middle text-center">{{ proyecto.codigo_fase }}</td>
+                                    <td class="align-middle">{{ proyecto.nombre_fase }}</td>
+                                    <td class="align-middle">{{ proyecto.descripcion_fase }}</td>
+                                    <td class="align-middle text-center">{{ proyecto.codigo_tipo_financ }}</td>
+                                    <td class="align-middle">{{ proyecto.nombre_tipo_financ }}</td>
+                                    <td class="align-middle text-center">{{ proyecto.estado }}</td>
+                                    <td class="align-middle text-center">{{ proyecto.municipio }}</td>
+                                    <td class="align-middle text-center">{{ proyecto.codigo_postal }}</td>
+                                    <td class="align-middle text-center">{{ proyecto.asentamiento }}</td>
+                                    <td class="align-middle text-center">{{ proyecto.tipo_asentamiento }}</td>
+                                    <td class="align-middle">{{ proyecto.domicilio }}</td>
+                                    <td class="align-middle text-center">{{ proyecto.codigo_partida }}</td>
+                                    <td class="align-middle">{{ proyecto.nombre_partida }}</td>
+                                    <td class="align-middle">{{ proyecto.importe | currency }}</td>
                                 </tr>
                             </tbody>
                             <tfoot>
-                                <th class="align-middle text-right font-weight-bold " colspan="19 ">Total</th>
-                                <th></th>
+                                <th class="align-middle text-right font-weight-bold " colspan="21">Total</th>
+                                <th>{{ total | currency }}</th>
 
                             </tfoot>
                         </table>
@@ -101,4 +108,4 @@
                 </div>
             </div>
         </div>
-    </div>s
+    </div>
