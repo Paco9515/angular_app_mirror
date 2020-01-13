@@ -8,19 +8,15 @@ export class ConstantsService {
 
 	readonly _url = 'http://localhost:8000';
 	readonly url = 'http://localhost:8000';
-	readonly url_direccion = 'https://api-codigos-postales.herokuapp.com/v2/codigo_postal/';
 
 	readonly headers = new HttpHeaders({
 		'Content-Type': 'application/json'
-	}); 
+	});
 
 	constructor(
 		private http: HttpClient
 	) { }
 
-	public getDireccionCP(cp: string) {
-		return this.http.get(this.url_direccion + cp);
-	}
 
 	public createEgreso(url: string, _data: any, _partidas: any) {
 		const data = {

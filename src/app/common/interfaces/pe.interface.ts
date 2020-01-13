@@ -30,12 +30,16 @@ export interface Fases {
 	nombre: string;
 	descripcion: string;
 	externo: boolean;
-	cp?: string;
-	entidad?: string;
+	id_ubicacion_geografica?: string;
+	codigo_postal?: string;
+	estado?: string;
 	municipio?: string;
-	colonia?: string;
-	domicilio?: string;
-	geografia?: any;
+	asentamiento?: string;
+	tipo_asentamiento?: string;
+	zona_asentamiento?: string;
+	calle?: string;
+	num_exterior?: number;
+	num_interior?: number;
 	status: boolean;
 	partidas: any;
 }
