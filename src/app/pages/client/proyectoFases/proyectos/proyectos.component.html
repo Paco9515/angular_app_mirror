@@ -143,7 +143,7 @@
 
                     <div class="col-sm-2 border bg-light font-weight-bold p-1 d-none d-sm-block text-center">Total</div>
                     <div class="col border bg-light font-weight-bold p-1 d-sm-none">Total</div>
-                    <div class="col-sm-4 border p-1 text-center">$ {{ total }}</div>
+                    <div class="col-sm-4 border p-1 text-center">{{ total | currency }}</div>
                 </div>
                 <div *ngIf="fases==0; else fasesBlock">
                     <div class="col border bg-light font-weight-bold p-1 text-center">Sin Fases</div>
@@ -178,7 +178,7 @@
 
                             <div class="col-sm-2 border bg-light font-weight-bold p-1 d-none d-sm-block text-center">Importe</div>
                             <div class="col border bg-light font-weight-bold p-1 d-sm-none">Importe</div>
-                            <div class="col-sm-4 border p-1 text-center"> $ {{ fase.importe }}</div>
+                            <div class="col-sm-4 border p-1 text-center"> {{ fase.importe | currency }}</div>
                         </div>
                     </div>
                 </ng-template>

@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, OnInit } from '@angular/core';
 import { FaseService } from 'src/app/common/services/pe/fase.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Fases } from 'src/app/common/interfaces/pe.interface';
@@ -11,7 +11,7 @@ import { CffComponent } from '../../../../components/classification/clasfFuenteF
 	selector: 'app-fase',
 	templateUrl: './fase.component.html'
 })
-export class FaseComponent {
+export class FaseComponent implements OnInit {
 	@ViewChild(CogComponent) cog_component: CogComponent;
 	@ViewChild(CffComponent) cff_component: CffComponent;
 
@@ -23,10 +23,13 @@ export class FaseComponent {
 	proyecto: string;
 	presupuesto: string;
 	fase: Fases;
-	colonias: any;
+	asentamientos: any[] = [];
+
 	partidas: any[] = [];
 	importe: number = null;
 	total: number = 0;
+	tipo_asentamiento = '';
+	zona_asentamiento = '';
 
 	constructor(
 		private faseService: FaseService,
@@ -35,34 +38,44 @@ export class FaseComponent {
 		private router: Router
 	) {
 		this.resetVariable();
+	}
+
+	ngOnInit() {
 		this.activatedRoute.params.subscribe((data: any) => {
 			this.proyecto = data['id_proyecto'];
 			this.presupuesto = data['id_presupuesto'];
 			if (data.id_fase !== 'nuevo') {
-				this.getFase(data.id_fase);
+				return this.getFase(data.id_fase);
 			}
 		});
 	}
 
-	eliminarPartida(id: any, importe: number) {
+	eliminarPartida(id: any, importe: number){
 		this.total -= importe;
 		this.partidas.splice(id, 1);
 	}
 
-	resetVariable() {
+	public resetVariable() {
 		this.fase = {
 			id: '',
 			id_proyecto: '',
 			id_tipo_financ: '',
+			id_subfuente: '',
+			id_fuente: '',
 			codigo: '',
 			nombre: '',
 			descripcion: '',
 			externo: false,
-			cp: '',
-			entidad: '',
+			codigo_postal: '',
+			estado: '',
 			municipio: '',
-			colonia: '',
-			domicilio: '',
+			id_ubicacion_geografica: '',
+			asentamiento: '',
+			tipo_asentamiento: '',
+			zona_asentamiento: '',
+			calle: '',
+			num_exterior: null,
+			num_interior: null,
 			status: false,
 			partidas: null
 		};
@@ -81,40 +94,47 @@ export class FaseComponent {
 			.subscribe((obj: any) => {
 				this.fase = obj.data[0];
 				this.partidas = obj.data[1];
-				this.cff_keys = [this.fase.id_subfuente, this.fase.id_tipo_financ, this.fase.id_fuente];
-		
-				this.partidas.forEach(partida => {
-					this.total += partida.importe;
-				});
+				// datos de ubicacion interna eliminados
+				if (!this.fase.externo) {
+					this.fase.codigo_postal = '';
+					this.fase.estado = '';
+					this.fase.municipio = '';
+					this.fase.id_ubicacion_geografica = '';
+					this.fase.asentamiento = '';
+					this.fase.tipo_asentamiento = '';
+					this.fase.zona_asentamiento = '';
+					this.fase.calle = '';
+					this.fase.num_exterior = null;
+					this.fase.num_interior = null;
+				} else {
+					this.getDireccion(this.fase.codigo_postal);
+				}
 
-				// this.cff_keys[];
+				this.cff_keys = [
+					this.fase.id_fuente,
+					this.fase.id_subfuente, 
+					this.fase.id_tipo_financ
+				];
 
-				// this.partidas.forEach(function(partida) {
-				// 	this.importe = this.importe + partida.importe;
-				// }, this);
+				this.total = this.partidas.reduce(( sum, partida )  => sum + (partida.importe), 0);
 
-				// if (this.fase.externo) {
-				// 	this.getDireccion(this.fase.cp);
-				// }
 			});
 	}
 
 	getDireccion($cp) {
 		if ($cp !== '') {
-			this.faseService.getDireccionCP($cp)
-			.subscribe((response: any) => {
-				if (response.colonias !== [] && response.municipio !== ''  && response.estado !== '' ) {
-					this.fase.entidad = response.estado;
-					this.fase.municipio = response.municipio;
-					this.colonias = response.colonias;
-				} else {
-					const MENSAJE: any = {
-							'message': 'El codigo postal no es valido',
-							'title': 'Advertencia'
-						};
-						this.mensaje.warning(MENSAJE);
+			this.faseService.get_asentamientos_cp($cp)
+				.subscribe((response: any) => {
+					response = response.data;
+					if (response.asentamientos !== [] && response.municipio !== ''  && response.estado !== '' ) {
+						this.fase.estado = response.estado;
+						this.fase.municipio = response.municipio;
+						this.asentamientos = response.asentamientos;
+						return;
 					}
-				});
+				}), error => {
+					return this.mensaje.warning(error.error);
+				};
 		}
 	}
 
@@ -126,7 +146,6 @@ export class FaseComponent {
 				partida: this.cog_data.codigo_partida + ' - ' + this.cog_data.nombre_partida,
 				importe: this.importe
 			});
-
 			this.importe = null;
 			this.cog_component.restartVariables();
 			return;
@@ -138,22 +157,32 @@ export class FaseComponent {
 		return this.mensaje.warning(MENSAJE);
 	}
 
+	obtener_asentamiento(id_asentamiento: any) {
+		this.fase.tipo_asentamiento = '';
+		this.fase.zona_asentamiento = '';
+		this.asentamientos.forEach((dato) => {
+			if(dato.id == id_asentamiento) {
+				this.fase.tipo_asentamiento = dato.tipo_asentamiento
+				this.fase.zona_asentamiento = dato.zona_asentamiento
+				return;
+			}
+		});
+	}
+
 	guardar(f: NgForm) {
 		this.fase.id_proyecto = this.proyecto;
 		this.fase.id_tipo_financ = this.cff_data.id_tipo;
 		this.fase.partidas = this.partidas;
 		this.faseService.createUpdateFase(this.fase)
 			.subscribe((data: any) => {
-				this.mensaje.success(data);
+				return this.mensaje.success(data);
 			}, error => {
-				this.mensaje.danger(error.error);
+				return this.mensaje.danger(error.error);
 			});
 	}
 
 	regresar() {
 		this.router.navigate([`/panel-adm/pres_egresos/${this.presupuesto}/proyectos/${this.proyecto}/fases`]);
 	}
-
-
 
 }

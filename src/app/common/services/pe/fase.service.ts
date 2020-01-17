@@ -39,7 +39,7 @@ export class FaseService  {
 		}
 	}
 
-	getDireccionCP(cp: string) {
-		return this.constants.getDireccionCP(cp);
+	get_asentamientos_cp(cp: number) {
+		return this.constants.getRequest(`/get_asentamientos_cp/${cp}`, 'get', false);
 	}
 }

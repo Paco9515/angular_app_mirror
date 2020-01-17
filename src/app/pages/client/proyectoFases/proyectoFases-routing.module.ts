@@ -14,9 +14,9 @@ const admin_routes: Routes = [
 		// component: ClientComponent,
 		children: [
 			{ path: 'fases', component: FasesComponent },
-			{ path: 'fase/:id', component: FaseComponent },
+			{ path: 'fases/:id', component: FaseComponent },
 			{ path: 'proyectos', component: ProyectosComponent },
-			{ path: 'proyecto/:id', component: ProyectoComponent },
+			{ path: 'proyectos/:id', component: ProyectoComponent },
 
 			{ path: '', pathMatch: 'full', redirectTo: 'escritorio' }
 		]
