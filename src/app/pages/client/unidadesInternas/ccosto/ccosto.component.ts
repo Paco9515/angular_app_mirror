@@ -106,6 +106,10 @@ export class CcostoComponent {
 
 	}
 
+	getDireccion(codigo_postal) {
+		console.log(codigo_postal);
+	}
+
 	guardar(f: NgForm) {
 		if (f.valid) {
 			this.ccostoService.createCcosto(this.ccostos)

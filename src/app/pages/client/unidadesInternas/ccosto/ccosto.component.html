@@ -34,8 +34,8 @@
                         </div>
                         <div class="card-body">
                             <div class="form-group row" *ngIf="bandera">
-                                <div class="col-sm-12">
-                                    <label for="staticEmail" class="col-sm-12 col-form-label">Empresa</label>
+                                <div class="col-sm-6">
+                                    <label for="empresa" class="col-sm-12 col-form-label">Empresa</label>
                                     <div class="col-sm-12">
                                         <select type="text" class="form-control" [(ngModel)]="emp" name="emp" (change)="inicio();" required>
                                             <option value=""> Seleccione una opcion... </option>
@@ -43,10 +43,8 @@
                                         </select>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="form-group row">
-                                <div class="col-sm-12">
-                                    <label for="staticEmail" class="col-sm-12 col-form-label">Unidad Administrativa</label>
+                                <div class="col-sm-6">
+                                    <label for="unidad_adm" class="col-sm-12 col-form-label">Unidad Administrativa</label>
                                     <div class="col-sm-12">
                                         <select type="text" class="form-control" [(ngModel)]="ccostos.id_unidad_adm" name="id_unidad_adm" [(disabled)]="bandera2" required>
                                                 <option value=""> Seleccione una opcion... </option>
@@ -56,8 +54,14 @@
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <div class="col-sm-12">
-                                    <label for="staticEmail" class="col-sm-12 col-form-label">Subfuncion</label>
+                                <div class="col-sm-6">
+                                    <label for="nombre" class="col-sm-12 col-form-label">Nombre</label>
+                                    <div class="col-sm-12">
+                                        <input type="text" class="form-control" placeholder="Ingresa el nombre" [(ngModel)]="ccostos.nombre" name="nombre" required>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <label for="subfuncion" class="col-sm-12 col-form-label">Subfuncion</label>
                                     <div class="col-sm-12">
                                         <select class="form-control" [(ngModel)]="ccostos.id_subfuncion" name="id_subfuncion" required>
                                             <option value=""> Seleccione una opcion... </option>
@@ -68,15 +72,7 @@
                             </div>
                             <div class="form-group row">
                                 <div class="col-sm-12">
-                                    <label for="staticEmail" class="col-sm-12 col-form-label">Nombre</label>
-                                    <div class="col-sm-12">
-                                        <input type="text" class="form-control" placeholder="Ingresa el nombre" [(ngModel)]="ccostos.nombre" name="nombre" required>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <div class="col-sm-12">
-                                    <label for="staticEmail" class="col-sm-12 col-form-label">Nivel</label>
+                                    <label for="nivel" class="col-sm-12 col-form-label">Nivel</label>
                                     <div class="col-sm-12">
                                         <select class="form-control" [(ngModel)]="ccostos.id_nivel" name="id_nivel" required>
                                             <option value=""> Seleccione una opcion... </option>
@@ -86,13 +82,77 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="card-header">
+                            <div class="row text-center text-sm-left">
+                                <div class="col-12 col-md-8 text-md-left h5 font-weight-bold">
+                                    <i class="fa fa-location-arrow"></i><strong> Centro de trabajo</strong>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="form-group row">
+                                <div class="col-sm-6">
+                                    <label for="codigo_postal" class="col-sm-12 col-form-label">Código postal</label>
+                                    <div class="col-sm-12">
+                                        <input type="number" class="form-control" placeholder="Ingrese codigo Postal" required name="cp" (change)="getDireccion($event.target.value)">
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <label for="estado" class="col-sm-12 col-form-label">Estado</label>
+                                    <div class="col-sm-12">
+                                        <input type="text" class="form-control" required name="estado" [(ngModel)]="fase.entidad" readonly>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-sm-6">
+                                    <label for="municipio" class="col-sm-12 col-form-label">Municipio</label>
+                                    <div class="col-sm-12">
+                                        <input type="text" class="form-control" required name="municipio" [(ngModel)]="fase.municipio" readonly>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <label for="colonia" class="col-sm-12 col-form-label">Colonia/Asentamiento</label>
+                                    <div class="col-sm-12">
+                                        <select class="form-control" name="colonia" required [(ngModel)]="fase.colonia">
+                                            <option value=''>Seleccione una colonia</option>
+                                            <option *ngFor="let colonia of colonias" [value]="colonia">
+                                                {{ colonia }}
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-sm-8">
+                                    <label for="calle" class="col-sm-12 col-form-label">Calle</label>
+                                    <div class="col-sm-12">
+                                        <input type="text" class="form-control" placeholder="Ingresa el nombre" [(ngModel)]="ccostos.nombre" name="nombre" required>
+                                    </div>
+                                </div>
+                                <div class="col-sm-2">
+                                    <label for="num_exterior" class="col-sm-12 col-form-label">Numero exterior</label>
+                                    <div class="col-sm-12">
+                                        <input type="number" class="form-control" placeholder="Ingresa el nombre" [(ngModel)]="ccostos.nombre" name="nombre" required>
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-2">
+                                    <label for="num_interior" class="col-sm-12 col-form-label">Numero interior</label>
+                                    <div class="col-sm-12">
+                                        <input type="number" class="form-control" placeholder="Ingresa el nombre" [(ngModel)]="ccostos.nombre" name="nombre" required>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                         <div class="card-footer">
                             <div class="form-group row">
                                 <div class="col-12">
                                     <button class="btn btn-primary btn-sm pull-right" type="submit" [disabled]="f.invalid || !f.dirty">
-                                        <i class="fa fa-save"></i>
-                                        Guardar
-                                    </button>
+                                <i class="fa fa-save"></i>
+                                Guardar
+                            </button>
                                 </div>
                             </div>
                         </div>

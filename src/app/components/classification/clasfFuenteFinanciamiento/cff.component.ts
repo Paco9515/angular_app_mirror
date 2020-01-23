@@ -29,7 +29,6 @@ export class CffComponent implements OnInit {
 			.subscribe((data: any) => {
 				this.fuentes = data;
 			});
-
 		if (this.primary_keys_cff[0] !== '0') {
 			this.onChangeFuente(this.primary_keys_cff[0]);
 			this.onChangeSubfuente(this.primary_keys_cff[1]);
@@ -43,7 +42,7 @@ export class CffComponent implements OnInit {
 		this.data = {
 			id_fuente: '',
 			id_subfuente: '',
-			id_tipo: '',
+			id_tipo_financ: '',
 			nombre_tipo: '',
 		};
 	}

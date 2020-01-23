@@ -18,13 +18,6 @@ export class FasesComponent implements OnInit {
 	partidas: any[];
 
 	total = 0;
-	geografia: any = {
-		cp: '',
-		entidad: '',
-		municipio: '',
-		colonia: '',
-		domicilio: ''
-	};
 
 	constructor(
 		private fase_service: FaseService,
@@ -36,15 +29,22 @@ export class FasesComponent implements OnInit {
 		this.detalle = {
 			id: '',
 			id_proyecto: '',
-			codigo_proyecto: '',
-			nombre_proyecto: '',
-			nombre_tipo_financ: '',
+			id_tipo_financ: '',
 			codigo: '',
 			nombre: '',
 			descripcion: '',
-			externo: null,
+			externo: false,
+			codigo_postal: '',
+			estado: '',
+			municipio: '',
+			id_ubicacion_geografica: '',
+			asentamiento: '',
+			tipo_asentamiento: '',
+			zona_asentamiento: '',
+			calle: '',
+			num_exterior: null,
+			num_interior: null,
 			status: false,
-			geografia: null,
 			partidas: null
 		};
 	}
@@ -64,8 +64,11 @@ export class FasesComponent implements OnInit {
 
 	getFases(id_proyecto) {
 		this.fase_service.getFases(id_proyecto)
-			.subscribe((data: any) => this.fases = data);
-	}
+			.subscribe((data: any) => {
+				this.fases = data;
+				
+			});
+	};
 
 	eliminarActivar(id: string, type: boolean) {
 		this.fase_service.activarEliminarFase(id, type)
@@ -88,10 +91,6 @@ export class FasesComponent implements OnInit {
 	mostrarDetalle( fase ) {
 		this.detalle = fase;
 		this.total = 0;
-		this.detalle.partidas.forEach(function(partida) {
-			this.total = this.total + partida.importe;
-		}, this);
-		this.geografia = this.detalle.geografia[0];
-
+		this.total = this.detalle.partidas.reduce(( sum, partida )  => sum + (partida.importe), 0);
 	}
 }

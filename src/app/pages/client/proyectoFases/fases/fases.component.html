@@ -79,14 +79,12 @@
 												</button>
                                                 <button *ngIf="!fase.status" title="Activar" type="button" class="btn btn-success btn-sm ml-3" (click)="eliminarActivar(fase.id, true)">
 													<i class="fa fa-arrow-circle-up"></i>
-													Activar
 												</button>
                                             </td>
                                         </tr>
                                     </ng-template>
                                 </tbody>
                             </table>
-
                         </div>
                     </div>
                 </div>
@@ -102,7 +100,7 @@
     <div class="modal-dialog modal_class" role="document">
         <div class="modal-content ">
             <div class="modal-header">
-                <h5 class="modal-title" id="">
+                <h5 class="modal-title">
                     Información de fase
                 </h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -156,23 +154,31 @@
                 <div class="row p-3">
                     <div class="col-sm-2 border bg-light font-weight-bold p-1 d-none d-sm-block text-center">Codigo Postal</div>
                     <div class="col border bg-light font-weight-bold p-1 d-sm-none">Codigo Postal</div>
-                    <div class="col-sm-4 border p-1">{{ geografia.cp }}</div>
+                    <div class="col-sm-4 border p-1">{{ detalle.codigo_postal }}</div>
 
-                    <div class="col-sm-2 border bg-light font-weight-bold p-1 d-none d-sm-block text-center">Entidad</div>
-                    <div class="col border bg-light font-weight-bold p-1 d-sm-none">Entidad</div>
-                    <div class="col-sm-4 border p-1">{{ geografia.entidad }}</div>
+                    <div class="col-sm-2 border bg-light font-weight-bold p-1 d-none d-sm-block text-center">Estado</div>
+                    <div class="col border bg-light font-weight-bold p-1 d-sm-none">Estado</div>
+                    <div class="col-sm-4 border p-1">{{ detalle.estado }}</div>
 
                     <div class="col-sm-2 border bg-light font-weight-bold p-1 d-none d-sm-block text-center">Municipio</div>
                     <div class="col border bg-light font-weight-bold p-1 d-sm-none">Municipio</div>
-                    <div class="col-sm-4 border p-1">{{ geografia.municipio }}</div>
+                    <div class="col-sm-4 border p-1">{{ detalle.municipio }}</div>
 
-                    <div class="col-sm-2 border bg-light font-weight-bold p-1 d-none d-sm-block text-center">Colonia</div>
+                    <div class="col-sm-2 border bg-light font-weight-bold p-1 d-none d-sm-block text-center">Asentamiento / Colonia</div>
                     <div class="col border bg-light font-weight-bold p-1 d-sm-none">Colonia</div>
-                    <div class="col-sm-4 border p-1">{{ geografia.colonia }}</div>
+                    <div class="col-sm-4 border p-1">{{ detalle.asentamiento }}</div>
 
                     <div class="col-sm-2 border bg-light font-weight-bold p-1 d-none d-sm-block text-center">Domicilio</div>
                     <div class="col border bg-light font-weight-bold p-1 d-sm-none">Domicilio</div>
-                    <div class="col-sm-10 border p-1">{{ geografia.domicilio }}</div>
+                    <div class="col-sm-10 border p-1">{{ detalle.calle }}</div>
+
+                    <div class="col-sm-2 border bg-light font-weight-bold p-1 d-none d-sm-block text-center">Num. Exterior</div>
+                    <div class="col border bg-light font-weight-bold p-1 d-sm-none">Num. Exterior</div>
+                    <div class="col-sm-4 border p-1">{{ detalle.num_exterior }}</div>
+
+                    <div class="col-sm-2 border bg-light font-weight-bold p-1 d-none d-sm-block text-center">Num. Interior</div>
+                    <div class="col border bg-light font-weight-bold p-1 d-sm-none">Num. Interior</div>
+                    <div class="col-sm-4 border p-1">{{ detalle.num_interior }}</div>
                 </div>
 
 
@@ -185,84 +191,12 @@
                             <div class="col-12 border bg-light font-weight-bold p-1 d-sm-none">Partida</div>
                             <div class="col-sm-1 border p-1 text-sm-center">{{ i+1 }}</div>
                             <div class="col-sm-9 border p-1 ">{{ partida.nombre_partida }}</div>
-                            <div class="col-sm-2 border p-1 text-sm-right">$ {{ partida.importe }}</div>
+                            <div class="col-sm-2 border p-1 text-sm-right">{{ partida.importe | currency }}</div>
                         </div>
                     </span>
                     <div class="col-sm-10 border bg-light font-weight-bold p-1 d-none d-sm-block text-right">Total</div>
-                    <div class="col-sm-2 border bg-light font-weight-bold p-1 d-none d-sm-block text-right">$ {{ total }} </div>
+                    <div class="col-sm-2 border bg-light font-weight-bold p-1 d-none d-sm-block text-right">{{ total | currency }}</div>
                 </div>
-
-                <!-- <div class="row">
-                    <div class="col-12">
-                        <div class="form-group row">
-                            <label for="" class="col-sm-2 col-form-label font-weight-bold">Código:</label>
-                            <div class="col-sm-10">{{ detalle.codigo }}</div>
-                        </div>
-                        <div class="form-group row">
-                            <label for="" class="col-sm-2 col-form-label font-weight-bold">Nombre:</label>
-                            <div class="col-sm-10">{{ detalle.nombre }}</div>
-                        </div>
-                        <div class="form-group row">
-                            <label for="" class="col-sm-2 col-form-label font-weight-bold">Descripcion:</label>
-                            <div class="col-sm-10">{{ detalle.descripcion }}</div>
-                        </div>
-                        <div class="form-group row">
-                            <label for="" class="col-sm-2 col-form-label font-weight-bold">Proyecto:</label>
-                            <div class="col-sm-10">{{ detalle.nombre_proyecto }}</div>
-                        </div>
-                        <div class="form-group row">
-                            <label for="" class="col-sm-2 col-form-label font-weight-bold">Tipo de financiamiento:</label>
-                            <div class="col-sm-10">{{ detalle.nombre_tipo_financ }}</div>
-                        </div>
-                        <div class="form-group row">
-                            <label for="" class="col-sm-2 col-form-label font-weight-bold">Estado:</label>
-                            <div class="col-sm-10">
-                                <span *ngIf="detalle.status; else inactiveBlock" class="badge badge-success">
-                                    Activo
-                                </span>
-                                <ng-template #inactiveBlock>
-                                    <span class="badge badge-secondary">Inactivo</span>
-                                </ng-template>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-12 table-responsive">
-                                <table class="table table-responsive-sm table-bordered table-striped table-sm">
-                                    <thead class="thead-dark">
-                                        <tr>
-                                            <th scope="col" class="text-center">#</th>
-                                            <th scope="col">Partida</th>
-                                            <th class="text-center" scope="col">Importe</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr *ngIf="fases.length==0; else tablePartida">
-                                            <td colspan="4" class="text-center">
-                                                <span class="badge badge-info">
-                                                    <h5>
-                                                        <i class="far fa-frown"></i>
-                                                        No hay elementos para mostrar.
-                                                    </h5>
-                                                </span>
-                                            </td>
-                                        </tr>
-                                        <ng-template #tablePartida>
-                                            <tr *ngFor="let partida of detalle.partidas; let i = index">
-                                                <td class="text-center">{{ i+1 }}</td>
-                                                <td>{{ partida.nombre_partida }}</td>
-                                                <td class="text-right">$ {{ partida.importe }}</td>
-                                            </tr>
-                                        </ng-template>
-                                        <tr>
-                                            <td colspan="2" class="text-right font-weight-bold">Total</td>
-                                            <td colspan="1" class="text-right">$ {{ total }}</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                </div> -->
             </div>
 
             <div class="modal-footer">
