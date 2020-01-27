@@ -1,84 +1,128 @@
-<div class="container-fluid p-3">
-    <div class="animated fadeIn">
-        <div class="row justify-content-center">
-            <form class="col-12">
-                <div class="col-md-12">
-                    <div class="card shadow">
-                        <div class="card-header">
-                            <div class="row">
-                                <div class="col-12 col-md-8 text-center text-sm-left  h5 font-weight-bold">
-                                    - Presupuesto de Egreso 2019.
-                                </div>
-                            </div>
+<!-- Breadcrumb -->
+<div class="d-none d-sm-block">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><i class="fa fa-folder-open"></i> Presupuestos de Egresos</li>
+        <li class="breadcrumb-item"> Presupuestos de Egreso</li>
+    </ol>
+</div>
+
+<div class="container-fluid">
+    <div class="row ">
+        <div class="col-md-12">
+            <div class="card shadow">
+                <div class="card-header">
+                    <div class="row">
+                        <div class="col-12 col-md-8 text-center text-sm-left  h5 font-weight-bold">
+                            <i class="fa fa-list"></i> Presupuesto de Egreso {{ anioEgreso }}
                         </div>
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-12">
-                                    <div id="accordion">
-                                        <div *ngFor="let proyecto of array">
-                                            <hr>
-                                            <div class="mb-0">
-                                                <a data-toggle="collapse" href="#" class="text-dark" [attr.data-target]="'#fase'+proyecto.id" aria-expanded="false">
-                                                    <p class="col-sm-12">
-                                                        <i class="fas fa-arrow-circle-right"></i>&nbsp;
-                                                        <b>Proyecto:</b> {{ proyecto.id }} &nbsp;&nbsp; <b>Nombre:</b> {{ proyecto.nombre }}.
-                                                    </p>
-                                                </a>
-                                            </div>
-                                            <div [id]="'fase'+proyecto.id" class="collapse ">
-                                                <div *ngFor="let fase of proyecto.fases" class="col-sm-12">
-                                                    <hr>
-                                                    <div class="ml-2">
-                                                        <a data-toggle="collapse" class="brown-lighter-hover" [attr.data-target]="'#partida'+proyecto.id+fase.id" aria-expanded="false">
-                                                            <p class="col-sm-12">
-                                                                <i class="fas fa-arrow-circle-right"></i>&nbsp;
-                                                                <b>Fase:</b> {{ fase.id }} &nbsp;&nbsp; <b>Nombre:</b> {{ fase.nombre }}.
-                                                            </p>
-                                                        </a>
-                                                    </div>
-                                                    <div [id]="'partida'+proyecto.id+fase.id" class="collapse ">
-                                                        <div *ngFor="let partida of fase.partidas" class="col-sm-12">
-                                                            <hr>
-                                                            <div class="ml-4">
-                                                                <div class="row">
-                                                                    <div class="ml-3 mt-2" style="width: 13%;">
-                                                                        <i class="fas fa-dot-circle"></i>&nbsp;
-                                                                        <b>Partida:</b> {{ partida.id }}
-                                                                    </div>
-                                                                    <div style="width: 55%;" class="mt-2">
-                                                                        <b>Nombre:</b> {{ partida.nombre }}.
-                                                                    </div>
-                                                                    <div style="width: 30%;">
-                                                                        <div class="form-inline">
-                                                                            <label><b>$:</b></label>&nbsp;
-                                                                            <input type="text" class="form-control" name="importe" id="importe" [value]="partida.importe" readonly style="width: 50%;">&nbsp;
-                                                                            <button class="btn btn-success" title="Transferir"><i class="fas fa-exchange-alt"></i></button>&nbsp;
-                                                                            <button class="btn btn-primary" title="Aumentar o Disminuir">
-                                                                                <i class="fas fa-long-arrow-alt-up"></i>
-                                                                                <i class="fas fa-long-arrow-alt-down"></i>
-                                                                            </button>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <hr>
-                                </div>
-                            </div>
+                        <div class="col-12 col-md-4 text-center text-sm-right">
+                            <button class="btn btn-outline-primary mt-2 btn-sm" type="button" [routerLink]="['/panel-adm/pres_egresos']">
+                                <i class="fa fa-arrow-circle-left "></i> Regresar
+                            </button>
                         </div>
                     </div>
                 </div>
-                <div class="col-12">
-                    <button class="btn btn-success mb-3 btn-block" type="submit" (click)="guardarInfo()">
-                        Guardar presupuesto de egreso
-                    </button>
+
+                <!-- botones aumento y disminucion -->
+                <div class="card-body ">
+                    <div *ngIf="cuentaTabla" class="row mb-3">
+                        <div class="col-2 well"></div>
+                        <div class="col-2 well"></div>
+                        <div class="col-2 well text-center">
+                            <button class="btn btn-primary mt-2 btn-sm" type="button" style="width: 100px;" (click)="aumento();" title="Aumentar o Disminuir">
+                                <i class="fas fa-plus"></i>/<i class="fas fa-minus"></i>
+                            </button>
+                        </div>
+                        <div class="col-2 well text-center">
+                            <button class="btn btn-primary mt-2 btn-sm" type="button" style="width: 100px;" (click)="transferir();" title="Tranferir">
+                                <i class="fas fa-exchange-alt"></i>
+                            </button>
+                        </div>
+                        <div class="col-2 well"></div>
+                        <div class="col-2 well"></div>
+                    </div>
+
+                    <!-- Calculos -->
+                    <div *ngIf="!cuentaTabla" class="row">
+                        <div class="col-md-9 well mt-3" style=" padding-left: 30px;">
+                        </div>
+                        <div class="col-md-3 well">
+                            <div class="text-right" style="padding-right: 20px;">
+                                <label class="font-weight-bold" style="font-size: 18px;">Total: $ {{ totalProyecto2 }}</label>
+                            </div>
+                            <div class="text-right" style="padding-right: 20px;">
+                                <label *ngIf="bandera === 0" class="font-weight-bold" style="font-size: 18px;">Diferencia: $ {{ diff }}</label>
+                                <label *ngIf="bandera === 1" class="font-weight-bold text-success" style="font-size: 18px;">Diferencia: $ {{ diff }}</label>
+                                <label *ngIf="bandera === 2" class="font-weight-bold text-danger" style="font-size: 18px;">Diferencia: $ {{ diff }}</label>
+                            </div>
+                            <hr style="margin: 0px; padding: 0px;">
+                            <div class="text-right" style="padding-right: 20px;">
+                                <label class="font-weight-bold" style="font-size: 18px;">Nuevo Total: $ {{ totalProyecto }}</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- tabla de las partidas del egreso -->
+                    <table id="tabla1" class="table table-striped table-bordered table-sm" style="display: none;">
+                        <thead>
+                            <tr>
+                                <th class="align-middle text-center " colspan="2" width="28%">Proyectos</th>
+                                <th class="align-middle text-center " colspan="2" width="28%">Fase</th>
+                                <th class="align-middle text-center " colspan="4" width="44%">Partidas</th>
+                            </tr>
+                            <!-- <tr> -->
+                            <!-- Info de Proyecto -->
+                            <th class="align-middle text-center" width="5%">Código</th>
+                            <th class="align-middle text-center" width="20%">Nombre</th>
+                            <!-- Info de Fase -->
+                            <th class="align-middle text-center" width="5%">Código</th>
+                            <th class="align-middle text-center" width="20%">Nombre</th>
+                            <!-- Info de Partidas -->
+                            <th class="align-middle text-center" width="5%">Código</th>
+                            <th class="align-middle text-center" width="25%">Nombre</th>
+                            <th class="align-middle text-center">Importe Original</th>
+                            <th class="align-middle text-center">Nuevo Importe</th>
+                            <!-- </tr> -->
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let proyecto of proyectos; let i=index ">
+                                <td class="align-middle text-center">{{ proyecto.codigo_proyecto }}</td>
+                                <td class="align-middle">{{ proyecto.nombre_proyecto }}</td>
+                                <td class="align-middle text-center">{{ proyecto.codigo_fase }}</td>
+                                <td class="align-middle">{{ proyecto.nombre_fase }}</td>
+                                <td class="align-middle text-center">{{ proyecto.codigo_partida }}</td>
+                                <td class="align-middle">{{ proyecto.nombre_partida}}</td>
+                                <td class="align-middle text-center">{{ proyectos2[i].importe | number:"1.2-2"}}</td>
+                                <td class="">
+                                    <div class="input-group mb-3 ">
+                                        <div class="input-group-prepend align-middle mt-3">
+                                            <span class="input-group-text" id="basic-addon1">$</span>
+                                        </div>
+                                        <input *ngIf="!aumentTranf" type="number" class="form-control mt-3" [id]="'item'+i" (change)="calcularTotalTransf(i)" name="importe" [(ngModel)]="proyecto.importe">
+                                        <input *ngIf="aumentTranf" type="number" class="form-control mt-3" [id]="'item2'+i" (change)="calcularTotalAumento(i)" name="importe" [(ngModel)]="proyecto.importe">
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <div *ngIf="!cuentaTabla" class="text-center">
+                        <button class="btn btn-warning mt-2" type="button" style="width: 100px;" (click)="limpiarCampos();">
+                            <i class="fas fa-eraser"></i> Limpiar 
+                        </button> &nbsp;&nbsp;
+                        <button class="btn btn-danger mt-2" id="cancelar" type="button" style="width: 100px;" (click)="cancelar();">
+                            <i class="fas fa-window-close"></i> Cancelar 
+                        </button> &nbsp;&nbsp;
+                        <button *ngIf="!aumentTranf" class="btn btn-success mt-2" id="guardar1" type="button" style="width: 100px;" (click)="guardar();" disabled>
+                            <i class="fas fa-save"></i> Guardar 
+                        </button>
+                        <button *ngIf="aumentTranf" class="btn btn-success mt-2" id="guardar2" type="button" style="width: 100px;" (click)="guardar();">
+                            <i class="fas fa-save"></i> Guardar 
+                        </button>
+                    </div>
                 </div>
-            </form>
+            </div>
         </div>
     </div>
 </div>
+<!-- <pre>{{ proyectos2[1].importe | json }}</pre> -->
