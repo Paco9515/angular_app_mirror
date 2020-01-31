@@ -73,9 +73,10 @@ export class CffComponent implements OnInit {
 		}
 	}
 
-	onChangeTipo(args) {
-		this.data.nombre_tipo = args.options[args.selectedIndex].innerText;
-		this.data.id_tipo = args.value;
+	onChangeTipo(id_tipo_financ) {
+		// this.data.nombre_tipo = args.options[args.selectedIndex].innerText;
+		// this.data.id_tipo_financ = args.value;
+		this.data.id_tipo_financ = id_tipo_financ;
 		this.out.emit(this.data);
 	}
 }

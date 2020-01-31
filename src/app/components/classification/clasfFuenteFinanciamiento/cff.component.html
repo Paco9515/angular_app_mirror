@@ -22,7 +22,7 @@
     </div>
     <div class="col-md-4 mb-2">
         <label>Tipos</label>
-        <select class="form-control form-control-sm" name="tipo" id="tipo" [(ngModel)]="data.id_tipo_financ" (change)="onChangeTipo($event.target)">
+        <select class="form-control form-control-sm" name="tipo" id="tipo" [(ngModel)]="data.id_tipo_financ" (change)="onChangeTipo($event.target.value)">
 			<option value="">Seleccione un tipo</option>
 			<option *ngFor="let tipo of tipos" [value]="tipo.id">
 				{{ tipo.codigo }} - {{ tipo.nombre }}
