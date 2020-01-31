@@ -13,7 +13,7 @@ import { PresupuestoEgreso } from 'src/app/common/interfaces/presupuesto.interfa
 	styles: []
 })
 export class EgresosComponent {
-	@ViewChild(UiComponent) ui_component: UiComponent;
+	@ViewChild(UiComponent, { static: true }) ui_component: UiComponent;
 	/* -- Unidades internas | clas administrativa -- */
 	ui_keys = ['0', '0'];
 	ui_data: any;

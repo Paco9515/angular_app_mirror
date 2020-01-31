@@ -46,9 +46,10 @@ export interface Fases {
 
 export interface PartidaFase {
 	id?: string;
-	id_partida: string;
-	nombre_partida?: string;
 	id_fase?: string;
+	id_partida: string;
+	codigo_partida?: string;
+	nombre_partida?: string;
 	nombre_fase?: string;
 	importe: number;
 }
