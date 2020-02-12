@@ -16,27 +16,48 @@
                             <i class="fa fa-list"></i> Presupuesto de Egreso {{ anioEgreso }}
                         </div>
                         <div class="col-12 col-md-4 text-center text-sm-right">
-                            <button class="btn btn-outline-primary mt-2 btn-sm" type="button" [routerLink]="['/panel-adm/pres_egresos']">
+                            <button *ngIf="!cuentaTabla" class="btn btn-outline-primary mt-2 btn-sm" type="button" (click)="cancelar();">
                                 <i class="fa fa-arrow-circle-left "></i> Regresar
                             </button>
                         </div>
                     </div>
                 </div>
 
-                <!-- botones aumento y disminucion -->
+                <!-- Botones de modificar egreso-->
                 <div class="card-body ">
+                    <!-- Boton editar partida -->
                     <div *ngIf="cuentaTabla" class="row mb-3">
+                        <div class="col-4 well text-center">
+                            <h5 class="mt-2"><b>Crear proyecto</b></h5>
+                        </div>
+                        <div class="col-2 well text-center">
+                            <button class="btn btn-danger mt- btn-sm" type="button" style="width: 100px;" (click)="mostrarProyectos()" title="Proyectos">
+                                <i class="fa fa-project-diagram fa-lg"></i>
+                            </button>
+                            <p style="font-size: 12px;">Proyectos</p>
+                        </div>
                         <div class="col-2 well"></div>
                         <div class="col-2 well"></div>
+                        <div class="col-2 well"></div>
+                    </div>
+                    <!-- Divicion de botones -->
+                    <hr>
+                    <!-- Botones de aumento y disminucion -->
+                    <div *ngIf="cuentaTabla" class="row mb-3">
+                        <div class="col-4 well text-center">
+                            <h5 class="mt-3"><b>Modificar partidas</b></h5>
+                        </div>
                         <div class="col-2 well text-center">
                             <button class="btn btn-primary mt-2 btn-sm" type="button" style="width: 100px;" (click)="aumento();" title="Aumentar o Disminuir">
                                 <i class="fas fa-plus"></i>/<i class="fas fa-minus"></i>
                             </button>
+                            <p style="font-size: 12px;">Aumentar o Disminuir</p>
                         </div>
                         <div class="col-2 well text-center">
                             <button class="btn btn-primary mt-2 btn-sm" type="button" style="width: 100px;" (click)="transferir();" title="Tranferir">
                                 <i class="fas fa-exchange-alt"></i>
                             </button>
+                            <p style="font-size: 12px;">Transferir</p>
                         </div>
                         <div class="col-2 well"></div>
                         <div class="col-2 well"></div>
@@ -98,8 +119,8 @@
                                         <div class="input-group-prepend align-middle mt-3">
                                             <span class="input-group-text" id="basic-addon1">$</span>
                                         </div>
-                                        <input *ngIf="!aumentTranf" type="number" class="form-control mt-3" [id]="'item'+i" (change)="calcularTotalTransf(i)" name="importe" [(ngModel)]="proyecto.importe">
-                                        <input *ngIf="aumentTranf" type="number" class="form-control mt-3" [id]="'item2'+i" (change)="calcularTotalAumento(i)" name="importe" [(ngModel)]="proyecto.importe">
+                                        <input *ngIf="!aumentTranf" type="number" class="form-control mt-3" [id]="'item'+i" (change)="calcularTotalTransf(i,  proyecto)" name="importe" [(ngModel)]="proyecto.importe">
+                                        <input *ngIf="aumentTranf" type="number" class="form-control mt-3" [id]="'item2'+i" (change)="calcularTotalAumento(i, proyecto)" name="importe" [(ngModel)]="proyecto.importe">
                                     </div>
                                 </td>
                             </tr>
@@ -125,4 +146,3 @@
         </div>
     </div>
 </div>
-<!-- <pre>{{ proyectos2[1].importe | json }}</pre> -->

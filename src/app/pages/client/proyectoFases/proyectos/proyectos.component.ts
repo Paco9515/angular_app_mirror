@@ -16,6 +16,7 @@ export class ProyectosComponent implements OnInit {
 	fases: any;
 	presupuesto: string;
 	total = 0;
+	bandera: boolean;
 
 	constructor(
 		private proyecto_service: ProyectoService,
@@ -44,18 +45,29 @@ export class ProyectosComponent implements OnInit {
 	}
 
 	ngOnInit() {
+		this.bandera = false;
 		this.activatedRoute.params.subscribe( params => {
 			this.presupuesto = params['id_presupuesto'];
+			this.bandera = params['bandera'];
+			// console.log(this.bandera);
 			this.getProyectos(this.presupuesto);
 		});
 	}
 
 	createProyecto() {
-		this.router.navigate([`/panel-adm/pres_egresos/${this.presupuesto}/proyectos`, 'nuevo']);
+		if (!this.bandera) {
+			this.router.navigate([`/panel-adm/pres_egresos/${this.presupuesto}/proyectos`, 'nuevo']);
+		} else {
+			this.router.navigate([`/panel-adm/mod_proyecto/${this.presupuesto}/proyectos/`, `nuevo`, this.bandera]);
+		}
 	}
 
 	mostrarFases(id_proyecto) {
-		this.router.navigate([`/panel-adm/pres_egresos/${this.presupuesto}/proyectos/${id_proyecto}/fases`]);
+		if (!this.bandera) {
+			this.router.navigate([`/panel-adm/pres_egresos/${this.presupuesto}/proyectos/${id_proyecto}/fases`]);
+		} else {
+			this.router.navigate([`/panel-adm/mod_fases/${this.presupuesto}/proyectos/${id_proyecto}/fases`, this.bandera]);
+		}
 	}
 
 	getProyectos($id_presupuesto) {
@@ -73,12 +85,21 @@ export class ProyectosComponent implements OnInit {
 		});
 	}
 
+	// editar normal
 	editar(proyecto) {
-		this.router.navigate([`/panel-adm/pres_egresos/${this.presupuesto}/proyectos`, proyecto]);
+		if (!this.bandera) {
+			this.router.navigate([`/panel-adm/pres_egresos/${this.presupuesto}/proyectos`, proyecto]);
+		} else {
+			this.router.navigate([`/panel-adm/mod_proyecto/${this.presupuesto}/proyectos`, proyecto, this.bandera]);
+		}
 	}
 
 	regresar() {
-		this.router.navigate([`/panel-adm/pres_egresos`]);
+		if (!this.bandera) {
+			this.router.navigate([`/panel-adm/pres_egresos`]);
+		} else {
+			this.router.navigate([`/panel-adm/modificar_egreso`]);
+		}
 	}
 
 	mostrarDetalle(proyecto) {
