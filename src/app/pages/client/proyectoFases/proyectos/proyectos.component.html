@@ -23,7 +23,7 @@
                                     Regresar
                                 </button>
                             </div>
-                            <div class="col-12 col-md-3 text-center text-sm-right">
+                            <div *ngIf="estadoEgreso != 'Finalizado'" class="col-12 col-md-3 text-center text-sm-right">
                                 <button type="button" class="btn btn-success btn-sm pull" (click)="createProyecto()">
 									<i class="fa fa-plus-circle"></i>
 									Agregar proyecto
@@ -43,7 +43,7 @@
                                         <th class="text-center" scope="col">Opciones</th>
                                     </tr>
                                 </thead>
-                                <tbody>
+                                <tbody class="scrollContent">
                                     <tr *ngIf="proyectos.length==0; else tableBlock">
                                         <td colspan="5" class="text-center">
                                             <span class="badge badge-info">
@@ -60,30 +60,32 @@
                                             <td>{{ proyecto.codigo }}</td>
                                             <td>{{ proyecto.nombre }}</td>
                                             <td class="text-center">
-                                                <span *ngIf="proyecto.status; else inactiveBlock" class="badge badge-success">
-													Activo
-												</span>
-                                                <ng-template #inactiveBlock>
-                                                    <span class="badge badge-secondary">Inactivo</span>
-                                                </ng-template>
+                                                <span *ngIf="proyecto.estado == 'Finalizado';" class="badge badge-danger">
+                                                    Finalizado
+                                                </span>
+                                                <span *ngIf="proyecto.estado == 'En curso';" class="badge badge-info text-white ">
+                                                    En curso
+                                                </span>
+                                                <span *ngIf="proyecto.estado == 'Creando';" class="badge badge-success">
+                                                    Creando
+                                                </span>
                                             </td>
                                             <td class="text-center" nowrap>
-                                                <button type="button" class="btn btn-primary btn-sm ml-3" (click)="mostrarFases(proyecto.id)">
-													<i class="fa fa-stream"></i>
-                                                    Fases
-                                                </button>
                                                 <button title="Ver detalles" type="button" class="btn btn-info btn-sm text-white ml-3" data-toggle="modal" data-target="#proyectoModal" (click)="mostrarDetalle(proyecto)">
-													<i class="fa fa-eye"></i>
+                                                    <i class="fa fa-eye"></i>
                                                 </button>
-                                                <button title="Editar" type="button" class="btn btn-primary btn-sm ml-3" (click)="editar(proyecto.id)" [disabled]="!proyecto.status">
+                                                <button *ngIf="estadoEgreso != 'Finalizado'" title="Editar" type="button" class="btn btn-primary btn-sm ml-3" (click)="editar(proyecto.id)" [disabled]="proyecto.deleted">
 													<i class="fa fa-edit"></i>
 												</button>
-                                                <button *ngIf="proyecto.status" title="Eliminar" type="button" class="btn btn-danger btn-sm ml-3" (click)="eliminarActivar(proyecto.id, false)">
-													<i class="fa fa-trash"></i>
+                                                <button *ngIf="!proyecto.deleted && estadoEgreso != 'Finalizado'" title="Eliminar" type="button" class="btn btn-danger btn-sm ml-3" (click)="eliminarActivar(proyecto.id, false)">
+                                                    <i class="fa fa-trash"></i>
 												</button>
-                                                <button *ngIf="!proyecto.status" title="Activar" type="button" class="btn btn-success btn-sm ml-3" (click)="eliminarActivar(proyecto.id, true)">
-													<i class="fa fa-arrow-circle-up"></i>
+                                                <button *ngIf="proyecto.deleted && estadoEgreso != 'Finalizado'" title="Activar" type="button" class="btn btn-success btn-sm ml-3" (click)="eliminarActivar(proyecto.id, true)">
+                                                    <i class="fa fa-arrow-circle-up"></i>
 												</button>
+                                                <button type="button" class="btn btn-secondary btn-sm ml-3" (click)="mostrarFases(proyecto.id)">
+                                                    <i class="fa fa-stream"></i> Fases
+                                                </button>
                                             </td>
                                         </tr>
                                     </ng-template>
@@ -133,12 +135,15 @@
                     <div class="col-sm-2 border bg-light font-weight-bold p-1 d-none d-sm-block text-right">Estado</div>
                     <div class="col border bg-light font-weight-bold p-1 d-sm-none">Estado</div>
                     <div class="col-sm-4 border p-1 text-center">
-                        <span *ngIf="detalle.status; else inactiveBlock" class="badge badge-success">
-                            Activo
+                        <span *ngIf="detalle.estado == 'Finalizado';" class="badge badge-danger">
+                            Finalizado
                         </span>
-                        <ng-template #inactiveBlock>
-                            <span class="badge badge-secondary">Inactivo</span>
-                        </ng-template>
+                        <span *ngIf="detalle.estado == 'En curso';" class="badge badge-info text-white ">
+                            En curso
+                        </span>
+                        <span *ngIf="detalle.estado == 'Creando';" class="badge badge-success">
+                            Creando
+                        </span>
                     </div>
 
                     <div class="col-sm-2 border bg-light font-weight-bold p-1 d-none d-sm-block text-center">Total</div>
@@ -167,21 +172,22 @@
                             <div class="col border bg-light font-weight-bold p-1 d-sm-none">Financiamiento</div>
                             <div class="col-sm-8 border p-1">{{ fase.nombre_tipo_financ }}</div>
 
-                            <div class="col-sm-2 border bg-light font-weight-bold p-1 d-none d-sm-block text-right">Estado</div>
+                            <!-- <div class="col-sm-2 border bg-light font-weight-bold p-1 d-none d-sm-block text-right">Estado</div>
                             <div class="col border bg-light font-weight-bold p-1 d-sm-none">Estado</div>
                             <div class="col-sm-4 border p-1 text-center text-sm-center">
                                 <span *ngIf="fase.status; else inactiveBlock" class="badge badge-success">Activo</span>
                                 <ng-template #inactiveBlock>
                                     <span class="badge badge-secondary">Inactivo</span>
                                 </ng-template>
-                            </div>
+                            </div> -->
 
                             <div class="col-sm-2 border bg-light font-weight-bold p-1 d-none d-sm-block text-center">Importe</div>
                             <div class="col border bg-light font-weight-bold p-1 d-sm-none">Importe</div>
-                            <div class="col-sm-4 border p-1 text-center"> {{ fase.importe | currency }}</div>
+                            <div class="col-sm-10 border p-1"> {{ fase.importe | currency }}</div>
                         </div>
                     </div>
                 </ng-template>
+                <pre> {{ fase | json }} </pre>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">

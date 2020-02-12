@@ -5,7 +5,7 @@ import { IndividualConfig, ToastrService } from 'ngx-toastr';
 @Injectable({
 	providedIn: 'root'
 })
-
+     
 export class MensajesService {
 
   constructor(

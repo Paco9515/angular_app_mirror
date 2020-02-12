@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { PresupuestoEgresoService } from '../../../common/services/presupuesto/egreso.service';
 import { ActivatedRoute } from '@angular/router';
 
@@ -8,15 +8,16 @@ import { ActivatedRoute } from '@angular/router';
 	styles: []
 })
 
-export class EgresoComponent implements OnInit {
+export class EgresoComponent  {
 
-	proyectos: any;
+	proyectos: any[];
 	anioPresEgreso: number;
 	total: number;
+	mensajeAlert: string;
 
 	constructor(
 		private presupuestoEgresos: PresupuestoEgresoService,
-		private activateRoute: ActivatedRoute
+		private activateRoute: ActivatedRoute,
 	) {
 		this.activateRoute.params.subscribe(params => {
 			this.getPresupuesto(params['id_presupuesto']);
@@ -25,11 +26,12 @@ export class EgresoComponent implements OnInit {
 
 	private getPresupuesto($id_presupuesto: string) {
 		this.presupuestoEgresos.get_presupuesto($id_presupuesto)
-		.subscribe((data: any) => {
-			this.proyectos = data.data;
-			this.total = this.proyectos.reduce(( acc, obj )  => acc + (obj.importe), 0);
-		});
+			.subscribe((data: any) => {
+				this.proyectos = data.data;
+				this.total = this.proyectos.reduce(( contador, proyecto )  => contador + (proyecto.importe), 0);
+			}, error => {
+				this.mensajeAlert = error.error.message;
+			});
 	}
 
-	ngOnInit() {}
 }

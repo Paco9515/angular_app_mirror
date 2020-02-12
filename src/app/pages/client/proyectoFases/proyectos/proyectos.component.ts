@@ -4,17 +4,20 @@ import { Proyectos } from 'src/app/common/interfaces/pe.interface';
 import { MensajesService } from '../../../../common/services/shared/mensajes.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FaseService } from '../../../../common/services/pe/fase.service';
+import { Observable } from 'rxjs';
 
 @Component({
 	selector: 'app-proyectos',
 	templateUrl: './proyectos.component.html'
+	
 })
 export class ProyectosComponent implements OnInit {
 
 	detalle: Proyectos;
 	proyectos: Proyectos[];
 	fases: any;
-	presupuesto: string;
+	estadoEgreso: any = '';
+	id_presupuesto: any;
 	total = 0;
 
 	constructor(
@@ -37,36 +40,56 @@ export class ProyectosComponent implements OnInit {
 				nombre_subprograma: '',
 				codigo_programa: '',
 				nombre_programa: '',
-				status: false
+				estado: '',
+				deleted: false
 			};
-			// console.log(navigation);
 			this.proyectos = [];
+
+			// let obs =  new Observable( observer => {
+			// 	let contador = 1;
+
+			// 	let intervalo = setInterval(() => {
+
+			// 		accion += 1;
+			// 		observer.next(accion);
+			// 	},1000);
+
+			// });
+			
+			// obs.subscribe( accion => {
+			// 	console.log('Sub', accion);
+			// });
+
 	}
 
 	ngOnInit() {
 		this.activatedRoute.params.subscribe( params => {
-			this.presupuesto = params['id_presupuesto'];
-			this.getProyectos(this.presupuesto);
+			this.id_presupuesto = params['id_presupuesto'];
+			this.getProyectos(this.id_presupuesto);
 		});
 	}
 
 	createProyecto() {
-		this.router.navigate([`/panel-adm/pres_egresos/${this.presupuesto}/proyectos`, 'nuevo']);
+		this.router.navigate([`/panel-adm/pres_egresos/${this.id_presupuesto}/proyectos`, 'nuevo']);
 	}
 
 	mostrarFases(id_proyecto) {
-		this.router.navigate([`/panel-adm/pres_egresos/${this.presupuesto}/proyectos/${id_proyecto}/fases`]);
+		this.router.navigate([`/panel-adm/pres_egresos/${this.id_presupuesto}/proyectos/${id_proyecto}/fases`]);
 	}
 
 	getProyectos($id_presupuesto) {
 		this.proyecto_service.getProyectos($id_presupuesto)
-		.subscribe((data: any) => this.proyectos = data);
+		.subscribe((data: any) => {
+			this.proyectos = data[0];
+			this.estadoEgreso = data[1];
+			this.estadoEgreso =  this.estadoEgreso.estado;
+		});
 	}
 
 	eliminarActivar(id: string, type: boolean) {
 		this.proyecto_service.activarEliminarProyecto(id, type)
 		.subscribe((data: any) => {
-			this.getProyectos(this.presupuesto);
+			this.getProyectos(this.id_presupuesto);
 			this.mensaje.success(data);
 		}, error => {
 			this.mensaje.danger(error.error);
@@ -74,7 +97,7 @@ export class ProyectosComponent implements OnInit {
 	}
 
 	editar(proyecto) {
-		this.router.navigate([`/panel-adm/pres_egresos/${this.presupuesto}/proyectos`, proyecto]);
+		this.router.navigate([`/panel-adm/pres_egresos/${this.id_presupuesto}/proyectos`, proyecto]);
 	}
 
 	regresar() {
@@ -86,14 +109,16 @@ export class ProyectosComponent implements OnInit {
 		this.total = 0;
 		this.fase_service.getFases(proyecto.id)
 			.subscribe( (data: any) => {
-				this.fases = data;
+				this.fases = data[0];
 				if (this.fases !== []) {
 					this.fases.forEach(function(fase) {
+						
 						fase.importe = 0;
 						fase.partidas.forEach(function(partida) {
 							fase.importe += partida.importe;
 						});
 						this.total += fase.importe;
+
 					}, this);
 				}
 			});

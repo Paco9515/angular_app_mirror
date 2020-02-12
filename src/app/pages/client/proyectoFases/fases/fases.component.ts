@@ -12,8 +12,8 @@ export class FasesComponent implements OnInit {
 
 	fases: Fases[];
 	proyecto: string;
-	presupuesto: string;
-
+	presupuesto: any[];
+	estadoProyecto: string = '';
 	detalle: Fases;
 	partidas: any[];
 
@@ -29,6 +29,7 @@ export class FasesComponent implements OnInit {
 		this.detalle = {
 			id: '',
 			id_proyecto: '',
+			estado_proyecto: '',
 			id_tipo_financ: '',
 			codigo: '',
 			nombre: '',
@@ -44,7 +45,7 @@ export class FasesComponent implements OnInit {
 			calle: '',
 			num_exterior: null,
 			num_interior: null,
-			status: false,
+			deleted: false,
 			partidas: null
 		};
 	}
@@ -65,8 +66,9 @@ export class FasesComponent implements OnInit {
 	getFases(id_proyecto) {
 		this.fase_service.getFases(id_proyecto)
 			.subscribe((data: any) => {
-				this.fases = data;
-				
+				this.fases = data[0];
+				this.estadoProyecto = data[1];
+				console.log(this.estadoProyecto);
 			});
 	};
 
@@ -91,6 +93,6 @@ export class FasesComponent implements OnInit {
 	mostrarDetalle( fase ) {
 		this.detalle = fase;
 		this.total = 0;
-		this.total = this.detalle.partidas.reduce(( sum, partida )  => sum + (partida.importe), 0);
+		this.total = this.detalle.partidas.reduce(( sum: number, partida: any )  => sum + (partida.importe), 0);
 	}
 }

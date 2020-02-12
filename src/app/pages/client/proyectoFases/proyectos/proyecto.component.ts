@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgForm } from '@angular/forms';
 import { Proyectos } from 'src/app/common/interfaces/pe.interface';
@@ -12,7 +12,7 @@ import { PresupuestoEgresoService } from '../../../../common/services/presupuest
 	templateUrl: './proyecto.component.html'
 })
 
-export class ProyectoComponent implements OnInit {
+export class ProyectoComponent {
 
 	fechaFinal: boolean = true;
 	limiteFechaInicio: Date;
@@ -29,7 +29,7 @@ export class ProyectoComponent implements OnInit {
 		anio: '',
 		fecha_inicio: null,
 		fecha_final: null,
-		status: false
+		estado: ''
 	};
 
 	programas: any[];
@@ -57,8 +57,6 @@ export class ProyectoComponent implements OnInit {
 		});
 		this.getProgramas();
 	}
-
-	ngOnInit() {}
 
 	cargarProyecto(id: string) {
 		this.proyectoService.getProyecto(id)

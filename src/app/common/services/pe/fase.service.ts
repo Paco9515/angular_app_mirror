@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { ConstantsService } from '../shared/constants.service';
-import { Fases } from '../../interfaces/pe.interface';
 
 @Injectable({
 	providedIn: 'root'
@@ -43,4 +42,5 @@ export class FaseService  {
 	get_asentamientos_cp(cp: number) {
 		return this.constants.getRequest(`/get_asentamientos_cp/${cp}`, 'get', false);
 	}
+
 }
