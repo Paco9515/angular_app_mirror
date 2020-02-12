@@ -144,7 +144,7 @@
                                             <th class="text-center" scope="col">Código</th>
                                             <th scope="col">Nombre partida</th>
                                             <th class="text-center" scope="col">Importe</th>
-                                            <th class="text-center" scope="col">Opciones</th>
+                                            <th *ngIf="!bandera" class="text-center" scope="col">Opciones</th>
                                         </tr>
                                     </thead>
                                     <tbody *ngIf="partidas.length>0; else tableEmpty">
@@ -153,7 +153,7 @@
                                             <td class="text-center">{{ partida.codigo_partida }}</td>
                                             <td>{{ partida.nombre_partida }}</td>
                                             <td class="text-right">{{ partida.importe | currency }}</td>
-                                            <td class="text-center" nowrap>
+                                            <td *ngIf="!bandera" class="text-center" nowrap>
                                                 <button type="button" class="btn btn-danger btn-sm ml-3" (click)="eliminarPartida(i, partida)">
                                                     <i class="fa fa-trash-alt"></i>
                                                 </button>
@@ -185,7 +185,7 @@
                         <div class="card-footer">
                             <div class="form-group row">
                                 <div class="col-12">
-                                    <button class="btn btn-primary btn-sm pull-right" type="submit" [disabled]="f.invalid || !f.dirty" (click)="guardar(f)">
+                                    <button class="btn btn-primary btn-sm pull-right" type="submit" (click)="guardar(f)">
 										<i class="fa fa-save"></i>
 										Guardar
 									</button>

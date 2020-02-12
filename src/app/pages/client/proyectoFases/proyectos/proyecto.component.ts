@@ -32,8 +32,12 @@ export class ProyectoComponent implements OnInit {
 		status: false
 	};
 
+	proyecto_original: any;
+
 	programas: any[];
 	subprogramas: any[];
+	bandera: boolean;
+	id_proyecto: string ;
 
 	constructor(
 		private proyectoService: ProyectoService,
@@ -43,11 +47,17 @@ export class ProyectoComponent implements OnInit {
 		private router: Router,
 		private egresos: PresupuestoEgresoService
 	) {
+
+		this.bandera = false;
 		this.activatedRoute.params.subscribe((params: any) => {
 			if (params.id_proyecto !== 'nuevo') {
+				this.bandera = params['bandera'];
+				this.id_proyecto = params.id_proyecto;
 				this.cargarProyecto(params.id_proyecto);
 			}
+
 			this.proyecto.id_presupuesto = params['id_presupuesto'];
+			this.bandera = params['bandera'];
 			this.egresos.get_presupuesto(this.proyecto.id_presupuesto)
 				.subscribe((data: any) => {
 					this.anioEgreso =  data.data.anio;
@@ -58,9 +68,16 @@ export class ProyectoComponent implements OnInit {
 		this.getProgramas();
 	}
 
-	ngOnInit() {}
+	ngOnInit() {
+	}
 
 	cargarProyecto(id: string) {
+		this.proyecto_original = [];
+		this.proyectoService.getProyecto(id)
+			.subscribe((data: any) => {
+				this.proyecto_original = data.data;
+				// console.log(this.proyecto_original);
+			});
 		this.proyectoService.getProyecto(id)
 			.subscribe((data: any) => {
 				this.proyecto = data.data;
@@ -98,20 +115,41 @@ export class ProyectoComponent implements OnInit {
 	guardar(f: NgForm) {
 		this.proyecto.anio = this.anioEgreso;
 		if (f.valid) {
-			console.log(this.proyecto);
-			this.proyectoService.createUpdateProyecto(this.proyecto)
-				.subscribe((data: any) => {
-					this.mensaje.success(data);
-				}, error => {
-					this.mensaje.danger(error.error);
-				});
+			if (this.bandera) {
+				this.proyectoService.createUpdateProyecto2(this.proyecto, this.proyecto_original)
+					.subscribe((data: any) => {
+					}, error => {
+						this.mensaje.danger(error.error);
+					});
+				this.proyectoService.createUpdateProyecto(this.proyecto)
+					.subscribe((data: any) => {
+						this.mensaje.success(data);
+					}, error => {
+						this.mensaje.danger(error.error);
+					});
+			} else {
+				this.proyectoService.createUpdateProyecto(this.proyecto)
+					.subscribe((data: any) => {
+						this.mensaje.success(data);
+					}, error => {
+						this.mensaje.danger(error.error);
+					});
+			}
 
 			// this.resetVariable();
+			this.cargarProyecto(this.id_proyecto);
 		}
 	}
 
+	// REgresar normal
 	regresar() {
 		this.router.navigate([`/panel-adm/pres_egresos/${this.proyecto.id_presupuesto}/proyectos`]);
+	}
+
+	// Regresar a proyectos modificar egreso
+	mod_regresar() {
+		const bandera = true;
+		this.router.navigate([`/panel-adm/mod_proyectos/${this.proyecto.id_presupuesto}/proyectos/${bandera}`]);
 	}
 
 }

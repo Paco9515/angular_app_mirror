@@ -27,6 +27,11 @@ const admin_routes: Routes = [
 			{ path: 'pres_egresos/:id_presupuesto/proyectos/:id_proyecto/fases', component: FasesComponent },
 			{ path: 'pres_egresos/:id_presupuesto/proyectos/:id_proyecto/fases/:id_fase', component: FaseComponent },
 
+			{ path: 'mod_proyectos/:id_presupuesto/proyectos/:bandera', component: ProyectosComponent },
+			{ path: 'mod_proyecto/:id_presupuesto/proyectos/:id_proyecto/:bandera', component: ProyectoComponent },
+			{ path: 'mod_fases/:id_presupuesto/proyectos/:id_proyecto/fases/:bandera', component: FasesComponent },
+			{ path: 'mod_fase/:id_presupuesto/proyectos/:id_proyecto/fases/:id_fase/:bandera', component: FaseComponent },
+
 			{ path: '', pathMatch: 'full', redirectTo: 'escritorio' }
 		]
 	}

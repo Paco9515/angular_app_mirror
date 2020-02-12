@@ -28,17 +28,25 @@ export class FaseComponent implements OnInit {
 	partidas: PartidaFase[] = [];
 	partidasEliminadasAlEditar: any[] = [];
 	// verifica si la fase se esta editando
-	editar:boolean;
-	id_fase:string = null;
+	editar: boolean;
+	id_fase: string = null;
 	importe: number = null;
 	total: number = 0;
 	tipo_asentamiento = '';
 	zona_asentamiento = '';
 
+	bandera: boolean;
+
 	envioInformacion: any = {
 		fase: null,
 		partidasEliminadas: null
 	};
+
+	faseHistorial: Fases;
+	envioInfoHistorial = {
+		fase: null
+	};
+
 
 	constructor(
 		private faseService: FaseService,
@@ -50,9 +58,11 @@ export class FaseComponent implements OnInit {
 	}
 
 	ngOnInit() {
+		this.bandera = false;
 		this.activatedRoute.params.subscribe((data: any) => {
 			this.proyecto = data['id_proyecto'];
 			this.presupuesto = data['id_presupuesto'];
+			this.bandera = data['bandera'];
 			this.editar = false;
 			if (data.id_fase !== 'nuevo') {
 				this.id_fase =  data.id_fase;
@@ -62,22 +72,50 @@ export class FaseComponent implements OnInit {
 		});
 	}
 
-	eliminarPartida(id: any, partida: PartidaFase){
+
+	eliminarPartida(id: any, partida: PartidaFase) {
 		this.total -= partida.importe;
 		this.partidas.splice(id, 1);
-		if(this.editar && partida.id){
+		if (this.editar && partida.id) {
 			this.partidasEliminadasAlEditar.push(partida.id);
 		}
 	}
 
-	private resetVariableEnvio(){
+	private resetVariableEnvio() {
 		this.envioInformacion = {
 			fase: null,
 			partidasEliminadas: null
 		};
+		this.envioInfoHistorial = {
+			fase: null
+		};
 	}
 	public resetVariable() {
 		this.fase = {
+			id: '',
+			id_proyecto: '',
+			id_tipo_financ: '',
+			id_subfuente: '',
+			id_fuente: '',
+			codigo: '',
+			nombre: '',
+			descripcion: '',
+			externo: false,
+			codigo_postal: '',
+			estado: '',
+			municipio: '',
+			id_ubicacion_geografica: '',
+			asentamiento: '',
+			tipo_asentamiento: '',
+			zona_asentamiento: '',
+			calle: '',
+			num_exterior: null,
+			num_interior: null,
+			status: false,
+			partidas: null
+		};
+
+		this.faseHistorial = {
 			id: '',
 			id_proyecto: '',
 			id_tipo_financ: '',
@@ -137,7 +175,16 @@ export class FaseComponent implements OnInit {
 
 				this.total = this.partidas.reduce(( sum, partida )  => sum + (partida.importe), 0);
 
+				// console.log('fase: ', this.fase);
+				// console.log('partidas: ', this.partidas);
 			});
+
+		// console.log('id_fase:', this.fase.id);
+		this.faseService.getFase(id).subscribe((obj1: any) => {
+			this.faseHistorial = obj1.data[0];
+			this.faseHistorial.partidas = obj1.data[1];
+			this.envioInfoHistorial.fase = this.faseHistorial;
+		});
 	}
 
 	getDireccion($cp) {
@@ -182,9 +229,9 @@ export class FaseComponent implements OnInit {
 		this.fase.tipo_asentamiento = '';
 		this.fase.zona_asentamiento = '';
 		this.asentamientos.forEach((dato) => {
-			if(dato.id == id_asentamiento) {
-				this.fase.tipo_asentamiento = dato.tipo_asentamiento
-				this.fase.zona_asentamiento = dato.zona_asentamiento
+			if (dato.id == id_asentamiento) {
+				this.fase.tipo_asentamiento = dato.tipo_asentamiento;
+				this.fase.zona_asentamiento = dato.zona_asentamiento;
 			}
 		});
 	}
@@ -195,23 +242,39 @@ export class FaseComponent implements OnInit {
 		this.fase.partidas = this.partidas;
 		this.envioInformacion.fase = this.fase;
 		this.envioInformacion.partidasEliminadas = this.partidasEliminadasAlEditar;
+
+		if (this.bandera) {
+			this.faseService.guardarHistorial(this.envioInfoHistorial)
+				.subscribe((data: any) => {
+
+				}, error => {
+
+				});
+		}
 		this.faseService.createUpdateFase(this.envioInformacion)
 			.subscribe((data: any) => {
-				console.log(data);
+				// console.log(data);
 				this.resetVariableEnvio();
 				this.partidasEliminadasAlEditar = [];
 				return this.mensaje.success(data);
 			}, error => {
-				console.log(error);
+				// console.log(error);
 				return this.mensaje.danger(error.error);
 			});
+
+		// console.log(this.envioInfoHistorial);
+
 	}
 
 	regresar() {
-		this.router.navigate([`/panel-adm/pres_egresos/${this.presupuesto}/proyectos/${this.proyecto}/fases`]);
+		if (!this.bandera) {
+			this.router.navigate([`/panel-adm/pres_egresos/${this.presupuesto}/proyectos/${this.proyecto}/fases`]);
+		} else {
+			this.router.navigate([`/panel-adm/mod_fases/${this.presupuesto}/proyectos/${this.proyecto}/fases`, this.bandera]);
+		}
 	}
 
-	cerrarModal(){
+	cerrarModal() {
 		this.importe = null;
 		this.cog_component.restartVariables();
 	}

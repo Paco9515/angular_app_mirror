@@ -14,7 +14,7 @@ export class FaseService  {
 	getProyectos() {
 		return this.constants.getRequest(`/get_proyectos`, 'get', false);
 	}
-	
+
 	// EL PRIMER PARAMETRO CONTIENE LOS DATOS DE LA FASE
 	createUpdateFase(informacion: any) {
 		if (informacion.fase.id === '') {
@@ -22,6 +22,11 @@ export class FaseService  {
 		} else {
 			return this.constants.getRequest(`/update_fase`, 'put', informacion);
 		}
+	}
+
+	/* guarda los datos en las tablas de historial */
+	guardarHistorial(infoHistorial: any) {
+		return this.constants.getRequest(`/create_fase_partida_historial/`, 'post', infoHistorial);
 	}
 
 	getFase(id: string) {

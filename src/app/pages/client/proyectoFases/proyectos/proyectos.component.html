@@ -27,7 +27,7 @@
                                 <button type="button" class="btn btn-success btn-sm pull" (click)="createProyecto()">
 									<i class="fa fa-plus-circle"></i>
 									Agregar proyecto
-								</button>
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -68,20 +68,25 @@
                                                 </ng-template>
                                             </td>
                                             <td class="text-center" nowrap>
+                                                <!-- boton normal para la creacion de fases -->
                                                 <button type="button" class="btn btn-primary btn-sm ml-3" (click)="mostrarFases(proyecto.id)">
 													<i class="fa fa-stream"></i>
                                                     Fases
                                                 </button>
+                                                <!-- boton ver detalles del proyecto -->
                                                 <button title="Ver detalles" type="button" class="btn btn-info btn-sm text-white ml-3" data-toggle="modal" data-target="#proyectoModal" (click)="mostrarDetalle(proyecto)">
 													<i class="fa fa-eye"></i>
                                                 </button>
-                                                <button title="Editar" type="button" class="btn btn-primary btn-sm ml-3" (click)="editar(proyecto.id)" [disabled]="!proyecto.status">
+                                                <!-- boton para modificar el proyecto -->
+                                                <button *ngIf="!bandera" title="Editar" type="button" class="btn btn-primary btn-sm ml-3" (click)="editar(proyecto.id)" [disabled]="!proyecto.status">
 													<i class="fa fa-edit"></i>
-												</button>
-                                                <button *ngIf="proyecto.status" title="Eliminar" type="button" class="btn btn-danger btn-sm ml-3" (click)="eliminarActivar(proyecto.id, false)">
+                                                </button>
+
+                                                <!-- botones normales -->
+                                                <button *ngIf="proyecto.status && !bandera" title="Eliminar" type="button" class="btn btn-danger btn-sm ml-3" (click)="eliminarActivar(proyecto.id, false)">
 													<i class="fa fa-trash"></i>
 												</button>
-                                                <button *ngIf="!proyecto.status" title="Activar" type="button" class="btn btn-success btn-sm ml-3" (click)="eliminarActivar(proyecto.id, true)">
+                                                <button *ngIf="!proyecto.status && !bandera" title="Activar" type="button" class="btn btn-success btn-sm ml-3" (click)="eliminarActivar(proyecto.id, true)">
 													<i class="fa fa-arrow-circle-up"></i>
 												</button>
                                             </td>
