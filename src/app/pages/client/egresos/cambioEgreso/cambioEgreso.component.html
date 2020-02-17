@@ -113,7 +113,7 @@
                                 <td class="align-middle">{{ proyecto.nombre_fase }}</td>
                                 <td class="align-middle text-center">{{ proyecto.codigo_partida }}</td>
                                 <td class="align-middle">{{ proyecto.nombre_partida}}</td>
-                                <td class="align-middle text-center">{{ proyectos2[i].importe | number:"1.2-2"}}</td>
+                                <td *ngIf="!cuentaTabla" class="align-middle text-center">{{ proyectos2[i].importe | number:"1.2-2"}}</td>
                                 <td class="">
                                     <div class="input-group mb-3 ">
                                         <div class="input-group-prepend align-middle mt-3">
