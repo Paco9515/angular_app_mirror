@@ -4,7 +4,6 @@ import { PresupuestoEgresoService } from 'src/app/common/services/presupuesto/eg
 import { Router } from '@angular/router';
 import { UiComponent } from '../../../components/classification/unidadesInternas/ui.component';
 import { PresupuestoEgreso } from 'src/app/common/interfaces/presupuesto.interface';
-// import { DOCUMENT } from '@angular/platform-browser';
 
 
 @Component({
@@ -21,20 +20,18 @@ export class EgresosComponent {
 	presupuesto: PresupuestoEgreso = {
 		id_centro_costo: '',
 		nombre: '',
+		estado: null,
 		anio: null
 	};
 	anioActual: number = new Date().getFullYear();
 	anioSiguiente: number = this.anioActual + 1;
-
 	showModal = false;
 
 	constructor(
-		// @Inject(DOCUMENT) private _document,
 		private mensaje: MensajesService,
 		private egreso_service: PresupuestoEgresoService,
 		private router: Router
 		) {}
-
 
 	mostrarProyectos( id_presupuesto: string) {
 		this.router.navigate([`/panel-adm/pres_egresos/${id_presupuesto}/proyectos`]);
@@ -75,22 +72,27 @@ export class EgresosComponent {
 	showModel() {
 		this.showModal = false;
 		let anio: number = 0;
+		let anioActualExiste:boolean = false;
 
 		if (this.presupuestos.length === 0) {
 			this.showModal = true;
 		} else {
-			this.presupuestos.forEach(element => {
-				if ( element.anio > anio ) {
-					anio = element.anio;
+			this.presupuestos.forEach(presupuesto => {
+				if( presupuesto.anio > anio ) {
+					anio = presupuesto.anio;
+				}
+				if(presupuesto.anio == this.anioActual){
+					anioActualExiste = true; 
 				}
 			});
-			this.crearPresupuesto(anio + 1);
+
+			if(anioActualExiste){
+				this.crearPresupuesto(anio + 1);
+			} else {
+				this.showModal = true
+				this.anioSiguiente = anio + 1;
+			}
 		}
-
 		this.getPresupuestos();
-	}
-
-	finalizarPresupuesto(presupuesto) {
-		console.log('Presupuesto finalizado');
 	}
 }

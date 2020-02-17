@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgForm } from '@angular/forms';
 import { Proyectos } from 'src/app/common/interfaces/pe.interface';
@@ -12,7 +12,7 @@ import { PresupuestoEgresoService } from '../../../../common/services/presupuest
 	templateUrl: './proyecto.component.html'
 })
 
-export class ProyectoComponent implements OnInit {
+export class ProyectoComponent {
 
 	fechaFinal: boolean = true;
 	limiteFechaInicio: Date;
@@ -29,14 +29,14 @@ export class ProyectoComponent implements OnInit {
 		anio: '',
 		fecha_inicio: null,
 		fecha_final: null,
-		status: false
+		estado: ''
 	};
 
 	proyecto_original: any;
 
 	programas: any[];
 	subprogramas: any[];
-	bandera: boolean;
+	bandera: boolean = false;
 	id_proyecto: string ;
 
 	constructor(
@@ -47,35 +47,37 @@ export class ProyectoComponent implements OnInit {
 		private router: Router,
 		private egresos: PresupuestoEgresoService
 	) {
-
-		this.bandera = false;
+		
 		this.activatedRoute.params.subscribe((params: any) => {
-			if (params.id_proyecto !== 'nuevo') {
-				this.bandera = params['bandera'];
-				this.id_proyecto = params.id_proyecto;
-				this.cargarProyecto(params.id_proyecto);
-			}
+			
+			// Comprobar la existencia del parametro bandera
+			(typeof params['bandera'] !== 'undefined')? this.bandera = params['bandera'] : this.bandera =  false;
 
-			this.proyecto.id_presupuesto = params['id_presupuesto'];
-			this.bandera = params['bandera'];
-			this.egresos.get_presupuesto(this.proyecto.id_presupuesto)
-				.subscribe((data: any) => {
-					this.anioEgreso =  data.data.anio;
-					this.limiteFechaInicio = new Date(`01-01-${this.anioEgreso}`);
-					this.limiteFechaFinal = new Date(`12-31-${this.anioEgreso}`);
-				});
+			if (params.id_proyecto !== 'nuevo') {
+				// Carga del proyecto a editar proyecto
+				this.id_proyecto = params.id_proyecto;
+				this.cargarProyecto(this.id_proyecto);
+			} else {
+				// Iniciar variables para creacion de proyecto nuevo
+				this.proyecto.id_presupuesto = params['id_presupuesto'];
+				this.egresos.get_presupuestoId(this.proyecto.id_presupuesto)
+					.subscribe((data: any) => {
+						this.anioEgreso =  data.data.anio;
+						this.limiteFechaInicio = new Date(`01-01-${this.anioEgreso}`);
+						this.limiteFechaFinal = new Date(`12-31-${this.anioEgreso}`);
+					});
+			}
 		});
 		this.getProgramas();
-	}
-
-	ngOnInit() {
+		console.log(this.bandera);
 	}
 
 	cargarProyecto(id: string) {
 		console.log('entre a cargar proyecto');
 		this.proyecto_original = [];
-		this.proyectoService.getProyecto(id)
+			this.proyectoService.getProyecto(id)
 			.subscribe((data: any) => {
+				
 				this.proyecto_original = data.data;
 				console.log(this.proyecto_original);
 			});
@@ -83,26 +85,30 @@ export class ProyectoComponent implements OnInit {
 		this.proyectoService.getProyecto(id)
 			.subscribe((data: any) => {
 				this.proyecto = data.data;
+
 				const PROGRAMA = this.proyecto.id_programa;
 				const SUBPROGRAMA = this.proyecto.id_subprograma;
 				this.getSubprogramaByPrograma(PROGRAMA);
 				this.getSubprograma(SUBPROGRAMA);
-
 			}, error => {
 				this.mensaje.danger(error.error);
 			});
 	}
 
+
+	// Obtener todos los programas
 	getProgramas() {
 		this.cpService.get_programas()
 			.subscribe((data: any) => this.programas = data);
 	}
 
+	// Obtener subprogramas pertenecientes a un programa
 	getSubprogramaByPrograma($id_programa) {
 		this.cpService.get_subprogramas($id_programa)
 			.subscribe((data: any) => this.subprogramas = data.data);
 	}
 
+	// Asignacion de i_programa a el objeto proyecto
 	getSubprograma($id_subprograma) {
 		if ($id_subprograma) {
 			this.proyecto.id_subprograma = $id_subprograma;
@@ -141,7 +147,7 @@ export class ProyectoComponent implements OnInit {
 		}
 	}
 
-	// REgresar normal
+	// Regresar normal
 	regresar() {
 		this.router.navigate([`/panel-adm/pres_egresos/${this.proyecto.id_presupuesto}/proyectos`]);
 	}

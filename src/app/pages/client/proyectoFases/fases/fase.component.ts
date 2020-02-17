@@ -111,7 +111,7 @@ export class FaseComponent implements OnInit {
 			calle: '',
 			num_exterior: null,
 			num_interior: null,
-			status: false,
+			deleted: false,
 			partidas: null
 		};
 
@@ -135,7 +135,7 @@ export class FaseComponent implements OnInit {
 			calle: '',
 			num_exterior: null,
 			num_interior: null,
-			status: false,
+			deleted: false,
 			partidas: null
 		};
 	}

@@ -68,22 +68,22 @@
                                         <td>{{ i+1 }}</td>
                                         <td>{{ presupuesto.nombre }}</td>
                                         <td class="text-center">
-                                            <span *ngIf="presupuesto.status; else inactiveBlock" class="badge badge-success">
+                                            <span *ngIf="presupuesto.estado == 'Finalizado';" class="badge badge-danger">
                                                 Finalizado
                                             </span>
-                                            <ng-template #inactiveBlock>
-                                                <span class="badge badge-secondary"> En Proceso</span>
-                                            </ng-template>
+                                            <span *ngIf="presupuesto.estado == 'En curso';" class="badge badge-info text-white ">
+                                                En curso
+                                            </span>
+                                            <span *ngIf="presupuesto.estado == 'Creando';" class="badge badge-success">
+                                                Creando
+                                            </span>
                                         </td>
                                         <td class="text-center" nowrap>
-                                            <button type="button" class="btn btn-info btn-sm text-white ml-3" [routerLink]="[presupuesto.id]">
+                                            <button type="button" class="btn btn-info btn-sm text-white ml-3" [routerLink]="presupuesto.id">
                                                 <i class="fa fa-eye"></i>
                                             </button>
-                                            <button type="button" class="btn btn-danger btn-sm ml-3  pull" (click)="mostrarProyectos(presupuesto.id, presupuesto.anio)">
+                                            <button type="button" class="btn btn-secondary btn-sm ml-3" (click)="mostrarProyectos(presupuesto.id, presupuesto.anio)">
                                                 <i class="fa fa-project-diagram fa-lg"></i> Proyectos
-                                            </button>
-                                            <button type="button" class="btn btn-info btn-sm text-white ml-3" [hidden]="presupuesto.status" (click)="finalizarPresupuesto(presupuesto.id)">
-                                                <i class="fa fa-thumbs-up"></i> Finalizar
                                             </button>
                                         </td>
                                     </tr>
@@ -107,28 +107,26 @@
     <div id="myModal" class="modal fade">
         <div class="modal-dialog">
             <div class="modal-content">
-                <div class="modal-header ">
-                    <h5 class="modal-title " id=" ">Crear Presupuesto</h5>
-                    <button type="button " class="close " data-dismiss="modal " aria-label="Close ">
-                        <span aria-hidden="true ">&times;</span>
-                    </button>
+                <div class="modal-header">
+                    <h5 class="modal-title">Crear Presupuesto</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
                 </div>
-                <div class="modal-body ">
-                    <p>Seleccione el año</p>
-                    <p>
-                        Este mensaje
-                    </p>
-                    <div class="row ">
-                        <div class="col-6 text-center ">
-                            <input type="button " class="btn btn-success" (click)="crearPresupuesto(anioActual) " value="{{ anioActual }} ">
+                <div class="modal-body">
+                    <p class="m-2">Seleccione el año</p>
+
+                    <div class="row">
+                        <div class="col-6 text-center">
+                            <input type="button" class="btn btn-success" (click)="crearPresupuesto(anioActual)" data-dismiss="modal" aria-label="Close" value="{{ anioActual }}">
                         </div>
-                        <div class="col-6 text-center ">
-                            <input type="button " class="btn btn-success" (click)="crearPresupuesto(anioSiguiente) " value="{{ anioSiguiente }} ">
+                        <div class="col-6 text-center">
+                            <input type="button" class="btn btn-success" (click)="crearPresupuesto(anioSiguiente)" data-dismiss="modal" aria-label="Close" value="{{ anioSiguiente }}">
                         </div>
                     </div>
                 </div>
-                <div class="modal-footer ">
-                    <button type="button " class="btn btn-default " data-dismiss="modal ">Cerrar</button>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal" aria-label="Close">Cerrar</button>
                 </div>
             </div>
         </div>

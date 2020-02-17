@@ -3,5 +3,5 @@ export interface PresupuestoEgreso {
 	id_centro_costo?: string;
 	nombre?: string;
 	anio: number;
-	status?: boolean;
+	estado?: string;
 }

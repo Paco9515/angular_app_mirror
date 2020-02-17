@@ -12,7 +12,7 @@ export class ProyectoService {
 	) { }
 
 	createUpdateProyecto(proyecto: Proyectos) {
-		if (proyecto.id === '') {
+		if (proyecto.id == '') {
 			return this.constants.getRequest(`/create_proyecto`, 'post', proyecto);
 		} else {
 			return this.constants.getRequest(`/update_proyecto`, 'put', proyecto);

@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { Clas_admin, Subeconomias, Economias, Financieros, Sectores } from '../../../common/interfaces/ca.interface';
 import { CaService } from 'src/app/common/services/ca/ca.service';
 
@@ -6,7 +6,7 @@ import { CaService } from 'src/app/common/services/ca/ca.service';
 	selector: 'app-ca',
 	templateUrl: './ca.component.html'
 })
-export class CaComponent implements OnInit {
+export class CaComponent {
 	@Input() primary_keys_ca: any;
 
 	administrativas: Clas_admin[];
@@ -28,8 +28,7 @@ export class CaComponent implements OnInit {
 			id_financiero: '',
 			id_sector: ''
 		};
-	}
-	ngOnInit() {
+
 		this.caService.getSectores()
 			.subscribe((data: any) => {
 				this.sectores = data;
@@ -60,7 +59,6 @@ export class CaComponent implements OnInit {
 			this.data.id_sector = id_sector;
 			this.caService.get_financieros_sector(id_sector)
 				.subscribe((data: any) => {
-					console.log(data);
 					this.financieros = data;
 				});
 		}

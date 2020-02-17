@@ -23,6 +23,10 @@ export class PresupuestoEgresoService {
 		return this.constants.getRequest(`/get_presupuestoEgresos/${id}`, 'get', false);
 	}
 
+	get_presupuestoId(id: string) {
+		return this.constants.getRequest(`/get_presupuestoEgresosId/${id}`, 'get', false);
+	}
+
 	get_presupuestoActual(id_cc: string) {
 		return this.constants.getRequest(`/get_presupuestoEgresoActual/${id_cc}`, 'get', false);
 	}

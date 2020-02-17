@@ -39,12 +39,13 @@ export class UiComponent implements OnInit {
 	ngOnInit() {
 		this.ui_service.getUnidadesAdmin()
 			.subscribe((data: any) => this.unidades = data);
-		if (this.primary_keys_ui[0] !== '0') {
-			this.getCcByUnidad(this.primary_keys_ui[0]);
-			this.getDataByCC(this.primary_keys_ui[1]);
-		} else {
+			
+		// if (this.primary_keys_ui[0] !== '0') {
+		// 	this.getCcByUnidad(this.primary_keys_ui[0]);
+		// 	this.getDataByCC(this.primary_keys_ui[1]);
+		// } else {
 			this.out.emit(this.data);
-		}
+		// }
 	}
 
 	getCcByUnidad(id_unidad: string) {

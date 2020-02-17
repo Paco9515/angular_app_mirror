@@ -3,6 +3,7 @@ import { FaseService } from 'src/app/common/services/pe/fase.service';
 import { Fases } from 'src/app/common/interfaces/pe.interface';
 import { MensajesService } from '../../../../common/services/shared/mensajes.service';
 import { Router, ActivatedRoute } from '@angular/router';
+import { ProyectoService } from '../../../../common/services/proyecto/proyecto.service';
 
 @Component({
 	selector: 'app-fases',
@@ -12,8 +13,8 @@ export class FasesComponent implements OnInit {
 
 	fases: Fases[];
 	proyecto: string;
-	presupuesto: string;
-
+	presupuesto: any[];
+	estadoProyecto: string = '';
 	detalle: Fases;
 	partidas: any[];
 	bandera: boolean;
@@ -22,6 +23,7 @@ export class FasesComponent implements OnInit {
 
 	constructor(
 		private fase_service: FaseService,
+		private proyectos_service: ProyectoService,
 		private mensaje: MensajesService,
 		private activatedRoute: ActivatedRoute,
 		private router: Router
@@ -30,6 +32,7 @@ export class FasesComponent implements OnInit {
 		this.detalle = {
 			id: '',
 			id_proyecto: '',
+			estado_proyecto: '',
 			id_tipo_financ: '',
 			codigo: '',
 			nombre: '',
@@ -45,19 +48,23 @@ export class FasesComponent implements OnInit {
 			calle: '',
 			num_exterior: null,
 			num_interior: null,
-			status: false,
+			deleted: false,
 			partidas: null
 		};
 		this.bandera = false;
 	}
 
 	ngOnInit() {
+
 		this.activatedRoute.params
 			.subscribe( params => {
+				(typeof params['bandera'] !== 'undefined')? this.bandera = params['bandera'] : this.bandera =  false;
+
 				this.proyecto = params['id_proyecto'];
 				this.presupuesto = params['id_presupuesto'];
-				this.bandera = params['bandera'];
+				this.getEstadoProyecto(this.proyecto);
 			});
+			// console.log(this.bandera);
 		this.getFases(this.proyecto);
 	}
 
@@ -74,7 +81,8 @@ export class FasesComponent implements OnInit {
 		this.fase_service.getFases(id_proyecto)
 			.subscribe((data: any) => {
 				this.fases = data;
-
+				// Se consulta el estado del proyecto de la primera fase
+				// this.estadoProyecto = this.fases[0].estado_proyecto
 			});
 	}
 
@@ -111,6 +119,16 @@ export class FasesComponent implements OnInit {
 	mostrarDetalle( fase ) {
 		this.detalle = fase;
 		this.total = 0;
-		this.total = this.detalle.partidas.reduce(( sum, partida )  => sum + (partida.importe), 0);
+		this.total = this.detalle.partidas.reduce(( sum: number, partida: any )  => sum + (partida.importe), 0);
 	}
+
+	getEstadoProyecto(id){
+		this.proyectos_service.getProyecto(id)
+			.subscribe((data: any) => {
+				this.estadoProyecto = data.estado;
+			}, error => {
+				this.mensaje.danger(error.error);
+			});
+	}
+
 }

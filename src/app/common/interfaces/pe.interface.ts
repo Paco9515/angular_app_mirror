@@ -9,7 +9,8 @@ export interface Proyectos {
 	fecha_inicio: Date;
 	fecha_final: Date;
 	anio?: string;
-	status: boolean;
+	estado?: string;
+	deleted?: boolean;
 	codigo_subprograma?: string;
 	nombre_subprograma?: string;
 	codigo_programa?: string;
@@ -21,6 +22,7 @@ export interface Fases {
 	id_proyecto?: string;
 	codigo_proyecto?: string;
 	nombre_proyecto?: string;
+	estado_proyecto?: string;
 	id_tipo_financ?: string;
 	id_subfuente?: string;
 	id_fuente?: string;
@@ -40,7 +42,7 @@ export interface Fases {
 	calle?: string;
 	num_exterior?: number;
 	num_interior?: number;
-	status: boolean;
+	deleted: boolean;
 	partidas: any;
 }
 

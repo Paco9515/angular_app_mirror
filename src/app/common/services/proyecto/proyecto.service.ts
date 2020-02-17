@@ -27,6 +27,10 @@ export class ProyectoService {
 		return this.constants.getRequest(`/get_proyectos`, 'get', false);
 	}
 
+	getProyecto(id) {
+		return this.constants.getRequest(`/get_proyecto_id/${id}`, 'get', false);
+	}
+
 
 
 }
