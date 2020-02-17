@@ -243,7 +243,7 @@ export class FaseComponent implements OnInit {
 		this.envioInformacion.fase = this.fase;
 		this.envioInformacion.partidasEliminadas = this.partidasEliminadasAlEditar;
 
-		if (this.bandera) {
+		if (this.bandera && this.fase.id !== '') {
 			this.faseService.guardarHistorial(this.envioInfoHistorial)
 				.subscribe((data: any) => {
 

@@ -20,11 +20,8 @@ export class ProyectoService {
 	}
 
 	// ** fUNCION QUE GUARDA UN HISTORIAL DE PROYECTOS **
-	createUpdateProyecto2(proyecto: Proyectos, proyectoHistorial: any) {
-		if (proyecto.id === '') {
-		} else {
-			return this.constants.getRequest(`/create_proyecto_historial`, 'post', proyectoHistorial);
-		}
+	createUpdateProyecto2(proyectoHistorial: any) {
+		return this.constants.getRequest(`/create_proyecto_historial`, 'post', proyectoHistorial);
 	}
 
 	getProyecto(id: string) {

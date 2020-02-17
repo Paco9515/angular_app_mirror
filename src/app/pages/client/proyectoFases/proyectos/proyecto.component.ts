@@ -73,13 +73,17 @@ export class ProyectoComponent {
 	}
 
 	cargarProyecto(id: string) {
-
+		console.log('entre a cargar proyecto');
 		this.proyecto_original = [];
 			this.proyectoService.getProyecto(id)
 			.subscribe((data: any) => {
 				
 				this.proyecto_original = data.data;
 				console.log(this.proyecto_original);
+			});
+
+		this.proyectoService.getProyecto(id)
+			.subscribe((data: any) => {
 				this.proyecto = data.data;
 
 				const PROGRAMA = this.proyecto.id_programa;
@@ -118,34 +122,28 @@ export class ProyectoComponent {
 
 	guardar(f: NgForm) {
 		this.proyecto.anio = this.anioEgreso;
-		
+		// console.log(this.proyecto.id);
 		if (f.valid) {
-			if (this.bandera) {
-				console.log(this.proyecto_original);
-				// this.proyectoService.createUpdateProyecto2(this.proyecto, this.proyecto_original)
-				// 	.subscribe((data: any) => {
-				// 		console.log(data);
-				// 		// this.mensaje.success(error.error);
-
-				// 	}, error => {
-				// 		this.mensaje.danger(error.error);
-				// 	});
-				// // this.proyectoService.createUpdateProyecto(this.proyecto)
-				// // 	.subscribe((data: any) => {
-				// // 		this.mensaje.success(data);
-				// // 	}, error => {
-				// // 		this.mensaje.danger(error.error);
-				// // 	});
-		} else {
-			this.proyectoService.createUpdateProyecto(this.proyecto)
-				.subscribe((data: any) => {
-						this.mensaje.success(data);
+			if (this.bandera && this.proyecto.id !== '') {
+				// console.log('entro en la bandera');
+				this.proyectoService.createUpdateProyecto2(this.proyecto_original)
+					.subscribe((data: any) => {
+						// console.log(data);
 					}, error => {
 						this.mensaje.danger(error.error);
 					});
 			}
+
+			this.proyectoService.createUpdateProyecto(this.proyecto)
+				.subscribe((data: any) => {
+					this.mensaje.success(data);
+				}, error => {
+					this.mensaje.danger(error.error);
+				});
+
+
 			// this.resetVariable();
-			// this.cargarProyecto(this.id_proyecto);
+
 		}
 	}
 
