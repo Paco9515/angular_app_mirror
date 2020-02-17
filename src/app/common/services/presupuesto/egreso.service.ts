@@ -23,9 +23,23 @@ export class PresupuestoEgresoService {
 		return this.constants.getRequest(`/get_presupuestoEgresos/${id}`, 'get', false);
 	}
 
-	// cambios de egresos
+	get_presupuestoId(id: string) {
+		return this.constants.getRequest(`/get_presupuestoEgresosId/${id}`, 'get', false);
+	}
+
+	get_presupuestoActual(id_cc: string) {
+		return this.constants.getRequest(`/get_presupuestoEgresoActual/${id_cc}`, 'get', false);
+	}
+
+	// ** SERVICIOS PARA LA MODIFICACION DEL EGRESO ** //
 	get_egreso(id: string) {
 		return this.constants.getRequest(`/get_presupuestoEgresos/${id}`, 'get', false);
 	}
+
+	// SERVICOO QUE MODIFICA EL EGRESO Y GUARDA LOS CAMBIOS EN EL HISTORIAL
+	modificar_egreso(info: any) {
+		return this.constants.getRequest(`/update_partidasEgreso`, 'put', info);
+	}
+
 
 }

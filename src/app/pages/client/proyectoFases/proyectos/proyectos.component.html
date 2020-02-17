@@ -27,7 +27,7 @@
                                 <button type="button" class="btn btn-success btn-sm pull" (click)="createProyecto()">
 									<i class="fa fa-plus-circle"></i>
 									Agregar proyecto
-								</button>
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -71,18 +71,22 @@
                                                 </span>
                                             </td>
                                             <td class="text-center" nowrap>
+                                                <!-- boton ver detalles del proyecto -->
                                                 <button title="Ver detalles" type="button" class="btn btn-info btn-sm text-white ml-3" data-toggle="modal" data-target="#proyectoModal" (click)="mostrarDetalle(proyecto)">
                                                     <i class="fa fa-eye"></i>
                                                 </button>
-                                                <button *ngIf="estadoEgreso != 'Finalizado'" title="Editar" type="button" class="btn btn-primary btn-sm ml-3" (click)="editar(proyecto.id)" [disabled]="proyecto.deleted">
+                                                <!-- boton para modificar el proyecto -->
+                                                <button *ngIf="estadoEgreso != 'Finalizado' && proyecto.estado == 'Creando' && !bandera" title="Editar" type="button" class="btn btn-primary btn-sm ml-3" (click)="editar(proyecto.id)" [disabled]="proyecto.deleted">
 													<i class="fa fa-edit"></i>
-												</button>
-                                                <button *ngIf="!proyecto.deleted && estadoEgreso != 'Finalizado'" title="Eliminar" type="button" class="btn btn-danger btn-sm ml-3" (click)="eliminarActivar(proyecto.id, false)">
+                                                </button>
+                                                <!-- botones normales Eliminar-Activar-->
+                                                <button *ngIf="!proyecto.deleted && estadoEgreso != 'Finalizado' && proyecto.estado == 'Creando' && !bandera" title="Eliminar" type="button" class="btn btn-danger btn-sm ml-3" (click)="eliminarActivar(proyecto.id, false)">
                                                     <i class="fa fa-trash"></i>
 												</button>
-                                                <button *ngIf="proyecto.deleted && estadoEgreso != 'Finalizado'" title="Activar" type="button" class="btn btn-success btn-sm ml-3" (click)="eliminarActivar(proyecto.id, true)">
+                                                <button *ngIf="proyecto.deleted && estadoEgreso != 'Finalizado' && proyecto.estado == 'Creando' && !bandera" title="Activar" type="button" class="btn btn-success btn-sm ml-3" (click)="eliminarActivar(proyecto.id, true)">
                                                     <i class="fa fa-arrow-circle-up"></i>
-												</button>
+                                                </button>
+                                                <!-- boton normal para la creacion de fases -->
                                                 <button type="button" class="btn btn-secondary btn-sm ml-3" (click)="mostrarFases(proyecto.id)">
                                                     <i class="fa fa-stream"></i> Fases
                                                 </button>
@@ -151,7 +155,9 @@
                     <div class="col-sm-4 border p-1 text-center">{{ total | currency }}</div>
                 </div>
                 <div *ngIf="fases==0; else fasesBlock">
-                    <div class="col border bg-light font-weight-bold p-1 text-center">Sin Fases</div>
+                    <div class="alert alert-warning text-center" role="alert">
+                        <i class="fa fa-exclamation-triangle fa-lg"></i> Sin Fases
+                    </div>
                 </div>
                 <ng-template #fasesBlock>
                     <div class="col border bg-light font-weight-bold p-1 text-center">Fases del proyecto</div>
@@ -181,13 +187,13 @@
                                 </ng-template>
                             </div> -->
 
-                            <div class="col-sm-2 border bg-light font-weight-bold p-1 d-none d-sm-block text-center">Importe</div>
+                            <div class="col-sm-8 border bg-light font-weight-bold p-1 d-none d-sm-block text-right">Importe</div>
                             <div class="col border bg-light font-weight-bold p-1 d-sm-none">Importe</div>
-                            <div class="col-sm-10 border p-1"> {{ fase.importe | currency }}</div>
+                            <div class="col-sm-4 border p-1 text-center"> {{ fase.importe | currency }}</div>
                         </div>
                     </div>
                 </ng-template>
-                <pre> {{ fase | json }} </pre>
+                <!-- <pre> {{ detalle | json }} </pre> -->
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">

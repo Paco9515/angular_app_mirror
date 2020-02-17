@@ -3,6 +3,7 @@ import { FaseService } from 'src/app/common/services/pe/fase.service';
 import { Fases } from 'src/app/common/interfaces/pe.interface';
 import { MensajesService } from '../../../../common/services/shared/mensajes.service';
 import { Router, ActivatedRoute } from '@angular/router';
+import { ProyectoService } from '../../../../common/services/proyecto/proyecto.service';
 
 @Component({
 	selector: 'app-fases',
@@ -16,11 +17,13 @@ export class FasesComponent implements OnInit {
 	estadoProyecto: string = '';
 	detalle: Fases;
 	partidas: any[];
+	bandera: boolean;
 
 	total = 0;
 
 	constructor(
 		private fase_service: FaseService,
+		private proyectos_service: ProyectoService,
 		private mensaje: MensajesService,
 		private activatedRoute: ActivatedRoute,
 		private router: Router
@@ -48,29 +51,40 @@ export class FasesComponent implements OnInit {
 			deleted: false,
 			partidas: null
 		};
+		this.bandera = false;
 	}
 
 	ngOnInit() {
+
 		this.activatedRoute.params
 			.subscribe( params => {
+				(typeof params['bandera'] !== 'undefined')? this.bandera = params['bandera'] : this.bandera =  false;
+
 				this.proyecto = params['id_proyecto'];
 				this.presupuesto = params['id_presupuesto'];
+				this.getEstadoProyecto(this.proyecto);
 			});
+			// console.log(this.bandera);
 		this.getFases(this.proyecto);
 	}
 
+	/* Funcion que valida si esta en el apartado de crear egreso o modificar egreso */
 	createFase() {
-		this.router.navigate([`/panel-adm/pres_egresos/${this.presupuesto}/proyectos/${this.proyecto}/fases`, 'nuevo']);
+		if (!this.bandera) {
+			this.router.navigate([`/panel-adm/pres_egresos/${this.presupuesto}/proyectos/${this.proyecto}/fases`, 'nuevo']);
+		} else {
+			this.router.navigate([`/panel-adm/mod_fase/${this.presupuesto}/proyectos/${this.proyecto}/fases`, 'nuevo', 'true']);
+		}
 	}
 
 	getFases(id_proyecto) {
 		this.fase_service.getFases(id_proyecto)
 			.subscribe((data: any) => {
-				this.fases = data[0];
-				this.estadoProyecto = data[1];
-				console.log(this.estadoProyecto);
+				this.fases = data;
+				// Se consulta el estado del proyecto de la primera fase
+				// this.estadoProyecto = this.fases[0].estado_proyecto
 			});
-	};
+	}
 
 	eliminarActivar(id: string, type: boolean) {
 		this.fase_service.activarEliminarFase(id, type)
@@ -83,11 +97,23 @@ export class FasesComponent implements OnInit {
 	}
 
 	editar(fase) {
-		this.router.navigate([`/panel-adm/pres_egresos/${this.presupuesto}/proyectos/${this.proyecto}/fases`, fase]);
+		if (!this.bandera) {
+			this.router.navigate([`/panel-adm/pres_egresos/${this.presupuesto}/proyectos/${this.proyecto}/fases`, fase]);
+		} else {
+			this.router.navigate([`/panel-adm/mod_fase/${this.presupuesto}/proyectos/${this.proyecto}/fases`, fase, this.bandera]);
+		}
 	}
 
+	/* Funcion que valida a donde debe regresar dependiendo si esta creando un egreso o modificandolo */
 	regresar() {
-		this.router.navigate([`/panel-adm/pres_egresos/${this.presupuesto}/proyectos`]);
+		console.log('Bandera:', this.bandera);
+		if (!this.bandera) {
+			// console.log(false);
+			this.router.navigate([`/panel-adm/pres_egresos/${this.presupuesto}/proyectos`]);
+		} else {
+			// console.log(true);
+			this.router.navigate([`/panel-adm/mod_proyectos/${this.presupuesto}/proyectos/`, this.bandera]);
+		}
 	}
 
 	mostrarDetalle( fase ) {
@@ -95,4 +121,14 @@ export class FasesComponent implements OnInit {
 		this.total = 0;
 		this.total = this.detalle.partidas.reduce(( sum: number, partida: any )  => sum + (partida.importe), 0);
 	}
+
+	getEstadoProyecto(id){
+		this.proyectos_service.getProyecto(id)
+			.subscribe((data: any) => {
+				this.estadoProyecto = data.estado;
+			}, error => {
+				this.mensaje.danger(error.error);
+			});
+	}
+
 }

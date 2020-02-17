@@ -19,6 +19,7 @@ export class ProyectosComponent implements OnInit {
 	estadoEgreso: any = '';
 	id_presupuesto: any;
 	total = 0;
+	bandera: boolean = false;
 
 	constructor(
 		private proyecto_service: ProyectoService,
@@ -63,18 +64,30 @@ export class ProyectosComponent implements OnInit {
 	}
 
 	ngOnInit() {
-		this.activatedRoute.params.subscribe( params => {
-			this.id_presupuesto = params['id_presupuesto'];
-			this.getProyectos(this.id_presupuesto);
-		});
+		this.activatedRoute.params
+			.subscribe( params => {
+				(typeof params['bandera'] !== 'undefined')? this.bandera = params['bandera'] : this.bandera =  false;
+	
+				this.id_presupuesto = params['id_presupuesto'];
+				this.getProyectos(this.id_presupuesto);
+			});
+		console.log(this.bandera);
 	}
 
 	createProyecto() {
-		this.router.navigate([`/panel-adm/pres_egresos/${this.id_presupuesto}/proyectos`, 'nuevo']);
+		if (!this.bandera) {
+			this.router.navigate([`/panel-adm/pres_egresos/${this.id_presupuesto}/proyectos`, 'nuevo']);
+		} else {
+			this.router.navigate([`/panel-adm/mod_proyecto/${this.id_presupuesto}/proyectos/`, `nuevo`, this.bandera]);
+		}		
 	}
 
 	mostrarFases(id_proyecto) {
-		this.router.navigate([`/panel-adm/pres_egresos/${this.id_presupuesto}/proyectos/${id_proyecto}/fases`]);
+		if (!this.bandera) {
+			this.router.navigate([`/panel-adm/pres_egresos/${this.id_presupuesto}/proyectos/${id_proyecto}/fases`]);
+		} else {
+			this.router.navigate([`/panel-adm/mod_fases/${this.id_presupuesto}/proyectos/${id_proyecto}/fases`, this.bandera]);
+		}
 	}
 
 	getProyectos($id_presupuesto) {
@@ -96,12 +109,21 @@ export class ProyectosComponent implements OnInit {
 		});
 	}
 
+	// editar normal
 	editar(proyecto) {
-		this.router.navigate([`/panel-adm/pres_egresos/${this.id_presupuesto}/proyectos`, proyecto]);
+		if (!this.bandera) {
+			this.router.navigate([`/panel-adm/pres_egresos/${this.id_presupuesto}/proyectos`, proyecto]);
+		} else {
+			this.router.navigate([`/panel-adm/mod_proyecto/${this.id_presupuesto}/proyectos`, proyecto, this.bandera]);
+		}
 	}
 
 	regresar() {
-		this.router.navigate([`/panel-adm/pres_egresos`]);
+		if (!this.bandera) {
+			this.router.navigate([`/panel-adm/pres_egresos`]);
+		} else {
+			this.router.navigate([`/panel-adm/modificar_egreso`]);
+		}
 	}
 
 	mostrarDetalle(proyecto) {
@@ -109,7 +131,9 @@ export class ProyectosComponent implements OnInit {
 		this.total = 0;
 		this.fase_service.getFases(proyecto.id)
 			.subscribe( (data: any) => {
-				this.fases = data[0];
+				this.fases = data;
+				console.log(this.fases)
+				
 				if (this.fases !== []) {
 					this.fases.forEach(function(fase) {
 						

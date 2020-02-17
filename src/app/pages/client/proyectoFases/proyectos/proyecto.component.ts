@@ -32,8 +32,12 @@ export class ProyectoComponent {
 		estado: ''
 	};
 
+	proyecto_original: any;
+
 	programas: any[];
 	subprogramas: any[];
+	bandera: boolean = false;
+	id_proyecto: string ;
 
 	constructor(
 		private proyectoService: ProyectoService,
@@ -43,45 +47,64 @@ export class ProyectoComponent {
 		private router: Router,
 		private egresos: PresupuestoEgresoService
 	) {
+		
 		this.activatedRoute.params.subscribe((params: any) => {
+			
+			// Comprobar la existencia del parametro bandera
+			(typeof params['bandera'] !== 'undefined')? this.bandera = params['bandera'] : this.bandera =  false;
+
 			if (params.id_proyecto !== 'nuevo') {
-				this.cargarProyecto(params.id_proyecto);
+				// Carga del proyecto a editar proyecto
+				this.id_proyecto = params.id_proyecto;
+				this.cargarProyecto(this.id_proyecto);
+			} else {
+				// Iniciar variables para creacion de proyecto nuevo
+				this.proyecto.id_presupuesto = params['id_presupuesto'];
+				this.egresos.get_presupuestoId(this.proyecto.id_presupuesto)
+					.subscribe((data: any) => {
+						this.anioEgreso =  data.data.anio;
+						this.limiteFechaInicio = new Date(`01-01-${this.anioEgreso}`);
+						this.limiteFechaFinal = new Date(`12-31-${this.anioEgreso}`);
+					});
 			}
-			this.proyecto.id_presupuesto = params['id_presupuesto'];
-			this.egresos.get_presupuesto(this.proyecto.id_presupuesto)
-				.subscribe((data: any) => {
-					this.anioEgreso =  data.data.anio;
-					this.limiteFechaInicio = new Date(`01-01-${this.anioEgreso}`);
-					this.limiteFechaFinal = new Date(`12-31-${this.anioEgreso}`);
-				});
 		});
 		this.getProgramas();
+		console.log(this.bandera);
 	}
 
 	cargarProyecto(id: string) {
-		this.proyectoService.getProyecto(id)
+
+		this.proyecto_original = [];
+			this.proyectoService.getProyecto(id)
 			.subscribe((data: any) => {
+				
+				this.proyecto_original = data.data;
+				console.log(this.proyecto_original);
 				this.proyecto = data.data;
+
 				const PROGRAMA = this.proyecto.id_programa;
 				const SUBPROGRAMA = this.proyecto.id_subprograma;
 				this.getSubprogramaByPrograma(PROGRAMA);
 				this.getSubprograma(SUBPROGRAMA);
-
 			}, error => {
 				this.mensaje.danger(error.error);
 			});
 	}
 
+
+	// Obtener todos los programas
 	getProgramas() {
 		this.cpService.get_programas()
 			.subscribe((data: any) => this.programas = data);
 	}
 
+	// Obtener subprogramas pertenecientes a un programa
 	getSubprogramaByPrograma($id_programa) {
 		this.cpService.get_subprogramas($id_programa)
 			.subscribe((data: any) => this.subprogramas = data.data);
 	}
 
+	// Asignacion de i_programa a el objeto proyecto
 	getSubprograma($id_subprograma) {
 		if ($id_subprograma) {
 			this.proyecto.id_subprograma = $id_subprograma;
@@ -95,21 +118,46 @@ export class ProyectoComponent {
 
 	guardar(f: NgForm) {
 		this.proyecto.anio = this.anioEgreso;
+		
 		if (f.valid) {
-			console.log(this.proyecto);
+			if (this.bandera) {
+				console.log(this.proyecto_original);
+				// this.proyectoService.createUpdateProyecto2(this.proyecto, this.proyecto_original)
+				// 	.subscribe((data: any) => {
+				// 		console.log(data);
+				// 		// this.mensaje.success(error.error);
+
+				// 	}, error => {
+				// 		this.mensaje.danger(error.error);
+				// 	});
+				// // this.proyectoService.createUpdateProyecto(this.proyecto)
+				// // 	.subscribe((data: any) => {
+				// // 		this.mensaje.success(data);
+				// // 	}, error => {
+				// // 		this.mensaje.danger(error.error);
+				// // 	});
+		} else {
 			this.proyectoService.createUpdateProyecto(this.proyecto)
 				.subscribe((data: any) => {
-					this.mensaje.success(data);
-				}, error => {
-					this.mensaje.danger(error.error);
-				});
-
+						this.mensaje.success(data);
+					}, error => {
+						this.mensaje.danger(error.error);
+					});
+			}
 			// this.resetVariable();
+			// this.cargarProyecto(this.id_proyecto);
 		}
 	}
 
+	// Regresar normal
 	regresar() {
 		this.router.navigate([`/panel-adm/pres_egresos/${this.proyecto.id_presupuesto}/proyectos`]);
+	}
+
+	// Regresar a proyectos modificar egreso
+	mod_regresar() {
+		const bandera = true;
+		this.router.navigate([`/panel-adm/mod_proyectos/${this.proyecto.id_presupuesto}/proyectos/${bandera}`]);
 	}
 
 }
