@@ -138,11 +138,14 @@ export class ProyectosComponent implements OnInit {
 					this.fases.forEach(function(fase) {
 						
 						fase.importe = 0;
-						fase.partidas.forEach(function(partida) {
-							fase.importe += partida.importe;
-						});
-						this.total += fase.importe;
+						if(fase.partidas[0] != null){
+							fase.partidas.forEach(function(partida) {
+								fase.importe += partida.importe;
+							});
+							this.total += fase.importe;
 
+						}
+						
 					}, this);
 				}
 			});

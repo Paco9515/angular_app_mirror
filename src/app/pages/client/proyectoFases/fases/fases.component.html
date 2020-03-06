@@ -191,21 +191,27 @@
                     <div class="col-sm-4 border p-1">{{ detalle.num_interior }}</div>
                 </div>
 
-
                 <div class="row p-3">
-                    <div class="col-1 border bg-light font-weight-bold p-1 d-none d-sm-block text-center">#</div>
-                    <div class="col-11 col-sm-9 border bg-light font-weight-bold p-1 d-none d-sm-block">Partidas</div>
-                    <div class="col-sm-2 border bg-light font-weight-bold p-1 d-none d-sm-block text-center">Importe</div>
-                    <span class="col-12" *ngFor="let partida of detalle.partidas; let i = index">
-                        <div class="row">
-                            <div class="col-12 border bg-light font-weight-bold p-1 d-sm-none">Partida</div>
-                            <div class="col-sm-1 border p-1 text-sm-center">{{ i+1 }}</div>
-                            <div class="col-sm-9 border p-1 ">{{ partida.nombre_partida }}</div>
-                            <div class="col-sm-2 border p-1 text-sm-right">{{ partida.importe | currency }}</div>
-                        </div>
-                    </span>
-                    <div class="col-sm-10 border bg-light font-weight-bold p-1 d-none d-sm-block text-right">Total</div>
-                    <div class="col-sm-2 border bg-light font-weight-bold p-1 d-none d-sm-block text-right">{{ total | currency }}</div>
+
+                    <div class="alert alert-warning text-center col-12" *ngIf="detalle.partidas == null; else tablePartidas">
+                        <i class="fa fa-exclamation-triangle fa-lg"></i> Sin partidas
+                    </div>
+
+                    <ng-template #tablePartidas>
+                        <div class="col-1 border bg-light font-weight-bold p-1 d-none d-sm-block text-center">#</div>
+                        <div class="col-11 col-sm-9 border bg-light font-weight-bold p-1 d-none d-sm-block">Partidas</div>
+                        <div class="col-sm-2 border bg-light font-weight-bold p-1 d-none d-sm-block text-center">Importe</div>
+                        <span class="col-12" *ngFor="let partida of detalle.partidas; let i = index">
+                            <div class="row">
+                                <div class="col-12 border bg-light font-weight-bold p-1 d-sm-none">Partida</div>
+                                <div class="col-sm-1 border p-1 text-sm-center">{{ i+1 }}</div>
+                                <div class="col-sm-9 border p-1 ">{{ partida.nombre_partida }}</div>
+                                <div class="col-sm-2 border p-1 text-sm-right">{{ partida.importe | currency }}</div>
+                            </div>
+                        </span>
+                        <div class="col-sm-10 border bg-light font-weight-bold p-1 d-none d-sm-block text-right">Total</div>
+                        <div class="col-sm-2 border bg-light font-weight-bold p-1 d-none d-sm-block text-right">{{ total | currency }}</div>
+                    </ng-template>
                 </div>
             </div>
 
