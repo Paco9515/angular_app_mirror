@@ -79,12 +79,12 @@
                                             <button type="button" class="btn btn-secondary btn-sm ml-3" (click)="mostrarProyectos(presupuesto.id, presupuesto.anio)">
                                                 <i class="fa fa-project-diagram fa-lg"></i> Proyectos
                                             </button>
-                                            <button *ngIf="presupuesto.estado == 'Creando'" type="button" class="btn btn-primary btn-sm text-white ml-3" (click)="enviarAEvaluar(presupuesto.id)">
+                                            <button *ngIf="presupuesto.estado == 'Capturando'" type="button" class="btn btn-primary btn-sm text-white ml-3" (click)="enviarAEvaluar(presupuesto.id)">
                                                 <i class="fa fa-thumbs-up"></i> Enviar a evaluación
                                             </button>
-                                            <button *ngIf="presupuesto.estado == 'En evaluación'" type="button" class="btn btn-primary btn-sm text-white ml-3" (click)="aprobarEgreso(presupuesto.id)">
+                                            <!-- <button *ngIf="presupuesto.estado == 'Revisión'" type="button" class="btn btn-primary btn-sm text-white ml-3" (click)="aprobarEgreso(presupuesto.id)">
                                                 <i class="fa fa-thumbs-up"></i> Aprobar
-                                            </button>
+                                            </button> -->
                                         </td>
                                     </tr>
                                 </ng-template>

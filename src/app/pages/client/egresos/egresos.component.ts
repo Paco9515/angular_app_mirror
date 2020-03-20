@@ -126,13 +126,13 @@ export class EgresosComponent {
 
 	getBadgeFormatEstado(estado){
 		switch (estado) {
-			case 'Creando':
+			case 'Capturando':
 				return 'badge badge-success';
-			case 'En evaluación':
+			case 'Revisión':
 				return 'badge badge-warning text-white';
-			case 'Aprobado':
+			case 'Aceptación':
 				return 'badge badge-primary';
-			case 'En curso':
+			case 'Cursando':
 				return 'badge badge-info text-white';
 			case 'Finalizado':
 				return 'badge badge-secondary';

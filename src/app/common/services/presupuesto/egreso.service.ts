@@ -38,10 +38,11 @@ export class PresupuestoEgresoService {
 	get_aprobar_egreso(id_egreso: string) {
 		return this.constants.getRequest(`/get_aprobar_egreso/${id_egreso}`, 'get', false);
 	}
-
-	// get_autorizacionPresupuestoAU(id_cc: string) {
-	// 	return this.constants.getRequest(`/get_presupuestoEgresoActual/${id_cc}`, 'get', false);
-	// }
+	
+	/* OBTIENE EL PRESUPUESTO DE EGRESOS DEL CENTRO DE COSTO PADRE E HIJOS FORMANDO UN PREUSPUETSO GENERAL */
+	get_presupuesto_egresos_general(id_cc: string, anio: number) {
+		return this.constants.getRequest(`/get_presupuesto_egresos_general/${id_cc}/${anio}`, 'get', false);
+	}
 
 	// ** SERVICIOS PARA LA MODIFICACION DEL EGRESO ** //
 	get_egreso(id: string) {
