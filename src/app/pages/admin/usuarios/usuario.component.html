@@ -1,0 +1,106 @@
+<!-- Breadcrumb-->
+<div class="d-none d-sm-block">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a [routerLink]="['/panel-adm/proyectos']">
+                <i class="fa fa-folder-open"></i> Usuarios
+            </a>
+        </li>
+        <li *ngIf="banderaCreate" class="breadcrumb-item active"> Crear Usuario</li>
+        <li *ngIf="!banderaCreate" class="breadcrumb-item active"> Editar Usuario</li>
+    </ol>
+</div>
+
+<div class="container-fluid p-3">
+    <div class="animated fadeIn">
+        <div class="row justify-content-center">
+            <div class="col-md-12">
+                <div class="card shadow">
+                    <form #f="ngForm" (ngSubmit)="guardar(f)">
+                        <div class="card-header">
+                            <div class="row">
+                                <div class="col-12 col-md-8 text-center text-sm-left  h5 font-weight-bold">
+                                    <i class="fa fa-list"></i> Usuarios
+                                </div>
+                                <div class="col-12 col-md-4 text-center text-sm-right">
+                                    <!-- Boton regresar normal -->
+                                    <button class="btn btn-outline-primary mt-2 btn-sm" type="button" [routerLink]="['/panel-adm/usuarios']">
+										<i class="fa fa-arrow-circle-left"></i> Regresar
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="form-group row">
+                                <label for="nombre" class="col-sm-2 col-form-label">Nombre Completo</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" placeholder="Ingresa el nombre completo del empleado." name="nombre" [(ngModel)]="usuario.nombre" required>
+                                </div>
+                            </div>
+                            <div *ngIf="banderaCreate" class="form-group row">
+                                <label for="descripcion" class="col-sm-2 col-form-label">Usuario:</label>
+                                <div class="col-sm-4">
+                                    <input type="text" class="form-control" placeholder="Ingresa el nombre de usuario." name="username" [(ngModel)]="usuario.username" required>
+                                </div>
+                                <label for="descripcion" class="col-sm-2 col-form-label">Contraseña:</label>
+                                <div class="col-sm-4">
+                                    <input type="password" class="form-control" placeholder="Ingresa la contraseña." name="constraseña" [(ngModel)]="usuario.password" required>
+                                </div>
+                            </div>
+
+                            <div *ngIf="!banderaCreate" class="form-group row">
+                                <label for="descripcion" class="col-sm-2 col-form-label">Usuario:</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" placeholder="Ingresa el nombre de usuario." name="username" [(ngModel)]="usuario.username" required>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="nombre" class="col-sm-2 col-form-label">Email</label>
+                                <div class="col-sm-10">
+                                    <input type="email" class="form-control" placeholder="Ingresa el email del usuario" name="email" [(ngModel)]="usuario.email" required>
+                                </div>
+                            </div>
+                            <div *ngIf="banderaAdmin" class="form-group row">
+                                <label for="programa" class="col-sm-2 col-form-label">Nivel de Usuario</label>
+                                <div class="col-sm-10">
+                                    <select class="form-control" name="id_nivel" (change)="cargarCentros($event.target.value);" [(ngModel)]="usuario.id_nivel" required>
+                                        <option value=""> Seleccione el nivel... </option>
+                                        <option *ngFor="let nivel of niveles" [value]="nivel.id"> {{ nivel.nivel }} </option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div *ngIf="!banderaAdmin" class="form-group row">
+                                <label for="programa" class="col-sm-2 col-form-label">Nivel de Usuario</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" name="nivel" [value]="nivel.nivel" readonly>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="programa" class="col-sm-2 col-form-label">Centro de Costo</label>
+                                <div class="col-sm-10">
+                                    <select class="form-control" name="id_cc" [(ngModel)]="usuario.id_cc" required>
+                                        <option value=""> Seleccione una opcion... </option>
+                                        <option *ngFor="let centro of centros" [value]="centro.id"> {{ centro.nombre }} </option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card-footer">
+                            <div class="form-group row">
+                                <div class="col-12">
+                                    <button class="btn btn-primary btn-sm pull-right" type="submit" [disabled]="f.invalid || !f.dirty">
+										<i class="fa fa-save"></i>
+										Guardar
+									</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <!-- /.col-->
+        </div>
+        <!-- /.row-->
+    </div>
+</div>

@@ -6,6 +6,26 @@
                     <i class="nav-icon fa fa-dashboard"></i> Escritorio
                 </a>
             </li>
+            <!-- APARTADO DE USUARIOS -->
+            <li *ngIf="nivel != 6" class="nav-item nav-dropdown">
+                <a class="nav-link nav-dropdown-toggle">
+                    <i class="nav-icon fa fa-folder"></i>Usuarios
+                </a>
+                <ul class="nav-dropdown-items">
+                    <li class="nav-item">
+                        <a class="nav-link" routerLink="usuarios" routerLinkActive="active">
+                            <i class="nav-icon fa fa-check-circle"></i> Lista de Usuarios
+                        </a>
+                    </li>
+                    <!--  <li class="nav-item">
+                        <a class="nav-link" routerLink="subprogramas" routerLinkActive="active">
+                            <i class="nav-icon fa fa-circle"></i> Subprogramas
+                        </a>
+                    </li> -->
+                </ul>
+            </li>
+
+            <!-- APARTADO TIPO DE GASTO -->
             <li class="nav-item nav-dropdown">
                 <a class="nav-link nav-dropdown-toggle">
                     <i class="nav-icon fa fa-folder"></i>Clas programatica

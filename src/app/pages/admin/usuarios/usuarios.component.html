@@ -1,0 +1,69 @@
+<!-- Breadcrumb -->
+<div class="d-none d-sm-block">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><i class="fa fa-folder-open"></i> Presupuestos de egresos</li>
+        <li class="breadcrumb-item"> Presupuestos de egreso</li>
+    </ol>
+</div>
+
+<div class="container-fluid">
+    <div class="row ">
+        <div class="col-md-12">
+            <div class="card shadow">
+                <div class="card-header">
+                    <div class="row">
+                        <div class="col-12 col-md-8 text-center text-sm-left  h5 font-weight-bold">
+                            <i class="fa fa-list"></i> Usuarios
+                        </div>
+                        <div class="col-12 col-md-4 text-center text-sm-right">
+                            <button class="btn btn-success mt-2 btn-sm" type="button" [routerLink]="['/panel-adm/usuario', 'nuevo']">
+                                <i class="fa fa-plus-circle "></i> Crear Usuario
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body ">
+
+                    <ng-template #alert>
+                        <div class="alert alert-warning text-center" role="alert">
+                            <i class="fa fa-exclamation-triangle fa-lg"></i> No hay usuarios aún.
+                        </div>
+                    </ng-template>
+
+                    <div *ngIf="cargado; else alert" class="table-responsive ">
+                        <table class="table table-striped table-sm ">
+                            <thead class="thead-dark">
+                                <tr>
+                                    <th class="align-middle text-center ">#</th>
+                                    <th class="align-middle text-center ">Nombre</th>
+                                    <th class="align-middle text-center ">Email</th>
+                                    <th class="align-middle text-center ">C. Costo</th>
+                                    <th class="align-middle text-center ">Nivel</th>
+                                    <th class="align-middle text-center ">Opciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let usuario of usuarios; let i=index">
+                                    <td class="align-middle text-center">{{ i + 1 }}</td>
+                                    <td class="align-middle">{{ usuario.nombre }}</td>
+                                    <td class="align-middle">{{ usuario.email }}</td>
+                                    <td class="align-middle">{{ usuario.nombre_cc }}</td>
+                                    <td class="align-middle text-center">{{ usuario.nivel }}</td>
+                                    <td class="align-middle text-center ">
+                                        <button class="btn btn-primary btn-sm w-auto mb-1 ml-1" [routerLink]="['/panel-adm/usuario', usuario.id]">
+                                            <i class="fa fa-edit"></i> 
+                                            Editar
+                                        </button>
+                                        <button class="btn btn-danger btn-sm w-auto mb-1 ml-1"><i class="fa fa-trash"></i> Eliminar</button>
+                                    </td>
+
+                                </tr>
+                            </tbody>
+                            <tfoot>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>

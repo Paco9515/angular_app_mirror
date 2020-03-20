@@ -11,6 +11,8 @@ import { LoginComponent } from './pages/login/login.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
 import { ClientModule } from './pages/client/client.module';
+import { CommonModule } from '@angular/common';
+import { BrowserModule } from '@angular/platform-browser';
 
 @NgModule({
 	declarations: [
@@ -23,6 +25,8 @@ import { ClientModule } from './pages/client/client.module';
 		FormsModule,
 		AppRoutingModule,
 		BrowserAnimationsModule,
+		CommonModule,
+		BrowserModule,
   		ToastrModule.forRoot()
 	],
 	providers: [],
