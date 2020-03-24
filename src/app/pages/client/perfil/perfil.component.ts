@@ -23,7 +23,7 @@ export class PerfilComponent implements OnInit {
     infoPass: any;
     banderaAlerta1: boolean;
     banderaAlerta2: boolean;
-    imagen: any;
+    imagenSeleccionada: boolean;
     imagenPerfil: any;
     formData: FormData;
 
@@ -35,6 +35,7 @@ export class PerfilComponent implements OnInit {
         private router: Router,
         private userService: UsuariosService
 	) { 
+        console.log('3');
         this.id_user = '';    
         this.user = '';
         this.url_img = '';
@@ -48,35 +49,26 @@ export class PerfilComponent implements OnInit {
         };
         this.banderaAlerta1 = false;
         this.banderaAlerta2 = false;
+        this.imagenSeleccionada = true;
         
 
         let user = JSON.parse(localStorage.getItem('currentUser'));
         this.id_user = user.id;
-        this.imagen = {
-            nombre: null,
-            nombreArchivo: null,
-            base64textString: null
-          }
         this.imagenPerfil = '';
-        this.formData = new FormData();
-        
+        this.formData = new FormData();        
 	}
 
-	ngOnInit() {        
+	ngOnInit() {    
+        console.log('4');    
         this.userService.getInfoPerfil(this.id_user).subscribe((data: any) => {
-            // console.log(data.data);
-            // this.url_img = '/home/paco/Documentos/proyecto/laravel-api/storage/assets/usuarios/';
-            // this.url_img += data.data.img_name;
-            // console.log(this.url_img);
             this.user = data.data;
         });
         this.get_imagen();
     }
 
     get_imagen() {
-        this.userService.getImage().subscribe((data: any) => {
-            //this.imagenPerfil = data.data.image;
-            console.log(data);
+        this.userService.getImage(this.id_user).subscribe((data: any) => {
+            this.imagenPerfil = data.ruta;
         });
     }
 
@@ -98,7 +90,7 @@ export class PerfilComponent implements OnInit {
         this.pass2 = '';
     }
     
-    cambiarPass() {        
+    cambiarPass() {     
         if (this.pass != '') {
             if (this.pass2 != '') {
                 if (this.pass.length >=  5) {
@@ -134,42 +126,26 @@ export class PerfilComponent implements OnInit {
         }
     }
 
-    seleccionarImagen(file: any) {
-        //this.imagen = file; //.nombreArchivo = file.name;
-        
+    seleccionarImagen(file: any) { 
+        this.formData.append('id', this.id_user)       
         this.formData.append('imagen', file)
-        console.log('formData', this.formData.getAll('imagen'));
-
-        /* if (file) {
-          var reader = new FileReader();
-          reader.onload = this._handleReaderLoaded.bind(this);
-          reader.readAsBinaryString(file);
-        } else {
-            this.imagen = null;
-        } */
-    }
-
-    _handleReaderLoaded(readerEvent) {
-        var binaryString = readerEvent.target.result;
-        this.imagen.base64textString = btoa(binaryString);        
+        this.imagenSeleccionada = false;
+        // console.log('formData', this.formData.getAll('imagen'));     
     }
 
     cambiarImagen() {
-        // console.log('CambiarImagen', this.imagen);
-        this.userService.uploadImage(this.formData).subscribe((data: any) => {
-            console.log(data);
-            /* if(data['resultado'] == 'OK') {
-                // let imagen = JSON.parse(data.imagen)
-                console.log(data.imagen);                
-                this.imagenPerfil = atob(data.imagen);
-                alert(data['mensaje']);
-              } */
+        this.userService.uploadImage(this.formData).subscribe((data: any) => {            
+            this.mensaje.success(data);
+            this.get_imagen();
+        }, error => {
+            this.mensaje.danger(error);
+            this.get_imagen();
         });
         
+             
     }
 
-	guardar(f: NgForm) {
-        // console.log(this.user);
+	guardar(f: NgForm) {        
 		this.userService.updateUserProfile(this.user)
         .subscribe((data: any) => {
             this.mensaje.success(data);

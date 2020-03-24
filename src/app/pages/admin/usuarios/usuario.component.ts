@@ -23,8 +23,8 @@ export class UsuarioComponent {
     private activatedRoute: ActivatedRoute,
     private mensaje: MensajesService
   ) { 
-	    this.usuario = {
-	      id: '',
+	  	this.usuario = {
+	    	id: '',
 	    	nombre: '',
 	    	username: '',
 	    	password: '',
@@ -42,11 +42,7 @@ export class UsuarioComponent {
 		this.nivel = {
 			id: '',
 			nivel:''
-		};
-		/* this.centros = {
-			id: '',
-			nombre: ''
-		} */
+		};		
 	    
 	    let user = JSON.parse(localStorage.getItem('currentUser'));
 		this.id_nivel_user = user.id_nivel;
@@ -61,10 +57,11 @@ export class UsuarioComponent {
 
 		this.activatedRoute.params.subscribe((data: any) => {
 			if (data.id !== 'nuevo') {
-				// console.log(data);				
+				this.banderaCreate = false;			
 				this.cargarUsuario(data.id);
 			} else {
 				let nivel = this.id_nivel_user + 1;
+				this.banderaCreate = true;
 				this.cargarCentros(nivel);
 			}
 		});
@@ -111,6 +108,14 @@ export class UsuarioComponent {
 		}
 
 		
+	}
+
+	resetPass() {
+		this.usuariosService.resetPass(this.usuario.id).subscribe( (data: any) => {
+			this.mensaje.success(data.messaje);
+		}, error => {
+			this.mensaje.danger(error.messaje);		
+		});
 	}
 
 	guardar(f: NgForm) {		

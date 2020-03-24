@@ -93,9 +93,14 @@ export class UsuariosService {
 		return this.constants.getRequest(`/update_user_pass/`, 'put', cambiarPass);
 	}
 
+	// ** Restablecer la contraseña de un usuario ** //
+	resetPass(id_user: string) {
+		return this.constants.getRequest(`/reboot_user_pass/${id_user}`, 'get', false);
+	}
+
 	// ** FUNCION PARA TRAER LA IMAGEN DE PERFIL DE UN USUARIO ** //
-	getImage() {
-		return this.constants.getRequest(`/get_image_user`, 'get', false);
+	getImage(id: string) {
+		return this.constants.getRequest(`/get_image_user/${id}`, 'get', false);
 	}
 
 	// ** FUNCION PARA CAMBIAR LA IMAGEN DE PERFIL DE UN USUARIO ** //

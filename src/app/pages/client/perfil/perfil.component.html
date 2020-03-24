@@ -38,13 +38,13 @@
                             <div class="container" style="width: 60%;">
                                 <div class="form-group text-center">
                                     <div class="col-md-12">
-                                        <img class="img-avatar" src="{{imagenPerfil}}">
+                                        <img class="img-avatar" width="200" src="{{ imagenPerfil }}">
                                     </div>
                                     <div class="colmd-12 mt-2">
                                         <input (change)="seleccionarImagen($event.target.files[0])" type="file" name="imagen">
                                     </div>
                                     <div class="colmd-12 mt-2">
-                                        <button (click)="cambiarImagen()" [disabled]="!imagen" class="btn btn-primary">Cambiar Foto</button>
+                                        <button (click)="cambiarImagen()" [disabled]="imagenSeleccionada" class="btn btn-primary">Cambiar Foto</button>
                                     </div>
                                 </div>
                                 <div class="form-group row">
