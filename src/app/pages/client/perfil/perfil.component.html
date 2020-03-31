@@ -41,7 +41,7 @@
                                         <img class="img-avatar" width="200" src="{{ imagenPerfil }}">
                                     </div>
                                     <div class="colmd-12 mt-2">
-                                        <input (change)="seleccionarImagen($event.target.files[0])" type="file" name="imagen">
+                                        <input (change)="seleccionarImagen($event.target.files[0])" type="file" name="imagen" [(ngModel)]="imagen">
                                     </div>
                                     <div class="colmd-12 mt-2">
                                         <button (click)="cambiarImagen()" [disabled]="imagenSeleccionada" class="btn btn-primary">Cambiar Foto</button>

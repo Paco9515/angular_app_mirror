@@ -26,6 +26,7 @@ export class PerfilComponent implements OnInit {
     imagenSeleccionada: boolean;
     imagenPerfil: any;
     formData: FormData;
+    imagen: string;
 
 
 
@@ -55,7 +56,8 @@ export class PerfilComponent implements OnInit {
         let user = JSON.parse(localStorage.getItem('currentUser'));
         this.id_user = user.id;
         this.imagenPerfil = '';
-        this.formData = new FormData();        
+        this.formData = new FormData();  
+        this.imagen = '';      
 	}
 
 	ngOnInit() {    
@@ -141,6 +143,8 @@ export class PerfilComponent implements OnInit {
             this.mensaje.danger(error);
             this.get_imagen();
         });
+
+        this.imagen = '';
         
              
     }
