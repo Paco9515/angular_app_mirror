@@ -4,7 +4,7 @@ import { ChartsModule } from 'ng2-charts';
 // import { HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { BrowserModule } from '@angular/platform-browser';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms'; 
 
 // Modulos
 import { ClasificacionModule } from './classification/clasificacion.module';
@@ -19,13 +19,17 @@ import { AdminComponent } from './admin.component';
 import { EscritorioComponent } from '../escritorio/escritorio.component';
 import { EmpresaComponent } from './empresa/empresa.component';
 import { EmpresasComponent } from './empresa/empresas.component';
+import { UsuariosComponent } from './usuarios/usuarios.component';
+import { UsuarioComponent } from './usuarios/usuario.component';
 
 @NgModule({
 	declarations: [
 		EscritorioComponent,
 		AdminComponent,
 		EmpresaComponent,
-		EmpresasComponent
+		EmpresasComponent,
+		UsuariosComponent,	
+		UsuarioComponent
 		// EgresosComponent
 	],
 	exports: [

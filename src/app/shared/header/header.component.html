@@ -1,59 +1,60 @@
 <header class="app-header navbar">
-	<button class="navbar-toggler sidebar-toggler d-lg-none mr-auto" type="button" data-toggle="sidebar-show">
+    <button class="navbar-toggler sidebar-toggler d-lg-none mr-auto" type="button" data-toggle="sidebar-show">
 		<span class="navbar-toggler-icon"></span>
 	</button>
-		<a class="navbar-brand" href="#">
-			<span class="navbar-brand-full">
+    <a class="navbar-brand" href="#">
+        <span class="navbar-brand-full">
 				<i class="fa fa-building" style="font-size: 20px; color:rgb(81, 146, 212);" aria-hidden="true"></i><strong> SAEEP</strong>
 			</span>
 
-			<span class="navbar-brand-minimized">
+        <span class="navbar-brand-minimized">
 				<i class="fa fa-building" style="font-size: 20px; color:rgb(81, 146, 212);" aria-hidden="true"></i><strong> S</strong>
 			</span>
 
-		</a>
-	<button class="navbar-toggler sidebar-toggler d-md-down-none" type="button" data-toggle="sidebar-lg-show">
+    </a>
+    <button class="navbar-toggler sidebar-toggler d-md-down-none" type="button" data-toggle="sidebar-lg-show">
 		<span class="navbar-toggler-icon"></span>
 	</button>
-	<ul class ="nav navbar-nav ml-auto">
-		<li class="nav-item d-md-down-none dropdown">
-			<a class="nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
-				<i class="fa fa-bell"></i>
-				<span class="badge badge-pill badge-danger">5</span>
-			</a>
-			<div class="dropdown-menu dropdown-menu-right">
-				<div class="dropdown-header text-center">
-					<strong>Cuenta</strong>
-				</div>
-				<a class="dropdown-item" href="#">
-					<i class="fa fa-tasks"></i> Notificaicones
-					<span class="badge badge-danger">5</span>
-				</a>
-			</div>
-		</li>
-		<li class="nav-item dropdown">
-			<a class="nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
-				<img class="img-avatar" src="assets/img/avatars/6.jpg" alt="admin@bootstrapmaster.com">
-			</a>
-			<div class="dropdown-menu dropdown-menu-right">
-				<div class="dropdown-header text-center">
-					<strong>Cuenta</strong>
-				</div>
-				<a class="dropdown-item" href="#">
-					<i class="fa fa-tasks"></i> Notificaicones
-					<span class="badge badge-danger">42</span>
-				</a>
-				<div class="dropdown-header text-center">
-					<strong>Ajustes</strong>
-				</div>
-				<a class="dropdown-item" href="#">
-					<i class="fa fa-user"></i> Perfil</a>
-				<a class="dropdown-item" href="#">
-					<i class="fa fa-wrench"></i> Ajustes</a>
-				<div class="dropdown-divider"></div>
-				<a class="dropdown-item" href="#">
-					<i class="fa fa-lock"></i> Salir</a>
-			</div>
-		</li>
-	</ul>
+    <ul class="nav navbar-nav ml-auto">
+        <li class="nav-item d-md-down-none dropdown">
+            <a class="nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+                <i class="fa fa-bell"></i>
+                <span class="badge badge-pill badge-danger">5</span>
+            </a>
+            <div class="dropdown-menu dropdown-menu-right">
+                <div class="dropdown-header text-center">
+                    <strong>Cuenta</strong>
+                </div>
+                <a class="dropdown-item" href="#">
+                    <i class="fa fa-tasks"></i> Notificaicones
+                    <span class="badge badge-danger">5</span>
+                </a>
+            </div>
+        </li>
+        <li class="nav-item dropdown">
+            <a class="nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+                <img class="img-avatar" src="{{url_img}}">
+                <label class="mt-2"><font size="4">{{usuario_loggeado.nombre}} </font>&nbsp;</label>
+            </a>
+            <div class="dropdown-menu dropdown-menu-right">
+                <div class="dropdown-header text-center">
+                    <strong>Cuenta</strong>
+                </div>
+                <a class="dropdown-item" href="#">
+                    <i class="fa fa-tasks"></i> Notificaicones
+                    <span class="badge badge-danger">42</span>
+                </a>
+                <div class="dropdown-header text-center">
+                    <strong>Ajustes</strong>
+                </div>
+                <a class="dropdown-item" routerLink="perfil">
+                    <i class="fa fa-user"></i> Perfil</a>
+                <a class="dropdown-item" href="#">
+                    <i class="fa fa-wrench"></i> Ajustes</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" (click)="logOut();">
+                    <i class="fa fa-lock"></i> Salir</a>
+            </div>
+        </li>
+    </ul>
 </header>

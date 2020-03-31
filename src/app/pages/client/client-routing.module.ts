@@ -11,6 +11,10 @@ import { ProyectosComponent } from './proyectoFases/proyectos/proyectos.componen
 import { ProyectoComponent } from './proyectoFases/proyectos/proyecto.component';
 import { CambioEgresoComponent } from './egresos/cambioEgreso/cambioEgreso.component';
 import { EgresoComponent } from './egresos/egreso.component';
+import { LoginComponent } from '../login/login.component';
+import { LoginGuard } from '../../common/guards/login.guard';
+import { LoginOutGuard } from 'src/app/common/guards/login-out.guard';
+import { PerfilComponent} from './perfil/perfil.component';
 
 
 const admin_routes: Routes = [
@@ -18,21 +22,24 @@ const admin_routes: Routes = [
 		path: 'panel-adm',
 		component: ClientComponent,
 		children: [
-			{ path: 'escritorio', component: EscritorioComponent },
-			{ path: 'pres_egresos', component: EgresosComponent },
-			{ path: 'modificar_egreso', component: CambioEgresoComponent },
-			{ path: 'pres_egresos/:id_presupuesto', component: EgresoComponent },
-			{ path: 'pres_egresos/:id_presupuesto/proyectos', component: ProyectosComponent },
-			{ path: 'pres_egresos/:id_presupuesto/proyectos/:id_proyecto', component: ProyectoComponent },
-			{ path: 'pres_egresos/:id_presupuesto/proyectos/:id_proyecto/fases', component: FasesComponent },
-			{ path: 'pres_egresos/:id_presupuesto/proyectos/:id_proyecto/fases/:id_fase', component: FaseComponent },
+			{ path: 'login', component: LoginComponent, canActivate: [LoginOutGuard] },
+			{ path: 'escritorio', component: EscritorioComponent, canActivate: [LoginGuard] },
+			{ path: 'pres_egresos', component: EgresosComponent, canActivate: [LoginGuard] },
+			{ path: 'modificar_egreso', component: CambioEgresoComponent, canActivate: [LoginGuard] },
+			{ path: 'pres_egresos/:id_presupuesto', component: EgresoComponent, canActivate: [LoginGuard] },
+			{ path: 'pres_egresos/:id_presupuesto/proyectos', component: ProyectosComponent, canActivate: [LoginGuard] },
+			{ path: 'pres_egresos/:id_presupuesto/proyectos/:id_proyecto', component: ProyectoComponent, canActivate: [LoginGuard] },
+			{ path: 'pres_egresos/:id_presupuesto/proyectos/:id_proyecto/fases', component: FasesComponent, canActivate: [LoginGuard] },
+			{ path: 'pres_egresos/:id_presupuesto/proyectos/:id_proyecto/fases/:id_fase', component: FaseComponent, canActivate: [LoginGuard] },
 
-			{ path: 'mod_proyectos/:id_presupuesto/proyectos/:bandera', component: ProyectosComponent },
-			{ path: 'mod_proyecto/:id_presupuesto/proyectos/:id_proyecto/:bandera', component: ProyectoComponent },
-			{ path: 'mod_fases/:id_presupuesto/proyectos/:id_proyecto/fases/:bandera', component: FasesComponent },
-			{ path: 'mod_fase/:id_presupuesto/proyectos/:id_proyecto/fases/:id_fase/:bandera', component: FaseComponent },
+			{ path: 'mod_proyectos/:id_presupuesto/proyectos/:bandera', component: ProyectosComponent, canActivate: [LoginGuard] },
+			{ path: 'mod_proyecto/:id_presupuesto/proyectos/:id_proyecto/:bandera', component: ProyectoComponent, canActivate: [LoginGuard] },
+			{ path: 'mod_fases/:id_presupuesto/proyectos/:id_proyecto/fases/:bandera', component: FasesComponent, canActivate: [LoginGuard] },
+			{ path: 'mod_fase/:id_presupuesto/proyectos/:id_proyecto/fases/:id_fase/:bandera', component: FaseComponent, canActivate: [LoginGuard] },
 
-			{ path: '', pathMatch: 'full', redirectTo: 'escritorio' }
+			{ path: 'perfil', component: PerfilComponent, canActivate: [LoginGuard] },
+
+			{ path: '', pathMatch: 'full', redirectTo: 'escritorio', canActivate: [LoginGuard] }
 		]
 	}
 ];

@@ -1,3 +1,55 @@
-<p>
-  login works!
-</p>
+<body class="app flex-row align-items-center" style="background: url(../../../assets/img/fondo_login_2.jpg) no-repeat center top;">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="cardLogin card-group">
+                    <div class="card p-3">
+                        <div class="card-body">
+                            <h2>Iniciar Sesion</h2>
+                            <form #f="ngForm">
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">
+                                                <i class="fas fa-user"></i>
+                                            </span>
+                                    </div>
+                                    <input class="form-control" type="text" placeholder="Ingrese su usuario" [ngModel]="username" name="username">
+                                </div>
+                                <div class="input-group mb-4">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">
+                                        <i class="fas fa-key"></i>
+                                    </span>
+                                    </div>
+                                    <input class="form-control" type="password" placeholder="Ingrese su contraseña" ngModel name="password">
+                                </div>
+
+                                <div class="input-group mb-2 form-check">
+                                    <input type="checkbox" [(ngModel)]="recordar" name="recordar" class="form-check-input" id="exampleCheck1">
+                                    <label class="form-check-label" for="exampleCheck1">Recordar Usuario.</label>
+                                </div>
+
+                                <div class="row mt-3">
+                                    <div class="col-3">
+                                        <button class="btn btn-primary" (click)="ingresar(f);" type="submit">Ingresar</button>
+                                    </div>
+                                    <div class="col-9 text-right">
+                                        <!-- <button class="btn btn-link " type="button">¿Olvido su contraseña?</button> -->
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="card text-white bg-primary py-5 d-md-down-none">
+                        <div class="card-body text-center">
+                            <h1 class="font-weight-bold">Sistema de Administración</h1>
+                            <div class="justify-content-center">
+                                <!-- <img class="rounded-pill w-75" src="../../../assets/img/fondo_login.jpg"> -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
