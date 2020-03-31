@@ -162,11 +162,9 @@
                                             <tr>
                                                 <th class="align-middle text-center " rowspan="2">Código</th>
                                                 <th class="align-middle text-center " rowspan="2">Nombre</th>
-
                                                 <th class="align-middle text-center " rowspan="2">Código</th>
                                                 <th class="align-middle text-center " rowspan="2">Nombre</th>
                                                 <th class="align-middle text-center " rowspan="2">Descripción</th>
-
                                                 <th class="align-middle text-center " colspan="2">Tipo FF</th>
                                                 <th class="align-middle text-center " colspan="6">Ubicación Geográfica</th>
                                                 <th class="align-middle text-center " colspan="3">Partida</th>
@@ -175,7 +173,6 @@
                                             <tr>
                                                 <th class="align-middle text-center ">Código</th>
                                                 <th class="align-middle text-center ">Nombre</th>
-
                                                 <th class="align-middle text-center ">Estado</th>
                                                 <th class="align-middle text-center ">Municipio</th>
                                                 <th class="align-middle text-center ">Codigo Postal</th>
@@ -230,7 +227,7 @@
                                         <div class="card-header" id="heading{{ i }}" role="tab">
                                             <div class="row">
                                                 <div class="col-12">
-                                                    <a class="h5" data-toggle="collapse" href="#collapse{{ i }}" (click)="get_presupuesto_egresos_general_Hijo(centro.id,  egresoPropioPrincipal.anio)" aria-expanded="false" aria-controls="collapse" d-inline>
+                                                    <a class="h5" data-toggle="collapse" href="#collapse{{ i }}" (click)="get_presupuesto_egresos_general_hijos(centro.id,  egresoPropioPrincipal.anio)" aria-expanded="false" aria-controls="collapse" d-inline>
                                                         {{ centro.nombre }}
                                                     </a>
                                                 </div>
@@ -240,7 +237,7 @@
                                             <div class="card-body">
                                                 <ng-template #alertEgresoHijo>
                                                     <div class="alert alert-warning text-center" role="alert">
-                                                        <i class="fa fa-exclamation-triangle fa-lg"></i> {{ mensajeAlert }}
+                                                        <i class="fa fa-exclamation-triangle fa-lg"></i> {{ mensajeAlertHijo }}
                                                     </div>
                                                 </ng-template>
 
@@ -327,8 +324,9 @@
                                                         </tfoot>
                                                     </table>
                                                 </div>
-                                                <div class="row col-12 text-center">
-                                                    <button class="btn btn-success mr-2" (click)="autorizarPresupuesto()">
+
+                                                <div class="row col-12 text-center" *ngIf="mostrarOpciones">
+                                                    <button class="btn btn-success mr-2" (click)="autorizarPresupuesto(centro.id)">
                                                         Autorizar Presupuesto
                                                     </button>
                                                     <button class="btn btn-danger text-white mr-2" (click)="rechazarPresupuesto()">

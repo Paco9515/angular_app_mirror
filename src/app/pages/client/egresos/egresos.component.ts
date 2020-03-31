@@ -114,23 +114,13 @@ export class EgresosComponent {
 			});
 	}
 
-	aprobarEgreso(id_egreso){
-		this.egreso_service.get_aprobar_egreso(id_egreso)
-			.subscribe((egreso: any) => {
-				this.mensaje.success(egreso);
-				this.getPresupuestos();
-			}, error => {
-				this.mensaje.danger(error.error);
-			});
-	}
-
-	getBadgeFormatEstado(estado){
+	getBadgeFormatEstado(estado: string){
 		switch (estado) {
 			case 'Capturando':
 				return 'badge badge-success';
 			case 'Revisión':
 				return 'badge badge-warning text-white';
-			case 'Aceptación':
+			case 'Proyecto':
 				return 'badge badge-primary';
 			case 'Cursando':
 				return 'badge badge-info text-white';

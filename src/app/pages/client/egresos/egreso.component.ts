@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ɵConsole } from '@angular/core';
 import { MensajesService } from '../../../common/services/shared/mensajes.service';
 import { CcostoService } from 'src/app/common/services/ui/ccosto.service';
 import { PresupuestoEgresoService } from '../../../common/services/presupuesto/egreso.service';
@@ -12,14 +12,15 @@ import { ActivatedRoute } from '@angular/router';
 
 export class EgresoComponent  {
 	
-	mensajeAlert: string;
+	mensajeAlert: string = '';
+	mensajeAlertHijo: string = '';
 	id_egreso: string;
 	centrosCostos: any = [];
 	egresoPropioPrincipal: any = '';
 
 	/* PRESUPUESTO PROPIO */
 	datosEgreso: any[];
-	totalPropio: number;
+	totalPropio: number = 0;
 	
 	/* PRESUPUESTO GENERAL */
 	datosEgresoGeneral: any = null;
@@ -27,7 +28,10 @@ export class EgresoComponent  {
 
 	/* PRESUPUESTO HIJO */
 	datosEgresoGeneralHijo: any = [];
-	totalGeneralHijo: number;
+	totalGeneralHijo: number = 0;
+
+	mostrarOpciones:boolean = false;
+
 
 	constructor(
 		private mensaje: MensajesService,
@@ -45,10 +49,8 @@ export class EgresoComponent  {
 	private getDatosPresupuesto($id_presupuesto: string) {
 		this.presupuestoEgresos.get_presupuesto($id_presupuesto)
 			.subscribe((data: any) => {
-				
 				this.datosEgreso = data.data;
 				this.totalPropio = this.datosEgreso.reduce(( contador, egreso )  => contador + (egreso.importe), 0);
-				this.getCCentroHijos(this.egresoPropioPrincipal.id_centro_costo);
 			}, error => {
 				this.mensajeAlert = error.error.message;
 			});
@@ -70,16 +72,14 @@ export class EgresoComponent  {
 				// console.log(egreso.data);
 				this.egresoPropioPrincipal = egreso.data;
 				this.get_presupuesto_egresos_general(this.egresoPropioPrincipal.id_centro_costo, this.egresoPropioPrincipal.anio);
-
-			// console.log(this.egresoPropioPrincipal)
-
+				this.getCCentroHijos(this.egresoPropioPrincipal.id_centro_costo);
 			}, error => {
 				this.mensaje.danger(error.error);
 			});
 	}
 
-	private get_presupuesto_egresos_general(id_cc, anio){
-		this.presupuestoEgresos.get_presupuesto_egresos_general(id_cc, anio)
+	private get_presupuesto_egresos_general(id_centro_costo, anio){
+		this.presupuestoEgresos.get_presupuesto_egresos_general(id_centro_costo, anio)
 			.subscribe((egresos: any) => {
 				// console.log(egresos.data);
 				this.datosEgresoGeneral = egresos.data; 
@@ -89,39 +89,53 @@ export class EgresoComponent  {
 			});
 	}
 
-	get_presupuesto_egresos_general_Hijo(id_cc, anio){
-		// console.log(id_cc, anio);
-		this.presupuestoEgresos.get_presupuesto_egresos_general(id_cc, anio)
-			.subscribe((egresos: any) => {
-				// console.log(egresos.data);
-				this.datosEgresoGeneralHijo = egresos.data; 
-				if(this.datosEgresoGeneralHijo.length != 0){
-					this.totalGeneralHijo = this.datosEgresoGeneralHijo.reduce(( contador, egreso )  => contador + (egreso.importe), 0);
-				}
-				this.mensajeAlert = 'El presupuesto de egreso de este centro de costo no ha sido enviado';
+	public get_presupuesto_egresos_general_hijos(id_centro_costo, anio: number) {
+		this.datosEgresoGeneralHijo = []; 
+		this.presupuestoEgresos.get_presupuestoEgreso_por_centro_anio(id_centro_costo, anio)
+			.subscribe((egreso: any) => {
+				// console.log(egreso);
+				this.mostrarOpciones = false;
+				egreso = egreso.data;
+				if (egreso.estado !== 'Capturando') {
+					this.presupuestoEgresos.get_presupuesto_egresos_general(id_centro_costo, anio)
+						.subscribe((egresos: any) => {
+							this.datosEgresoGeneralHijo = egresos.data; 
+							this.totalGeneralHijo = this.datosEgresoGeneralHijo.reduce((contador, egreso) => contador + (egreso.importe), 0);
+							(egreso.estado == 'Revisión' ) ?  this.mostrarOpciones = true : null;
+						}, error => {
+							this.mensaje.danger(error.error);
+						});
+					} else {
+						this.mensajeAlertHijo = 'El presupuesto de egreso no ha sido enviado por el centro de costo';
+					}
 			}, error => {
 				this.mensaje.danger(error.error);
 			});
 	}
 
-	getFormatFont($datoEgreso){
-		if($datoEgreso === 'N/A')
+	public getFormatFont(datoEgreso){
+		if(datoEgreso === 'N/A')
 			return 'text-danger text-center font-weight-bolder';
 	}
 
-	autorizarPresupuesto(id_cc, anio){
-		this.presupuestoEgresos.get_aprobar_egreso(this.id_egreso)
+	public autorizarPresupuesto(id_centro_costo) {
+		// console.log('Rechazar');
+		// console.log(this.egresoPropioPrincipal);
+		
+		this.presupuestoEgresos.get_aprobar_egreso(id_centro_costo, this.egresoPropioPrincipal.anio)
 			.subscribe((data: any) => {
 				// console.log(egresos.data);
 				this.mensaje.success(data);
+				this.get_presupuesto_egresos_general( this.egresoPropioPrincipal.id_centro_costo, this.egresoPropioPrincipal.anio);
+				this.get_presupuesto_egresos_general_hijos(id_centro_costo, this.egresoPropioPrincipal.anio);
 				// console.log(this.datosEgresoGeneralHijo);
 			}, error => {
 				this.mensaje.danger(error.error);
 			});
 	}
 
-	rechazarPresupuesto(){
-		console.log('Rechazar');
+	public rechazarPresupuesto(){
+		// console.log('Rechazar');
 		// this.presupuestoEgresos.get_aprobar_egreso(this.id_egreso)
 		// .subscribe((egresos: any) => {
 		// 	// console.log(egresos.data);
