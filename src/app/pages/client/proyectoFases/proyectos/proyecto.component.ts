@@ -15,8 +15,8 @@ import { PresupuestoEgresoService } from '../../../../common/services/presupuest
 export class ProyectoComponent {
 
 	fechaFinal: boolean = true;
-	limiteFechaInicio: Date;
-	limiteFechaFinal: Date;
+	limiteFechaInicio: any;
+	limiteFechaFinal: any;
 	anioEgreso: string;
 
 	proyecto: Proyectos = {
@@ -60,26 +60,29 @@ export class ProyectoComponent {
 			} else {
 				// Iniciar variables para creacion de proyecto nuevo
 				this.proyecto.id_presupuesto = params['id_presupuesto'];
-				this.egresos.get_presupuestoId(this.proyecto.id_presupuesto)
+				// console.log(params['id_presupuesto']);
+				this.egresos.get_presupuestoId(params['id_presupuesto'])
 					.subscribe((data: any) => {
 						this.anioEgreso =  data.data.anio;
-						this.limiteFechaInicio = new Date(`01-01-${this.anioEgreso}`);
-						this.limiteFechaFinal = new Date(`12-31-${this.anioEgreso}`);
+						this.limiteFechaInicio = new Date(`${this.anioEgreso}-01-01`).toISOString().split('T')[0];
+						// console.log(this.limiteFechaInicio);
+						this.limiteFechaFinal = new Date(`${this.anioEgreso}-12-31`).toISOString().split('T')[0];
+						// console.log(this.limiteFechaFinal);
 					});
 			}
 		});
 		this.getProgramas();
-		console.log(this.bandera);
+		// console.log(this.bandera);
 	}
 
 	cargarProyecto(id: string) {
-		console.log('entre a cargar proyecto');
+		// console.log('entre a cargar proyecto');
 		this.proyecto_original = [];
 			this.proyectoService.getProyecto(id)
 			.subscribe((data: any) => {
 				
 				this.proyecto_original = data.data;
-				console.log(this.proyecto_original);
+				// console.log(this.proyecto_original);
 			});
 
 		this.proyectoService.getProyecto(id)

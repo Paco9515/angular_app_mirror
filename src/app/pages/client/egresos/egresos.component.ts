@@ -5,7 +5,6 @@ import { Router } from '@angular/router';
 import { UiComponent } from '../../../components/classification/unidadesInternas/ui.component';
 import { PresupuestoEgreso } from 'src/app/common/interfaces/presupuesto.interface';
 
-
 @Component({
 	selector: 'app-egresos',
 	templateUrl: './egresos.component.html',
@@ -19,6 +18,7 @@ export class EgresosComponent {
 	presupuestos: any = [];
 	presupuesto: PresupuestoEgreso = {
 		id_centro_costo: '',
+		nombre_centro_costo: '',
 		nombre: '',
 		estado: null,
 		anio: null
@@ -42,6 +42,13 @@ export class EgresosComponent {
 		.subscribe((presupuestos: any) => {
 			if (presupuestos !== []) {
 				this.presupuestos = presupuestos;
+				let ultimoAnio = 0;
+				this.presupuestos.filter(egreso => {
+					if(ultimoAnio > egreso.anio){
+						ultimoAnio = egreso.anio;
+						return egreso;
+					}
+				});
 			}
 		});
 	}
@@ -95,4 +102,32 @@ export class EgresosComponent {
 		}
 		this.getPresupuestos();
 	}
+
+	enviarAEvaluar(id_egreso){
+		this.egreso_service.get_enviar_a_evacuacion_egreso_por_superior(id_egreso)
+			.subscribe((egreso: any) => {
+				this.mensaje.success(egreso);
+				this.getPresupuestos();
+			}, error => {
+				this.mensaje.danger(error.error);
+				// console.log();
+			});
+	}
+
+	getBadgeFormatEstado(estado: string){
+		switch (estado) {
+			case 'Capturando':
+				return 'badge badge-success';
+			case 'Revisión':
+				return 'badge badge-warning text-white';
+			case 'Proyecto':
+				return 'badge badge-primary';
+			case 'Cursando':
+				return 'badge badge-info text-white';
+			case 'Finalizado':
+				return 'badge badge-secondary';
+		}
+	}
+
+
 }

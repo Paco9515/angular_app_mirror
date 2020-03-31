@@ -117,9 +117,19 @@ export class FasesComponent implements OnInit {
 	}
 
 	mostrarDetalle( fase ) {
+		// let data: any = {
+		// 	title: "Hola",
+		// 	message: "<ul><li>Coffee</li><li>Tea</li><li>Milk</li></ul>"
+		// };
+		// this.mensaje.success(data);
+		// console.log(data.title);
 		this.detalle = fase;
 		this.total = 0;
-		this.total = this.detalle.partidas.reduce(( sum: number, partida: any )  => sum + (partida.importe), 0);
+
+		if(this.detalle.partidas[0] == null) {
+			return this.detalle.partidas = null;
+		}
+		return this.total = this.detalle.partidas.reduce(( sum: number, partida: any )  => sum + (partida.importe), 0);
 	}
 
 	getEstadoProyecto(id){

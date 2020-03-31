@@ -71,4 +71,8 @@ export class CcostoService {
 		}
 	}
 
+	getCentrosCostoHijos(id: string){
+		return this.constants.getRequest(`/get_centros_costos_hijos/${id}`, 'get', false);
+	}
+
 }
