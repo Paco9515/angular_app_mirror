@@ -25,6 +25,8 @@ import { CfgComponent } from '../../components/classification/clasfFuncionalGast
 import { CpComponent } from '../../components/classification/clasfProgramatica/cp.component';
 import { PeComponent } from '../../components/classification/proyectoFases/pe.component';
 import { UiComponent } from '../../components/classification/unidadesInternas/ui.component';
+import { PerfilComponent } from './perfil/perfil.component';
+// import { LoginComponent } from '../login/login.component';
 
 @NgModule({
 	declarations: [
@@ -38,7 +40,8 @@ import { UiComponent } from '../../components/classification/unidadesInternas/ui
 		CfgComponent,
 		CpComponent,
 		PeComponent,
-		UiComponent
+		UiComponent,
+		PerfilComponent
 	],
 	exports: [
 		// EscritorioComponent,
@@ -51,7 +54,8 @@ import { UiComponent } from '../../components/classification/unidadesInternas/ui
 		CfgComponent,
 		CpComponent,
 		PeComponent,
-		UiComponent
+		UiComponent,
+		PerfilComponent
 	],
 	imports: [
 		ChartsModule,
@@ -64,6 +68,6 @@ import { UiComponent } from '../../components/classification/unidadesInternas/ui
 		FormsModule,
 		ReactiveFormsModule
 	],
-	providers:[]
+	providers: []
 })
 export class ClientModule { }

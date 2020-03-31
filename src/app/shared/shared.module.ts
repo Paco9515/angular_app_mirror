@@ -5,6 +5,9 @@ import { FooterComponent } from './footer/footer.component';
 import { NopagefoundComponent } from './nopagefound/nopagefound.component';
 import { BreadcrumbsComponent } from './breadcrumbs/breadcrumbs.component';
 import { RouterModule } from '@angular/router';
+import { CommonModule } from '@angular/common';
+import { BrowserModule } from '@angular/platform-browser';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -23,7 +26,11 @@ import { RouterModule } from '@angular/router';
 		BreadcrumbsComponent
 	],
 	imports: [
-		RouterModule
+		RouterModule,
+		CommonModule,
+		BrowserModule,
+		FormsModule,
+		ReactiveFormsModule
 	]
 })
 export class SharedModule { }
