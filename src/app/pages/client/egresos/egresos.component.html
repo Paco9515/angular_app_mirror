@@ -12,27 +12,10 @@
                 <div class="card-header">
                     <div class="row">
                         <div class="col-12 col-md-8 text-center text-sm-left  h5 font-weight-bold">
-                            <i class="fa fa-list"></i> Centro de costo
-                        </div>
-                    </div>
-                </div>
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-12">
-                            <app-ui [primary_keys_ui]="ui_keys" (out)="getDataUI($event)"></app-ui>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="card shadow">
-                <div class="card-header">
-                    <div class="row">
-                        <div class="col-12 col-md-8 text-center text-sm-left  h5 font-weight-bold">
                             <i class="fa fa-list"></i> Presupuestos de egreso
                         </div>
                         <div class="col-12 col-md-4 text-center text-sm-right">
-                            <button title="Ver detalles" type="button" class="btn btn-success btn-sm text-white ml-3" data-toggle="modal" data-target="#myModal" (click)="showModel()" [disabled]="!this.ui_data.id_ccosto">
+                            <button title="Ver detalles" type="button" class="btn btn-success btn-sm text-white ml-3" data-toggle="modal" data-target="#myModal" (click)="showModel()">
                                 <i class="fa fa-plus-circle"></i>
                                 Agregar 
                             </button>
@@ -40,7 +23,7 @@
                     </div>
                 </div>
                 <div class="card-body">
-                    <div class="table-responsive" *ngIf="ui_data.id_ccosto; else selectCC">
+                    <div class="table-responsive">
                         <table class="table table-striped table-sm">
                             <thead class="thead-dark">
                                 <tr>
@@ -88,11 +71,6 @@
                             </tbody>
                         </table>
                     </div>
-                    <ng-template #selectCC>
-                        <div class="alert alert-warning text-center" role="alert">
-                            <i class="fa fa-exclamation-triangle fa-lg"></i> Seleccione el centro de costo
-                        </div>
-                    </ng-template>
                 </div>
                 <div class="card-footer"></div>
             </div>
