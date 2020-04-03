@@ -50,7 +50,7 @@ export class EgresoComponent  {
 		this.presupuestoEgresos.get_presupuesto($id_presupuesto)
 			.subscribe((data: any) => {
 				this.datosEgreso = data.data;
-				this.totalPropio = this.datosEgreso.reduce(( contador, egreso )  => contador + (egreso.importe), 0);
+				this.totalPropio = this.datosEgreso.reduce((contador, egreso) => contador + parseInt(egreso.importe), 0);
 			}, error => {
 				this.mensajeAlert = error.error.message;
 			});
@@ -83,7 +83,7 @@ export class EgresoComponent  {
 			.subscribe((egresos: any) => {
 				// console.log(egresos.data);
 				this.datosEgresoGeneral = egresos.data; 
-				this.totalGeneral = this.datosEgresoGeneral.reduce(( contador, egreso )  => contador + (egreso.importe), 0);
+				this.totalGeneral = this.datosEgresoGeneral.reduce(( contador, egreso )  => contador + parseInt(egreso.importe), 0);
 			}, error => {
 				this.mensaje.danger(error.error);
 			});
@@ -100,7 +100,7 @@ export class EgresoComponent  {
 					this.presupuestoEgresos.get_presupuesto_egresos_general(id_centro_costo, anio)
 						.subscribe((egresos: any) => {
 							this.datosEgresoGeneralHijo = egresos.data; 
-							this.totalGeneralHijo = this.datosEgresoGeneralHijo.reduce((contador, egreso) => contador + (egreso.importe), 0);
+							this.totalGeneralHijo = this.datosEgresoGeneralHijo.reduce((contador, egreso) => contador + parseInt(egreso.importe), 0);
 							(egreso.estado == 'Revisión' ) ?  this.mostrarOpciones = true : null;
 						}, error => {
 							this.mensaje.danger(error.error);

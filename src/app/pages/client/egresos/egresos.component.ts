@@ -4,6 +4,7 @@ import { PresupuestoEgresoService } from 'src/app/common/services/presupuesto/eg
 import { Router } from '@angular/router';
 import { UiComponent } from '../../../components/classification/unidadesInternas/ui.component';
 import { PresupuestoEgreso } from 'src/app/common/interfaces/presupuesto.interface';
+import { Usuario } from 'src/app/common/interfaces/usuario.interface';
 
 @Component({
 	selector: 'app-egresos',
@@ -16,6 +17,8 @@ export class EgresosComponent {
 	ui_keys = ['0', '0'];
 	ui_data: any;
 	presupuestos: any = [];
+	usuario: Usuario;
+
 	presupuesto: PresupuestoEgreso = {
 		id_centro_costo: '',
 		nombre_centro_costo: '',
@@ -31,14 +34,17 @@ export class EgresosComponent {
 		private mensaje: MensajesService,
 		private egreso_service: PresupuestoEgresoService,
 		private router: Router
-		) {}
+	) {
+		this.usuario = JSON.parse(localStorage.getItem('currentUser'));
+		this.getPresupuestos();
+	}
 
-	mostrarProyectos( id_presupuesto: string) {
+	mostrarProyectos( id_presupuesto: number) {
 		this.router.navigate([`/panel-adm/pres_egresos/${id_presupuesto}/proyectos`]);
 	}
 
 	getPresupuestos() {
-		this.egreso_service.get_presupuestos_cc(this.ui_data.id_ccosto)
+		this.egreso_service.get_presupuestos_cc(this.usuario.id_cc)
 		.subscribe((presupuestos: any) => {
 			if (presupuestos !== []) {
 				this.presupuestos = presupuestos;
@@ -53,17 +59,17 @@ export class EgresosComponent {
 		});
 	}
 
-	/* -- Unidades internas -- */
-	getDataUI(data: any) {
-		this.ui_data = data;
-		if (this.ui_data.id_ccosto !== '0' && this.ui_data.id_ccosto !== null && this.ui_data.id_ccosto !== '') {
-			this.getPresupuestos();
-		}
-	}
+	// /* -- Unidades internas -- */
+	// getDataUI(data: any) {
+	// 	this.ui_data = data;
+	// 	if (this.ui_data.id_ccosto !== '0' && this.ui_data.id_ccosto !== null && this.ui_data.id_ccosto !== '') {
+	// 		this.getPresupuestos();
+	// 	}
+	// }
 
-	crearPresupuesto(anio) {
+	crearPresupuesto(anio: number) {
 		this.presupuesto = {
-			id_centro_costo: this.ui_data.id_ccosto,
+			id_centro_costo: this.usuario.id_cc,
 			anio: anio
 		};
 
