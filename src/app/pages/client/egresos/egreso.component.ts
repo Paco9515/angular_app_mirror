@@ -1,4 +1,4 @@
-import { Component, ɵConsole } from '@angular/core';
+import { Component } from '@angular/core';
 import { MensajesService } from '../../../common/services/shared/mensajes.service';
 import { CcostoService } from 'src/app/common/services/ui/ccosto.service';
 import { PresupuestoEgresoService } from '../../../common/services/presupuesto/egreso.service';
@@ -30,8 +30,10 @@ export class EgresoComponent  {
 	datosEgresoGeneralHijo: any = [];
 	totalGeneralHijo: number = 0;
 
-	mostrarOpciones:boolean = false;
-
+	mostrarOpciones: boolean = false;
+	clasificaciones: any[] = [];
+	// totalClasificacion: number;
+	// loading: boolean = false;
 
 	constructor(
 		private mensaje: MensajesService,
@@ -73,6 +75,7 @@ export class EgresoComponent  {
 				this.egresoPropioPrincipal = egreso.data;
 				this.get_presupuesto_egresos_general(this.egresoPropioPrincipal.id_centro_costo, this.egresoPropioPrincipal.anio);
 				this.getCCentroHijos(this.egresoPropioPrincipal.id_centro_costo);
+				this.buscarPresupuestoPorClasificacion('ClasfObjGasto');
 			}, error => {
 				this.mensaje.danger(error.error);
 			});
@@ -143,5 +146,17 @@ export class EgresoComponent  {
 		// }, error => {
 		// 	this.mensaje.danger(error.error);
 		// });
+	}
+
+	public buscarPresupuestoPorClasificacion(clasificacion: string) {
+		// console.log('Rechazar');
+		this.presupuestoEgresos.get_presupuetso_egreso_por_clasificacion(clasificacion, this.egresoPropioPrincipal.id_centro_costo, this.egresoPropioPrincipal.anio )
+		.subscribe((clasificacion: any) => {
+			console.log(clasificacion.data);
+			this.clasificaciones = clasificacion.data; 
+		}, error => {
+			this.mensaje.danger(error.error);
+		});
+
 	}
 }

@@ -8,6 +8,8 @@ import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { TableClasificacionComponent } from './tableClasificacion/tableClasificacion.component';
+import { LoadingComponent } from './loading/loading.component';
 
 
 @NgModule({
@@ -16,14 +18,18 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 		MenuComponent,
 		FooterComponent,
 		NopagefoundComponent,
-		BreadcrumbsComponent
+		BreadcrumbsComponent,
+		TableClasificacionComponent,
+		LoadingComponent
 	],
 	exports: [
 		HeaderComponent,
 		MenuComponent,
 		FooterComponent,
 		NopagefoundComponent,
-		BreadcrumbsComponent
+		BreadcrumbsComponent,
+		TableClasificacionComponent,
+		LoadingComponent
 	],
 	imports: [
 		RouterModule,

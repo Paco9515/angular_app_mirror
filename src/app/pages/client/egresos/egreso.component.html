@@ -13,7 +13,7 @@
                 <div class="card-header">
                     <div class="row text-center">
                         <div class="col-12 col-md-8 text-md-left h5 font-weight-bold">
-                            <i class="fa fa-list"></i><strong>Presupuesto de egreso {{ egresoPropioPrincipal.anio }} ({{ egresoPropioPrincipal.nombre_centro_costo }})</strong>
+                            <i class="fa fa-list"></i><strong> Presupuesto de egreso {{ egresoPropioPrincipal.anio + ' (' + egresoPropioPrincipal.nombre_centro_costo }})</strong>
                         </div>
                         <div class="col-12 col-md-4 text-center text-sm-right">
                             <!-- Boton regresar normal -->
@@ -26,11 +26,18 @@
                 <div class="card-body">
                     <div class="nav-tabs-boxed">
                         <ul class="nav nav-tabs" role="tablist">
-                            <li class="nav-item" *ngIf="centrosCostos.length != 0"><a class="nav-link active" data-toggle="tab" href="#egresoGeneral" role="tab" aria-controls="egresoGeneral">Presupuesto general de egreso</a></li>
-                            <li class="nav-item"><a class="nav-link" [ngClass]="{
-                                'active': centrosCostos.length == 0
-                            }" data-toggle="tab" href="#egresoPropio" role="tab" aria-controls="egresoPropio">Presupuesto Propio</a></li>
-                            <li class="nav-item" *ngIf="centrosCostos.length != 0"><a class="nav-link" data-toggle="tab" href="#egresoACargos" role="tab" aria-controls="egresoACargos">Relacion de presupuestos de egresos a cargo</a></li>
+                            <li class="nav-item" *ngIf="centrosCostos.length != 0">
+                                <a class="nav-link active" data-toggle="tab" href="#egresoGeneral" role="tab" aria-controls="egresoGeneral">Presupuesto general de egreso</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" [ngClass]="{ 'active': centrosCostos.length == 0 }" data-toggle="tab" href="#egresoPropio" role="tab" aria-controls="egresoPropio">Presupuesto Propio</a>
+                            </li>
+                            <li class="nav-item" *ngIf="centrosCostos.length != 0">
+                                <a class="nav-link" data-toggle="tab" href="#egresoACargos" role="tab" aria-controls="egresoACargos">Relacion de presupuestos de egresos a cargo</a>
+                            </li>
+                            <li class="nav-item" *ngIf="centrosCostos.length != 0">
+                                <a class="nav-link" data-toggle="tab" href="#clasificacionEgreso" role="tab" aria-controls="clasificacionEgreso">Vista por clasificaciones</a>
+                            </li>
                         </ul>
 
                         <div class="tab-content">
@@ -333,6 +340,59 @@
                                                         Rechazar Presupuesto
                                                     </button>
                                                 </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="tab-pane" id="clasificacionEgreso" role="tabpanel">
+                                <div class="row">
+                                    <div class="col-2">
+                                        <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+                                            <a class="nav-link active" id="v-pills-clasf-obj-gasto-tab" data-toggle="pill" href="#v-pills-clasf-obj-gasto" role="tab" aria-controls="v-pills-clasf-obj-gasto" aria-selected="true" (click)="buscarPresupuestoPorClasificacion('ClasfObjGasto')">Clasificación Objeto de Gasto</a>
+                                            <a class="nav-link" id="v-pills-clasf-tipo-gasto-tab" data-toggle="pill" href="#v-pills-clasf-tipo-gasto" role="tab" aria-controls="v-pills-clasf-tipo-gasto" aria-selected="false" (click)="buscarPresupuestoPorClasificacion('ClasfTipoGasto')">Clasificación por tipo de gasto</a>
+                                            <a class="nav-link" id="v-pills-clasf-administrativa-tab" data-toggle="pill" href="#v-pills-clasf-administrativa" role="tab" aria-controls="v-pills-clasf-administrativa" aria-selected="false"(click)="buscarPresupuestoPorClasificacion('ClasfAdministrativa')">Clasificación Administrativa</a>
+                                            <a class="nav-link" id="v-pills-clasf-programatica-tab" data-toggle="pill" href="#v-pills-clasf-programatica" role="tab" aria-controls="v-pills-clasf-programatica" aria-selected="false" (click)="buscarPresupuestoPorClasificacion('ClasfProgramatica')">Clasificación Programatica</a>
+                                            <a class="nav-link" id="v-pills-clasf-fuente-financiamiento-tab" data-toggle="pill" href="#v-pills-clasf-fuente-financiamiento" role="tab" aria-controls="v-pills-clasf-fuente-financiamiento" aria-selected="false" (click)="buscarPresupuestoPorClasificacion('ClasfFuenteFinanciamiento')">Clasificación Por fuente de financiamiento</a>
+                                        </div>
+                                    </div>
+                                    <div class="col-10">
+                                        <div class="tab-content" id="v-pills-tabContent">
+                                            <div class="tab-pane show active animeted fadeIn" id="v-pills-clasf-obj-gasto" role="tabpanel" aria-labelledby="v-pills-clasf-obj-gasto-tab">
+                                                <div class="align-middle text-center h3 font-weight-bold">
+                                                    Clasificación Por Objeto De Gasto {{ egresoPropioPrincipal.anio }}
+                                                    <p><small>({{ egresoPropioPrincipal.nombre_centro_costo }})</small></p>
+                                                </div>
+                                                <app-table-clasificacion [datosClasificacion]="clasificaciones"></app-table-clasificacion>
+                                            </div>
+                                            <div class="tab-pane animeted fadeIn" id="v-pills-clasf-tipo-gasto" role="tabpanel" aria-labelledby="v-pills-clasf-tipo-gasto-tab">
+                                                <div class="align-middle text-center h3 font-weight-bold">
+                                                    Clasificación Por Tipo De Gasto {{ egresoPropioPrincipal.anio }}
+                                                    <p><small>({{ egresoPropioPrincipal.nombre_centro_costo }})</small></p>
+                                                </div>
+                                                <app-table-clasificacion [datosClasificacion]="clasificaciones"></app-table-clasificacion>
+                                            </div>
+                                            <div class="tab-pane animeted fadeIn" id="v-pills-clasf-administrativa" role="tabpanel" aria-labelledby="v-pills-clasf-administrativa-tab">
+                                                <div class="align-middle text-center h3 font-weight-bold">
+                                                    Clasificación Unidad Administrativa {{ egresoPropioPrincipal.anio }}
+                                                    <p><small>({{ egresoPropioPrincipal.nombre_centro_costo }})</small></p>
+                                                </div>
+                                                <app-table-clasificacion [datosClasificacion]="clasificaciones"></app-table-clasificacion>
+                                            </div>
+                                            <div class="tab-pane animeted fadeIn" id="v-pills-clasf-programatica" role="tabpanel" aria-labelledby="v-pills-clasf-programatica-tab">
+                                                <div class="align-middle text-center h3 font-weight-bold">
+                                                    Clasificación Programatica {{ egresoPropioPrincipal.anio }}
+                                                    <p><small>({{ egresoPropioPrincipal.nombre_centro_costo }})</small></p>
+                                                </div>
+                                                <app-table-clasificacion [datosClasificacion]="clasificaciones"></app-table-clasificacion>
+                                            </div>
+                                            <div class="tab-pane animeted fadeIn" id="v-pills-clasf-fuente-financiamiento" role="tabpanel" aria-labelledby="v-pills-clasf-fuente-financiamiento-tab">
+                                                <div class="align-middle text-center h3 font-weight-bold">
+                                                    Clasificación Por Fuente Financiamiento {{ egresoPropioPrincipal.anio }}
+                                                    <p><small>({{ egresoPropioPrincipal.nombre_centro_costo }})</small></p>
+                                                </div>
+                                                <app-table-clasificacion [datosClasificacion]="clasificaciones"></app-table-clasificacion>
                                             </div>
                                         </div>
                                     </div>
