@@ -33,6 +33,8 @@ export class EgresoComponent  {
 
 	mostrarOpciones: boolean = false;
 	clasificaciones: any[] = [];
+
+	datosEmpresa:any;
 	// totalClasificacion: number;
 	// loading: boolean = false;
 
@@ -41,20 +43,21 @@ export class EgresoComponent  {
 		private ccosto_service: CcostoService,
 		private presupuestoEgresos: PresupuestoEgresoService,
 		private activateRoute: ActivatedRoute,
-		private pdf: PDFService
 	) {
 		this.activateRoute.params.subscribe(params => {
 			this.id_egreso = params['id_presupuesto'];
 			this.get_presupuestoId(this.id_egreso);
 			this.getDatosPresupuesto(this.id_egreso);
 		});
+		this.datosEmpresaPorIdCentroCosto();
+
 	}
 
 	private getDatosPresupuesto($id_presupuesto: string) {
 		this.presupuestoEgresos.get_presupuesto($id_presupuesto)
 			.subscribe((data: any) => {
 				this.datosEgreso = data.data;
-				this.totalPropio = this.datosEgreso.reduce((contador, egreso) => contador + parseInt(egreso.importe), 0);
+				this.totalPropio = this.datosEgreso.reduce((contador, egreso) => contador + parseFloat(egreso.importe), 0);
 			}, error => {
 				this.mensajeAlert = error.error.message;
 			});
@@ -88,7 +91,7 @@ export class EgresoComponent  {
 			.subscribe((egresos: any) => {
 				// console.log(egresos.data);
 				this.datosEgresoGeneral = egresos.data; 
-				this.totalGeneral = this.datosEgresoGeneral.reduce(( contador, egreso )  => contador + parseInt(egreso.importe), 0);
+				this.totalGeneral = this.datosEgresoGeneral.reduce(( contador, egreso )  => contador + parseFloat(egreso.importe), 0);
 			}, error => {
 				this.mensaje.danger(error.error);
 			});
@@ -105,7 +108,7 @@ export class EgresoComponent  {
 					this.presupuestoEgresos.get_presupuesto_egresos_general(id_centro_costo, anio)
 						.subscribe((egresos: any) => {
 							this.datosEgresoGeneralHijo = egresos.data; 
-							this.totalGeneralHijo = this.datosEgresoGeneralHijo.reduce((contador, egreso) => contador + parseInt(egreso.importe), 0);
+							this.totalGeneralHijo = this.datosEgresoGeneralHijo.reduce((contador, egreso) => contador + parseFloat(egreso.importe), 0);
 							(egreso.estado == 'Revisión' ) ?  this.mostrarOpciones = true : null;
 						}, error => {
 							this.mensaje.danger(error.error);
@@ -174,39 +177,37 @@ export class EgresoComponent  {
 
 	public pdfPresupuestoEgresoGeneral() {
 
-		let datosEmpresa: any = {
-			nombre_comercial: 'Casa Magna Marriott Puerto Vallarta Resort & SPA. S.A. de C.V',
-			rfc: 'xxxxxxxx',
-			imss_sar: 'xxxxxxxx',
-			reg_estatal: 'xxxxxxxx',
-			calle: 'Ramón y Caja',
-			nombre_asentamiento: 'Jaimito',
-			num_exterior: '270',
-			codigo_postal: 'xxxxxxxxxx',
-			nombre_municipio: 'Guadalajara',
-			nombre_estado: 'Jalisco',
-		};
-
 		let title: string = 'Presupuesto de egreso' + this.egresoPropioPrincipal.anio + ' (' + this.egresoPropioPrincipal.nombre_centro_costo + ')';
 		let headTable = this.headTablePresupuestoEgresoGeneral(title);
 		let bodyTable = this.bodyTablePresupuestoEgresoGeneral(this.datosEgresoGeneral);
 		let footTable = this.footerTablePresupuestoEgresoGeneral(this.datosEgresoGeneral, 23);
-
 		let doc = new PDFService;
 		doc.buildPDF('l', 'tabloid');
 		doc.createTable(headTable, bodyTable, footTable);
 		doc.addPage();
 		// ESTA FUNCION SE LLAMA AL FINAL PARA QUE COLOQUE EL HEADER Y EL FOOTER EN TODAS LAS PAGINAS QUE SE REALICEN 
-		doc.headerFooterPage(datosEmpresa);
+		doc.headerFooterPage(this.datosEmpresa);
 
 		return doc;
+	}
+
+	public datosEmpresaPorIdCentroCosto(){
+		let user = JSON.parse(localStorage.getItem('currentUser'));
+
+		this.ccosto_service.getInfoEmpresaPorCentroCosto(user.id_cc)
+			.subscribe((informacion: any) => {
+				this.datosEmpresa = informacion.data;
+			}, error => {
+				error.error;
+			});
+
 	}
 
 	private headTablePresupuestoEgresoGeneral(title: string) {
 
 		return [
 			[
-				{ title: title, colSpan: 24, styles: { fontSize: 12 } }
+				{ title: title, colSpan: 24, styles: { fontSize: 10 } }
 			],
 			[
 				{ title: 'Nº', rowSpan: 5 },
@@ -252,7 +253,7 @@ export class EgresoComponent  {
 		];
 	}
 
-	private bodyTablePresupuestoEgresoGeneral(datos: any[]) {
+	private bodyTablePresupuestoEgresoGeneral(datos: any) {
 
 		let arrayData: any[] = [];
 		let importe: number = 0;
@@ -260,42 +261,39 @@ export class EgresoComponent  {
 		datos.forEach((element, index) => {
 			element = [
 				arrayData['num'] = index + 1,
-				arrayData['anio'] = element['anio'],
-				arrayData['codigo_centro'] = element['codigo_centro'],
-				arrayData['nombre_centro'] = element['nombre_centro'],
-				arrayData['codigo_proyecto'] = element['codigo_proyecto'],
-				arrayData['nombre_proyecto'] = element['nombre_proyecto'],
-				arrayData['fecha_inicio_proyecto'] = element['fecha_inicio_proyecto'],
-				arrayData['fecha_final_proyecto'] = element['fecha_final_proyecto'],
-				arrayData['codigo_subprograma'] = element['codigo_subprograma'],
-				arrayData['nombre_subprograma'] = element['nombre_subprograma'],
-				arrayData['codigo_fase'] = element['codigo_fase'],
-				arrayData['nombre_fase'] = element['nombre_fase'],
-				arrayData['descripcion_fase'] = element['descripcion_fase'],
-				arrayData['codigo_tipo_financ'] = element['codigo_tipo_financ'],
-				arrayData['nombre_tipo_financ'] = element['nombre_tipo_financ'],
-				arrayData['estado'] = element['estado'],
-				arrayData['municipio'] = element['municipio'],
-				arrayData['codigo_postal'] = element['codigo_postal'],
-				arrayData['asentamiento'] = element['asentamiento'],
-				arrayData['tipo_asentamiento'] = element['tipo_asentamiento'],
-				arrayData['domicilio'] = element['domicilio'],
-				arrayData['codigo_partida'] = element['codigo_partida'],
-				arrayData['nombre_partida'] = element['nombre_partida'],
-				arrayData['importe'] = element['importe'],
+				arrayData['anio'] = element.anio,
+				arrayData['codigo_centro'] = element.codigo_centro,
+				arrayData['nombre_centro'] = element.nombre_centro,
+				arrayData['codigo_proyecto'] = element.codigo_proyecto,
+				arrayData['nombre_proyecto'] = element.nombre_proyecto,
+				arrayData['fecha_inicio_proyecto'] = element.fecha_inicio_proyecto,
+				arrayData['fecha_final_proyecto'] = element.fecha_final_proyecto,
+				arrayData['codigo_subprograma'] = element.codigo_subprograma,
+				arrayData['nombre_subprograma'] = element.nombre_subprograma,
+				arrayData['codigo_fase'] = element.codigo_fase,
+				arrayData['nombre_fase'] = element.nombre_fase,
+				arrayData['descripcion_fase'] = element.descripcion_fase,
+				arrayData['codigo_tipo_financ'] = element.codigo_tipo_financ,
+				arrayData['nombre_tipo_financ'] = element.nombre_tipo_financ,
+				arrayData['estado'] = element.estado,
+				arrayData['municipio'] = element.municipio,
+				arrayData['codigo_postal'] = element.codigo_postal,
+				arrayData['asentamiento'] = element.asentamiento,
+				arrayData['tipo_asentamiento'] = element.tipo_asentamiento,
+				arrayData['domicilio'] = element.domicilio,
+				arrayData['codigo_partida'] = element.codigo_partida,
+				arrayData['nombre_partida'] = element.nombre_partida,
+				arrayData['importe'] = element.importe,
 			];
-
-			importe += Number(element['importe']);
 
 			arrayData.push(Object.values(element));
 		});
-		console.log([arrayData, importe]);
-        
+
 		return arrayData;
 	}
 
 	private footerTablePresupuestoEgresoGeneral(datos: any, colSpan: number) {
-		let importe = datos.reduce((contador, egreso) => contador + parseInt(egreso.importe), 0);
+		let importe = datos.reduce((contador, egreso) => contador + parseFloat(egreso.importe), 0);
 
 		return [
 			[

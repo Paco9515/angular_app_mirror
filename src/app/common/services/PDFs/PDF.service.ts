@@ -23,11 +23,10 @@ export class PDFService  {
 			theme: 'grid',
 			styles: {
 				font: 'helvetica',
-				fontSize: 8,
+				fontSize: 6,
 			},
 			showFoot: 'lastPage',
-			startY: 50,
-			startX: 10,
+
 			tableWidth: 'auto',
 			headStyles: {
 				halign: 'center',
@@ -40,17 +39,18 @@ export class PDFService  {
             head: headTable,
 			body: bodyTable,
 			foot: footTable,
-			margin: { top: 50 }
+			margin: { top: 45, left: 15, right:15 }
 		});
 		return this.doc;
 	}
 
     public headerFooterPage(datos:any) : jsPDF {
+        console.log(datos);
         let srcImagen = 'assets/img/sin_img.jpg';
         let xAxisImagen = 150;
         let yAxisImagen = 5;
-        let widthImagen = 40;
-        let heightImagen = 40;
+        let widthImagen = 35;
+        let heightImagen = 35;
         let xAxisText = 210;
         let empresa = datos.nombre_comercial;
         let datosEmpresa = 'RFC: ' + datos.rfc + ' IMSS: ' + datos.imss_sar + ' Reg. Estatal: ' + datos.reg_estatal;
@@ -65,12 +65,12 @@ export class PDFService  {
         img.src = srcImagen;
 		// For each page, print the page number and the total pages
         for (var i = 1; i <= totalPages; i++) {
-            this.doc.setFontSize(14);
-            this.doc.text(String(empresa), xAxisText, 15);
             this.doc.setFontSize(12);
+            this.doc.text(String(empresa), xAxisText, 15);
+            this.doc.setFontSize(10);
             this.doc.text(String(datosEmpresa), xAxisText, 22);
-            this.doc.text(String(direccion), xAxisText, 29);
-            this.doc.text(String(direccion2), xAxisText, 36);
+            this.doc.text(String(direccion), xAxisText, 27);
+            this.doc.text(String(direccion2), xAxisText, 32);
             this.doc.addImage(img, 'JPG', xAxisImagen, yAxisImagen, widthImagen, heightImagen);
 			// Go to page i
             this.doc.setPage(i);
@@ -85,7 +85,9 @@ export class PDFService  {
     }
 
     public seePDF() {
+    
         return this.doc.output('dataurlnewwindow');
+
     }
 
     public createText(text: string, xAxisText: number, yAxisText: number) {

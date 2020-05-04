@@ -138,12 +138,12 @@
                                                 <td class="align-middle">{{ datoEgresoGeneral.domicilio }}</td>
                                                 <td class="align-middle text-center">{{ datoEgresoGeneral.codigo_partida }}</td>
                                                 <td class="align-middle">{{ datoEgresoGeneral.nombre_partida }}</td>
-                                                <td class="align-middle text-right" nowrap>{{ datoEgresoGeneral.importe | currency }}</td>
+                                                <td class="align-middle text-right" nowrap>{{ datoEgresoGeneral.importe }}</td>
                                             </tr>
                                         </tbody>
                                         <tfoot>
                                             <th class="align-middle text-right font-weight-bold " colspan="23">Total</th>
-                                            <th class="align-middle text-right" nowrap>{{ totalGeneral | currency }}</th>
+                                            <th class="align-middle text-right" nowrap>{{ totalGeneral }}</th>
                                         </tfoot>
                                     </table>
                                 </div>
@@ -224,12 +224,12 @@
                                                 <td [ngClass]="getFormatFont(datoEgreso.domicilio)" class="align-middle">{{ datoEgreso.domicilio }}</td>
                                                 <td [ngClass]="getFormatFont(datoEgreso.codigo_partida)" class="align-middle text-center">{{ datoEgreso.codigo_partida }}</td>
                                                 <td [ngClass]="getFormatFont(datoEgreso.nombre_partida)" class="align-middle">{{ datoEgreso.nombre_partida }}</td>
-                                                <td class="align-middle text-right" nowrap>{{ datoEgreso.importe | currency }}</td>
+                                                <td class="align-middle text-right" nowrap>{{ datoEgreso.importe }}</td>
                                             </tr>
                                         </tbody>
                                         <tfoot>
                                             <th class="align-middle text-right font-weight-bold " colspan="21">Total</th>
-                                            <th class="align-middle text-right" nowrap>{{ totalPropio | currency }}</th>
+                                            <th class="align-middle text-right" nowrap>{{ totalPropio }}</th>
                                         </tfoot>
                                     </table>
                                 </div>
@@ -330,12 +330,12 @@
                                                                 <td class="align-middle">{{ datoEgresoGeneral.domicilio }}</td>
                                                                 <td class="align-middle text-center">{{ datoEgresoGeneral.codigo_partida }}</td>
                                                                 <td class="align-middle">{{ datoEgresoGeneral.nombre_partida }}</td>
-                                                                <td class="align-middle text-right" nowrap>{{ datoEgresoGeneral.importe | currency }}</td>
+                                                                <td class="align-middle text-right" nowrap>{{ datoEgresoGeneral.importe }}</td>
                                                             </tr>
                                                         </tbody>
                                                         <tfoot>
                                                             <th class="align-middle text-right font-weight-bold " colspan="23">Total</th>
-                                                            <th class="align-middle text-right" nowrap>{{ totalGeneralHijo | currency }}</th>
+                                                            <th class="align-middle text-right" nowrap>{{ totalGeneralHijo }}</th>
                                                         </tfoot>
                                                     </table>
                                                 </div>
@@ -360,7 +360,7 @@
                                         <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
                                             <a class="nav-link active" id="v-pills-clasf-obj-gasto-tab" data-toggle="pill" href="#v-pills-clasf-obj-gasto" role="tab" aria-controls="v-pills-clasf-obj-gasto" aria-selected="true" (click)="buscarPresupuestoPorClasificacion('ClasfObjGasto')">Clasificación Objeto de Gasto</a>
                                             <a class="nav-link" id="v-pills-clasf-tipo-gasto-tab" data-toggle="pill" href="#v-pills-clasf-tipo-gasto" role="tab" aria-controls="v-pills-clasf-tipo-gasto" aria-selected="false" (click)="buscarPresupuestoPorClasificacion('ClasfTipoGasto')">Clasificación por tipo de gasto</a>
-                                            <a class="nav-link" id="v-pills-clasf-administrativa-tab" data-toggle="pill" href="#v-pills-clasf-administrativa" role="tab" aria-controls="v-pills-clasf-administrativa" aria-selected="false"(click)="buscarPresupuestoPorClasificacion('ClasfAdministrativa')">Clasificación Administrativa</a>
+                                            <a class="nav-link" id="v-pills-clasf-administrativa-tab" data-toggle="pill" href="#v-pills-clasf-administrativa" role="tab" aria-controls="v-pills-clasf-administrativa" aria-selected="false" (click)="buscarPresupuestoPorClasificacion('ClasfAdministrativa')">Clasificación Administrativa</a>
                                             <a class="nav-link" id="v-pills-clasf-programatica-tab" data-toggle="pill" href="#v-pills-clasf-programatica" role="tab" aria-controls="v-pills-clasf-programatica" aria-selected="false" (click)="buscarPresupuestoPorClasificacion('ClasfProgramatica')">Clasificación Programatica</a>
                                             <a class="nav-link" id="v-pills-clasf-fuente-financiamiento-tab" data-toggle="pill" href="#v-pills-clasf-fuente-financiamiento" role="tab" aria-controls="v-pills-clasf-fuente-financiamiento" aria-selected="false" (click)="buscarPresupuestoPorClasificacion('ClasfFuenteFinanciamiento')">Clasificación Por fuente de financiamiento</a>
                                         </div>
