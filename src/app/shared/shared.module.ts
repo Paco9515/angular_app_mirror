@@ -8,7 +8,7 @@ import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { TableClasificacionComponent } from './tableClasificacion/tableClasificacion.component';
+import { TableClasificacionComponent } from './tables/tableClasificacion/tableClasificacion.component';
 import { LoadingComponent } from './loading/loading.component';
 
 

@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { MensajesService } from '../../../common/services/shared/mensajes.service';
 import { CcostoService } from 'src/app/common/services/ui/ccosto.service';
 import { PresupuestoEgresoService } from '../../../common/services/presupuesto/egreso.service';
+import { PDFService } from '../../../common/services/PDFs/PDF.service';
 import { ActivatedRoute } from '@angular/router';
 
 @Component ({
@@ -23,7 +24,7 @@ export class EgresoComponent  {
 	totalPropio: number = 0;
 	
 	/* PRESUPUESTO GENERAL */
-	datosEgresoGeneral: any = null;
+	datosEgresoGeneral: any[] = null;
 	totalGeneral: number;
 
 	/* PRESUPUESTO HIJO */
@@ -40,6 +41,7 @@ export class EgresoComponent  {
 		private ccosto_service: CcostoService,
 		private presupuestoEgresos: PresupuestoEgresoService,
 		private activateRoute: ActivatedRoute,
+		private pdf: PDFService
 	) {
 		this.activateRoute.params.subscribe(params => {
 			this.id_egreso = params['id_presupuesto'];
@@ -152,11 +154,156 @@ export class EgresoComponent  {
 		// console.log('Rechazar');
 		this.presupuestoEgresos.get_presupuetso_egreso_por_clasificacion(clasificacion, this.egresoPropioPrincipal.id_centro_costo, this.egresoPropioPrincipal.anio )
 		.subscribe((clasificacion: any) => {
-			console.log(clasificacion.data);
+			// console.log(clasificacion.data);
 			this.clasificaciones = clasificacion.data; 
 		}, error => {
 			this.mensaje.danger(error.error);
 		});
 
 	}
+
+	public descargarPDF() {
+		let doc = this.pdfPresupuestoEgresoGeneral();
+		doc.dowloadPDF('PresupuestoEgreso' + this.egresoPropioPrincipal.anio + this.egresoPropioPrincipal.nombre_centro_costo);
+	}
+
+	public verPDF() {
+		let doc = this.pdfPresupuestoEgresoGeneral();
+		doc.seePDF();
+	}
+
+	public pdfPresupuestoEgresoGeneral() {
+
+		let datosEmpresa: any = {
+			nombre_comercial: 'Casa Magna Marriott Puerto Vallarta Resort & SPA. S.A. de C.V',
+			rfc: 'xxxxxxxx',
+			imss_sar: 'xxxxxxxx',
+			reg_estatal: 'xxxxxxxx',
+			calle: 'Ramón y Caja',
+			nombre_asentamiento: 'Jaimito',
+			num_exterior: '270',
+			codigo_postal: 'xxxxxxxxxx',
+			nombre_municipio: 'Guadalajara',
+			nombre_estado: 'Jalisco',
+		};
+
+		let title: string = 'Presupuesto de egreso' + this.egresoPropioPrincipal.anio + ' (' + this.egresoPropioPrincipal.nombre_centro_costo + ')';
+		let headTable = this.headTablePresupuestoEgresoGeneral(title);
+		let bodyTable = this.bodyTablePresupuestoEgresoGeneral(this.datosEgresoGeneral);
+		let footTable = this.footerTablePresupuestoEgresoGeneral(this.datosEgresoGeneral, 23);
+
+		let doc = new PDFService;
+		doc.buildPDF('l', 'tabloid');
+		doc.createTable(headTable, bodyTable, footTable);
+		doc.addPage();
+		// ESTA FUNCION SE LLAMA AL FINAL PARA QUE COLOQUE EL HEADER Y EL FOOTER EN TODAS LAS PAGINAS QUE SE REALICEN 
+		doc.headerFooterPage(datosEmpresa);
+
+		return doc;
+	}
+
+	private headTablePresupuestoEgresoGeneral(title: string) {
+
+		return [
+			[
+				{ title: title, colSpan: 24, styles: { fontSize: 12 } }
+			],
+			[
+				{ title: 'Nº', rowSpan: 5 },
+				{ title: 'Año', rowSpan: 5 },
+				{ title: 'Centro Costo', colSpan: 22 }
+			],
+			[
+				{ title: 'Código', rowSpan: 4 },
+				{ title: 'Nombre', rowSpan: 4 },
+				{ title: 'Proyectos', colSpan: 20 }
+			],
+			[
+				{ title: 'Código', rowSpan: 3 },
+				{ title: 'Nombre', rowSpan: 3 },
+				{ title: 'Fecha Inicio', rowSpan: 3 },
+				{ title: 'Fecha Final', rowSpan: 3 },
+				{ title: 'Subprograma', colSpan: 2 },
+				{ title: 'Fase', colSpan: 14 }
+			],
+			[
+				{ title: 'Código', rowSpan: 2 },
+				{ title: 'Nombre', rowSpan: 2 },
+				{ title: 'Código', rowSpan: 2 },
+				{ title: 'Nombre', rowSpan: 2 },
+				{ title: 'Descripción', rowSpan: 2 },
+				{ title: 'Tipo FF', colSpan: 2 },
+				{ title: 'Ubicación Geográfica', colSpan: 6 },
+				{ title: 'Partida', colSpan: 3 },
+			],
+			[
+				{ title: 'Código' },
+				{ title: 'Nombre' },
+				{ title: 'Estado' },
+				{ title: 'Municipio' },
+				{ title: 'Código Postal' },
+				{ title: 'Asentamiento' },
+				{ title: 'Tipo Asentamiento' },
+				{ title: 'Domicilio' },
+				{ title: 'Código' },
+				{ title: 'Nombre' },
+				{ title: 'Importe' },
+			]
+		];
+	}
+
+	private bodyTablePresupuestoEgresoGeneral(datos: any[]) {
+
+		let arrayData: any[] = [];
+		let importe: number = 0;
+
+		datos.forEach((element, index) => {
+			element = [
+				arrayData['num'] = index + 1,
+				arrayData['anio'] = element['anio'],
+				arrayData['codigo_centro'] = element['codigo_centro'],
+				arrayData['nombre_centro'] = element['nombre_centro'],
+				arrayData['codigo_proyecto'] = element['codigo_proyecto'],
+				arrayData['nombre_proyecto'] = element['nombre_proyecto'],
+				arrayData['fecha_inicio_proyecto'] = element['fecha_inicio_proyecto'],
+				arrayData['fecha_final_proyecto'] = element['fecha_final_proyecto'],
+				arrayData['codigo_subprograma'] = element['codigo_subprograma'],
+				arrayData['nombre_subprograma'] = element['nombre_subprograma'],
+				arrayData['codigo_fase'] = element['codigo_fase'],
+				arrayData['nombre_fase'] = element['nombre_fase'],
+				arrayData['descripcion_fase'] = element['descripcion_fase'],
+				arrayData['codigo_tipo_financ'] = element['codigo_tipo_financ'],
+				arrayData['nombre_tipo_financ'] = element['nombre_tipo_financ'],
+				arrayData['estado'] = element['estado'],
+				arrayData['municipio'] = element['municipio'],
+				arrayData['codigo_postal'] = element['codigo_postal'],
+				arrayData['asentamiento'] = element['asentamiento'],
+				arrayData['tipo_asentamiento'] = element['tipo_asentamiento'],
+				arrayData['domicilio'] = element['domicilio'],
+				arrayData['codigo_partida'] = element['codigo_partida'],
+				arrayData['nombre_partida'] = element['nombre_partida'],
+				arrayData['importe'] = element['importe'],
+			];
+
+			importe += Number(element['importe']);
+
+			arrayData.push(Object.values(element));
+		});
+		console.log([arrayData, importe]);
+        
+		return arrayData;
+	}
+
+	private footerTablePresupuestoEgresoGeneral(datos: any, colSpan: number) {
+		let importe = datos.reduce((contador, egreso) => contador + parseInt(egreso.importe), 0);
+
+		return [
+			[
+				{ content: 'Importe total', colSpan: colSpan, styles: { halign: 'right' } },
+				{ content: importe, styles: { halign: 'right' } }
+			]
+		];
+	}
+
 }
+
