@@ -50,7 +50,6 @@ export class EgresoComponent  {
 			this.getDatosPresupuesto(this.id_egreso);
 		});
 		this.datosEmpresaPorIdCentroCosto();
-
 	}
 
 	private getDatosPresupuesto($id_presupuesto: string) {
@@ -165,27 +164,64 @@ export class EgresoComponent  {
 
 	}
 
-	public descargarPDF() {
+	public downloadPresupuestoEgresoPDF() {
+		let fecha = new Date();
+		let nombre = `Presupuesto Egreso ${this.egresoPropioPrincipal.anio, this.egresoPropioPrincipal.nombre_centro_costo}`;
+		let fechaActual = `${ String(fecha.getDay()).padStart(2, '0') }${ String(fecha.getMonth()).padStart(2, '0') }${ fecha.getFullYear() }`;
+		let hora = `${ String(fecha.getHours()).padStart(2, '0') }${ String(fecha.getMinutes()).padStart(2, '0') }${ String(fecha.getSeconds()).padStart(2, '0') }`;
+
 		let doc = this.pdfPresupuestoEgresoGeneral();
+		doc.dowloadPDF(nombre + fechaActual + hora);
+	}
+
+	public seePresupuestoEgresoPDF() {
+		let doc = this.pdfPresupuestoEgresoGeneral();
+		doc.seePDF();
+	}
+
+	public downloadClasificacionPDF() {
+		let doc = this.pdfClasificaicon('Clasificacion');
 		doc.dowloadPDF('PresupuestoEgreso' + this.egresoPropioPrincipal.anio + this.egresoPropioPrincipal.nombre_centro_costo);
 	}
 
-	public verPDF() {
-		let doc = this.pdfPresupuestoEgresoGeneral();
+	public seeClasificacionPDF() {
+		let doc = this.pdfClasificaicon('Clasificacion');
 		doc.seePDF();
 	}
 
 	public pdfPresupuestoEgresoGeneral() {
 
-		let title: string = 'Presupuesto de egreso' + this.egresoPropioPrincipal.anio + ' (' + this.egresoPropioPrincipal.nombre_centro_costo + ')';
+		let title: string = `Presupuesto de egreso ${ this.egresoPropioPrincipal.anio } \n(${ this.egresoPropioPrincipal.nombre_centro_costo })`;
 		let headTable = this.headTablePresupuestoEgresoGeneral(title);
 		let bodyTable = this.bodyTablePresupuestoEgresoGeneral(this.datosEgresoGeneral);
-		let footTable = this.footerTablePresupuestoEgresoGeneral(this.datosEgresoGeneral, 23);
+		let footTable = this.footerTableAmount(this.datosEgresoGeneral, 23);
 		let doc = new PDFService;
 		doc.buildPDF('l', 'tabloid');
-		doc.createTable(headTable, bodyTable, footTable);
-		doc.addPage();
+		doc.createTable(headTable, bodyTable, footTable, 8);
 		// ESTA FUNCION SE LLAMA AL FINAL PARA QUE COLOQUE EL HEADER Y EL FOOTER EN TODAS LAS PAGINAS QUE SE REALICEN 
+		doc.headerFooterPage(this.datosEmpresa);
+
+		return doc;
+	}
+
+	public pdfClasificaicon(title: string) {
+		let headTable = [
+			[
+				{ title: title, colSpan: 4 }
+			],
+			[
+				{ title: 'Nº' },
+				{ title: 'Código' },
+				{ title: 'Nombre' },
+				{ title: 'Importe' }
+			]
+		];
+		let bodyTable = this.bodyTableClasificacion(this.clasificaciones);
+		let footTable = this.footerTableAmount(this.clasificaciones, 3);
+
+		let doc = new PDFService;
+		doc.buildPDF('p', 'letter');
+		doc.createTable(headTable, bodyTable, footTable);
 		doc.headerFooterPage(this.datosEmpresa);
 
 		return doc;
@@ -200,14 +236,12 @@ export class EgresoComponent  {
 			}, error => {
 				error.error;
 			});
-
 	}
 
 	private headTablePresupuestoEgresoGeneral(title: string) {
-
 		return [
 			[
-				{ title: title, colSpan: 24, styles: { fontSize: 10 } }
+				{ title: title, colSpan: 24 }
 			],
 			[
 				{ title: 'Nº', rowSpan: 5 },
@@ -256,7 +290,6 @@ export class EgresoComponent  {
 	private bodyTablePresupuestoEgresoGeneral(datos: any) {
 
 		let arrayData: any[] = [];
-		let importe: number = 0;
 
 		datos.forEach((element, index) => {
 			element = [
@@ -292,15 +325,31 @@ export class EgresoComponent  {
 		return arrayData;
 	}
 
-	private footerTablePresupuestoEgresoGeneral(datos: any, colSpan: number) {
-		let importe = datos.reduce((contador, egreso) => contador + parseFloat(egreso.importe), 0);
+	private footerTableAmount(datos: any, colSpan: number) {
+		let importe = datos.reduce((contador, dato) => contador + parseFloat(dato.importe), 0);
 
 		return [
 			[
 				{ content: 'Importe total', colSpan: colSpan, styles: { halign: 'right' } },
-				{ content: importe, styles: { halign: 'right' } }
+				{ content: importe }
 			]
 		];
+	}
+
+	private bodyTableClasificacion(datos: any[]) {
+		let arrayData: any[] = [];
+		datos.forEach((dato, index) => {
+			dato = [
+				arrayData['num'] = index + 1,
+				arrayData['codigo'] = dato.codigo,
+				arrayData['nombre'] = dato.nombre,
+				arrayData['importe'] = dato.importe
+			];
+
+			arrayData.push(Object.values(dato));
+		});
+		
+		return arrayData;
 	}
 
 }
