@@ -58,5 +58,8 @@ export class PresupuestoEgresoService {
 		return this.constants.getRequest(`/update_partidasEgreso`, 'put', info);
 	}
 
-
+	// Consultas para presupuesto de egresos por clasificaciones
+	get_presupuetso_egreso_por_clasificacion(clasificacion: string, id_centro_costo: number, anio: number) {
+		return this.constants.getRequest(`/get_presupuesto_egreso_por_clasificacion/${clasificacion}/${id_centro_costo}/${anio}`, 'get', false);
+	}
 }
