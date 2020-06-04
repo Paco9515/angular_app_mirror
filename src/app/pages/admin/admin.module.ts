@@ -21,6 +21,11 @@ import { EmpresaComponent } from './empresa/empresa.component';
 import { EmpresasComponent } from './empresa/empresas.component';
 import { UsuariosComponent } from './usuarios/usuarios.component';
 import { UsuarioComponent } from './usuarios/usuario.component';
+import { UsuarioAdminComponent } from './usuarios/usuarioAdmin.component';
+import { NivelesCcComponent } from './niveles/centrosCosto/nivelesCc.component';
+import { NivelesUserComponent } from './niveles/usuarios/nivelesUser.component';
+import { NivelUserComponent } from './niveles/usuarios/nivelUser.component';
+import { NivelCcComponent } from './niveles/centrosCosto/nivelCc.component';
 
 @NgModule({
 	declarations: [
@@ -29,15 +34,23 @@ import { UsuarioComponent } from './usuarios/usuario.component';
 		EmpresaComponent,
 		EmpresasComponent,
 		UsuariosComponent,	
-		UsuarioComponent
-		// EgresosComponent
+		UsuarioComponent,
+		UsuarioAdminComponent,
+		NivelesCcComponent,
+		NivelCcComponent,
+		NivelesUserComponent,
+		NivelUserComponent
 	],
 	exports: [
 		EscritorioComponent,
 		AdminComponent,
 		EmpresaComponent,
-		EmpresasComponent
-	],
+		EmpresasComponent,
+		NivelesCcComponent,
+		NivelCcComponent,
+		NivelesUserComponent,
+		NivelUserComponent
+	],		
 	imports: [
 		ChartsModule,
 		SharedModule,

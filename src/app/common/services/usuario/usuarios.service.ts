@@ -26,12 +26,16 @@ export class UsuariosService {
 		return this.constants.getRequest(`/get_user/${id}`, 'get', false);
 	}
 
+	getUserXEmpresa(id_empresa: string) {
+		return this.constants.getRequest(`/get_users_empresa/${id_empresa}`, 'get', false);
+	}
+
 	createUsuario(usuario: Usuario) {
 		if (usuario.id === '') {
 			// console.log('id_centro', usuario.id);
 			return this.constants.getRequest(`/create_user`, 'post', usuario);
 		} else {
-			console.log(usuario);
+			// console.log(usuario);
 			return this.constants.getRequest(`/update_user_from_father`, 'put', usuario);
 		}
     }
@@ -40,13 +44,13 @@ export class UsuariosService {
         return this.constants.getRequest(`/activate_user/${usuario}`, 'put', false);
     }	
 
-	eliminarusuario(id: string) {
+	deleteUser(id: string) {
 		return this.constants.getRequest(`/delete_user/${id}`, 'delete', false);	
 	}
 
-	getNivelesUser(id_nivel_user: string) {
+	getNivelesUser(datos: any) {
 		// let user = JSON.parse(localStorage.getItem('currentUser'));
-		return this.constants.getRequest(`/get_nivelesUser/${id_nivel_user}`, 'get', false);
+		return this.constants.getRequest(`/get_nivelesUser`, 'post', datos);
 	}
 
 	// ** FUNCION PARA TRAER LOS CENTROS DE COSTOS POR NIVEL ** // 
@@ -55,18 +59,35 @@ export class UsuariosService {
 		return this.constants.getRequest(`/get_CcsUserAdmin/${id_cc_nivel}`, 'get', false);
 	}
 
- 	// ** FUNCION PARA TRAER LOS CENTROS DE COSTOS AL ADMIN ** // 
-	getCcsAdmin(id_cc_nivel: string) {
+ 	// ** FUNCION PARA TRAER LOS CENTROS DE COSTOS AL ADMIN EN LA VISTA NUEVO ** // 
+	getCcsAdminNuevo(id_cc_nivel: string) {
 		// let user = JSON.parse(localStorage.getItem('currentUser'));
-		return this.constants.getRequest(`/get_CcsUserAdmin/${id_cc_nivel}`, 'get', false);
+		return this.constants.getRequest(`/get_CcsUserAdminNuevo/${id_cc_nivel}`, 'get', false);
 	}
 
-	// ** FUNCION PARA TRAER LOS CENTROS DE COSTOS HIJOS AL CLIENTE ** // 
-	getCcsClient(id_cc_user: string) {
+	// ** FUNCION PARA OBTENER LOS CENTROS DE UNA EMPRESA POR NIVELES ** // 
+	getCcsAdminByEmpresa(datos: any) {
 		// let user = JSON.parse(localStorage.getItem('currentUser'));
-		return this.constants.getRequest(`/get_CcsUserClient/${id_cc_user}`, 'get', false);
+		return this.constants.getRequest(`/get_CcsUserAdminByEmpresa/`, 'post', datos);
 	}
 
+	// ** FUNCION PARA TRAER LOS CENTROS DE COSTOS AL ADMIN EN LA VISTA UPDATE ** // 
+	getCcsAdminUpdate(id_cc_nivel: string) {
+		// let user = JSON.parse(localStorage.getItem('currentUser'));
+		return this.constants.getRequest(`/get_CcsUserAdminUpdate/${id_cc_nivel}`, 'get', false);
+	}
+
+	// ** FUNCION PARA TRAER LOS CENTROS DE COSTOS HIJOS AL CLIENTE EN LA VISTA CREAR ** // 
+	getCcsClientNuevo(datos: any) {
+		// let user = JSON.parse(localStorage.getItem('currentUser'));
+		return this.constants.getRequest(`/get_CcsUserClientNuevo`, 'post', datos);
+	}
+	
+	// ** FUNCION PARA TRAER LOS CENTROS DE COSTOS HIJOS AL CLIENTE EN LA VISTA UPDATE ** // 
+	getCcsClientUpdate(datos: any) {
+		// let user = JSON.parse(localStorage.getItem('currentUser'));
+		return this.constants.getRequest(`/get_CcsUserClientUpdate`, 'post', datos);
+	}
 	
 	// ** FUNCION PARA TRAER LOS DATOS DEL USUARIO A SU PERFIL ** //
 	getInfoPerfil(id: string) {
@@ -106,10 +127,19 @@ export class UsuariosService {
 	// ** FUNCION PARA CAMBIAR LA IMAGEN DE PERFIL DE UN USUARIO ** //
 	uploadImage(imagenParaSubir: FormData){
 		
-		console.log('imagenSubir', imagenParaSubir.getAll('imagen')); 
+		// console.log('imagenSubir', imagenParaSubir.getAll('imagen')); 
 
 		return this.constants.getRequest(`/update_user_image/`, 'post', imagenParaSubir);
 		// return this.http.post(this.url_servidor, formData);
+	}
 
+	//** OBTENER EL ULTIMO NIVEL DE LOS USUARIOS DE UNA EMPRESA  ** //
+
+	get_last_level_user_by_company(id_empresa: string) {
+		return this.constants.getRequest(`/get_last_level_user_by_company/${id_empresa}`, 'get', false);
+	}
+
+	get_levels_admin_user_by_company(id_empresa: string) {
+		return this.constants.getRequest(`/get_levels_admin_user_by_company/${id_empresa}`, 'get', false);
 	}
 }

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { UsuariosService } from 'src/app/common/services/usuario/usuarios.service';
 
 
 @Component({
@@ -6,17 +7,57 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: './menu.component.html',
   styles: []
 })
-export class MenuComponent implements OnInit {
+export class MenuComponent {
   
   nivel: number;
+  banderaMostrarNiveles: boolean;
+  banderaMostrarUsuarios: boolean;
+  banderaMostrarEmpresas: boolean;
+  banderaMostrarUnidades: boolean;
+  banderaMostrarCentros: boolean;
+  banderaMostrarUi: boolean;
 
-  constructor() { 
+
+  constructor(
+    private userService: UsuariosService
+  ) { 
     let user = JSON.parse(localStorage.getItem('currentUser'));
-    this.nivel = user.id_nivel;
-    // console.log(this.nivel);
-  }
+    // this.nivel = user.nivel_user;
+    // console.log('id_nivel', user.id_nivel);
 
-  ngOnInit() {
-  }
+    if(user.id_nivel == 1 || user.id_nivel == 1) {
+      // console.log('admin');
+      this.banderaMostrarEmpresas = true;
+      this.banderaMostrarUnidades = true;
+      this.banderaMostrarNiveles = true;
+      // this.banderaMostrarUi = true;
+    } else {
+      // console.log('no admin');
+      this.banderaMostrarEmpresas = false;
+      this.banderaMostrarUnidades = false;
+      this.banderaMostrarNiveles = false;
+    }
 
+    this.userService.get_last_level_user_by_company(user.id_empresa).subscribe((level: any) => {
+      // console.log('usuarios', [user.id_nivel, level.nivel_user]);
+      if(user.id_nivel == level.nivel_user) {
+        // console.log('ultimo nivel');
+        this.banderaMostrarUsuarios = false;
+        this.banderaMostrarCentros = false;
+        if(!this.banderaMostrarEmpresas && !this.banderaMostrarUnidades && !this.banderaMostrarCentros){
+          // console.log('muestro ui');
+          this.banderaMostrarUi = false;
+        }
+        else {
+          // console.log('no muestro ui');
+          this.banderaMostrarUi = true;
+        }
+      } else {
+        // console.log('diferente de ult nivel');
+        this.banderaMostrarUsuarios = true;
+        this.banderaMostrarCentros = true;
+        this.banderaMostrarUi = true;
+      }
+    });    
+  }
 }

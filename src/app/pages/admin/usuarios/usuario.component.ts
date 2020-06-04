@@ -11,13 +11,16 @@ import { MensajesService } from '../../../common/services/shared/mensajes.servic
 })
 export class UsuarioComponent {
   id_nivel_user: string;
-  id_cc_user: string;  
+  id_empresa: string;  
+  id_cc: string;
   usuario: Usuario;
   niveles: Nivel;
   nivel: Nivel;
   centros: any;
   banderaCreate: boolean;
-  banderaAdmin: boolean;
+  hayCentros: boolean;
+  // hayCentrosAdmin: boolean;
+  banderaGuardar: boolean = true;
   constructor(
     private usuariosService: UsuariosService,
     private activatedRoute: ActivatedRoute,
@@ -34,9 +37,10 @@ export class UsuarioComponent {
 	    	nivel: '',
 	    	id_cc: '',
 			nombre_cc: '',
+			id_emp: '',
 			img_name: '',
 	    	status: true
-	    }
+		}
 	
 		this.id_nivel_user = '';
 		this.nivel = {
@@ -46,38 +50,27 @@ export class UsuarioComponent {
 	    
 	    let user = JSON.parse(localStorage.getItem('currentUser'));
 		this.id_nivel_user = user.id_nivel;
-		this.id_cc_user = user.id_cc;
-		// console.log('nivel', this.id_nivel_user);
-		
-		if (this.id_nivel_user != "1") {
-			this.banderaAdmin = false;						
-		} else {
-			this.banderaAdmin = true;			
-		}
+		this.id_empresa = user.id_empresa;
+		this.id_cc = user.id_cc;
 
 		this.activatedRoute.params.subscribe((data: any) => {
 			if (data.id !== 'nuevo') {
 				this.banderaCreate = false;			
 				this.cargarUsuario(data.id);
-			} else {
-				let nivel = this.id_nivel_user + 1;
+			} else {				
 				this.banderaCreate = true;
-				this.cargarCentros(nivel);
+				this.cargarCcsUserNuevo();
 			}
 		});
-	
-		this.usuariosService.getNivelesUser(this.id_nivel_user)
-			.subscribe((data: any) => {
-			// console.log(data);
-			if (data.length == 1) {
-				this.nivel = data[0];
-				this.usuario.id_nivel = this.nivel.id;
-				this.usuario.nivel = this.nivel.nivel;
-				// console.log('data 1', this.niveles);
-			} else {
-				this.niveles = data;
-				// console.log('data > 1', this.niveles);
-			}
+
+		let datos = {
+			id_user: user.id,
+			id_empresa: user.id_empresa
+		};
+		this.usuariosService.getNivelesUser(datos).subscribe((data: any) => {
+			// console.log('niveles', data);
+			this.nivel = data[0];
+			this.usuario.id_nivel = data[0].id;
 		});
 	}
 
@@ -85,31 +78,49 @@ export class UsuarioComponent {
 		this.usuariosService.getUsuario(id)
 		.subscribe((obj: any) => {
 			this.usuario = obj.data;
-			this.cargarCentros(this.usuario.id_nivel);
+			this.cargarCcsUserUpdate(this.usuario);
 		}, error => {
-			this.mensaje.danger(error.error, 'panel-adm/usuarios');
+			this.mensaje.danger(error.error);
 		});	
 	}
 
-	cargarCentros(id_nivel: string) {
-		// console.log(id_nivel);
-		if (this.banderaAdmin) {
-			this.usuariosService.getCcsAdmin(id_nivel)
-			.subscribe((data: any) => {
-			this.centros = data;	
-			// console.log('traje centros admin', this.centros);			
-			});
-		} else {
-			this.usuariosService.getCcsClient(this.id_cc_user)
-			.subscribe((data: any) => {
-				this.centros = data;	
-				// console.log('traje centros cliente', this.centros);			
-			});
-		}
+	cargarCcsUserNuevo() {
+		let datos = {
+			id_cc: this.id_cc,
+			id_empresa: this.id_empresa
+		};
 
+		// console.log('Datos nuevo', datos);
 		
-	}
+		this.usuariosService.getCcsClientNuevo(datos).subscribe((data: any) => {
+			if(data.length != 0) {
+				this.hayCentros = true;
+				this.centros = data;
+				// console.log(this.centros);
+			} else {
+				this.hayCentros = false;
+			}
+		});
+	};
 
+	cargarCcsUserUpdate(usuario: any) {
+		let datos = {
+			id_cc: usuario.id_cc,
+			id_empresa: usuario.id_emp
+		};
+		// console.log('Datos update', datos);
+		
+		this.usuariosService.getCcsClientUpdate(datos).subscribe((data: any) => {
+			if(data.length != 0) {
+				this.hayCentros = true;
+				this.centros = data;
+				// console.log(this.centros);
+			} else {
+				this.hayCentros = false;
+			}
+		});
+	}
+	
 	resetPass() {
 		this.usuariosService.resetPass(this.usuario.id).subscribe( (data: any) => {
 			this.mensaje.success(data.messaje);
@@ -122,10 +133,11 @@ export class UsuarioComponent {
 		if (f.valid) {
 			this.usuariosService.createUsuario(this.usuario)
 				.subscribe((data: any) => {
-					this.mensaje.success(data);
+					this.mensaje.success(data, 'panel-adm/usuarios');
 				}, error => {
 					this.mensaje.danger(error.error);
 				});
-		}
+		} 
+		//console.log(this.usuario);
 	}
 }

@@ -22,6 +22,12 @@ a:hover {
     max-width: 80% !important;
 }
 
+.tabla-movs {
+    max-height: 220px;
+    border: 1px rgba(0, 0, 0, .7) solid;
+    border-radius: 10px;
+}
+
 
 /*#toast-container>.toast-success {
      background-image: url('../src/app/shared/images/images.png')!important; 

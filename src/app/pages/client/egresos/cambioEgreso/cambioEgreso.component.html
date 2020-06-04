@@ -7,141 +7,523 @@
 </div>
 
 <div class="container-fluid">
-    <div class="row ">
+    <div class="row">
         <div class="col-md-12">
             <div class="card shadow">
-                <div class="card-header">
+
+                <div class="card-header" style="height: 60px;">
                     <div class="row">
-                        <div class="col-12 col-md-8 text-center text-sm-left  h5 font-weight-bold">
-                            <i class="fa fa-list"></i> Presupuesto de Egreso {{ anioEgreso }}
+
+                        <div class="col-12 col-md-5 text-sm-left mt-1  h5 font-weight-bold">
+                            <i class="fa fa-list"></i> Presupuestos de egreso
                         </div>
-                        <div class="col-12 col-md-4 text-center text-sm-right">
-                            <button *ngIf="!cuentaTabla" class="btn btn-outline-primary mt-2 btn-sm" type="button" (click)="cancelar();">
-                                <i class="fa fa-arrow-circle-left "></i> Regresar
-                            </button>
+                        <div class="col-sm-2">
+                        </div>
+                        <div class="col-12 col-md-5">
+                            <div class="row">
+                                <div class="col-12 col-sm-4"></div>
+                                <div class="col-12 col-sm-4 text-center">
+                                    <button class="btn btn-sm btn-primary" type="button" style="width: 100px;" (click)="aumento();">
+                                        <i class="fas fa-plus"></i>/<i class="fas fa-minus"></i>
+                                    </button>
+                                    <p style="font-size: 12px;">Aumentar/Disminuir</p>
+                                </div>
+                                <div class="col-12 col-sm-4  text-center">
+                                    <button class="btn btn-sm btn-primary" type="button" style="width: 100px;" (click)="transferir();">
+                                        <i class="fas fa-exchange-alt"></i>
+                                    </button>
+                                    <p style="font-size: 12px;">Transferir</p>
+                                </div>
+                                <!-- <div class="col-12 col-sm-4  text-center">
+                                    <button class="btn btn-sm btn-outline-primary" type="button" style="width: 100px;" (click)="cancelar();">
+                                        <i class="fa fa-arrow-circle-left "></i> Regresar
+                                    </button>
+                                </div> -->
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="card-body ">
+                    <nav>
+                        <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                            <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">Información General</a>
+                            <a class="nav-item nav-link" id="nav-centros-tab" data-toggle="tab" href="#nav-centros" role="tab" aria-controls="nav-centros" aria-selected="false">Revisar Movimientos</a>
+                            <a (click)="validarCentrosRevisados();" class="nav-item nav-link" id="nav-movimientosAceptados-tab" data-toggle="tab" href="#nav-movimientosAceptados" role="tab" aria-controls="nav-movimientosAceptados" aria-selected="false">Movimientos Revisados</a>
+
+                        </div>
+                    </nav>
+                    <div class="tab-content" id="nav-tabContent">
+                        <!-- PESTAÑA DE INFORMACION GENEREAL -->
+                        <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+                            <h5>Propio</h5>
+                            <div class="table-responsive tabla-movs">
+
+                                <table class="table table-striped table-bordered">
+                                    <thead class="thead-dark">
+                                        <tr>
+                                            <th class="text-center" scope="col">Codigo</th>
+                                            <th class="text-center" scope="col">Centro de costo</th>
+                                            <th class="text-center" scope="col">Presupuesto</th>
+                                            <!-- <th class="text-center" scope="col">Estado</th> -->
+                                            <th class="text-center" scope="col">Opciones</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td class="text-center">{{ presupuestoPropio.codigo_cc }}</td>
+                                            <td>{{ presupuestoPropio.nombre_centro_costo }}</td>
+                                            <td>{{ presupuestoPropio.nombre }}</td>
+                                            <td class="text-center">
+                                                <button type="button" class="btn btn-info btn-sm text-white ml-3" (click)="mostrarInfo(presupuestoPropio.id);">
+                                                    <i class="fa fa-eye"></i>
+                                                </button>
+                                                <button type="button" class="btn btn-secondary btn-sm ml-3" (click)="mostrarProyectos(presupuestoPropio.id, presupuestoPropio.anio)">
+                                                    <i class="fa fa-project-diagram fa-lg"></i> Proyectos
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <br>
+                            <hr>
+                            <h5>Hijos</h5>
+                            <div class="table-responsive tabla-movs">
+                                <table class="table table-striped table-bordered">
+                                    <thead class="thead-dark">
+                                        <tr>
+                                            <th class="text-center" scope="col">Codigo</th>
+                                            <th class="text-center" scope="col">Centro de costo</th>
+                                            <th class="text-center" scope="col">Presupuesto</th>
+                                            <!-- <th class="text-center" scope="col">Estado</th> -->
+                                            <th class="text-center" scope="col">Opciones</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngIf="!banderaPresupuestosHijos; else tableBlock">
+                                            <td colspan="3" class="text-center">
+                                                <span class="badge badge-info">
+                                                    <h5>
+                                                        <i class="far fa-frown"></i>
+                                                        No hay elementos para mostrar.
+                                                    </h5>
+                                                </span>
+                                            </td>
+                                        </tr>
+                                        <ng-template #tableBlock>
+                                            <tr *ngFor="let presupuesto of presupuestosHijos; let i = index">
+                                                <td class="text-center">{{ presupuesto.codigo_cc }}</td>
+                                                <td>{{ presupuesto.nombre_cc }}</td>
+                                                <td>{{ presupuesto.nombre_pres }}</td>
+                                                <!--<td class="text-center">
+                                                     <span [class]="getBadgeFormatEstado(presupuesto.estado)">
+                                                        {{ presupuesto.estado }}
+                                                    </span> 
+                                                </td>-->
+                                                <td class="text-center" nowrap>
+                                                    <button type="button" class="btn btn-info btn-sm text-white ml-3" (click)="mostrarInfo(presupuesto.id_egreso);">
+                                                        <i class="fa fa-eye"></i>
+                                                    </button>
+                                                    <!-- <button type="button" class="btn btn-secondary btn-sm ml-3" (click)="mostrarProyectos(presupuesto.id, presupuesto.anio)">
+                                                        <i class="fa fa-project-diagram fa-lg"></i> Proyectos
+                                                    </button> -->
+                                                </td>
+                                            </tr>
+                                        </ng-template>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <!-- PESTAÑA DE MOVIMIENTOS PENDIENTES -->
+                        <div class="tab-pane fade" id="nav-centros" role="tabpanel" aria-labelledby="nav-centros-tab">
+                            <!-- <h4>Centros de Costos</h4> -->
+                            <!-- TABLA DE AUMENTOS PENDIENTES -->
+                            <h5><i class="fas fa-arrow-up"></i> Aumentos <i class="fas fa-arrow-up"></i></h5>
+                            <div class="table-responsive tabla-movs table-bordered">
+                                <table class="table table-striped table-sm">
+                                    <thead class="thead-dark">
+                                        <tr>
+                                            <!-- <th scope="col">#</th> -->
+                                            <th class="text-center" scope="col">Codigo</th>
+                                            <th class="text-center" scope="col">Solicitante</th>
+                                            <th class="text-center" scope="col">Unidad Adm</th>
+                                            <th class="text-center" scope="col">Opciones</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngIf="!banderaCcAumentosPendientes; else tableCentrosPendientesAumentos">
+                                            <td colspan="5" class="text-center">
+                                                <span class="badge badge-info">
+                                                    <h5>
+                                                    <i class="far fa-frown"></i>
+                                                    No hay elementos para mostrar.
+                                                    </h5>
+                                                </span>
+                                            </td>
+                                        </tr>
+                                        <ng-template #tableCentrosPendientesAumentos>
+                                            <tr *ngFor="let aumento of centrosAumentosPendientes">
+                                                <td class="text-center">{{ aumento.codigo }}</td>
+                                                <td>{{ aumento.nombre_cc }}</td>
+                                                <td>{{ aumento.nombre_unidad }}</td>
+                                                <td class="text-center">
+                                                    <button type="button" class="btn btn-info btn-sm text-white ml-3" data-toggle="modal" data-target="#modalMovs" (click)="mostrarAumentos(aumento.id);">
+                                                        <i class="fa fa-eye"> Revisar Movimientos</i>
+                                                    </button>
+                                                    <!-- <button type="button" class="btn btn-secondary btn-sm ml-3" (click)="mostrarProyectos(presupuestoPropio.id, presupuestoPropio.anio)">
+                                                        <i class="fa fa-eye"></i> Rechazar
+                                                    </button> -->
+                                                </td>
+                                            </tr>
+                                        </ng-template>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <hr>
+                            <!-- TABLA DE DISMINUCIONES PENDIENTES -->
+                            <h5><i class="fas fa-arrow-down"></i> Disminuciones <i class="fas fa-arrow-down"></i></h5>
+                            <div class="table-responsive tabla-movs">
+                                <table class="table table-striped table-sm table-bordered">
+                                    <thead class="thead-dark">
+                                        <tr>
+                                            <!-- <th scope="col">#</th> -->
+                                            <th class="text-center" scope="col">Codigo</th>
+                                            <th class="text-center" scope="col">Solicitante</th>
+                                            <th class="text-center" scope="col">Unidad Adm</th>
+                                            <th class="text-center" scope="col">Opciones</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngIf="!banderaCcDisminPendientes; else tableCentrosPendientesDismin">
+                                            <td colspan="5" class="text-center">
+                                                <span class="badge badge-info">
+                                                    <h5>
+                                                    <i class="far fa-frown"></i>
+                                                    No hay elementos para mostrar.
+                                                    </h5>
+                                                </span>
+                                            </td>
+                                        </tr>
+                                        <ng-template #tableCentrosPendientesDismin>
+                                            <tr *ngFor="let dismins of centrosDisminPendientes">
+                                                <td class="text-center">{{ dismins.codigo }}</td>
+                                                <td>{{ dismins.nombre_cc }}</td>
+                                                <td>{{ dismins.nombre_unidad }}</td>
+                                                <td class="text-center">
+                                                    <button type="button" class="btn btn-info btn-sm text-white ml-3" data-toggle="modal" data-target="#modalMovs" (click)="mostrarDisminuciones(dismins.id);">
+                                                        <i class="fa fa-eye"> Revisar Movimientos</i>
+                                                    </button>
+                                                    <!-- <button type="button" class="btn btn-secondary btn-sm ml-3" (click)="mostrarProyectos(presupuestoPropio.id, presupuestoPropio.anio)">
+                                                        <i class="fa fa-eye"></i> Rechazar
+                                                    </button> -->
+                                                </td>
+                                            </tr>
+                                        </ng-template>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <hr>
+                            <!-- TABLA DE TRANSFERENCIAS PENDIENTES -->
+                            <h5><i class="fas fa-exchange-alt"></i> Tranferencias <i class="fas fa-exchange-alt"></i></h5>
+                            <div class="table-responsive tabla-movs">
+                                <table class="table table-striped table-sm table-bordered">
+                                    <thead class="thead-dark">
+                                        <tr>
+                                            <!-- <th scope="col">#</th> -->
+                                            <th class="text-center" scope="col">Codigo</th>
+                                            <th class="text-center" scope="col">Solicitante</th>
+                                            <th class="text-center" scope="col">Unidad Adm</th>
+                                            <th class="text-center" scope="col">Opciones</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngIf="!banderaCcTransfPendientes; else tableCentrosPendientesTransf">
+                                            <td colspan="5" class="text-center">
+                                                <span class="badge badge-info">
+                                                    <h5>
+                                                    <i class="far fa-frown"></i>
+                                                    No hay elementos para mostrar.
+                                                    </h5>
+                                                </span>
+                                            </td>
+                                        </tr>
+                                        <ng-template #tableCentrosPendientesTransf>
+                                            <tr *ngFor="let transf of centrosTransfPendientes">
+                                                <td class="text-center">{{ transf.codigo }}</td>
+                                                <td>{{ transf.nombre_cc }}</td>
+                                                <td>{{ transf.nombre_unidad }}</td>
+                                                <td class="text-center">
+                                                    <button type="button" class="btn btn-info btn-sm text-white ml-3" data-toggle="modal" data-target="#modalMovs" (click)="mostrarTransferencias(transf.id);">
+                                                        <i class="fa fa-eye"> Revisar Movimientos</i>
+                                                    </button>
+                                                    <!-- <button type="button" class="btn btn-secondary btn-sm ml-3" (click)="mostrarProyectos(presupuestoPropio.id, presupuestoPropio.anio)">
+                                                        <i class="fa fa-eye"></i> Rechazar
+                                                    </button> -->
+                                                </td>
+                                            </tr>
+                                        </ng-template>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <!-- PESTAÑA DE MOVIMIENTOS REVISADOS -->
+                        <div class="tab-pane fade" id="nav-movimientosAceptados" role="tabpanel" aria-labelledby="nav-movimientosAceptados-tab">
+                            <h5>Aumentos</h5>
+                            <div class="table-responsive tabla-movs">
+                                <table class="table table-striped table-sm">
+                                    <thead class="thead-dark">
+                                        <tr>
+                                            <!-- <th scope="col">#</th> -->
+                                            <th scope="col">Codigo</th>
+                                            <th scope="col">Nombre</th>
+                                            <th scope="col">Unidad Adm</th>
+                                            <th class="text-center" scope="col">Opciones</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngIf="!banderaCcAumentosRevisados; else tableCentrosAumentosRevisados">
+                                            <td colspan="5" class="text-center">
+                                                <span class="badge badge-info">
+                                                    <h5>
+                                                    <i class="far fa-frown"></i>
+                                                    No hay elementos para mostrar.
+                                                    </h5>
+                                                </span>
+                                            </td>
+                                        </tr>
+                                        <ng-template #tableCentrosAumentosRevisados>
+                                            <tr *ngFor="let centro of centrosAumentosRevisados">
+                                                <td>{{ centro.codigo }}</td>
+                                                <td>{{ centro.nombre_cc }}</td>
+                                                <td>{{ centro.nombre_unidad }}</td>
+                                                <td class="text-center">
+                                                    <button type="button" class="btn btn-info btn-sm text-white ml-3" data-toggle="modal" data-target="#modalMovs" (click)="mostrarAumentosRevisados(centro.id);">
+                                                        <i class="fa fa-eye"> Ver Movimientos</i>
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        </ng-template>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <hr>
+                            <h5>Disminución</h5>
+                            <div class="table-responsive tabla-movs">
+                                <table class="table table-striped table-sm">
+                                    <thead class="thead-dark">
+                                        <tr>
+                                            <!-- <th scope="col">#</th> -->
+                                            <th scope="col">Codigo</th>
+                                            <th scope="col">Nombre</th>
+                                            <th scope="col">Unidad Adm</th>
+                                            <th class="text-center" scope="col">Opciones</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngIf="!banderaCcDisminRevisados; else tableCentrosDisminRevisados">
+                                            <td colspan="5" class="text-center">
+                                                <span class="badge badge-info">
+                                                    <h5>
+                                                    <i class="far fa-frown"></i>
+                                                    No hay elementos para mostrar.
+                                                    </h5>
+                                                </span>
+                                            </td>
+                                        </tr>
+                                        <ng-template #tableCentrosDisminRevisados>
+                                            <tr *ngFor="let centro of centrosDisminRevisados">
+                                                <td>{{ centro.codigo }}</td>
+                                                <td>{{ centro.nombre_cc }}</td>
+                                                <td>{{ centro.nombre_unidad }}</td>
+                                                <td class="text-center">
+                                                    <button type="button" class="btn btn-info btn-sm text-white ml-3" data-toggle="modal" data-target="#modalMovs" (click)="mostrarDisminRevisados(centro.id);">
+                                                        <i class="fa fa-eye"> Ver Movimientos</i>
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        </ng-template>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <hr>
+                            <h5>Transferencias</h5>
+                            <div class="table-responsive tabla-movs">
+                                <table class="table table-striped table-sm">
+                                    <thead class="thead-dark">
+                                        <tr>
+                                            <!-- <th scope="col">#</th> -->
+                                            <th scope="col">Codigo</th>
+                                            <th scope="col">Nombre</th>
+                                            <th scope="col">Unidad Adm</th>
+                                            <th class="text-center" scope="col">Opciones</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngIf="!banderaCcTransfRevisados; else tableCentrosTransfRevisados">
+                                            <td colspan="5" class="text-center">
+                                                <span class="badge badge-info">
+                                                    <h5>
+                                                    <i class="far fa-frown"></i>
+                                                    No hay elementos para mostrar.
+                                                    </h5>
+                                                </span>
+                                            </td>
+                                        </tr>
+                                        <ng-template #tableCentrosTransfRevisados>
+                                            <tr *ngFor="let centro of centrosTransfRevisados">
+                                                <td>{{ centro.codigo }}</td>
+                                                <td>{{ centro.nombre_cc }}</td>
+                                                <td>{{ centro.nombre_unidad }}</td>
+                                                <td class="text-center">
+                                                    <button type="button" class="btn btn-info btn-sm text-white ml-3" data-toggle="modal" data-target="#modalMovs" (click)="mostrarTransfRevisados(centro.id);">
+                                                        <i class="fa fa-eye"> Ver Movimientos</i>
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        </ng-template>
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
+    </div>
+</div>
 
-                <!-- Botones de modificar egreso-->
-                <div class="card-body ">
-                    <!-- Boton editar partida -->
-                    <div *ngIf="cuentaTabla" class="row mb-3">
-                        <div class="col-4 well text-center">
-                            <h5 class="mt-2"><b>Crear proyecto</b></h5>
-                        </div>
-                        <div class="col-2 well text-center">
-                            <button class="btn btn-danger mt- btn-sm" type="button" style="width: 100px;" (click)="mostrarProyectos()" title="Proyectos">
-                                <i class="fa fa-project-diagram fa-lg"></i>
-                            </button>
-                            <p style="font-size: 12px;">Proyectos</p>
-                        </div>
-                        <div class="col-2 well"></div>
-                        <div class="col-2 well"></div>
-                        <div class="col-2 well"></div>
-                    </div>
-                    <!-- Divicion de botones -->
-                    <hr>
-                    <!-- Botones de aumento y disminucion -->
-                    <div *ngIf="cuentaTabla" class="row mb-3">
-                        <div class="col-4 well text-center">
-                            <h5 class="mt-3"><b>Modificar partidas</b></h5>
-                        </div>
-                        <div class="col-2 well text-center">
-                            <button class="btn btn-primary mt-2 btn-sm" type="button" style="width: 100px;" (click)="aumento();" title="Aumentar o Disminuir">
-                                <i class="fas fa-plus"></i>/<i class="fas fa-minus"></i>
-                            </button>
-                            <p style="font-size: 12px;">Aumentar o Disminuir</p>
-                        </div>
-                        <div class="col-2 well text-center">
-                            <button class="btn btn-primary mt-2 btn-sm" type="button" style="width: 100px;" (click)="transferir();" title="Tranferir">
-                                <i class="fas fa-exchange-alt"></i>
-                            </button>
-                            <p style="font-size: 12px;">Transferir</p>
-                        </div>
-                        <div class="col-2 well"></div>
-                        <div class="col-2 well"></div>
-                    </div>
 
-                    <!-- Calculos -->
-                    <div *ngIf="!cuentaTabla" class="row">
-                        <div class="col-md-9 well mt-3" style=" padding-left: 30px;">
-                        </div>
-                        <div class="col-md-3 well">
-                            <div class="text-right" style="padding-right: 20px;">
-                                <label class="font-weight-bold" style="font-size: 18px;">Total: $ {{ totalProyecto2 }}</label>
-                            </div>
-                            <div class="text-right" style="padding-right: 20px;">
-                                <label *ngIf="bandera === 0" class="font-weight-bold" style="font-size: 18px;">Diferencia: $ {{ diff }}</label>
-                                <label *ngIf="bandera === 1" class="font-weight-bold text-success" style="font-size: 18px;">Diferencia: $ {{ diff }}</label>
-                                <label *ngIf="bandera === 2" class="font-weight-bold text-danger" style="font-size: 18px;">Diferencia: $ {{ diff }}</label>
-                            </div>
-                            <hr style="margin: 0px; padding: 0px;">
-                            <div class="text-right" style="padding-right: 20px;">
-                                <label class="font-weight-bold" style="font-size: 18px;">Nuevo Total: $ {{ totalProyecto }}</label>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- tabla de las partidas del egreso -->
-                    <table id="tabla1" class="table table-striped table-bordered table-sm" style="display: none;">
-                        <thead>
+<!-- MODAL PARA LOS MOVIMIENTOS DE UIN CENTRO DE COSTO -->
+<div class="modal fade" id="modalMovs" tabindex="-1" role="document" aria-hidden="true">
+    <div class="modal-dialog modal2_class" role="document">
+        <div class="modal-content">
+            <!-- MODAL HEADER -->
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">
+                    Movimientos del Centro de Costo
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+            </div>
+            <!-- MODAL BODY NO TRANSF -->
+            <div *ngIf="!banderaTransf" class="modal-body">
+                <div class="table-responsive">
+                    <table class="table table-striped table-sm table-bordered">
+                        <thead class="thead-dark">
                             <tr>
-                                <th class="align-middle text-center " colspan="2" width="28%">Proyectos</th>
-                                <th class="align-middle text-center " colspan="2" width="28%">Fase</th>
-                                <th class="align-middle text-center " colspan="4" width="44%">Partidas</th>
+                                <!-- <th scope="col">#</th> -->
+                                <th class="text-center" width="5%">Folio</th>
+                                <th class="text-center" width="15%">Centro</th>
+                                <th class="text-center" width="20%">Partida</th>
+                                <th class="text-center" width="10%">Importe</th>
+                                <th class="text-center" width="15%">Solicitante</th>
+                                <th class="text-center" width="10%">Fecha Creación</th>
+                                <th class="text-center" width="10%">Estado</th>
+                                <th class="text-center" width="15%">Opciones</th>
                             </tr>
-                            <!-- <tr> -->
-                            <!-- Info de Proyecto -->
-                            <th class="align-middle text-center" width="5%">Código</th>
-                            <th class="align-middle text-center" width="20%">Nombre</th>
-                            <!-- Info de Fase -->
-                            <th class="align-middle text-center" width="5%">Código</th>
-                            <th class="align-middle text-center" width="20%">Nombre</th>
-                            <!-- Info de Partidas -->
-                            <th class="align-middle text-center" width="5%">Código</th>
-                            <th class="align-middle text-center" width="25%">Nombre</th>
-                            <th class="align-middle text-center">Importe Original</th>
-                            <th class="align-middle text-center">Nuevo Importe</th>
-                            <!-- </tr> -->
                         </thead>
                         <tbody>
-                            <tr *ngFor="let proyecto of proyectos; let i=index ">
-                                <td class="align-middle text-center">{{ proyecto.codigo_proyecto }}</td>
-                                <td class="align-middle">{{ proyecto.nombre_proyecto }}</td>
-                                <td class="align-middle text-center">{{ proyecto.codigo_fase }}</td>
-                                <td class="align-middle">{{ proyecto.nombre_fase }}</td>
-                                <td class="align-middle text-center">{{ proyecto.codigo_partida }}</td>
-                                <td class="align-middle">{{ proyecto.nombre_partida}}</td>
-                                <td *ngIf="!cuentaTabla" class="align-middle text-center">{{ proyectos2[i].importe | number:"1.2-2"}}</td>
-                                <td class="">
-                                    <div class="input-group mb-3 ">
-                                        <div class="input-group-prepend align-middle mt-3">
-                                            <span class="input-group-text" id="basic-addon1">$</span>
-                                        </div>
-                                        <input *ngIf="!aumentTranf" type="number" class="form-control mt-3" [id]="'item'+i" (change)="calcularTotalTransf(i,  proyecto)" name="importe" [(ngModel)]="proyecto.importe">
-                                        <input *ngIf="aumentTranf" type="number" class="form-control mt-3" [id]="'item2'+i" (change)="calcularTotalAumento(i, proyecto)" name="importe" [(ngModel)]="proyecto.importe">
-                                    </div>
+                            <tr *ngIf="!banderaMovs; else tableMovs">
+                                <td colspan="5" class="text-center">
+                                    <span class="badge badge-info">
+                                        <h5>
+                                        <i class="far fa-frown"></i>
+                                        No hay elementos para mostrar.
+                                        </h5>
+                                    </span>
                                 </td>
                             </tr>
+                            <ng-template #tableMovs>
+                                <tr *ngFor="let movimiento of movimientos">
+                                    <td class="text-center">{{ movimiento.tipo_mov }}{{ movimiento.folio_mov }}</td>
+                                    <td>{{ movimiento.cc_origen }}</td>
+                                    <td>{{ movimiento.nom_partida_origen }}</td>
+                                    <td class="text-center"> $ {{ movimiento.importe }}</td>
+                                    <td>{{ movimiento.nom_solicitante }}</td>
+                                    <td class="text-center">{{ movimiento.fecha_creacion }}</td>
+                                    <td class="text-center"><b>{{ movimiento.status }}</b></td>
+                                    <td class="text-center">
+                                        <button type="button" class="btn btn-success btn-sm text-white" (click)="aprobarMovimiento()">
+                                            <i class="fas fa-thumbs-up"> Aceptar</i>
+                                        </button> &nbsp;
+                                        <button type="button" class="btn btn-danger btn-sm text-white" (click)="rechazarMovimiento()">
+                                            <i class="fas fa-thumbs-down"></i> Rechazar
+                                        </button>
+                                    </td>
+                                </tr>
+                            </ng-template>
                         </tbody>
                     </table>
-
-                    <div *ngIf="!cuentaTabla" class="text-center">
-                        <button class="btn btn-warning mt-2" type="button" style="width: 100px;" (click)="limpiarCampos();">
-                            <i class="fas fa-eraser"></i> Limpiar 
-                        </button> &nbsp;&nbsp;
-                        <button class="btn btn-danger mt-2" id="cancelar" type="button" style="width: 100px;" (click)="cancelar();">
-                            <i class="fas fa-window-close"></i> Cancelar 
-                        </button> &nbsp;&nbsp;
-                        <button *ngIf="!aumentTranf" class="btn btn-success mt-2" id="guardar1" type="button" style="width: 100px;" (click)="guardar();" disabled>
-                            <i class="fas fa-save"></i> Guardar 
-                        </button>
-                        <button *ngIf="aumentTranf" class="btn btn-success mt-2" id="guardar2" type="button" style="width: 100px;" (click)="guardar();">
-                            <i class="fas fa-save"></i> Guardar 
-                        </button>
-                    </div>
                 </div>
+            </div>
+            <!-- MODAL BODY TRANSF -->
+            <div *ngIf="banderaTransf" class="modal-body">
+                <div class="table-responsive">
+                    <table class="table table-striped table-sm table-bordered">
+                        <thead class="thead-dark">
+                            <tr>
+                                <!-- <th scope="col">#</th> -->
+                                <th class="text-center" width="3%">Folio</th>
+                                <th class="text-center" width="11%">Centro Origen</th>
+                                <th class="text-center" width="15%">Partida Origen</th>
+                                <th class="text-center" width="10%">Centro Destino</th>
+                                <th class="text-center" width="15%">Partida Destino</th>
+                                <th class="text-center" width="10%">Importe</th>
+                                <th class="text-center" width="10%">Solicitante</th>
+                                <th class="text-center" width="8%">Fecha Creación</th>
+                                <th class="text-center" width="8%">Estado</th>
+                                <th class="text-center" width="10%">Opciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngIf="!banderaMovs; else tableMovs">
+                                <td colspan="5" class="text-center">
+                                    <span class="badge badge-info">
+                                        <h5>
+                                        <i class="far fa-frown"></i>
+                                        No hay elementos para mostrar.
+                                        </h5>
+                                    </span>
+                                </td>
+                            </tr>
+
+                            <ng-template #tableMovs>
+                                <tr *ngFor="let movimiento of movimientos">
+                                    <td class="text-center">{{ movimiento.tipo_mov }}{{ movimiento.folio_mov }}</td>
+                                    <td>{{ movimiento.cc_origen }}</td>
+                                    <td>{{ movimiento.nom_partida_origen }}</td>
+                                    <td>{{ movimiento.cc_destino }}</td>
+                                    <td>{{ movimiento.nom_partida_destino }}</td>
+                                    <td class="text-center"> $ {{ movimiento.importe }}</td>
+                                    <td>{{ movimiento.nom_solicitante }}</td>
+                                    <td class="text-center">{{ movimiento.fecha_creacion }}</td>
+                                    <td class="text-center"><b>{{ movimiento.status}}</b></td>
+                                    <td *ngIf="banderaSoloImprimir" class="text-center">
+                                        <button type="button" class="btn btn-info btn-sm text-white" (click)="aprobarMovimiento()">
+                                            <i class="fas fa-print"> Imprimir</i>
+                                        </button>
+                                    </td>
+                                    <td *ngIf="!banderaSoloImprimir" class="text-center">
+                                        <button type="button" class="btn btn-success btn-sm text-white" (click)="aprobarMovimiento()">
+                                            <i class="fas fa-thumbs-up"> Aceptar</i>
+                                        </button> &nbsp;
+                                        <button type="button" class="btn btn-danger btn-sm text-white" (click)="rechazarMovimiento()">
+                                            <i class="fas fa-thumbs-down"></i> Rechazar
+                                        </button>
+                                    </td>
+                                </tr>
+                            </ng-template>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <!-- MODAL FOOTER -->
+            <div class="modal-footer">
+
             </div>
         </div>
     </div>

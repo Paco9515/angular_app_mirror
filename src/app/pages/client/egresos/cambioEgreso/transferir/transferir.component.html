@@ -1,0 +1,150 @@
+<!-- Breadcrumb -->
+<div class="d-none d-sm-block">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><i class="fa fa-folder-open"></i> Presupuestos de Egresos</li>
+        <li class="breadcrumb-item"> Presupuestos de Egreso</li>
+    </ol>
+</div>
+
+<div class="container-fluid">
+    <div class="row ">
+        <div class="col-md-12">
+            <div class="card shadow">
+                <div class="card-header">
+                    <div class="row">
+                        <div class="col-12 col-md-8 text-center text-sm-left  h5 font-weight-bold">
+                            <i class="fa fa-list"></i> Transferencia de dinero.
+                        </div>
+                        <div class="col-12 col-md-4 text-center text-sm-right">
+                            <button class="btn btn-outline-primary mt-2 btn-sm" type="button" (click)="cancelar();">
+                                <i class="fa fa-arrow-circle-left "></i> Regresar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-body ">
+
+                    <div class="container">
+                        <div class="row">
+
+                            <div class="col-sm-5 border rounded ">
+                                <div class="col-sm-12 text-center mt-2">
+                                    <h4>Origen</h4>
+                                </div>
+                                <div class="col-sm-12  mt-3">
+                                    <label for="">Centro de Costo:</label>
+                                    <select class="form-control" name="cc1" id="cc1" [(ngModel)]="centro1" (change)="cargarProyectos1($event.target.value);">
+                                        <option value="">Selecciona un centro de costo...</option>
+                                        <option *ngFor="let cc of centros1" [value]="cc.id">{{ cc.codigo }} - {{ cc.nombre }}</option>
+                                    </select>
+                                </div>
+                                <div class="col-sm-12  mt-2">
+                                    <label for="">Proyecto:</label>
+                                    <select class="form-control" name="proyecto1" id="proyecto1" [(ngModel)]="proyecto1" (change)="cargarFases1($event.target.value);" [disabled]="banderaProyecto1">
+                                        <option value="">Selecciona un proyecto...</option>
+                                        <option *ngFor="let proyecto of proyectos1" [value]="proyecto.id">{{ proyecto.codigo }} - {{ proyecto.nombre }}</option>
+                                    </select>
+                                </div>
+                                <div class="col-sm-12  mt-2">
+                                    <label for="">Fase:</label>
+                                    <select class="form-control" name="fase1" id="fase1" [(ngModel)]="fase1" (change)="cargarPartidas1($event.target.value);" [disabled]="banderaFase1">
+                                        <option value="">Selecciona un fase...</option>
+                                        <option *ngFor="let fase of fases1" [value]="fase.id">{{ fase.codigo }} - {{ fase.nombre }}</option>
+                                    </select>
+                                </div>
+                                <div class="col-sm-12  mt-2">
+                                    <label for="">Partida:</label>
+                                    <select class="form-control" name="partida1" id="partida1" [(ngModel)]="partida1" (change)="cargarInfoPartida1(partida1);" [disabled]="banderaPartida1">
+                                        <option value="">Selecciona un partida...</option>
+                                        <option *ngFor="let partida of partidas1" [value]="partida.id_fase_partida">{{ partida.codigo }} - {{ partida.nombre }}</option>
+                                    </select>
+                                </div>
+                                <div *ngIf="banderaSaldo1" class="col-sm-12  mt-2">
+                                    <label for="">Saldo:</label>
+                                    <input type="text" class="form-control" [value]="saldo1" readonly>
+                                </div>
+
+                                <br>
+
+                            </div>
+
+                            <div class="col-sm-2 border rounded">
+                                <div class="col-sm-12 text-center" style="margin-top: 150px;">
+                                    <i class="fas fa-arrow-right"></i>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-5 border rounded ">
+                                <div class="col-sm-12 text-center mt-2">
+                                    <h4>Destino</h4>
+                                </div>
+                                <div class="col-sm-12  mt-3">
+                                    <label for="">Centro de Costo:</label>
+                                    <select class="form-control" name="cc2" id="cc2" [(ngModel)]="centro2" (change)="cargarProyectos2($event.target.value);">
+                                        <option value="">Selecciona un centro de costo...</option>
+                                        <option *ngFor="let cc of centros2" [value]="cc.id">{{ cc.codigo }} - {{ cc.nombre }}</option>
+                                    </select>
+                                </div>
+                                <div class="col-sm-12  mt-2">
+                                    <label for="">Proyecto:</label>
+                                    <select class="form-control" name="proyecto2" id="proyecto2" [(ngModel)]="proyecto2" (change)="cargarFases2($event.target.value);" [disabled]="banderaProyecto2">
+                                        <option value="">Selecciona un proyecto...</option>
+                                        <option *ngFor="let proyecto of proyectos2" [value]="proyecto.id">{{ proyecto.codigo }} - {{ proyecto.nombre }}</option>
+                                    </select>
+                                </div>
+                                <div class="col-sm-12  mt-2">
+                                    <label for="">Fase:</label>
+                                    <select class="form-control" name="fase2" id="fase2" [(ngModel)]="fase2" (change)="cargarPartidas2($event.target.value);" [disabled]="banderaFase2">
+                                        <option value="">Selecciona un fase...</option>
+                                        <option *ngFor="let fase of fases2" [value]="fase.id">{{ fase.codigo }} - {{ fase.nombre }}</option>
+                                    </select>
+                                </div>
+                                <div class="col-sm-12  mt-2">
+                                    <label for="">Partida:</label>
+                                    <select class="form-control" name="partida2" id="partida2" [(ngModel)]="partida2" (change)="cargarInfoPartida2(partida2);" [disabled]="banderaPartida2">
+                                        <option value="">Selecciona un partida...</option>
+                                        <option *ngFor="let partida of partidas2" [value]="partida.id_fase_partida">{{ partida.codigo }} - {{ partida.nombre }}</option>
+                                    </select>
+                                </div>
+
+                                <div *ngIf="banderaSaldo2" class="col-sm-12  mt-2">
+                                    <label for="">Saldo:</label>
+                                    <input type="text" class="form-control" [value]="saldo2" readonly>
+                                </div>
+
+                                <br>
+
+                            </div>
+                        </div>
+
+
+                        <div class="row mt-3">
+                            <div class="col-sm-3"></div>
+                            <div class="col-sm-6">
+                                <div class="col-sm-12 text-center">
+                                    <label for="">Importe:</label>
+                                    <input type="text" class="form-control" placeholder="Ingrese la cantidad..." [(ngModel)]="importe" [disabled]="banderaImporte">
+                                </div>
+                            </div>
+                            <div class="col-sm-3"></div>
+                        </div>
+                    </div>
+
+
+                    <br>
+
+                    <div class="text-center">
+                        <button class="btn btn-warning mt-2" type="button" style="width: 100px;" (click)="limpiarCampos();">
+                            <i class="fas fa-eraser"></i> Limpiar 
+                        </button> &nbsp;&nbsp;
+                        <button class="btn btn-success mt-2" id="guardar" name="guardar" type="button" style="width: 100px;" (click)="guardar();" [disabled]="banderaGuardar">
+                            <i class="fas fa-save"></i> Guardar 
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

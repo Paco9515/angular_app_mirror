@@ -36,7 +36,7 @@ export class PerfilComponent implements OnInit {
         private router: Router,
         private userService: UsuariosService
 	) { 
-        console.log('3');
+        // console.log('3');
         this.id_user = '';    
         this.user = '';
         this.url_img = '';
@@ -61,7 +61,7 @@ export class PerfilComponent implements OnInit {
 	}
 
 	ngOnInit() {    
-        console.log('4');    
+        // console.log('4');    
         this.userService.getInfoPerfil(this.id_user).subscribe((data: any) => {
             this.user = data.data;
         });

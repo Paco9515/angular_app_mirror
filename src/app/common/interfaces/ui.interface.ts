@@ -1,12 +1,8 @@
 export interface Infos {
 	id?: string;
 	nombre: string;
-	estado: string;
-	municipio: string;
-	localidad: string;
-	cp: string;
-	colonia: string;
-	calle: string;
+	id_ubicacion: string;
+	direccion: string;
 	num_exterior: string;
 	dom_interior?: string;
 	num_interior?: string;
@@ -66,12 +62,21 @@ export interface UnidadesAdmin {
 
 export interface Ccosto {
 	id?: string;
+	id_ubicacion_geografica: string;
 	id_unidad_adm: string;
 	id_subfuncion: string;
 	id_nivel: string;
+	id_padre: string;
 	codigo: string;
 	nombre: string;
+	calle: string;
+	num_exterior: string;
+	num_interior: string;
+	longitud: string;
+	latitud: string;
+	responsable_ley: boolean;
 	status: boolean;
+	id_empresa: string;
 }
 
 export interface Ctrabajo {

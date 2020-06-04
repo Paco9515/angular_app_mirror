@@ -9,6 +9,7 @@ export interface Usuario {
 	nivel: string;
 	id_cc: string;
 	nombre_cc: string;
+	id_emp: string;
 	img_name: string;
 	status: boolean;
 }

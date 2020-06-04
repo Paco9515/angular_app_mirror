@@ -33,8 +33,8 @@ export class UnidadesAdminService {
 		return this.constants.getRequest(`/get_unidad/${id}`, 'get', false);
 	}
 
-	getUnidadesAdmin() {
-		return this.constants.getRequest(`/get_unidades`, 'get', false);
+	getUnidadesAdmin(id_empresa: string) {
+		return this.constants.getRequest(`/get_unidades/${id_empresa}`, 'get', false);
 	}
 
 	getUltimaUnidad() {

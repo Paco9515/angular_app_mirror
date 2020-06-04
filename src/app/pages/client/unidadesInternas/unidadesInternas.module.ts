@@ -17,15 +17,21 @@ import { UnidadesAdminComponent } from './unidadesAdmin/unidadesAdmin.component'
 
 // Route
 import { UINIDADES_ADMINISTRATIVAS_ROUTES } from './unidadesInternas-routing.module';
+import { CcostoAdminComponent } from './ccosto/ccostoAdmin.component';
+import { CambiarResponsableComponent } from './ccosto/cambiarResponsable.component';
+import { NivelesComponent } from './niveles/niveles.component';
 
 @NgModule({
 	declarations: [
 		CcostoComponent,
+		CcostoAdminComponent,
 		CcostosComponent,
 		CtrabajoComponent,
 		CtrabajosComponent,
 		UnidadAdminComponent,
-		UnidadesAdminComponent
+		UnidadesAdminComponent,
+		CambiarResponsableComponent,
+		NivelesComponent
 	],
 	imports: [
 		BrowserModule,
