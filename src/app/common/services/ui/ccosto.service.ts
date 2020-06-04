@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { ConstantsService } from '../shared/constants.service';
 import { Ccosto } from '../../interfaces/ui.interface';
 // import { runInThisContext } from 'vm';
@@ -136,5 +136,9 @@ export class CcostoService {
 	}
 
 	
+
+	getInfoEmpresaPorCentroCosto(id_centro_costo: number){
+		return this.constants.getRequest(`/get_info_empresa_por_centro_costo/${id_centro_costo}`, 'get', false);
+	}
 
 }
