@@ -45,7 +45,10 @@ export class UsuarioComponent {
 		this.id_nivel_user = '';
 		this.nivel = {
 			id: '',
-			nivel:''
+			id_empresa: '',
+			id_nom_nivel_user: '',
+			nivel_user: '',
+			nombre_nivel:''
 		};		
 	    
 	    let user = JSON.parse(localStorage.getItem('currentUser'));
@@ -68,7 +71,7 @@ export class UsuarioComponent {
 			id_empresa: user.id_empresa
 		};
 		this.usuariosService.getNivelesUser(datos).subscribe((data: any) => {
-			// console.log('niveles', data);
+			console.log('niveles', data);
 			this.nivel = data[0];
 			this.usuario.id_nivel = data[0].id;
 		});

@@ -42,7 +42,7 @@ export class PresupuestoEgresoService {
 	get_aprobar_egreso(id_centro_costo: number, anio: number ) {
 		return this.constants.getRequest(`/get_aprobar_egreso/${id_centro_costo}/${anio}`, 'get', false);
 	}
-	
+
 	/* OBTIENE EL PRESUPUESTO DE EGRESOS DEL CENTRO DE COSTO PADRE E HIJOS FORMANDO UN PREUSPUETSO GENERAL */
 	get_presupuesto_egresos_general(id_centro_costo: string, anio: number) {
 		return this.constants.getRequest(`/get_presupuesto_egresos_general/${id_centro_costo}/${anio}`, 'get', false);
@@ -59,7 +59,7 @@ export class PresupuestoEgresoService {
 	}
 
 	// Consultas para presupuesto de egresos por clasificaciones
-	get_presupuetso_egreso_por_clasificacion(clasificacion: string, id_centro_costo: number, anio: number) {
-		return this.constants.getRequest(`/get_presupuesto_egreso_por_clasificacion/${clasificacion}/${id_centro_costo}/${anio}`, 'get', false);
+	get_presupuesto_egreso_por_clasificacion(clasificacion: string, presupuesto: any) {
+		return this.constants.getRequest(`/get_presupuesto_egreso_por_clasificacion/${clasificacion}/${presupuesto.id_centro_costo}/${presupuesto.anio}`, 'get', false);
 	}
 }

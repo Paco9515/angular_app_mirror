@@ -50,7 +50,7 @@
                                 </ng-template>
 
                                 <div *ngIf="datosEgresoGeneral.length != 0; else alertPresupuestoPropio">
-                                    <div class="col-12 m-2 text-right" >
+                                    <div class="col-12 m-2 text-right">
                                         <button type="button" class="btn btn-sm text-white m-1" [ngStyle]="{'background-color':'orange'}" (click)="downloadPresupuestoEgresoPDF()">
                                             <i class="fa fa-print"></i> Imprimir
                                         </button>
@@ -69,13 +69,13 @@
                                                     <th class="align-middle text-center " rowspan="5">Año</th>
                                                     <th class="align-middle text-center " colspan="22">Centro Costo</th>
                                                 </tr>
-    
+
                                                 <tr>
                                                     <th class="align-middle text-center " rowspan="4">Código</th>
                                                     <th class="align-middle text-center " rowspan="4">Nombre</th>
                                                     <th class="align-middle text-center " colspan="20">Proyectos</th>
                                                 </tr>
-    
+
                                                 <tr>
                                                     <th class="align-middle text-center " rowspan="3">Código</th>
                                                     <th class="align-middle text-center " rowspan="3">Nombre</th>
@@ -87,20 +87,20 @@
                                                 <tr>
                                                     <th class="align-middle text-center " rowspan="2">Código</th>
                                                     <th class="align-middle text-center " rowspan="2">Nombre</th>
-    
+
                                                     <th class="align-middle text-center " rowspan="2">Código</th>
                                                     <th class="align-middle text-center " rowspan="2">Nombre</th>
                                                     <th class="align-middle text-center " rowspan="2">Descripción</th>
-    
+
                                                     <th class="align-middle text-center " colspan="2">Tipo FF</th>
                                                     <th class="align-middle text-center " colspan="6">Ubicación Geográfica</th>
                                                     <th class="align-middle text-center " colspan="3">Partida</th>
-    
+
                                                 </tr>
                                                 <tr>
                                                     <th class="align-middle text-center ">Código</th>
                                                     <th class="align-middle text-center ">Nombre</th>
-    
+
                                                     <th class="align-middle text-center ">Estado</th>
                                                     <th class="align-middle text-center ">Municipio</th>
                                                     <th class="align-middle text-center ">Código Postal</th>
@@ -112,7 +112,7 @@
                                                     <th class="align-middle text-center ">Importe</th>
                                                 </tr>
                                             </thead>
-    
+
                                             <tbody>
                                                 <tr *ngFor="let datoEgresoGeneral of datosEgresoGeneral; let i=index ">
                                                     <!-- 19 columnas -->
@@ -139,12 +139,12 @@
                                                     <td class="align-middle">{{ datoEgresoGeneral.domicilio }}</td>
                                                     <td class="align-middle text-center">{{ datoEgresoGeneral.codigo_partida }}</td>
                                                     <td class="align-middle">{{ datoEgresoGeneral.nombre_partida }}</td>
-                                                    <td class="align-middle text-right" nowrap>{{ datoEgresoGeneral.importe }}</td>
+                                                    <td class="align-middle text-right" nowrap>$ {{ datoEgresoGeneral.importe }}</td>
                                                 </tr>
                                             </tbody>
                                             <tfoot>
                                                 <th class="align-middle text-right font-weight-bold " colspan="23">Total</th>
-                                                <th class="align-middle text-right" nowrap>{{ totalGeneral }}</th>
+                                                <th class="align-middle text-right" nowrap>$ {{ totalGeneral.toFixed(2) }}</th>
                                             </tfoot>
                                         </table>
                                     </div>
@@ -226,12 +226,12 @@
                                                 <td [ngClass]="getFormatFont(datoEgreso.domicilio)" class="align-middle">{{ datoEgreso.domicilio }}</td>
                                                 <td [ngClass]="getFormatFont(datoEgreso.codigo_partida)" class="align-middle text-center">{{ datoEgreso.codigo_partida }}</td>
                                                 <td [ngClass]="getFormatFont(datoEgreso.nombre_partida)" class="align-middle">{{ datoEgreso.nombre_partida }}</td>
-                                                <td class="align-middle text-right" nowrap>{{ datoEgreso.importe }}</td>
+                                                <td class="align-middle text-right" nowrap>$ {{ datoEgreso.importe }}</td>
                                             </tr>
                                         </tbody>
                                         <tfoot>
                                             <th class="align-middle text-right font-weight-bold " colspan="21">Total</th>
-                                            <th class="align-middle text-right" nowrap>{{ totalPropio }}</th>
+                                            <th class="align-middle text-right" nowrap>$ {{ totalPropio.toFixed(2) }}</th>
                                         </tfoot>
                                     </table>
                                 </div>
@@ -332,12 +332,12 @@
                                                                 <td class="align-middle">{{ datoEgresoGeneral.domicilio }}</td>
                                                                 <td class="align-middle text-center">{{ datoEgresoGeneral.codigo_partida }}</td>
                                                                 <td class="align-middle">{{ datoEgresoGeneral.nombre_partida }}</td>
-                                                                <td class="align-middle text-right" nowrap>{{ datoEgresoGeneral.importe }}</td>
+                                                                <td class="align-middle text-right" nowrap>$ {{ datoEgresoGeneral.importe }}</td>
                                                             </tr>
                                                         </tbody>
                                                         <tfoot>
                                                             <th class="align-middle text-right font-weight-bold " colspan="23">Total</th>
-                                                            <th class="align-middle text-right" nowrap>{{ totalGeneralHijo }}</th>
+                                                            <th class="align-middle text-right" nowrap>$ {{ totalGeneralHijo.toFixed(2) }}</th>
                                                         </tfoot>
                                                     </table>
                                                 </div>
@@ -360,11 +360,11 @@
                                 <div class="row">
                                     <div class="col-2">
                                         <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-                                            <a class="nav-link active" id="v-pills-clasf-obj-gasto-tab" data-toggle="pill" href="#v-pills-clasf-obj-gasto" role="tab" aria-controls="v-pills-clasf-obj-gasto" aria-selected="true" (click)="buscarPresupuestoPorClasificacion('ClasfObjGasto')">Clasificación Objeto de Gasto</a>
-                                            <a class="nav-link" id="v-pills-clasf-tipo-gasto-tab" data-toggle="pill" href="#v-pills-clasf-tipo-gasto" role="tab" aria-controls="v-pills-clasf-tipo-gasto" aria-selected="false" (click)="buscarPresupuestoPorClasificacion('ClasfTipoGasto')">Clasificación por tipo de gasto</a>
-                                            <a class="nav-link" id="v-pills-clasf-administrativa-tab" data-toggle="pill" href="#v-pills-clasf-administrativa" role="tab" aria-controls="v-pills-clasf-administrativa" aria-selected="false" (click)="buscarPresupuestoPorClasificacion('ClasfAdministrativa')">Clasificación Administrativa</a>
-                                            <a class="nav-link" id="v-pills-clasf-programatica-tab" data-toggle="pill" href="#v-pills-clasf-programatica" role="tab" aria-controls="v-pills-clasf-programatica" aria-selected="false" (click)="buscarPresupuestoPorClasificacion('ClasfProgramatica')">Clasificación Programatica</a>
-                                            <a class="nav-link" id="v-pills-clasf-fuente-financiamiento-tab" data-toggle="pill" href="#v-pills-clasf-fuente-financiamiento" role="tab" aria-controls="v-pills-clasf-fuente-financiamiento" aria-selected="false" (click)="buscarPresupuestoPorClasificacion('ClasfFuenteFinanciamiento')">Clasificación Por fuente de financiamiento</a>
+                                            <a class="nav-link active" id="v-pills-clasf-obj-gasto-tab" data-toggle="pill" href="#v-pills-clasf-obj-gasto" role="tab" aria-controls="v-pills-clasf-obj-gasto" aria-selected="true" (click)="buscarPresupuestoPorClasificacion('ClasfObjGasto', $event.target.text)">Clasificación Objeto de Gasto</a>
+                                            <a class="nav-link" id="v-pills-clasf-tipo-gasto-tab" data-toggle="pill" href="#v-pills-clasf-tipo-gasto" role="tab" aria-controls="v-pills-clasf-tipo-gasto" aria-selected="false" (click)="buscarPresupuestoPorClasificacion('ClasfTipoGasto', $event.target.text)">Clasificación por tipo de gasto</a>
+                                            <a class="nav-link" id="v-pills-clasf-administrativa-tab" data-toggle="pill" href="#v-pills-clasf-administrativa" role="tab" aria-controls="v-pills-clasf-administrativa" aria-selected="false" (click)="buscarPresupuestoPorClasificacion('ClasfAdministrativa', $event.target.text)">Clasificación Administrativa</a>
+                                            <a class="nav-link" id="v-pills-clasf-programatica-tab" data-toggle="pill" href="#v-pills-clasf-programatica" role="tab" aria-controls="v-pills-clasf-programatica" aria-selected="false" (click)="buscarPresupuestoPorClasificacion('ClasfProgramatica', $event.target.text)">Clasificación Programatica</a>
+                                            <a class="nav-link" id="v-pills-clasf-fuente-financiamiento-tab" data-toggle="pill" href="#v-pills-clasf-fuente-financiamiento" role="tab" aria-controls="v-pills-clasf-fuente-financiamiento" aria-selected="false" (click)="buscarPresupuestoPorClasificacion('ClasfFuenteFinanciamiento', $event.target.text)">Clasificación Por fuente de financiamiento</a>
                                         </div>
                                         <div class="text-center m-3">
                                             <button type="button" class="btn btn-sm text-white m-1" [ngStyle]="{'background-color':'orange'}" (click)="downloadClasificacionPDF()">

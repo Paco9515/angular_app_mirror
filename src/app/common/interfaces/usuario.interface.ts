@@ -15,8 +15,11 @@ export interface Usuario {
 }
 
 export interface Nivel {
-	id: string,
-	nivel:string
+	id: string;
+	id_empresa: string;
+	id_nom_nivel_user: string;
+	nivel_user: string;
+	nombre_nivel:string;
 }
 
 export interface Cc {

@@ -24,7 +24,7 @@
     "core-js": "^2.6.11",
     "html2canvas": "^1.0.0-rc.5",
     "jspdf": "^1.5.3",
-    "jspdf-autotable": "^3.4.4",
+    "jspdf-autotable": "^3.5.3",
     "latest-version": "^5.1.0",
     "ng2-charts": "^2.3.0",
     "ngx-toastr": "^10.2.0",
