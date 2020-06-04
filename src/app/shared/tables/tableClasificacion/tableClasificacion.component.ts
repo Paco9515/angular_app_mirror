@@ -7,12 +7,12 @@ import { Component, Input } from '@angular/core';
   styles: []
 })
 export class TableClasificacionComponent {
-  
-    @Input() datosClasificacion: any[] = [];
 
-    constructor(){}
+	@Input() datosClasificacion: any[] = [];
+
+	constructor() {}
 
 	calcularImporteTotal(): number {
-		return this.datosClasificacion.reduce((contador, egreso) => contador + parseInt(egreso.importe), 0);
+		return this.datosClasificacion.reduce((contador, egreso) => contador + parseFloat(egreso.importe), 0);
 	}
 }
