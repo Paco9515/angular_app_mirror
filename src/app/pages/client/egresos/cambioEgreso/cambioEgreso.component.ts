@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import { PresupuestoEgresoService } from '../../../../common/services/presupuesto/egreso.service';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { CambioEgresoService } from '../../../../common/services/presupuesto/cambioEgreso';
 import { Router } from '@angular/router';
 import { MensajesService } from '../../../../common/services/shared/mensajes.service';
-import { distinct } from 'rxjs/operators';
+// import { distinct } from 'rxjs/operators';
 // import { ActivatedRoute } from '@angular/router';
 // import { NgForm } from '@angular/forms';
 
@@ -14,216 +14,349 @@ import { distinct } from 'rxjs/operators';
 })
 export class CambioEgresoComponent {
 
-	proyectos: any;
-	proyectos2: any[];
-	anioPresEgreso: number;
-	totalProyecto: number;
-	totalProyecto2: number;
-	diff: number;
+	id_pres: number;	
+	id_cc: string;
+	info_user: any;
 	anioEgreso: number;
-	bandera: number;
-	bandImporte: boolean;
-	cuentaTabla: boolean;
-	array2: any[];
-	aumentTranf: boolean;
-	id_pres: number;
-	envioInfo: any;
-	partidasCambiadas: any;
+	centrosAumentosPendientes: any;
+	centrosDisminPendientes: any;
+	centrosTransfPendientes: any;
+	centrosAumentosRevisados: any;
+	centrosDisminRevisados: any;
+	centrosTransfRevisados: any;
+	
+	centro: string;	
+	presupuestoPropio: any;
+	presupuestosHijos: any;
+	movimientos: any;	
+	banderaTransf: boolean;
+	banderaPresupuestosHijos: boolean = false;
 
-	x: boolean;
+	banderaCcAumentosPendientes: boolean = false;
+	banderaCcDisminPendientes: boolean = false;
+	banderaCcTransfPendientes: boolean = false;
+	banderaCcAumentosRevisados: boolean = false;
+	banderaCcDisminRevisados: boolean = false;
+	banderaCcTransfRevisados: boolean = false;
+
+	banderaMovs: boolean = false;
+	banderaSoloImprimir: boolean;
+	
+	
 
 	constructor(
-		private presupuestoEgresos: PresupuestoEgresoService,
+		private cambioEgresos: CambioEgresoService,
 		private router: Router,
 		private mensaje: MensajesService
 	) {
-		this.totalProyecto = 0;
-		this.totalProyecto2 = 0;
-		this.diff = 0;
-		this.bandera = 0;
-		this.bandImporte = false;
-		this.cuentaTabla = true;
-		this.proyectos = [];
-		this.proyectos2 = [];
-		this.array2 = [];
 
-		this.inicio();
-	}
-
-	private inicio() {
 		this.id_pres = null;
-		this.totalProyecto = 0;
-		this.totalProyecto2 = 0;
-		this.diff = 0;
-		this.bandera = 0;
-		this.proyectos = [];
-		this.proyectos2 = [];
-		this.partidasCambiadas = [];
-		this.envioInfo = {
-			partidasOriginal: null,
-			partidas: null,
-			partidasCambiadas: null
-		};
-		this.presupuestoEgresos.get_presupuestoActual('3')
-		.subscribe((data1: any) => {
-			this.proyectos2 = data1.data;
-			this.id_pres = data1.data[0].id_pres;
-		});
-
-		this.presupuestoEgresos.get_presupuestoActual('3')
-		.subscribe((data2: any) => {
-			this.proyectos = data2.data;
-			this.totalProyecto = 0;
-			for (const proyecto of this.proyectos) {
-				this.totalProyecto += proyecto.importe;
-				this.totalProyecto2 += proyecto.importe;
-			}
-
-			this.anioEgreso = this.proyectos[1].anio;
-		});
-	}
-
-	private aumento() {
-		this.aumentTranf = true;
-		// this.desbloquearBandera();
-		this.cuentaTabla = false;
-		document.getElementById('tabla1').removeAttribute('style');
-	}
-
-	private transferir() {
-		this.aumentTranf = false;
-		this.cuentaTabla = false;
-		document.getElementById('tabla1').removeAttribute('style');
-	}
-
-	private calcularTotalTransf(a?: any, partida?: any) {
-		// ** Funcion para agregar las partidas que se van a modificar a array  ** //
-		const id_fase_partida = partida.id_fase_partida;
-		this.partidasCambiadas.push(id_fase_partida);
-		// ** Funcion para filtar partidas que si tuvieron cambios ** //
-		if (this.proyectos2[a].importe === partida.importe) {
-			this.partidasCambiadas = this.partidasCambiadas.filter( function (value, index, arr) {
-				return value !== partida.id_fase_partida;
-			});
-			console.log('segundo array', this.partidasCambiadas);
-		}
+		this.info_user = JSON.parse(localStorage.getItem('currentUser'));
+		// console.log('user', this.info_user);
 		
-		this.bloquearBandera(a);
-		this.totalProyecto = 0;
-		this.diff = 0;
-		for (const proyecto of this.proyectos) {
-			this.totalProyecto += proyecto.importe;
-		}
-		this.diff = this.totalProyecto2 - this.totalProyecto;
+		this.presupuestoPropio = '';
+		this.presupuestosHijos = '';
+		this.centrosAumentosPendientes = '';
+		this.centrosDisminPendientes = '';
+		this.centrosTransfPendientes = '';
+		this.centrosAumentosRevisados = '';
+		this.centrosDisminRevisados = '';
+		this.centrosTransfRevisados = '';
 
-		if (this.totalProyecto2 < this.totalProyecto) {
-			this.bandera = 2;
-		}
-		if (this.totalProyecto2 > this.totalProyecto) {
-			this.bandera = 1;
-		}
-		if (this.totalProyecto2 === this.totalProyecto) {
-			this.bandera = 0;
-			if (this.aumentTranf === false) {
-				document.getElementById('guardar1').removeAttribute('disabled');
+		this.cambioEgresos.get_presupuestoActualByCc(this.info_user.id_cc)
+		.subscribe((pres: any) => {
+			this.presupuestoPropio = pres; 
+			// console.log('pres', pres);
+		});
+
+		this.cambioEgresos.get_presupuestosActualesHijosCc(this.info_user.id_cc)
+		.subscribe((presupuestosHijos: any) => {
+			if(presupuestosHijos.length > 0) {
+				this.presupuestosHijos = presupuestosHijos;
+				this.banderaPresupuestosHijos = true;
+			} else {
+				this.banderaPresupuestosHijos = false;
 			}
-			this.desbloquearBandera();
-			// this.guardar();
-		}
-	}
-
-
-	private calcularTotalAumento(a?: any, partida?: any) {
-		// ** Funcion para agregar las partidas que se van a modificar a array  ** //
-		const id_fase_partida = partida.id_fase_partida;
-		this.partidasCambiadas.push(id_fase_partida);
-		// ** Funcion para filtar partidas que si tuvieron cambios ** //
-		if (this.proyectos2[a].importe === partida.importe) {
-			this.partidasCambiadas = this.partidasCambiadas.filter( function (value, index, arr) {
-				return value !== partida.id_fase_partida;
-			});
-			console.log('segundo array', this.partidasCambiadas);
-		}
-
-
-		this.totalProyecto = 0;
-		this.diff = 0;
-		for (const proyecto of this.proyectos) {
-			this.totalProyecto += proyecto.importe;
-		}
-		this.diff = this.totalProyecto2 - this.totalProyecto;
-
-		if (this.totalProyecto2 < this.totalProyecto) {
-			this.bandera = 2;
-		}
-		if (this.totalProyecto2 > this.totalProyecto) {
-			this.bandera = 1;
-		}
-		if (this.totalProyecto2 === this.totalProyecto) {
-			this.bandera = 0;
-		}
-
-	}
-
-	private bloquearBandera(a?: any) {
-		document.getElementById('item' + a).setAttribute('disabled', 'true');
-	}
-
-	private desbloquearBandera() {
-		let a = 0;
-		for (const proyecto of this.proyectos) {
-			document.getElementById('item' + a).removeAttribute('disabled');
-			a++;
-		}
-		this.cuentaTabla = false;
-		document.getElementById('tabla1').removeAttribute('style');
-	}
-
-	private limpiarCampos() {
-		this.array2 = [];
-		this.presupuestoEgresos.get_presupuestoActual('3')
-		.subscribe((data2: any) => {
-			this.array2 = data2.data;
-			this.proyectos = this.array2;
+			
+			// console.log('presHijos', presupuestosHijos);
 		});
-		if (this.aumentTranf === false) {
-			document.getElementById('guardar1').setAttribute('disabled', 'true');
-		}
-		this.totalProyecto = 0;
-		this.diff = 0;
-		this.totalProyecto = this.totalProyecto2;
-		this.bandera = 0;
-	}
+	
+		let datos = {
+			id_cc: this.info_user.id_cc,
+			tipoMov: 1
+		};
 
-	private guardar() {
-		// document.getElementById('guardar').removeAttribute('disabled');
-		this.envioInfo.partidasOriginal = this.proyectos2;
-		this.envioInfo.partidas = this.proyectos;
-		this.envioInfo.partidasCambiadas = this.partidasCambiadas;
-		this.x = true;
-		console.log(this.envioInfo);
-
-		this.presupuestoEgresos.modificar_egreso(this.envioInfo).subscribe(( data: any ) => {
-				// console.log('data', data);
-				return this.mensaje.success(data);
-			}, error => {
-				// console.log(error);
-				return this.mensaje.danger(error.error);
+		this.cambioEgresos.get_centrosHijosConAumentosByCc(datos).subscribe((ccAumentos: any) => {
+			if(ccAumentos.length > 0) {
+				// console.log('ccAumentos', ccAumentos);
+				this.centrosAumentosPendientes = ccAumentos;
+				// console.log('Amuentos pendientes', this.centrosAumentosPendientes);
+				this.banderaCcAumentosPendientes = true;
+			} else {
+				this.banderaCcAumentosPendientes = false;
+			}			
 		});
-		this.inicio();
+
+		this.cambioEgresos.get_centrosHijosConDisminByCc(datos).subscribe((ccDismin: any) => {
+			if(ccDismin.length > 0) {
+				// console.log('ccDismin', ccDismin);
+				this.centrosDisminPendientes = ccDismin;
+				// console.log(this.centrosPendientes);
+				this.banderaCcDisminPendientes = true;
+			} else {
+				this.banderaCcDisminPendientes = false;
+			}			
+		});
+
+		this.cambioEgresos.get_centrosHijosConTransfByCc(datos).subscribe((ccTransf: any) => {
+			if(ccTransf.length > 0) {
+				// console.log('ccTransf', ccTransf);
+				this.centrosTransfPendientes = ccTransf;
+				// console.log('Transferencias pendientes', this.centrosTransfPendientes);
+				this.banderaCcTransfPendientes = true;
+			} else {
+				this.banderaCcTransfPendientes = false;
+			}			
+		});
 	}
 
-	private cancelar() {
-		this.limpiarCampos();
-		this.cuentaTabla = true;
-		document.getElementById('tabla1').setAttribute('style', 'display: none');
-		this.inicio();
+	aumento() {
+		this.router.navigate([`/panel-adm/aumentoDisminucion`]);
 	}
 
-	// Redireccion a proyectos
+	transferir() {
+		this.router.navigate([`/panel-adm/transferir`]);
+	}
+
 	mostrarProyectos() {
 		const bandera = true;
-		this.router.navigate([`/panel-adm/mod_proyectos/${this.id_pres}/proyectos/${bandera}`]);
+		this.router.navigate([`/panel-adm/mod_proyectos/${this.presupuestoPropio.id}/proyectos/${bandera}`]);
+	}
+
+	mostrarInfo(id: string) {
+		const bandera = true;
+		this.router.navigate([`/panel-adm/pres_egresos/${id}/${bandera}`]);
+	}
+
+	// ** ** //
+
+	mostrarAumentos(id_cc: string) {
+		if(this.info_user.id_nivel != null && this.info_user.id_nivel != 1) {
+			if(this.info_user.id_cc == Number(id_cc)) {
+				this.banderaSoloImprimir = true;
+				console.log('imprimir1', this.banderaSoloImprimir);
+			} else {
+				this.banderaSoloImprimir = false;
+				console.log('imprimir1', this.banderaSoloImprimir);
+			}			
+		}
+		else {
+			this.banderaSoloImprimir = false;
+		}
+
+		this.banderaTransf = false;
+		let datos = {
+			id_cc: id_cc,
+			tipoMov: 1
+		};
+		this.cambioEgresos.get_aumentos_by_cc(datos).subscribe((aumentos: any) => {
+			// console.log('movimeintos pendientes', movs.data);
+			if(aumentos.data.length > 0) {
+				this.movimientos = aumentos.data;
+				this.banderaMovs = true;
+			} else {
+				this.banderaMovs = false;				
+			}
+		});
+	}
+
+	mostrarDisminuciones(id_cc: string) {
+		if(this.info_user.id_nivel != null && this.info_user.id_nivel != 1) {
+			if(this.info_user.id_cc == Number(id_cc)) {
+				this.banderaSoloImprimir = true;
+				console.log('imprimir1', this.banderaSoloImprimir);
+			} else {
+				this.banderaSoloImprimir = false;
+				console.log('imprimir1', this.banderaSoloImprimir);
+			}			
+		}
+		else {
+			this.banderaSoloImprimir = false;
+		}
+
+		this.banderaTransf = false;
+		let datos = {
+			id_cc: id_cc,
+			tipoMov: 1
+		};
+		this.cambioEgresos.get_disminuciones_by_cc(datos).subscribe((disminuciones: any) => {
+			// console.log('movimeintos pendientes', movs.data);
+			if(disminuciones.data.length > 0) {
+				this.movimientos = disminuciones.data;
+				this.banderaMovs = true;
+			} else {
+				this.banderaMovs = false;				
+			}
+		});
+	}
+
+	mostrarTransferencias(id_cc: string) {		
+		if(this.info_user.id_nivel != null && this.info_user.id_nivel != 1) {
+			if(this.info_user.id_cc == Number(id_cc)) {
+				this.banderaSoloImprimir = true;
+				console.log('imprimir1', this.banderaSoloImprimir);
+			} else {
+				this.banderaSoloImprimir = false;
+				console.log('imprimir1', this.banderaSoloImprimir);
+			}			
+		}
+		else {
+			this.banderaSoloImprimir = false;
+		}
+
+		this.banderaTransf = true;
+		let datos = {
+			id_cc: id_cc,
+			tipoMov: 1
+		};
+		this.cambioEgresos.get_transferencias_by_cc(datos).subscribe((tansferencias: any) => {
+			// console.log('movimeintos pendientes', tansferencias.data);
+			if(tansferencias.data.length > 0) {
+				this.movimientos = tansferencias.data;
+				this.banderaMovs = true;
+			} else {
+				this.banderaMovs = false;				
+			}
+		});	
+		// console.log(this.centrosAumentosPendientes);
+		// console.log(this.centrosTransfPendientes);
+	}
+
+	// ** ** //
+
+	validarCentrosRevisados(id_cc: string) {
+		let datos = {
+			id_cc: this.info_user.id_cc,
+			tipoMov: 2
+		};
+
+		this.cambioEgresos.get_centrosHijosConAumentosByCc(datos).subscribe((ccAumentos: any) => {
+			if(ccAumentos.length > 0) {
+				// console.log('ccAumentos', ccAumentos);
+				this.centrosAumentosRevisados = ccAumentos;
+				// console.log('Amuentos pendientes', this.centrosAumentosRevisados);
+				this.banderaCcAumentosRevisados = true;
+			} else {
+				this.banderaCcAumentosRevisados = false;
+			}			
+		});
+
+		this.cambioEgresos.get_centrosHijosConDisminByCc(datos).subscribe((ccDismin: any) => {
+			if(ccDismin.length > 0) {
+				// console.log('ccDismin', ccDismin);
+				this.centrosDisminRevisados = ccDismin;
+				// console.log(this.centrosPendientes);
+				this.banderaCcDisminRevisados = true;
+			} else {
+				this.banderaCcDisminRevisados = false;
+			}			
+		});
+
+		this.cambioEgresos.get_centrosHijosConTransfByCc(datos).subscribe((ccTransf: any) => {
+			if(ccTransf.length > 0) {
+				// console.log('ccTransf', ccTransf);
+				this.centrosTransfRevisados	 = ccTransf;
+				// console.log('Transferencias pendientes', this.centrosTransfRevisados);
+				this.banderaCcTransfRevisados = true;
+			} else {
+				this.banderaCcTransfRevisados = false;
+			}			
+		});
+	}
+
+	mostrarAumentosRevisados(id_cc: string) {
+		/* if(this.info_user.id_nivel != null && this.info_user.id_nivel != 1) {
+			if(this.info_user.id_cc == Number(id_cc)) {
+				this.banderaSoloImprimir = true;
+				console.log('imprimir1', this.banderaSoloImprimir);
+			} else {
+				this.banderaSoloImprimir = false;
+				console.log('imprimir1', this.banderaSoloImprimir);
+			}			
+		} 
+		else {
+			this.banderaSoloImprimir = false;
+		}*/
+
+		this.banderaSoloImprimir = true;
+		this.banderaTransf = false;// validar si fue transferencia
+		let datos = {
+			id_cc: id_cc,
+			tipoMov: 2
+		};		
+		this.cambioEgresos.get_aumentos_by_cc(datos).subscribe((aumentos: any) => {
+			// console.log('movimeintos pendientes', movs.data);
+			if(aumentos.data.length > 0) {
+				this.movimientos = aumentos.data;
+				this.banderaMovs = true;
+			} else {
+				this.banderaMovs = false;				
+			}
+		});
+	}
+
+	mostrarDisminRevisados(id_cc: string) {
+		
+		this.banderaSoloImprimir = true;
+		this.banderaTransf = false;
+		let datos = {
+			id_cc: id_cc,
+			tipoMov: 2
+		};
+		this.cambioEgresos.get_disminuciones_by_cc(datos).subscribe((disminuciones: any) => {
+			// console.log('movimeintos pendientes', movs.data);
+			if(disminuciones.data.length > 0) {
+				this.movimientos = disminuciones.data;
+				this.banderaMovs = true;
+			} else {
+				this.banderaMovs = false;				
+			}
+		});
+	}
+
+	mostrarTransfRevisados(id_cc: string) {		
+		
+		this.banderaSoloImprimir = true;
+		this.banderaTransf = true;
+		let datos = {
+			id_cc: id_cc,
+			tipoMov: 2
+		};
+		this.cambioEgresos.get_transferencias_by_cc(datos).subscribe((tansferencias: any) => {
+			// console.log('movimeintos pendientes', tansferencias.data);
+			if(tansferencias.data.length > 0) {
+				this.movimientos = tansferencias.data;
+				this.banderaMovs = true;
+			} else {
+				this.banderaMovs = false;				
+			}
+		});	
+		// console.log(this.centrosAumentosPendientes);
+		// console.log(this.centrosTransfPendientes);
+	}
+
+	// ** ** //
+
+	aprobarMovimiento() {
+
+	}
+
+	rechazarMovimiento() {
+
+	}
+
+	cancelar() {
+		this.router.navigate([`/panel-adm/`]);
 	}
 
 

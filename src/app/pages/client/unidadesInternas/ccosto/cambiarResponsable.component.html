@@ -1,0 +1,66 @@
+<!-- Breadcrumb-->
+<div class="d-none d-sm-block">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><i class="fa fa-folder-open"></i> Unidades internas</li>
+        <li class="breadcrumb-item active"> Centros de costos</li>
+    </ol>
+</div>
+    
+<div class="container-fluid p-3">
+    <div class="animated fadeIn">
+        <div class="row justify-content-center">
+            <div class="col-md-12">
+                <div class="card shadow">
+                    <div class="card-header">
+                        <div class="row">
+                            <div class="col-12 col-md-8 text-center text-sm-left h5 font-weight-bold">
+                                <i class="fa fa-list"></i> Cambiar Responsable de Hacer un Presupuesto a Ley
+                            </div>
+                            <div class="col-12 col-md-4 text-center text-sm-right">
+                                <button class="btn btn-outline-primary mt-2 btn-sm" type="button" [routerLink]="['/panel-adm/ccostos']">
+                                    <i class="fa fa-arrow-circle-left "></i> Regresar
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-sm-12 border rounded ">
+                                    <div class="col-sm-12 text-center mt-2">
+                                        <h4>Buscar Centro de costo</h4>
+                                    </div>
+                                    <div class="col-sm-12  mt-3">
+                                        <label for="">Nivel:</label>
+                                        <select class="form-control" name="nivel" id="nivel" [(ngModel)]="nivel" (change)="cargarCentros($event.target.value);">
+                                            <option value="">Selecciona un Nivel...</option>
+                                            <option *ngFor="let nivel of niveles" [value]="nivel.nivel"> {{ nivel.nombre}}</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-sm-12  mt-2">
+                                        <label for="">Centro de Costo:</label>
+                                        <select class="form-control" name="centro" id="centro" [(ngModel)]="centro" (change)="habilitarBoton($event.target.value);" [disabled]="banderaCentros">
+                                            <option value="">Selecciona Centro de Costo...</option>
+                                            <option *ngFor="let centro of centros" [value]="centro.id">{{ centro.codigo }} - {{ centro.nombre }}</option>
+                                        </select>
+                                    </div>
+                                    <br>
+                                    <div class="col-sm-12  mt-2">                                        
+                                        <button class="btn btn-success text-white" (click)="guardar();" [disabled]="banderaGuardar">
+                                            Establecer
+                                        </button>
+                                    </div>
+                                    <br>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+					<div class="card-footer">
+					</div>
+				</div><!-- /.card-->
+            </div><!-- /.col-->
+        </div><!-- /.row-->
+    </div>
+</div>

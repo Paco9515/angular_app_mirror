@@ -9,13 +9,17 @@ export interface Usuario {
 	nivel: string;
 	id_cc: string;
 	nombre_cc: string;
+	id_emp: string;
 	img_name: string;
 	status: boolean;
 }
 
 export interface Nivel {
-	id: string,
-	nivel:string
+	id: string;
+	id_empresa: string;
+	id_nom_nivel_user: string;
+	nivel_user: string;
+	nombre_nivel:string;
 }
 
 export interface Cc {

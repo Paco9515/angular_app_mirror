@@ -58,12 +58,13 @@ export class EmpresasComponent  {
 		this.detalle = empresa;
 		this.empresa_service.getClasAdmin(empresa.id_clas_administrativa).subscribe((admin: any) => {
 			this.detalle.nom_administrativa = admin.nombre;
-			// console.log(this.detalle);
+			 console.log(this.detalle);
 		});
 		this.empresa_service.getTipo(empresa.id_tipo_empresa).subscribe((tipo: any) => {
 			this.detalle.nom_tipo_emp = tipo.nombre;
 			// console.log(this.detalle);
 		});
+
 	}
 
 	eliminarActivar(id: string, bandera: boolean) {

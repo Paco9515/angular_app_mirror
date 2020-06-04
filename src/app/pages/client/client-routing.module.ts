@@ -15,6 +15,9 @@ import { LoginComponent } from '../login/login.component';
 import { LoginGuard } from '../../common/guards/login.guard';
 import { LoginOutGuard } from 'src/app/common/guards/login-out.guard';
 import { PerfilComponent} from './perfil/perfil.component';
+import { AumentarDisminuirComponent } from './egresos/cambioEgreso/aumentarDisminuir/aumentarDisminuir.component';
+import { TransferirComponent } from './egresos/cambioEgreso/transferir/transferir.component';
+import { movimientosEgresosComponent } from './egresos/cambioEgreso/movimientosEgresos/movimientosEgresos.component';
 
 
 const admin_routes: Routes = [
@@ -26,12 +29,19 @@ const admin_routes: Routes = [
 			{ path: 'escritorio', component: EscritorioComponent, canActivate: [LoginGuard] },
 			{ path: 'pres_egresos', component: EgresosComponent, canActivate: [LoginGuard] },
 			{ path: 'modificar_egreso', component: CambioEgresoComponent, canActivate: [LoginGuard] },
+			{ path: 'aumentoDisminucion', component: AumentarDisminuirComponent, canActivate: [LoginGuard] },
+			{ path: 'transferir', component: TransferirComponent, canActivate: [LoginGuard] },
+
 			{ path: 'pres_egresos/:id_presupuesto', component: EgresoComponent, canActivate: [LoginGuard] },
 			{ path: 'pres_egresos/:id_presupuesto/proyectos', component: ProyectosComponent, canActivate: [LoginGuard] },
 			{ path: 'pres_egresos/:id_presupuesto/proyectos/:id_proyecto', component: ProyectoComponent, canActivate: [LoginGuard] },
 			{ path: 'pres_egresos/:id_presupuesto/proyectos/:id_proyecto/fases', component: FasesComponent, canActivate: [LoginGuard] },
 			{ path: 'pres_egresos/:id_presupuesto/proyectos/:id_proyecto/fases/:id_fase', component: FaseComponent, canActivate: [LoginGuard] },
 
+			{ path: 'movimientos', component: movimientosEgresosComponent, canActivate: [LoginGuard] },
+			{ path: 'movimientos/:id_cc', component: movimientosEgresosComponent, canActivate: [LoginGuard] },
+
+			{ path: 'pres_egresos/:id_presupuesto/:bandera', component: EgresoComponent, canActivate: [LoginGuard] },
 			{ path: 'mod_proyectos/:id_presupuesto/proyectos/:bandera', component: ProyectosComponent, canActivate: [LoginGuard] },
 			{ path: 'mod_proyecto/:id_presupuesto/proyectos/:id_proyecto/:bandera', component: ProyectoComponent, canActivate: [LoginGuard] },
 			{ path: 'mod_fases/:id_presupuesto/proyectos/:id_proyecto/fases/:bandera', component: FasesComponent, canActivate: [LoginGuard] },

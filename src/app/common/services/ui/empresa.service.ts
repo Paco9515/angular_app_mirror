@@ -68,6 +68,10 @@ export class EmpresaService {
 		return this.constants.getRequest(`/get_empresas`, 'get', null);
 	}
 
+	getSoloEmpresas() {
+		return this.constants.getRequest(`/get_solo_empresas`, 'get', null);
+	}
+
 	getClasAdmis() {
 		return this.constants.getRequest(`/get_administrativas`, 'get', null);
 	}

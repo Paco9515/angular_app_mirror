@@ -1,13 +1,32 @@
 <div class="sidebar">
     <nav class="sidebar-nav">
         <ul class="nav">
+            <!-- ESCRITORIO -->
             <li class="nav-item">
                 <a class="nav-link" routerLink="escritorio" routerLinkActive="active">
                     <i class="nav-icon fa fa-dashboard"></i> Escritorio
                 </a>
             </li>
+            <!-- APARTADO DE NIVELES -->
+            <li *ngIf="banderaMostrarNiveles" class="nav-item nav-dropdown">
+                <a class="nav-link nav-dropdown-toggle">
+                    <i class="nav-icon fa fa-folder"></i>Niveles
+                </a>
+                <ul class="nav-dropdown-items">
+                    <li class="nav-item">
+                        <a class="nav-link" routerLink="nivelesCc" routerLinkActive="active">
+                            <i class="nav-icon fa fa-check-circle"></i> Centros de Costo
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" routerLink="nivelesUser" routerLinkActive="active">
+                            <i class="nav-icon fa fa-check-circle"></i> Usuarios
+                        </a>
+                    </li>
+                </ul>
+            </li>
             <!-- APARTADO DE USUARIOS -->
-            <li *ngIf="nivel != 6" class="nav-item nav-dropdown">
+            <li *ngIf="banderaMostrarUsuarios" class="nav-item nav-dropdown">
                 <a class="nav-link nav-dropdown-toggle">
                     <i class="nav-icon fa fa-folder"></i>Usuarios
                 </a>
@@ -24,8 +43,7 @@
                     </li> -->
                 </ul>
             </li>
-
-            <!-- APARTADO TIPO DE GASTO -->
+            <!-- APARTADO CLAS PROGRAMATICA -->
             <li class="nav-item nav-dropdown">
                 <a class="nav-link nav-dropdown-toggle">
                     <i class="nav-icon fa fa-folder"></i>Clas programatica
@@ -43,6 +61,7 @@
                     </li>
                 </ul>
             </li>
+            <!-- APARTADO TIPO DE GASTO -->
             <li class="nav-item nav-dropdown">
                 <a class="nav-link nav-dropdown-toggle">
                     <i class="nav-icon fa fa-folder"></i>Clas tipo de gasto
@@ -55,6 +74,7 @@
                     </li>
                 </ul>
             </li>
+            <!-- APARTADO COG -->
             <li class="nav-item nav-dropdown">
                 <a class="nav-link nav-dropdown-toggle">
                     <i class="nav-icon fa fa-folder"></i>Clas por objeto de gasto
@@ -77,6 +97,7 @@
                     </li>
                 </ul>
             </li>
+            <!-- APARTADO CLAS CONTABLE -->
             <li class="nav-item nav-dropdown">
                 <a class="nav-link nav-dropdown-toggle">
                     <i class="nav-icon fa fa-folder"></i>Clas contable
@@ -109,6 +130,7 @@
                     </li>
                 </ul>
             </li>
+            <!-- APARTADO CLAS ADMINISTRATIVA -->
             <li class="nav-item nav-dropdown">
                 <a class="nav-link nav-dropdown-toggle">
                     <i class="nav-icon fa fa-folder"></i>Clas Administrativa
@@ -141,33 +163,35 @@
                     </li>
                 </ul>
             </li>
-            <li class="nav-item nav-dropdown">
+            <!-- APARTADO UNIDADES INTERNAS -->
+            <li *ngIf="banderaMostrarUi" class="nav-item nav-dropdown">
                 <a class="nav-link nav-dropdown-toggle">
                     <i class="nav-icon fa fa-folder"></i>Unidades Internas
                 </a>
                 <ul class="nav-dropdown-items">
-                    <li class="nav-item">
+                    <li *ngIf="banderaMostrarEmpresas" class="nav-item">
                         <a class="nav-link" routerLink="empresas" routerLinkActive="active">
                             <i class="nav-icon fa fa-check-circle"></i> Empresas
                         </a>
                     </li>
-                    <li class="nav-item">
+                    <li *ngIf="banderaMostrarUnidades" class="nav-item">
                         <a class="nav-link" routerLink="unidadesAdmin" routerLinkActive="active">
                             <i class="nav-icon fa fa-check-circle"></i> Uds. Administrativas
                         </a>
                     </li>
-                    <li class="nav-item">
+                    <li *ngIf="banderaMostrarCentros" class="nav-item">
                         <a class="nav-link" routerLink="ccostos" routerLinkActive="active">
                             <i class="nav-icon fa fa-check-circle"></i> Centros de Costos
                         </a>
                     </li>
-                    <li class="nav-item">
+                   <!--  <li class="nav-item">
                         <a class="nav-link" routerLink="ctrabajos" routerLinkActive="active">
                             <i class="nav-icon fa fa-check-circle"></i> Centros de Trabajo
                         </a>
-                    </li>
+                    </li> -->
                 </ul>
             </li>
+            <!-- APARTADO CLAS FUNCIONAL -->
             <li class="nav-item nav-dropdown">
                 <a class="nav-link nav-dropdown-toggle">
                     <i class="nav-icon fa fa-folder"></i>Clas Funcional
@@ -190,6 +214,7 @@
                     </li>
                 </ul>
             </li>
+            <!-- APARTADO CLAS FUENTE FINANCIAMIENTO -->
             <li class="nav-item nav-dropdown">
                 <a class="nav-link nav-dropdown-toggle">
                     <i class="nav-icon fa fa-folder"></i>Clas F. Financiamiento
@@ -212,6 +237,7 @@
                     </li>
                 </ul>
             </li>
+            <!-- APARTADO PRESUPUESTO DE INGRESOS -->
             <li class="nav-item nav-dropdown">
                 <a class="nav-link nav-dropdown-toggle">
                     <i class="nav-icon fa fa-folder"></i>Presupuesto de egresos
@@ -233,5 +259,5 @@
             </li>
         </ul>
     </nav>
-    <button class="sidebar-minimizer brand-minimizer" type="button"></button>
+    <!-- <button class="sidebar-minimizer brand-minimizer" type="button"></button> -->
 </div>

@@ -12,7 +12,7 @@
         <div class="row justify-content-center">
             <div class="col-md-12">
                 <div class="card shadow">
-                    <form #f="ngForm" (ngSubmit)="guardar(f)">
+                    <form #f="ngForm">
                         <div class="card-header">
                             <div class="row text-center text-sm-left">
                                 <div class="col-12 col-md-8 text-md-left h5 font-weight-bold">
@@ -49,7 +49,7 @@
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <div class="col-sm-4">
+                                <div class="col-sm-3">
                                     <label class="col-sm-12 col-form-label">Tipo Empresa: </label>
                                     <div class="col-sm-12">
                                         <select class="form-control" [(ngModel)]="empresa.id_tipo_empresa" name="id_tipo_empresa">
@@ -58,17 +58,8 @@
                                             <option value="2">Privada</option>
                                         </select>
                                     </div>
-                                </div>
-                                <div class="col-sm-4">
-                                    <label class="col-sm-12 col-form-label">Clas Administrativa: </label>
-                                    <div class="col-sm-12">
-                                        <select class="form-control" [(ngModel)]="empresa.id_clas_administrativa" name="id_clas_administrativa">
-                                            <option value="">Seleccione una opción...</option>
-                                            <option *ngFor="let admin of admins; let i = index" [value]="i">{{ admin.nombre }}</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-sm-4">
+                                </div>                               
+                                <div class="col-sm-3">
                                     <label class="col-sm-12 col-form-label">Tipo Persona:</label>
                                     <div class="col-sm-12">
                                         <select class="form-control" [(ngModel)]="empresa.persona_moral" name="persona_moral">
@@ -78,88 +69,35 @@
                                         </select>
                                     </div>
                                 </div>
-                            </div>
-
-                            <div class="form-group row">
-                                <input type="hidden" [(ngModel)]="empresa.id_info_gene" name="id_info_gene">
-                                <div class="col-sm-3">
-                                    <label class="col-sm-12 col-form-label">Estado: </label>
+                                <div class="col-sm-6">
+                                    <label class="col-sm-12 col-form-label">Clas Administrativa: </label>
                                     <div class="col-sm-12">
-                                        <input type="text" class="form-control" placeholder="Ingresa el estado" [(ngModel)]="info.estado" name="estado">
-                                    </div>
-                                </div>
-                                <div class="col-sm-3">
-                                    <label class="col-sm-12 col-form-label">Municipio: </label>
-                                    <div class="col-sm-12">
-                                        <input type="text" class="form-control" placeholder="Ingresa el municipio" [(ngModel)]="info.municipio" name="municipio">
-                                    </div>
-                                </div>
-                                <div class="col-sm-3">
-                                    <label class="col-sm-12 col-form-label">Localidad:</label>
-                                    <div class="col-sm-12">
-                                        <input type="text" class="form-control" placeholder="Ingresa el localidad" [(ngModel)]="info.localidad" name="localidad">
-                                    </div>
-                                </div>
-                                <div class="col-sm-3">
-                                    <label class="col-sm-12 col-form-label">Codigo Postal:</label>
-                                    <div class="col-sm-12">
-                                        <input type="text" class="form-control" placeholder="Ingresa el cp" [(ngModel)]="info.cp" name="cp">
+                                        <select class="form-control" [(ngModel)]="empresa.id_clas_administrativa" name="id_clas_administrativa">
+                                            <option value="">Seleccione una opción...</option>
+                                            <option *ngFor="let admin of admins; let i = index" value="{{admin.id}}">{{ admin.nombre }}</option>
+                                        </select>
                                     </div>
                                 </div>
                             </div>
-
-                            <div class="form-group row">
-                                <div class="col-sm-4">
-                                    <label class="col-sm-12 col-form-label">Colonia: </label>
-                                    <div class="col-sm-12">
-                                        <input type="text" class="form-control" placeholder="Ingresa el estado" [(ngModel)]="info.colonia" name="colonia">
-                                    </div>
-                                </div>
-                                <div class="col-sm-4">
-                                    <label class="col-sm-12 col-form-label">Calle: </label>
-                                    <div class="col-sm-12">
-                                        <input type="text" class="form-control" placeholder="Ingresa el municipio" [(ngModel)]="info.calle" name="calle">
-                                    </div>
-                                </div>
-                                <div class="col-sm-4">
-                                    <label class="col-sm-12 col-form-label">N° Exterior:</label>
-                                    <div class="col-sm-12">
-                                        <input type="text" class="form-control" placeholder="Ingresa el localidad" [(ngModel)]="info.num_exterior" name="num_exterior">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <div class="col-sm-8">
-                                    <label class="col-sm-12 col-form-label">Domicilio Interior: </label>
-                                    <div class="col-sm-12">
-                                        <input type="text" class="form-control" placeholder="Ingresa el estado" [(ngModel)]="info.dom_interior" name="dom_interior">
-                                    </div>
-                                </div>
-                                <div class="col-sm-4">
-                                    <label class="col-sm-12 col-form-label">N° Interior: </label>
-                                    <div class="col-sm-12">
-                                        <input type="text" class="form-control" placeholder="Ingresa el municipio" [(ngModel)]="info.num_interior" name="num_interior">
-                                    </div>
-                                </div>
-                            </div>
+                            
                             <div class="form-group row">
                                 <div class="col-sm-4">
                                     <label class="col-sm-12 col-form-label">Telefono: </label>
                                     <div class="col-sm-12">
-                                        <input type="text" class="form-control" placeholder="Ingresa el telefono" [(ngModel)]="info.telefono" name="telefono">
+                                        <input type="text" class="form-control" placeholder="Ingresa el telefono" [(ngModel)]="info.telefono" name="telefono" required>
                                     </div>
                                 </div>
                                 <div class="col-sm-4">
                                     <label class="col-sm-12 col-form-label">Correo Electronico: </label>
                                     <div class="col-sm-12">
-                                        <input type="text" class="form-control" placeholder="Ingresa el correo" [(ngModel)]="info.correo" name="correo">
+                                        <input type="text" class="form-control" placeholder="Ingresa el correo" [(ngModel)]="info.correo" name="correo" required>
                                     </div>
                                 </div>
 
                                 <div class="col-sm-4">
                                     <label class="col-sm-12 col-form-label">RFC: </label>
                                     <div class="col-sm-12">
-                                        <input type="text" class="form-control" placeholder="Ingresa el RFC" [(ngModel)]="info.rfc" name="rfc">
+                                        <input type="text" class="form-control" placeholder="Ingresa el RFC" [(ngModel)]="info.rfc" name="rfc" required>
                                     </div>
                                 </div>
                             </div>
@@ -167,42 +105,111 @@
                                 <div class="col-sm-3">
                                     <label class="col-sm-12 col-form-label">CURP: </label>
                                     <div class="col-sm-12">
-                                        <input type="text" class="form-control" placeholder="Ingresa el CURP" [(ngModel)]="info.curp" name="curp">
+                                        <input type="text" class="form-control" placeholder="Ingresa el CURP" [(ngModel)]="info.curp" name="curp"required>
                                     </div>
                                 </div>
                                 <div class="col-sm-3">
                                     <label class="col-sm-12 col-form-label">IMSS SAR: </label>
                                     <div class="col-sm-12">
-                                        <input type="text" class="form-control" placeholder="Ingresa la clave" [(ngModel)]="empresa.imss_sar" name="imss_sar">
+                                        <input type="text" class="form-control" placeholder="Ingresa la clave" [(ngModel)]="empresa.imss_sar" name="imss_sar" required>
                                     </div>
                                 </div>
                                 <div class="col-sm-3">
                                     <label class="col-sm-12 col-form-label">ISSSTE FOVISSSTE: </label>
                                     <div class="col-sm-12">
-                                        <input type="text" class="form-control" placeholder="Ingresa la clave" [(ngModel)]="empresa.isste_foviste" name="isste_foviste">
+                                        <input type="text" class="form-control" placeholder="Ingresa la clave" [(ngModel)]="empresa.isste_foviste" name="isste_foviste" required>
                                     </div>
                                 </div>
                                 <div class="col-sm-3">
                                     <label class="col-sm-12 col-form-label">Registro Estatal: </label>
                                     <div class="col-sm-12">
-                                        <input type="text" class="form-control" placeholder="Ingresa la Clave" [(ngModel)]="empresa.reg_estatal" name="reg_estatal">
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="form-group row">
-                                <div class="col-sm-12">
-                                    <label class="col-sm-12 col-form-label">URL Imagen: </label>
-                                    <div class="col-sm-12">
-                                        <input type="text" class="form-control" placeholder="Ingresa la imagen" [(ngModel)]="empresa.url_img" name="url_image">
+                                        <input type="text" class="form-control" placeholder="Ingresa la Clave" [(ngModel)]="empresa.reg_estatal" name="reg_estatal" required>
                                     </div>
                                 </div>
                             </div>
                         </div>
+
+                        <div class="card-header">
+                            <div class="row text-center text-sm-left">
+                                <div class="col-12 col-md-8 text-md-left h5 font-weight-bold">
+                                    <i class="fa fa-map-marked-alt"></i><strong> Ubicación</strong>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="form-group row">
+                                <input type="hidden" [(ngModel)]="empresa.id_info_gene" name="id_info_gene">
+
+                                <div class="col-sm-4">
+                                    <label class="col-sm-12 col-form-label">Codigo Postal:</label>
+                                    <div class="col-sm-12">
+                                        <input type="number" class="form-control" placeholder="Ingrese el codigo postal" [(ngModel)]="ubicacion.cp"  name="cp" (change)="getUbicacion();" required>
+                                        <label *ngIf="banderaDigitos" class="text-danger"><b>* Deben ser 5 Digitos</b></label>
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <label class="col-sm-12 col-form-label">Estado: </label>
+                                    <div class="col-sm-12">
+                                        <input type="text" class="form-control" placeholder="Esperando..." [(ngModel)]="ubicacion.estado" name="estado" required readonly>
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <label class="col-sm-12 col-form-label">Municipio: </label>
+                                    <div class="col-sm-12">
+                                        <input type="text" class="form-control" placeholder="Esperando..." [(ngModel)]="ubicacion.municipio" name="municipio" required readonly>
+                                    </div>
+                                </div>
+                                <div class="col-sm-5">
+                                    <label class="col-sm-12 col-form-label">Asentamiento:</label>
+                                    <div class="col-sm-12">
+                                        <select class="form-control" name="localidades" id="localidades" [(ngModel)]="info.id_ubicacion" [disabled]="banderaAsentamiento" required>
+                                            <option value="">Selecciona una opción...</option>
+                                            <option *ngFor="let asentamiento of ubicacion.asentamientos" value="{{asentamiento.id}}">{{ asentamiento.nombre_asentamiento }}</option>
+                                        </select>
+                                        <!-- <input type="text" class="form-control" placeholder="Esperando..." [(ngModel)]="ubicacion.localidad" name="localidad" required readonly>                                         -->
+                                    </div>
+                                </div>                                
+                                                           
+                                <div class="col-sm-7">
+                                    <label class="col-sm-12 col-form-label">Dirección: </label>
+                                    <div class="col-sm-12">
+                                        <input type="text" class="form-control" placeholder="Ingresa el Dirección..." [(ngModel)]="info.direccion" name="calle" required>
+                                    </div>
+                                </div>
+                                <div class="col-sm-3">
+                                    <label class="col-sm-12 col-form-label">N° Exterior:</label>
+                                    <div class="col-sm-12">
+                                        <input type="text" class="form-control" placeholder="Ingresa el N° Extrerior..." [(ngModel)]="info.num_exterior" name="num_exterior"required>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <label class="col-sm-12 col-form-label">Domicilio Interior: </label>
+                                    <div class="col-sm-12">
+                                        <input type="text" class="form-control" placeholder="Ingresa el Domicilio Interior..." [(ngModel)]="info.dom_interior" name="dom_interior">
+                                    </div>
+                                </div>
+                                <div class="col-sm-3">
+                                    <label class="col-sm-12 col-form-label">N° Interior: </label>
+                                    <div class="col-sm-12">
+                                        <input type="text" class="form-control" placeholder="Ingresa el N° Interior..." [(ngModel)]="info.num_interior" name="num_interior">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- <div class="form-group row">
+                            <div class="col-sm-12">
+                                <label class="col-sm-12 col-form-label">URL Imagen: </label>
+                                <div class="col-sm-12">
+                                    <input type="text" class="form-control" placeholder="Ingresa la imagen" [(ngModel)]="empresa.url_img" name="url_image">
+                                </div>
+                            </div>
+                        </div> -->
+                        
                         <div class="card-footer">
                             <div class="form-group row">
                                 <div class="col-12">
-                                    <button class="btn btn-primary pull-right btn-sm" type="submit" [disabled]="f.invalid || !f.dirty">
+                                    <button class="btn btn-primary pull-right btn-sm" type="button" (click)="guardar(f);" [disabled]="f.invalid || !f.dirty">
                                         <i class="fa fa-save"></i>
                                         Guardar
                                     </button>

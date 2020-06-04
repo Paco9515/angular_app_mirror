@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 import { MensajesService } from '../../../common/services/shared/mensajes.service';
 import { CcostoService } from 'src/app/common/services/ui/ccosto.service';
 import { PresupuestoEgresoService } from '../../../common/services/presupuesto/egreso.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { JspdfPresupuestoEgresoGeneral } from '../../../Arquitecture/pdfs/JspdfPresupuestoEgresoGeneral';
 import { JspdfClasificacionPresupuestoEgreso } from '../../../Arquitecture/pdfs/jsPDFClasificacionPresupuestoegreso';
 
@@ -37,16 +37,23 @@ export class EgresoComponent {
 	clasificaciones: any[] = [];
 	titleClasf = 'Clasificación Objeto de Gasto';
 
-	datosEmpresa: any;
+	infoModEgreso: boolean = false;
+
+	datosEmpresa:any;
+	// totalClasificacion: number;
+	// loading: boolean = false;
 
 	constructor(
 		private mensaje: MensajesService,
 		private ccosto_service: CcostoService,
 		private presupuestoEgresos: PresupuestoEgresoService,
 		private activateRoute: ActivatedRoute,
+		private router: Router
 	) {
 		this.activateRoute.params.subscribe(params => {
-			this.id_egreso = params[`id_presupuesto`];
+			this.id_egreso = params['id_presupuesto'];
+			this.infoModEgreso = params['bandera'];
+			console.log('infoModEgreso', this.infoModEgreso);
 			this.get_presupuestoId(this.id_egreso);
 			this.getDatosPresupuesto(this.id_egreso);
 		});
@@ -153,6 +160,14 @@ export class EgresoComponent {
 		// }, error => {
 		// 	this.mensaje.danger(error.error);
 		// });
+	}
+
+	regresar() {
+		if(this.infoModEgreso) {
+			this.router.navigate([`/panel-adm/modificar_egreso`]);
+		} else {
+			this.router.navigate([`/panel-adm/pres_egresos`]);
+		}		
 	}
 
 	public buscarPresupuestoPorClasificacion(clasificacion: string, titleClasf: string = null) {

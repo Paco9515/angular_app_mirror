@@ -26,6 +26,9 @@ import { CpComponent } from '../../components/classification/clasfProgramatica/c
 import { PeComponent } from '../../components/classification/proyectoFases/pe.component';
 import { UiComponent } from '../../components/classification/unidadesInternas/ui.component';
 import { PerfilComponent } from './perfil/perfil.component';
+import { AumentarDisminuirComponent } from './egresos/cambioEgreso/aumentarDisminuir/aumentarDisminuir.component';
+import { TransferirComponent } from './egresos/cambioEgreso/transferir/transferir.component';
+import { movimientosEgresosComponent } from './egresos/cambioEgreso/movimientosEgresos/movimientosEgresos.component';
 // import { LoginComponent } from '../login/login.component';
 
 @NgModule({
@@ -35,13 +38,16 @@ import { PerfilComponent } from './perfil/perfil.component';
 		EgresosComponent,
 		EgresoComponent,
 		CambioEgresoComponent,
+		AumentarDisminuirComponent,
+		TransferirComponent,
 		CaComponent,
 		CcComponent,
 		CfgComponent,
 		CpComponent,
 		PeComponent,
 		UiComponent,
-		PerfilComponent
+		PerfilComponent,
+		movimientosEgresosComponent
 	],
 	exports: [
 		// EscritorioComponent,
@@ -49,13 +55,16 @@ import { PerfilComponent } from './perfil/perfil.component';
 		EgresosComponent,
 		EgresoComponent,
 		CambioEgresoComponent,
+		AumentarDisminuirComponent,
+		TransferirComponent,
 		CaComponent,
 		CcComponent,
 		CfgComponent,
 		CpComponent,
 		PeComponent,
 		UiComponent,
-		PerfilComponent
+		PerfilComponent,
+		movimientosEgresosComponent
 	],
 	imports: [
 		ChartsModule,

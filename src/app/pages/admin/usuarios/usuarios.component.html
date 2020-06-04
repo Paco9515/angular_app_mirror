@@ -1,8 +1,8 @@
 <!-- Breadcrumb -->
 <div class="d-none d-sm-block">
     <ol class="breadcrumb">
-        <li class="breadcrumb-item"><i class="fa fa-folder-open"></i> Presupuestos de egresos</li>
-        <li class="breadcrumb-item"> Presupuestos de egreso</li>
+        <li class="breadcrumb-item"><i class="fa fa-folder-open"></i> Usuarios</li>
+        <li class="breadcrumb-item"> Lista de Usuarios</li>
     </ol>
 </div>
 
@@ -12,17 +12,30 @@
             <div class="card shadow">
                 <div class="card-header">
                     <div class="row">
-                        <div class="col-12 col-md-8 text-center text-sm-left  h5 font-weight-bold">
+                        <div class="col-12 col-md-4 col-sm-4 text-center text-sm-left mt-2  h5 font-weight-bold">
                             <i class="fa fa-list"></i> Usuarios
-                        </div>
-                        <div class="col-12 col-md-4 text-center text-sm-right">
-                            <button class="btn btn-success mt-2 btn-sm" type="button" [routerLink]="['/panel-adm/usuario', 'nuevo']">
+                        </div> 
+                        <div class="col-12 col-md-4 col-sm-4 text-center ">
+                            
+                        </div>                        
+                        <div class="col-12 col-md-4 col-sm-4 text-center text-sm-right">
+                            <button *ngIf="banderaAdmin" class="btn btn-success mt-2 btn-sm" type="button" [routerLink]="['/panel-adm/usuarioAdmin', 'nuevo']">
                                 <i class="fa fa-plus-circle "></i> Crear Usuario
                             </button>
+                            <button *ngIf="!banderaAdmin" class="btn btn-success mt-2 btn-sm" type="button" [routerLink]="['/panel-adm/usuario', 'nuevo']">
+                                <i class="fa fa-plus-circle "></i> Crear Usuario
+                            </button>
+                            
                         </div>
                     </div>
                 </div>
                 <div class="card-body ">
+                    
+                    <div *ngIf="banderaAdmin" class="col-6 text-center  mb-3" style="margin-left: auto; margin-right: auto;">
+                        <select class="form-control" name="empresa" (change)="cargarUsuarios($event.target.value)">
+                            <option *ngFor="let empresa of empresas" [value]="empresa.id"> {{ empresa.nombre }} </option>
+                        </select>
+                    </div>                          
 
                     <ng-template #alert>
                         <div class="alert alert-warning text-center" role="alert">
@@ -36,7 +49,7 @@
                                 <tr>
                                     <th class="align-middle text-center ">#</th>
                                     <th class="align-middle text-center ">Nombre</th>
-                                    <th class="align-middle text-center ">Email</th>
+                                    <!-- <th class="align-middle text-center ">Email</th> -->
                                     <th class="align-middle text-center ">C. Costo</th>
                                     <th class="align-middle text-center ">Nivel</th>
                                     <th class="align-middle text-center ">Opciones</th>
@@ -46,15 +59,21 @@
                                 <tr *ngFor="let usuario of usuarios; let i=index">
                                     <td class="align-middle text-center">{{ i + 1 }}</td>
                                     <td class="align-middle">{{ usuario.nombre }}</td>
-                                    <td class="align-middle">{{ usuario.email }}</td>
+                                    <!-- <td class="align-middle">{{ usuario.email }}</td> -->
                                     <td class="align-middle">{{ usuario.nombre_cc }}</td>
                                     <td class="align-middle text-center">{{ usuario.nivel }}</td>
                                     <td class="align-middle text-center ">
-                                        <button class="btn btn-primary btn-sm w-auto mb-1 ml-1" [routerLink]="['/panel-adm/usuario', usuario.id]">
+                                        <button *ngIf="banderaAdmin" class="btn btn-primary btn-sm w-auto mb-1 ml-1" [routerLink]="['/panel-adm/usuarioAdmin', usuario.id]">
                                             <i class="fa fa-edit"></i> 
                                             Editar
                                         </button>
-                                        <button class="btn btn-danger btn-sm w-auto mb-1 ml-1"><i class="fa fa-trash"></i> Eliminar</button>
+                                        <button *ngIf="!banderaAdmin" class="btn btn-primary btn-sm w-auto mb-1 ml-1" [routerLink]="['/panel-adm/usuario', usuario.id]">
+                                            <i class="fa fa-edit"></i> 
+                                            Editar
+                                        </button>
+                                        <button class="btn btn-danger btn-sm w-auto mb-1 ml-1" (click)="deleteUser(usuario.id)">
+                                            <i class="fa fa-trash"></i> Eliminar
+                                        </button>
                                     </td>
 
                                 </tr>

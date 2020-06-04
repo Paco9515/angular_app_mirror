@@ -25,9 +25,10 @@ export class LoginService {
 			id: userInfo.id,
 			nombre: userInfo.nombre,
 			username: userInfo.username,
-			id_nivel: userInfo.id_nivel,
+			id_nivel: userInfo.nivel_user,
 			id_cc: userInfo.id_cc,
-			img_name: userInfo.img_name
+      img_name: userInfo.img_name,
+      id_empresa: userInfo.id_empresa      
 		};
 	  const user_string = JSON.stringify(user);
 	  localStorage.setItem('currentUser', user_string);
