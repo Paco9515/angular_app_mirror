@@ -28,6 +28,8 @@ export class UnidadesAdminComponent {
 		this.detalle = {
 			id: '',
 			id_empresa: '',
+			id_clas_admin: '',
+			nom_clas_admin: '',
 			nom_emp: '',
 			codigo: '',
 			nombre: '',
@@ -39,14 +41,14 @@ export class UnidadesAdminComponent {
 		this.user = user;
 		this.nivel = user.id_nivel;
 
-		if (this.nivel != 1) {
+		if (this.nivel != null) {
 				this.banderaAdmin = false;	
 				this.getUnidades(user.id_empresa);					
 		} else {
 			this.banderaAdmin = true;	
 			this.empresaService.getEmpresas().subscribe((data: any) => {
 				this.empresas = data;
-				console.log('empresas' ,this.empresas);
+				// console.log('empresas' ,this.empresas);
 				this.getUnidades(this.empresas[0].id);
 			});		
 		} 		
@@ -61,9 +63,9 @@ export class UnidadesAdminComponent {
 	}
 
 	info(unidad: any) {
-		this.detalle = unidad;
-		this.unidad_service.getEmpresa(unidad.id_empresa).subscribe((data: any) => {
-			this.detalle.nom_emp = data.data[0].nom_comercial;
+		this.unidad_service.getDetalleUnidad(unidad.id).subscribe((data: any) => {
+			this.detalle = data;
+			// console.log('detalle', data);
 		});
 	}
 

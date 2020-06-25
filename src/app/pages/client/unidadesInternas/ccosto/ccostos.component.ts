@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { CcostoService } from 'src/app/common/services/ui/ccosto.service';
 import { Ccosto } from 'src/app/common/interfaces/ui.interface';
 import { EmpresaService } from 'src/app/common/services/ui/empresa.service';
 import { MensajesService } from 'src/app/common/services/shared/mensajes.service';
-import { InterpolationConfig } from '@angular/compiler';
+import { DomSanitizer } from '@angular/platform-browser';
+import { HttpClient } from '@angular/common/http';
 
 
 @Component({
@@ -11,19 +12,21 @@ import { InterpolationConfig } from '@angular/compiler';
   templateUrl: './ccostos.component.html',
   styles: []
 })
-export class CcostosComponent  {
+export class CcostosComponent {
 
-  ccostos: Ccosto[];
-  detalle: any;
-  user: any;
-  nivel: any;
-  empresa: string;
-  banderaAdmin: boolean;
-  empresas: any;
-  responsable: any = [];
-  banderaResp: boolean = false;
+	ccostos: Ccosto[];
+	detalle: any;
+	user: any;
+	nivel: any;
+	empresa: string;
+	banderaAdmin: boolean;
+	empresas: any;
+	responsable: any = [];
+	banderaResp: boolean = false;
+	banderaMostrarTitular: boolean;
+	disCrear: boolean;
 
-  constructor(
+  	constructor(
 		private ccosto_service: CcostoService,
 		private empresaService: EmpresaService,
 		private mensaje: MensajesService
@@ -32,8 +35,9 @@ export class CcostosComponent  {
 		this.detalle = {
 			id: '',
 			id_unidad_adm: '',
-			nom_unidad: '',
+			nom_area: '',
 			id_subfuncion: '',
+			codigo_subfuncion: '',
 			nom_subfuncion: '',
 			codigo: '',
 			nombre: '',
@@ -49,14 +53,32 @@ export class CcostosComponent  {
 		
 	}
 
+	
+	
+
 	inicio() {
 		this.ccosto_service.getResponsable().subscribe((centro: any) => {
 			// console.log('responsable', centro);
 			this.responsable = centro;
 		});
 
+		this.ccosto_service.getUnidadCcClient(this.user.id_cc).subscribe((unidad: any) => {
+			// console.log('unidad', unidad);
+
+			if(unidad.length < 1) {
+				this.disCrear = true;
+			} else {
+				this.disCrear = false;
+			}
+			// this.ccosto.id_unidad_adm = unidad[0].id;
+		});
+
 		if(this.nivel == null || this.nivel == 1) {
 			this.banderaResp = true;
+			this.banderaMostrarTitular = true;
+		} else {
+			this.banderaResp = false;
+			this.banderaMostrarTitular = false;
 		}
 
 
@@ -90,14 +112,9 @@ export class CcostosComponent  {
 	}
 
 	info(ccosto: any) {
-		this.detalle = ccosto;
-		this.ccosto_service.getUnidad(ccosto.id_unidad_adm).subscribe((unidad: any) => {
-			// console.log('unidad', unidad);
-			this.detalle.nom_unidad = unidad.data.nombre;
-		});
-		this.ccosto_service.getSubfuncion(ccosto.id_subfuncion).subscribe((subfuncion: any) => {
-			// console.log('subfuncion', subfuncion);
-			this.detalle.nom_subfuncion = subfuncion.nombre;
+		this.ccosto_service.getDetalleCc(ccosto.id).subscribe((detalle_cc: any) => {
+			// console.log('detalle cc', detalle_cc);
+			this.detalle = detalle_cc;
 		});
 	}
 
@@ -106,7 +123,7 @@ export class CcostosComponent  {
 		this.ccosto_service.eliminarCcosto(id, bandera)
 			.subscribe((response: any) => {
 				this.mensaje.success(response);
-				this.getCcostos(this.empresas[0].id);
+				this.inicio();
 			});
 	}
 

@@ -24,10 +24,14 @@ export class MenuComponent {
     let user = JSON.parse(localStorage.getItem('currentUser'));
     // this.nivel = user.nivel_user;
     // console.log('id_nivel', user.id_nivel);
-
-    if(user.id_nivel == 1 || user.id_nivel == 1) {
-      // console.log('admin');
+    if(user.id_nivel == null) {
       this.banderaMostrarEmpresas = true;
+    } else {
+      this.banderaMostrarEmpresas = false;
+    }
+
+    if(user.id_nivel == null || user.id_nivel == 1) {
+      // console.log('admin');      
       this.banderaMostrarUnidades = true;
       this.banderaMostrarNiveles = true;
       // this.banderaMostrarUi = true;

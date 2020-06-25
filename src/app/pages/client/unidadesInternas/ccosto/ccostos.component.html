@@ -5,10 +5,18 @@
         <li class="breadcrumb-item active"> Centros de costos</li>
     </ol>
 </div>
-    
+
 <div class="container-fluid p-3">
     <div class="animated fadeIn">
         <div class="row justify-content-center">
+            <div class="mb-2" *ngIf="disCrear">
+                <span class="badge badge-warning" style="padding-top: 10px;">
+                    <h5>
+                    <i class="far fa-frown"></i>
+                        No hay unidades disponibles a las cuales asignar el centro de costo encargado.
+                    </h5>
+                </span>
+            </div>
             <div class="col-md-12">
                 <div class="card shadow">
                     <div class="card-header">
@@ -17,14 +25,14 @@
                                 <i class="fa fa-list"></i> Listado de centros de costos
                             </div>
                             <div class="col-12 col-md-3 text-center text-sm-right">
-                                <button *ngIf="banderaAdmin" type="button" class="btn btn-success btn-sm mb-2" [routerLink]="['/panel-adm/ccostoAdmin', 'nuevo']">
+                                <!-- <button *ngIf="banderaAdmin" type="button" class="btn btn-success btn-sm mb-2" [routerLink]="['/panel-adm/ccostoAdmin', 'nuevo']" disabled="{{disCrear}}">
                                     <i class="fa fa-plus-circle"></i>
-                                    Agregar Nuevo
-                                </button>    
-                                <button *ngIf="!banderaAdmin" type="button" class="btn btn-success btn-sm mb-2" [routerLink]="['/panel-adm/ccosto', 'nuevo']">
+                                    Agregar Nuevo Centro
+                                </button> -->
+                                <button *ngIf="!banderaAdmin" type="button" class="btn btn-success btn-sm mb-2" [routerLink]="['/panel-adm/ccosto', 'nuevo']" [disabled]="disCrear">
                                     <i class="fa fa-plus-circle"></i>
                                     Agregar nuevo centro
-                                </button>                             
+                                </button>
                             </div>
                             <div class="col-12 col-md-2 text-center text-sm-right">
                                 <button class="btn btn-outline-primary btn-sm" type="button" [routerLink]="['/panel-adm']">
@@ -38,69 +46,77 @@
                             <select class="form-control" name="empresa" (change)="getCcostos($event.target.value)">
                                 <option *ngFor="let empresa of empresas" [value]="empresa.id"> {{ empresa.nombre }} </option>
                             </select>
-                        </div> 
-                        
+                        </div>
+
                         <div class="table-responsive">
-                            <h5>Responsable de Hacer un Prespuesto a Ley</h5>
-                            <table class="table table-striped table-sm">
-                                <thead class="thead-dark">
-                                    <tr>
-                                        <th scope="col">codigo</th>
-                                        <th scope="col">Nombre</th>
-                                        <th scope="col">Estado</th>
-                                        <th class="text-center" scope="col">Opciones</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr *ngIf="responsable.length==0; else tableResp">
-                                        <td colspan="5" class="text-center">
-                                            <span class="badge badge-info">
-                                                <h5>
-                                                <i class="far fa-frown"></i>
-                                                No hay elementos para mostrar.
-                                                </h5>
-                                            </span>
-                                            <br>
-                                            <br>
-                                            <button class="btn btn-success btn-sm text-white" [routerLink]="['/panel-adm/cambiarResponsable']">
-                                                Establecer Centro
-                                            </button>
-                                        </td>
-                                    </tr>
-                                    <ng-template #tableResp>
-                                        <tr *ngFor="let resp of responsable">
-                                            <td>{{ resp.codigo }}</td>
-                                            <td>{{ resp.nombre }}</td>
-                                            <td>
-                                                <span *ngIf="resp.status; else inactiveBlock" class="badge badge-success">
-                                                    Activo
+                            <div *ngIf="banderaMostrarTitular">
+                                <h5>Titular de Finanzas</h5>
+                                <table class="table table-striped table-sm">
+                                    <thead class="thead-dark">
+                                        <tr>
+                                            <th scope="col">Nombre</th>
+                                            <th scope="col">Area</th>
+                                            <th class="text-center" scope="col">Opciones</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngIf="responsable.length==0; else tableResp">
+                                            <td colspan="5" class="text-center">
+                                                <span class="badge badge-info">
+                                                    <h5>
+                                                    <i class="far fa-frown"></i>
+                                                    No hay elementos para mostrar.
+                                                    </h5>
                                                 </span>
-                                                <ng-template #inactiveBlock>
-                                                    <span class="badge badge-secondary">Inactivo</span>
-                                                </ng-template>
-                                            </td>
-                                            <td class="text-center">
-                                                <button type="button" class="btn btn-info btn-sm text-white" data-toggle="modal" data-target="#unidadModal" (click)="info(resp)">
-                                                    <i class="fa fa-eye"></i>
-                                                    Ver detalle
-                                                </button>
-                                                <button *ngIf="banderaResp" type="button" class="btn btn-primary btn-sm ml-3" [routerLink]="['/panel-adm/cambiarResponsable']">
-                                                    <i class="fa fa-retweet"></i>
-                                                    Cambiar
+                                                <br>
+                                                <br>
+                                                <button class="btn btn-success btn-sm text-white" [routerLink]="['/panel-adm/cambiarResponsable']">
+                                                    Establecer Centro
                                                 </button>
                                             </td>
                                         </tr>
-                                    </ng-template>
-                                </tbody>
-                            </table>
-                            <hr>
+                                        <ng-template #tableResp>
+                                            <tr *ngFor="let resp of responsable">
+                                                <td>{{ resp.codigo_cc }} - {{ resp.nom_cc }}</td>
+                                                <td>{{resp.codigo_unidad}} - {{ resp.nom_unidad}}</td>
+                                                <!-- <td>
+                                                    <span *ngIf="resp.status; else inactiveBlock" class="badge badge-success">
+                                                        Activo
+                                                    </span>
+                                                    <ng-template #inactiveBlock>
+                                                        <span class="badge badge-secondary">Inactivo</span>
+                                                    </ng-template>
+                                                </td> -->
+                                                <td class="text-center">
+                                                    <button type="button" class="btn btn-info btn-sm text-white" data-toggle="modal" data-target="#unidadModal" (click)="info(resp)">
+                                                        <i class="fa fa-eye"></i>
+                                                        Ver detalle
+                                                    </button>
+                                                    <button *ngIf="banderaAdmin" type="button" class="btn btn-primary btn-sm ml-3" [routerLink]="['/panel-adm/ccostoAdmin', resp.id]">
+                                                        <i class="fa fa-edit"></i>
+                                                        Editar
+                                                    </button>
+                                                    <button *ngIf="!banderaAdmin" type="button" class="btn btn-primary btn-sm ml-3" [routerLink]="['/panel-adm/ccosto', resp.id]">
+                                                        <i class="fa fa-edit"></i>
+                                                        Editar
+                                                    </button>
+                                                    <button *ngIf="banderaResp" type="button" class="btn btn-primary btn-sm ml-3" [routerLink]="['/panel-adm/cambiarResponsable']">
+                                                        <i class="fa fa-retweet"></i>
+                                                        Cambiar
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        </ng-template>
+                                    </tbody>
+                                </table>
+                                <hr>
+                            </div>
                             <h5>Hijos</h5>
                             <table class="table table-striped table-sm">
                                 <thead class="thead-dark">
                                     <tr>
-                                        <th scope="col">Código</th>
                                         <th scope="col">Nombre</th>
-                                        <th scope="col">Estado</th>
+                                        <th scope="col">Unidad Adm</th>
                                         <th class="text-center" scope="col">Opciones</th>
                                     </tr>
                                 </thead>
@@ -117,16 +133,16 @@
                                     </tr>
                                     <ng-template #tableBlock>
                                         <tr *ngFor="let ccosto of ccostos">
-                                            <td>{{ ccosto.codigo }}</td>
-                                            <td>{{ ccosto.nombre }}</td>
-                                            <td>
+                                            <td>{{ ccosto.codigo }} - {{ ccosto.nombre }}</td>
+                                            <td>{{ccosto.codigo_unidad}} - {{ ccosto.nom_unidad }}</td>
+                                            <!-- <td>
                                                 <span *ngIf="ccosto.status; else inactiveBlock" class="badge badge-success">
                                                     Activo
                                                 </span>
                                                 <ng-template #inactiveBlock>
                                                     <span class="badge badge-secondary">Inactivo</span>
                                                 </ng-template>
-                                            </td>
+                                            </td> -->
                                             <td class="text-center">
                                                 <button type="button" class="btn btn-info btn-sm text-white" data-toggle="modal" data-target="#unidadModal" (click)="info(ccosto)">
                                                     <i class="fa fa-eye"></i>
@@ -168,10 +184,26 @@
                                                     <div class="col-12">
                                                         <div class="form-group row">
                                                             <label for="staticEmail" class="col-sm-3 col-form-label">
+                                                                    Centro de Costo:
+                                                                </label>
+                                                            <div class="col-9">
+                                                                <input type="text" readonly class="form-control-plaintext" value="{{ detalle.codigo_cc }} - {{ detalle.nom_cc }}">
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group row">
+                                                            <label for="staticEmail" class="col-sm-3 col-form-label">
+                                                                    Nivel:
+                                                                </label>
+                                                            <div class="col-9">
+                                                                <input type="text" readonly class="form-control-plaintext" value="{{ detalle.codigo_nivel }} - {{ detalle.nom_nivel }}">
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group row">
+                                                            <label for="staticEmail" class="col-sm-3 col-form-label">
                                                                     Unidad administrativa:
                                                                 </label>
                                                             <div class="col-9">
-                                                                <input type="text" readonly class="form-control-plaintext" [(ngModel)]="detalle.nom_unidad">
+                                                                <input type="text" readonly class="form-control-plaintext" value="{{ detalle.codigo_unidad }} - {{ detalle.nom_unidad }}">
                                                             </div>
                                                         </div>
                                                         <div class="form-group row">
@@ -179,25 +211,25 @@
                                                                         Subfunción:
                                                                     </label>
                                                             <div class="col-9">
-                                                                <input type="text" readonly class="form-control-plaintext" [(ngModel)]="detalle.nom_subfuncion">
+                                                                <input type="text" readonly class="form-control-plaintext" value="{{ detalle.codigo_subf }} - {{ detalle.nom_subf }}">
                                                             </div>
                                                         </div>
                                                         <div class="form-group row">
                                                             <label for="staticEmail" class="col-sm-3 col-form-label">
-                                                                        Código:
+                                                                        Dirección:
                                                                     </label>
                                                             <div class="col-9">
-                                                                <input type="text" readonly class="form-control-plaintext" [(ngModel)]="detalle.codigo">
+                                                                <input type="text" readonly class="form-control-plaintext" value="{{ detalle.direccion }} N° {{ detalle.num_exterior }}, {{ detalle.ciudad }}, {{ detalle.municipio }}, {{ detalle.estado }}">
                                                             </div>
                                                         </div>
-                                                        <div class="form-group row">
+                                                        <!-- <div class="form-group row">
                                                             <label for="staticEmail" class="col-sm-3 col-form-label">
                                                                         Centro:
                                                                     </label>
                                                             <div class="col-9">
-                                                                <input type="text" readonly class="form-control-plaintext" [(ngModel)]="detalle.nombre">
+                                                                <input type="text" readonly class="form-control-plaintext" value="{{  }} - {{  }}">
                                                             </div>
-                                                        </div>
+                                                        </div> -->
                                                         <div class="form-group row">
                                                             <label for="staticEmail" class="col-sm-3 col-form-label">
                                                                     Estado:
@@ -225,10 +257,13 @@
                             </table>
                         </div>
                     </div>
-					<div class="card-footer">
-					</div>
-				</div><!-- /.card-->
-            </div><!-- /.col-->
-        </div><!-- /.row-->
+                    <div class="card-footer">
+                    </div>
+                </div>
+                <!-- /.card-->
+            </div>
+            <!-- /.col-->
+        </div>
+        <!-- /.row-->
     </div>
 </div>

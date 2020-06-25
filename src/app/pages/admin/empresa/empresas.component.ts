@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { EmpresaService } from 'src/app/common/services/ui/empresa.service';
 import { Empresas } from 'src/app/common/interfaces/ui.interface';
+import { MensajesService } from '../../../common/services/shared/mensajes.service';
 
 @Component({
   selector: 'app-empresas',
@@ -13,7 +14,8 @@ export class EmpresasComponent  {
   detalle: any;
 
   constructor(
-		private empresa_service: EmpresaService
+		private empresa_service: EmpresaService,
+		private mensaje: MensajesService
 	) {
 	this.empresas = [];
 	this.detalle = {
@@ -58,7 +60,7 @@ export class EmpresasComponent  {
 		this.detalle = empresa;
 		this.empresa_service.getClasAdmin(empresa.id_clas_administrativa).subscribe((admin: any) => {
 			this.detalle.nom_administrativa = admin.nombre;
-			 console.log(this.detalle);
+			// console.log(this.detalle);
 		});
 		this.empresa_service.getTipo(empresa.id_tipo_empresa).subscribe((tipo: any) => {
 			this.detalle.nom_tipo_emp = tipo.nombre;
@@ -72,11 +74,13 @@ export class EmpresasComponent  {
 		this.empresa_service.activarEliminarEmpresa(id, bandera)
 			.subscribe((response: any) => {
 				if (response.mensaje === 'eliminado') {
-					console.log('Empresa eliminada');
+					// console.log('Empresa eliminada');
+					this.mensaje.success(response);
 					this.getEmpresas();
 
 				} else {
-					console.log('Empresa activada');
+					// console.log('Empresa activada');
+					this.mensaje.danger(response);
 					this.getEmpresas();
 				}
 			});

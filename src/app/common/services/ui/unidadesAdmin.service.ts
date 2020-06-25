@@ -36,6 +36,38 @@ export class UnidadesAdminService {
 	getUnidadesAdmin(id_empresa: string) {
 		return this.constants.getRequest(`/get_unidades/${id_empresa}`, 'get', false);
 	}
+	
+	///////////////////////////////////////////////////////////////////////////////////
+	///////////////////////////////////////////////////////////////////////////////////
+	/* getSectorInstucional() {
+		return this.constants.getRequest(`/get_sector_institucional`, 'get', false);
+	}
+
+	getSector() {
+		return this.constants.getRequest(`/get_sector`, 'get', false);
+	}
+	
+	getFinanciero() {
+		return this.constants.getRequest(`/get_financiero`, 'get', false);
+	}
+	
+	getEconomia() {
+		return this.constants.getRequest(`/get_economia`, 'get', false);
+	}
+	
+	getSubeconomia() {
+		return this.constants.getRequest(`/get_subeconomia`, 'get', false);
+	} */
+	
+	getClasifsAdmin() {
+		return this.constants.getRequest(`/get_clasifs_admin`, 'get', false);
+	}
+
+	getClasifAdmin(id_clas: string) {
+		return this.constants.getRequest(`/get_clasifs_admin/${id_clas}`, 'get', false);
+	}
+	///////////////////////////////////////////////////////////////////////////////////
+	///////////////////////////////////////////////////////////////////////////////////
 
 	getUltimaUnidad() {
 		return this.constants.getRequest(`/get_ult_unidad`, 'get', null);
@@ -45,8 +77,8 @@ export class UnidadesAdminService {
 		return this.constants.getRequest(`/get_empresas`, 'get', false);
 	}
 
-	getEmpresa(id: string) {
-		return this.constants.getRequest(`/get_empresa/${id}`, 'get', false);
+	getDetalleUnidad(id_unidad: string) {
+		return this.constants.getRequest(`/get_detalle_unidad/${id_unidad}`, 'get', false);
 	}
 
 	activarEliminarUnidad(id: string, bandera: boolean) {

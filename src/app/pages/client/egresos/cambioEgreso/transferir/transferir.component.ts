@@ -17,8 +17,8 @@ export class TransferirComponent {
 	movimiento: Movimiento;
 	id_cc: string;
 	id_user: string;
-	cc_origen: string;
-	cc_destino: string;
+	info_cc_origen: any;
+	info_cc_destino: any;
 	centro1: string;
 	centros1: any;
 	centro2: string;
@@ -88,8 +88,10 @@ export class TransferirComponent {
 		this.banderaSaldo2 = false;		
 		this.movimiento = {
 			tipo_movimiento: '',
+			id_cc_origen: '',
 			cc_origen: '',
 			id_partida_origen: '',
+			id_cc_destino: '',
 			cc_destino: '',
 			id_partida_destino: '',
 			importe: '',
@@ -132,8 +134,8 @@ export class TransferirComponent {
 		this.banderaGuardar = true;
 
 		this.cambioEgresos.get_cc(id_cc).subscribe((info_cc: any) => {
-			// console.log('info_cc', info_cc);
-			this.cc_origen = info_cc.nombre;
+			console.log('info_cc', info_cc);
+			this.info_cc_origen = info_cc;
 		});
 
 		this.cambioEgresos.get_proyectosActuales(id_cc).subscribe((proyectos: any) => {
@@ -229,7 +231,7 @@ export class TransferirComponent {
 
 		this.cambioEgresos.get_cc(id_cc).subscribe((info_cc: any) => {
 			// console.log('info_cc', info_cc);
-			this.cc_destino = info_cc.nombre;
+			this.info_cc_destino = info_cc;
 		});		
 
 		this.cambioEgresos.get_proyectosActuales(id_cc).subscribe((proyectos: any) => {
@@ -415,9 +417,11 @@ export class TransferirComponent {
 				console.log('importe menor');
 				this.movimiento = {
 					tipo_movimiento: 'T',
-					cc_origen: this.cc_origen,
+					id_cc_origen: this.info_cc_origen.id,
+					cc_origen: this.info_cc_origen.nombre,
 					id_partida_origen: this.partida1,
-					cc_destino: this.cc_destino,
+					id_cc_destino: this.info_cc_destino.id,
+					cc_destino: this.info_cc_destino.nombre,
 					id_partida_destino: this.partida2,
 					importe: this.importe,
 					id_cc: this.id_cc

@@ -5,6 +5,11 @@ import { Ccosto } from '../../interfaces/ui.interface';
 // import { runInThisContext } from 'vm';
 
 
+import {HttpResponse} from '@angular/common/http';
+
+import {Observable} from 'rxjs';
+
+
 @Injectable({
 	providedIn: 'root'
 })
@@ -41,6 +46,10 @@ export class CcostoService {
 
 	getResponsable() {
 		return this.constants.getRequest('/get_responsable_ley', 'get', false);
+	}
+
+	getOficinaUnidad(id_area: string) {
+		return this.constants.getRequest(`/get_oficina_unidad/${id_area}`, 'get', false);
 	}
 
 	getUltimoCentro() {
@@ -107,7 +116,10 @@ export class CcostoService {
 
 	// ** ////////////////////////// ** //
 	// ******************************** //
-
+	// FUNCION PARA TRAER LA INFO DEL CENTRO SELECCIONADO //
+	getDetalleCc(id_cc: string) {
+		return this.constants.getRequest(`/get_detalle_cc/${id_cc}`, 'get', false);
+	}
 	// ** ////////////////////////// ** //
 	// ******************************** //
 	// ** FUNCIONES PARA CENTROS DE COSTO CLIENT ** //
@@ -120,7 +132,11 @@ export class CcostoService {
 		return this.constants.getRequest(`/get_nivel_cc_client/${id_cc}`, 'get', false);
 	}
 	
-	getUnidadCcClient(id_cc: string) {
+	getUnidadesCcClient(info: any) {
+		return this.constants.getRequest(`/get_unidades_cc_client`, 'post', info);
+	}
+
+	getUnidadCcClient(id_cc: any) {
 		return this.constants.getRequest(`/get_unidad_cc_client/${id_cc}`, 'get', false);
 	}
 
@@ -140,5 +156,5 @@ export class CcostoService {
 	getInfoEmpresaPorCentroCosto(id_centro_costo: number){
 		return this.constants.getRequest(`/get_info_empresa_por_centro_costo/${id_centro_costo}`, 'get', false);
 	}
-
+	
 }
