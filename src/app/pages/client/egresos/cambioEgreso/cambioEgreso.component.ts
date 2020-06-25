@@ -140,19 +140,7 @@ export class CambioEgresoComponent {
 
 	// ** ** //
 
-	mostrarAumentos(id_cc: string) {
-		if(this.info_user.id_nivel != null && this.info_user.id_nivel != 1) {
-			if(this.info_user.id_cc == Number(id_cc)) {
-				this.banderaSoloImprimir = true;
-				console.log('imprimir1', this.banderaSoloImprimir);
-			} else {
-				this.banderaSoloImprimir = false;
-				console.log('imprimir1', this.banderaSoloImprimir);
-			}			
-		}
-		else {
-			this.banderaSoloImprimir = false;
-		}
+	mostrarAumentos(id_cc: string) {		
 
 		this.banderaTransf = false;
 		let datos = {
@@ -160,7 +148,7 @@ export class CambioEgresoComponent {
 			tipoMov: 1
 		};
 		this.cambioEgresos.get_aumentos_by_cc(datos).subscribe((aumentos: any) => {
-			// console.log('movimeintos pendientes', movs.data);
+			// console.log('movimeintos pendientes', aumentos.data);
 			if(aumentos.data.length > 0) {
 				this.movimientos = aumentos.data;
 				this.banderaMovs = true;
@@ -171,18 +159,18 @@ export class CambioEgresoComponent {
 	}
 
 	mostrarDisminuciones(id_cc: string) {
-		if(this.info_user.id_nivel != null && this.info_user.id_nivel != 1) {
+		/* if(this.info_user.id_nivel != null && this.info_user.id_nivel != 1) {
 			if(this.info_user.id_cc == Number(id_cc)) {
 				this.banderaSoloImprimir = true;
-				console.log('imprimir1', this.banderaSoloImprimir);
+				console.log('disminucion imprimir1', this.banderaSoloImprimir);
 			} else {
 				this.banderaSoloImprimir = false;
-				console.log('imprimir1', this.banderaSoloImprimir);
+				console.log('disminucion imprimir1', this.banderaSoloImprimir);
 			}			
 		}
 		else {
 			this.banderaSoloImprimir = false;
-		}
+		} */
 
 		this.banderaTransf = false;
 		let datos = {
@@ -201,18 +189,18 @@ export class CambioEgresoComponent {
 	}
 
 	mostrarTransferencias(id_cc: string) {		
-		if(this.info_user.id_nivel != null && this.info_user.id_nivel != 1) {
+		/* if(this.info_user.id_nivel != null && this.info_user.id_nivel != 1) {
 			if(this.info_user.id_cc == Number(id_cc)) {
 				this.banderaSoloImprimir = true;
-				console.log('imprimir1', this.banderaSoloImprimir);
+				console.log('Tranf imprimir1', this.banderaSoloImprimir);
 			} else {
 				this.banderaSoloImprimir = false;
-				console.log('imprimir1', this.banderaSoloImprimir);
+				console.log('Tranf imprimir1', this.banderaSoloImprimir);
 			}			
 		}
 		else {
 			this.banderaSoloImprimir = false;
-		}
+		} */
 
 		this.banderaTransf = true;
 		let datos = {
@@ -234,7 +222,7 @@ export class CambioEgresoComponent {
 
 	// ** ** //
 
-	validarCentrosRevisados(id_cc: string) {
+	validarCentrosRevisados() {
 		let datos = {
 			id_cc: this.info_user.id_cc,
 			tipoMov: 2

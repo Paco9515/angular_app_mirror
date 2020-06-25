@@ -47,6 +47,8 @@ export class CcostoAdminComponent {
 			id: '',
 			id_ubicacion_geografica: '',
 			id_unidad_adm: '',
+			codigo_unidad: '',
+			nom_unidad: '',
 			id_subfuncion: '',
 			id_nivel: '',
 			id_padre: '',
@@ -58,6 +60,7 @@ export class CcostoAdminComponent {
 			longitud: '',
 			latitud: '',
 			responsable_ley: false,
+			oficina_unidad: false,
 			status: true,
 			id_empresa: ''
 		};

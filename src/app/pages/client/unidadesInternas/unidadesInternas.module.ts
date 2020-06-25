@@ -20,6 +20,8 @@ import { UINIDADES_ADMINISTRATIVAS_ROUTES } from './unidadesInternas-routing.mod
 import { CcostoAdminComponent } from './ccosto/ccostoAdmin.component';
 import { CambiarResponsableComponent } from './ccosto/cambiarResponsable.component';
 import { NivelesComponent } from './niveles/niveles.component';
+import { AreasComponent } from './areas/areas.component';
+import { AreaComponent } from './areas/area.component';
 
 @NgModule({
 	declarations: [
@@ -31,7 +33,9 @@ import { NivelesComponent } from './niveles/niveles.component';
 		UnidadAdminComponent,
 		UnidadesAdminComponent,
 		CambiarResponsableComponent,
-		NivelesComponent
+		NivelesComponent,
+		AreasComponent,
+		AreaComponent
 	],
 	imports: [
 		BrowserModule,

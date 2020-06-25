@@ -13,7 +13,8 @@
         <div class="row justify-content-center">
             <div class="col-md-12">
                 <div class="card shadow">
-                    <form #f="ngForm" ><!--(ngSubmit)="guardar(f)">-->
+                    <form #f="ngForm">
+                        <!--(ngSubmit)="guardar(f)">-->
                         <div class="card-header">
                             <div class="row text-center text-sm-left">
                                 <div class="col-12 col-md-8 text-md-left h5 font-weight-bold">
@@ -33,7 +34,7 @@
                             </div>
                         </div>
                         <div class="card-body">
-                            <div class="form-group row">  
+                            <div class="form-group row">
                                 <div class="col-sm-5">
                                     <label for="nivel" class="col-sm-12 col-form-label">Nivel</label>
                                     <div class="col-sm-12">
@@ -43,7 +44,10 @@
                                 <div class="col-sm-7">
                                     <label for="unidad_adm" class="col-sm-12 col-form-label">Unidad Administrativa</label>
                                     <div class="col-sm-12">
-                                        <input type="text" class="form-control" value='{{unidad.codigo}} - {{unidad.nombre}}' readonly required>
+                                        <select class="form-control" name="unidad" id="unidad" [(ngModel)]="ccosto.id_unidad_adm" [disabled]="disUnidad">
+                                            <option value="">Seleccione una opción...</option>
+                                            <option *ngFor="let unidad of unidades" [value]="unidad.id">{{unidad.codigo}} - {{unidad.nombre}}</option>
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="col-sm-6">
@@ -60,15 +64,15 @@
                                             <option *ngFor="let sub of subs" [value]="sub.id">{{sub.codigo}} - {{ sub.nombre }} </option>
                                         </select>
                                     </div>
-                                </div>                              
-                                
+                                </div>
+
                             </div>
                             <!--    //////////////////////////////  -->
                             <div class="form-group row">
-                                
-                                
+
+
                             </div>
-                        
+
                         </div>
                         <div class="card-header">
                             <div class="row text-center text-sm-left">
@@ -79,18 +83,18 @@
                         </div>
                         <div class="card-body">
                             <div class="form-group row">
-                                <div class="col-sm-4">  
+                                <div class="col-sm-4">
                                     <label for="codigo_postal" class="col-sm-12 col-form-label">Código postal</label>
-                                    <div class="col-sm-12">                                        
-                                        
-                                        <input  type="number" class="form-control" placeholder="Ingrese codigo Postal" required name="cp" [(ngModel)]="ubicacion.cp" (change)="getUbicacion()">  
-                                        <label *ngIf="banderaDigitos" class="text-danger"><b>* Deben ser 5 Digitos</b></label>  
+                                    <div class="col-sm-12">
+
+                                        <input type="number" class="form-control" placeholder="Ingrese codigo Postal" required name="cp" [(ngModel)]="ubicacion.cp" (change)="getUbicacion()">
+                                        <label *ngIf="banderaDigitos" class="text-danger"><b>* Deben ser 5 Digitos</b></label>
                                     </div>
                                 </div>
                                 <div class="col-sm-4">
                                     <label for="estado" class="col-sm-12 col-form-label">Estado</label>
                                     <div class="col-sm-12">
-                                        <input type="text" class="form-control" placeholder="Esperando..."  required name="estado" [(ngModel)]="ubicacion.estado" readonly>
+                                        <input type="text" class="form-control" placeholder="Esperando..." required name="estado" [(ngModel)]="ubicacion.estado" readonly>
                                     </div>
                                 </div>
                                 <div class="col-sm-4">
@@ -113,9 +117,9 @@
                                     <div class="col-sm-12">
                                         <input type="text" class="form-control" placeholder="Ingresa el nombre" [(ngModel)]="ccosto.calle" name="calle" required>
                                     </div>
-                                </div>                              
+                                </div>
                             </div>
-                            <div class="form-group row">                                
+                            <div class="form-group row">
                                 <div class="col-sm-3">
                                     <label for="num_exterior" class="col-sm-12 col-form-label">Numero exterior</label>
                                     <div class="col-sm-12">
@@ -130,12 +134,12 @@
                                     </div>
                                 </div>
 
-                                <!-- <div class="col-sm-4" *ngIf="!banderaResp">
-                                    <div class="col-sm-12" style="margin-top: 39px;" >
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" id="resp" name="resp" [(ngModel)]="ccosto.responsable_ley">
+                                <!-- <div class="col-sm-4" *ngIf="banderaOficina">
+                                    <div class="col-sm-12" style="margin-top: 39px;">
+                                        <div *ngIf="banderaMostrarSelectResp" class="form-check">
+                                            <input class="form-check-input" type="checkbox" id="resp" name="resp" [(ngModel)]="ccosto.oficina_unidad">
                                             <label class="form-check-label" for="resp">
-                                                Responsable de Ley
+                                                Oficina de la Unidad
                                             </label>
                                         </div>
                                     </div>

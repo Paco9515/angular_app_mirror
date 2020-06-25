@@ -17,7 +17,7 @@ export class CcostoComponent {
 	id: string;
 	usuario: any;
 	ccosto: Ccosto;
-	unidad: any;
+	unidades: any;
 	subs: any;
 	id_nivel: string;
 	id_empresa: string;
@@ -33,7 +33,9 @@ export class CcostoComponent {
 	banderaCreate: boolean;
 	banderaTipo: string;
 	banderaDigitos: boolean;
-	banderaResp: boolean = false;
+	// banderaOficina: boolean;
+	banderaMostrarSelectResp: boolean;
+	disUnidad: boolean;
 
 	constructor(
 		private ccostoService: CcostoService,		
@@ -45,6 +47,8 @@ export class CcostoComponent {
 			id: '',
 			id_ubicacion_geografica: '',
 			id_unidad_adm: '',
+			codigo_unidad: '',
+			nom_unidad: '',
 			id_subfuncion: '',
 			id_nivel: '',
 			id_padre: '',
@@ -55,6 +59,7 @@ export class CcostoComponent {
 			num_interior: '',
 			longitud: '',
 			latitud: '',
+			oficina_unidad: false,
 			responsable_ley: false,
 			status: true,
 			id_empresa: ''
@@ -66,7 +71,7 @@ export class CcostoComponent {
 			asentamientos: ''
 		}
 
-		this.unidad = ''
+		this.unidades = ''
 		this.subs = '';
 		this.id_nivel = '';
 		this.id_empresa = '';
@@ -77,24 +82,26 @@ export class CcostoComponent {
 
 		let usuario = JSON.parse(localStorage.getItem('currentUser'));
 		this.usuario = usuario;
+		// console.log(usuario);
 		this.id_cc = usuario.id_cc;
 
-		/* if(usuario.id_nivel == null || usuario.id_nivel == 1) {
-			this.ccostoService.getResponsable().subscribe((resp: any) => {
-				if(resp) {
-					this.banderaResp = true;
-				}
-			});
-		} */
+		if(usuario.id_nivel == 1) {
+			this.ccosto.oficina_unidad = true;
+			this.banderaMostrarSelectResp = true;			
+		} else {
+			this.banderaMostrarSelectResp = false;
+		}
 
 		this.activatedRoute.params.subscribe((data: any) => {
-			// console.log(data);
+			// console.log('params', data);
+			
 			this.id = data.id;
-			if (this.id !== 'nuevo') {
+			if (this.id !== 'nuevo') {				
 				this.banderaCreate = false;				
-				this.ccostoService.getCcosto(this.id).subscribe((obj: any) => {						
-					// console.log('centro', obj.data);
+				this.ccostoService.getCcosto(this.id).subscribe((obj: any) => {	
+					// console.log('ccsoto', obj.data);					
 					this.ccosto = obj.data;	
+					// console.log('id_area', this.ccosto.id_area);
 					this.ccostoService.getUbicacion(this.ccosto.id_ubicacion_geografica).subscribe((ubicacion: any) => {
 						// console.log('ubicacion', ubicacion);
 						this.ubicacion.cp = ubicacion.codigo_postal;
@@ -102,12 +109,13 @@ export class CcostoComponent {
 					});
 					this.cargarNiveles(usuario.id_empresa);		
 				});
-			} else {
+			} else {				
 				// console.log('empresas', empresas.data);
 				this.banderaCreate = true;				
 				this.cargarNiveles(usuario.id_empresa);
 			}
 		});
+
 	}
 	
 	cargarNiveles(id_empresa: string) {	
@@ -126,11 +134,28 @@ export class CcostoComponent {
 				this.ccosto.id_nivel = nivel[0].id;				
 			}
 		});
-
-		this.ccostoService.getUnidadCcClient(this.id_cc).subscribe((unidad: any) => {
-			// console.log('unidad', unidad);
-			this.unidad = unidad[0];
-			this.ccosto.id_unidad_adm = unidad[0].id;
+		
+		let info = {
+			'id_cc_seleccionado': this.id,
+			'id_cc_seleccionador': this.id_cc
+		};
+		// console.log('info', info);
+		this.ccostoService.getUnidadesCcClient(info).subscribe((unidad: any) => {
+			// console.log('unidades', unidad);
+			this.unidades = unidad;
+			if(unidad.length < 2 && this.id !== 'nuevo') {
+				this.disUnidad = true;
+				let mensaje = {
+					'title': 'Precaución',
+					'message': 'No hay unidades disponibles para seleccionar.'
+				};
+				this.mensaje.warning(mensaje);
+			} else {
+				this.disUnidad = false;
+			}
+			// this.ccosto.id_unidad_adm = unidad[0].id;
+			
+			// console.log('Unidad.length', unidad.length);
 		});
 
 		this.ccostoService.getSubfunciones().subscribe((subs: any) => {
@@ -163,7 +188,7 @@ export class CcostoComponent {
 		let cp = this.ubicacion.cp.toString();
 		this.ccosto.id_padre = this.usuario.id_cc;
 		this.ccosto.id_empresa = this.usuario.id_empresa;
-		// console.log('info a guardar', this.ccosto);
+	    // console.log('info a guardar', this.ccosto);
 		if(cp.length != 5) {
 			let mensaje = { 
 				message: 'El codigo Postal debe constar de 5 digitos.',
@@ -172,6 +197,18 @@ export class CcostoComponent {
 			this.mensaje.danger(mensaje);
 		} else {
 			if (f.valid) {
+				if(this.ccosto.num_interior == '') {
+					this.ccosto.num_interior = 'S/N';
+				}
+				if(this.ccosto.longitud == '') {
+					this.ccosto.longitud = null;
+				}
+				if(this.ccosto.latitud == '') {
+					this.ccosto.latitud = null;
+				}
+				if(this.usuario.id_nivel == 2) {
+					this.ccosto.oficina_unidad = true;	
+				}
 				this.ccostoService.createCcosto(this.ccosto)
 				.subscribe((response: any) => {
 					// console.log(response);
@@ -180,8 +217,7 @@ export class CcostoComponent {
 					// console.log(error.error);
 					return this.mensaje.danger(error.error);
 				});
-			} 
-		// console.log(this.ccosto);
+			} 		
 		}
 		
 		

@@ -2,7 +2,7 @@ export interface Infos {
 	id?: string;
 	nombre: string;
 	id_ubicacion: string;
-	direccion: string;
+	calle: string;
 	num_exterior: string;
 	dom_interior?: string;
 	num_interior?: string;
@@ -53,17 +53,29 @@ export interface InfoEmpresa {
 
 export interface UnidadesAdmin {
 	id?: string;
-	id_empresa?: any;
-	codigo: number;
+	id_empresa?: string;
+	id_clas_administrativa: string;
+	codigo: string;
 	nombre: string;
 	descripcion: string;
 	status?: boolean;
+}
+
+export interface Area {
+	id_area?: string;	
+	codigo: string;
+	nom_area: string;
+	id_unidad_adm: string;
+	nom_unidad: string;
+	id_empresa: string;
 }
 
 export interface Ccosto {
 	id?: string;
 	id_ubicacion_geografica: string;
 	id_unidad_adm: string;
+	codigo_unidad: string;
+	nom_unidad: string;
 	id_subfuncion: string;
 	id_nivel: string;
 	id_padre: string;
@@ -74,6 +86,7 @@ export interface Ccosto {
 	num_interior: string;
 	longitud: string;
 	latitud: string;
+	oficina_unidad: boolean;
 	responsable_ley: boolean;
 	status: boolean;
 	id_empresa: string;

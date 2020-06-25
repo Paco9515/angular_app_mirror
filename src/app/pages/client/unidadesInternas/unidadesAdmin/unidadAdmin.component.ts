@@ -17,13 +17,20 @@ export class UnidadAdminComponent  {
 	unidad: UnidadesAdmin = {
 		id: '',
 		id_empresa: '',
+		id_clas_administrativa: '',
 		codigo: null,
 		nombre: '',
 		descripcion: '',
 		status: true
 	};
+	usuario: any;
+	
+	clasifsAdm: string;
+	clasifsAdms: any;
+
 	emps_unidades = [];
 	ult_unidad = [];
+	
 
 
 	constructor(
@@ -31,6 +38,17 @@ export class UnidadAdminComponent  {
 		private activatedRoute: ActivatedRoute,
 		private mensajes: MensajesService
 	) {
+		this.usuario = JSON.parse(localStorage.getItem('currentUser'));
+		
+
+		this.clasifsAdm = '';
+		this.clasifsAdms = [];
+
+		this.unidadesService.getClasifsAdmin().subscribe((clasifsAdms: any) => {
+			// console.log(clasifs);
+			this.clasifsAdms = clasifsAdms.data;
+		});
+
 		this.activatedRoute.params.subscribe((data: any) => {
 			this.id = data.id;
 			if (this.id !== 'nuevo') {
@@ -42,6 +60,7 @@ export class UnidadAdminComponent  {
 				this.createForma({
 					id: '',
 					id_empresa: '',
+					id_clas_administrativa: '',
 					codigo: null,
 					nombre: '',
 					descripcion: '',
@@ -63,17 +82,18 @@ export class UnidadAdminComponent  {
 		this.unidad = obj;
 	}
 
-	guardar(f: NgForm) {
-		console.log(this.unidad);
+	guardar(f: NgForm) {		
 		if (f.valid) {
-			this.unidadesService.createUnidad(this.unidad)
+			this.unidad.id_empresa = this.usuario.id_empresa;
+			console.log('info a enviar', this.unidad);
+			/* this.unidadesService.createUnidad(this.unidad)
 			.subscribe((response: any) => {
-				console.log(response);
-				this.mensajes.success(response);
+				// console.log(response);
+				this.mensajes.success(response, 'panel-adm/unidadesAdmin');
 			}, error => {
-				console.log(error);
+				// console.log(error);
 				this.mensajes.warning(error.error);
-			});
+			}); */
 		}
 	}
 }

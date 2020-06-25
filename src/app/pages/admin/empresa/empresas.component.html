@@ -51,8 +51,8 @@
                                         <tr *ngFor="let empresa of empresas; let i = index">
                                             <td>{{ i+1 }}</td>
                                             <td>{{ empresa.nom_comercial }}</td>
-                                            <td *ngIf="empresa.id_tipo_empresa == 1">Pública</td>
-                                            <td *ngIf="empresa.id_tipo_empresa == 2">Privada</td>
+                                            <td *ngIf="empresa.id_tipo_empresa == '1'">Pública</td>
+                                            <td *ngIf="empresa.id_tipo_empresa == '2'">Privada</td>
                                             <td>
                                                 <span *ngIf="empresa.status; else inactiveBlock" class="badge badge-success">
                                                     Activo

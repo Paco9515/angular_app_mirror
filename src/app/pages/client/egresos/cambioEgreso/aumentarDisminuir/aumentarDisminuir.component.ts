@@ -13,6 +13,7 @@ import { CambioEgresoService } from 'src/app/common/services/presupuesto/cambioE
 export class AumentarDisminuirComponent {
 
 	movimiento: any;
+	info_cc: any;
 	tipoMov: string;
 	id_cc: string;
 	id_user: string;
@@ -49,6 +50,7 @@ export class AumentarDisminuirComponent {
 	}
 
 	inicio() {
+		this.info_cc= '';
 		this.tipoMov = '';
 		this.banderaContent = false;
 		this.centro1 = '';		
@@ -120,7 +122,7 @@ export class AumentarDisminuirComponent {
 
 		this.cambioEgresos.get_cc(id_cc).subscribe((info_cc: any) => {
 			// console.log('info_cc', info_cc);
-			this.cc_origen = info_cc.nombre;
+			this.info_cc = info_cc;
 		});
 
 		this.cambioEgresos.get_proyectosActuales(id_cc).subscribe((proyectos: any) => {
@@ -253,7 +255,8 @@ export class AumentarDisminuirComponent {
 			console.log('importe menor');
 			this.movimiento = {
 				tipo_movimiento: this.tipoMov,
-				cc_origen: this.cc_origen,
+				id_cc_origen: this.info_cc.id,
+				cc_origen: this.info_cc.nombre,
 				id_partida_origen: this.partida1,
 				importe: this.importe,
 				id_cc: this.id_cc

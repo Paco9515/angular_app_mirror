@@ -58,7 +58,7 @@
                                             <option value="2">Privada</option>
                                         </select>
                                     </div>
-                                </div>                               
+                                </div>
                                 <div class="col-sm-3">
                                     <label class="col-sm-12 col-form-label">Tipo Persona:</label>
                                     <div class="col-sm-12">
@@ -79,7 +79,7 @@
                                     </div>
                                 </div>
                             </div>
-                            
+
                             <div class="form-group row">
                                 <div class="col-sm-4">
                                     <label class="col-sm-12 col-form-label">Telefono: </label>
@@ -105,7 +105,7 @@
                                 <div class="col-sm-3">
                                     <label class="col-sm-12 col-form-label">CURP: </label>
                                     <div class="col-sm-12">
-                                        <input type="text" class="form-control" placeholder="Ingresa el CURP" [(ngModel)]="info.curp" name="curp"required>
+                                        <input type="text" class="form-control" placeholder="Ingresa el CURP" [(ngModel)]="info.curp" name="curp" required>
                                     </div>
                                 </div>
                                 <div class="col-sm-3">
@@ -143,7 +143,7 @@
                                 <div class="col-sm-4">
                                     <label class="col-sm-12 col-form-label">Codigo Postal:</label>
                                     <div class="col-sm-12">
-                                        <input type="number" class="form-control" placeholder="Ingrese el codigo postal" [(ngModel)]="ubicacion.cp"  name="cp" (change)="getUbicacion();" required>
+                                        <input type="number" class="form-control" placeholder="Ingrese el codigo postal" [(ngModel)]="ubicacion.cp" name="cp" (change)="getUbicacion();" required>
                                         <label *ngIf="banderaDigitos" class="text-danger"><b>* Deben ser 5 Digitos</b></label>
                                     </div>
                                 </div>
@@ -168,18 +168,18 @@
                                         </select>
                                         <!-- <input type="text" class="form-control" placeholder="Esperando..." [(ngModel)]="ubicacion.localidad" name="localidad" required readonly>                                         -->
                                     </div>
-                                </div>                                
-                                                           
+                                </div>
+
                                 <div class="col-sm-7">
                                     <label class="col-sm-12 col-form-label">Dirección: </label>
                                     <div class="col-sm-12">
-                                        <input type="text" class="form-control" placeholder="Ingresa el Dirección..." [(ngModel)]="info.direccion" name="calle" required>
+                                        <input type="text" class="form-control" placeholder="Ingresa el Dirección..." [(ngModel)]="info.calle" name="calle" required>
                                     </div>
                                 </div>
                                 <div class="col-sm-3">
                                     <label class="col-sm-12 col-form-label">N° Exterior:</label>
                                     <div class="col-sm-12">
-                                        <input type="text" class="form-control" placeholder="Ingresa el N° Extrerior..." [(ngModel)]="info.num_exterior" name="num_exterior"required>
+                                        <input type="text" class="form-control" placeholder="Ingresa el N° Extrerior..." [(ngModel)]="info.num_exterior" name="num_exterior" required>
                                     </div>
                                 </div>
                                 <div class="col-sm-6">
@@ -205,7 +205,7 @@
                                 </div>
                             </div>
                         </div> -->
-                        
+
                         <div class="card-footer">
                             <div class="form-group row">
                                 <div class="col-12">

@@ -33,7 +33,7 @@
                         </div>
                         <div class="card-body">
                             <div class="form-group row">
-                                <div class="col-sm-12">
+                                <!-- <div class="col-sm-12">
                                     <label for="staticEmail" class="col-sm-12 col-form-label">Empresa</label>
                                     <div class="col-sm-12">
                                         <select [(ngModel)]="unidad.id_empresa" name="id_empresa" class="form-control" required>
@@ -41,7 +41,17 @@
                                             <option *ngFor="let empresa of emps_unidades;" [value]="empresa.id">{{empresa.nombre}}</option>
                                         </select>
                                     </div>
+                                </div> -->
+                                <div class="col-sm-12">
+                                    <label for="staticEmail" class="col-sm-12 col-form-label">Clasf Administrativa</label>
+                                    <div class="col-sm-12">
+                                        <select [(ngModel)]="unidad.id_clas_administrativa" name="clasAdmin" class="form-control" required>
+                                            <option value=""> Seleccione una opcion... </option>
+                                            <option *ngFor="let class of clasifsAdms;" [value]="class.id">{{ class.codigo }} - {{class.nombre}}</option>
+                                        </select>
+                                    </div>
                                 </div>
+
                                 <div class="col-sm-12">
                                     <label for="staticEmail" class="col-sm-12 col-form-label">Nombre</label>
                                     <div class="col-sm-12">
