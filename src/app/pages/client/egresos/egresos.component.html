@@ -51,9 +51,7 @@
                                         <td>{{ presupuesto.nombre }}</td>
                                         <td>{{ presupuesto.nombre_centro_costo }}</td>
                                         <td class="text-center">
-                                            <span [class]="getBadgeFormatEstado(presupuesto.estado)">
-                                                {{ presupuesto.estado }}
-                                            </span>
+                                            <app-badge-estado [estado]="presupuesto.estado"></app-badge-estado>
                                         </td>
                                         <td class="text-center" nowrap>
                                             <button type="button" class="btn btn-info btn-sm text-white ml-3" [routerLink]="presupuesto.id">

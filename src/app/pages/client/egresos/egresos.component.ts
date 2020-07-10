@@ -1,8 +1,7 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component } from '@angular/core';
 import { MensajesService } from '../../../common/services/shared/mensajes.service';
 import { PresupuestoEgresoService } from 'src/app/common/services/presupuesto/egreso.service';
 import { Router } from '@angular/router';
-import { UiComponent } from '../../../components/classification/unidadesInternas/ui.component';
 import { PresupuestoEgreso } from 'src/app/common/interfaces/presupuesto.interface';
 import { Usuario } from 'src/app/common/interfaces/usuario.interface';
 
@@ -12,10 +11,7 @@ import { Usuario } from 'src/app/common/interfaces/usuario.interface';
 	styles: []
 })
 export class EgresosComponent {
-	@ViewChild(UiComponent, { static: true }) ui_component: UiComponent;
-	/* -- Unidades internas | clas administrativa -- */
-	ui_keys = ['0', '0'];
-	ui_data: any;
+
 	presupuestos: any = [];
 	usuario: Usuario;
 
@@ -46,11 +42,12 @@ export class EgresosComponent {
 	getPresupuestos() {
 		this.egreso_service.get_presupuestos_cc(this.usuario.id_cc)
 		.subscribe((presupuestos: any) => {
-			if (presupuestos !== []) {
-				this.presupuestos = presupuestos;
+
+			if (presupuestos.data !== []) {
+				this.presupuestos = presupuestos.data;
 				let ultimoAnio = 0;
 				this.presupuestos.filter(egreso => {
-					if(ultimoAnio > egreso.anio){
+					if (ultimoAnio > egreso.anio) {
 						ultimoAnio = egreso.anio;
 						return egreso;
 					}
@@ -59,18 +56,10 @@ export class EgresosComponent {
 		});
 	}
 
-	// /* -- Unidades internas -- */
-	// getDataUI(data: any) {
-	// 	this.ui_data = data;
-	// 	if (this.ui_data.id_ccosto !== '0' && this.ui_data.id_ccosto !== null && this.ui_data.id_ccosto !== '') {
-	// 		this.getPresupuestos();
-	// 	}
-	// }
-
 	crearPresupuesto(anio: number) {
 		this.presupuesto = {
 			id_centro_costo: this.usuario.id_cc,
-			anio: anio
+			anio
 		};
 
 		this.egreso_service.create_presupuesto(this.presupuesto)
@@ -94,15 +83,15 @@ export class EgresosComponent {
 				if( presupuesto.anio > anio ) {
 					anio = presupuesto.anio;
 				}
-				if(presupuesto.anio == this.anioActual){
-					anioActualExiste = true; 
+				if(presupuesto.anio === this.anioActual) {
+					anioActualExiste = true;
 				}
 			});
 
 			if(anioActualExiste){
 				this.crearPresupuesto(anio + 1);
 			} else {
-				this.showModal = true
+				this.showModal = true;
 				this.anioSiguiente = anio + 1;
 			}
 		}
@@ -119,21 +108,5 @@ export class EgresosComponent {
 				// console.log();
 			});
 	}
-
-	getBadgeFormatEstado(estado: string){
-		switch (estado) {
-			case 'Capturando':
-				return 'badge badge-success';
-			case 'Revisión':
-				return 'badge badge-warning text-white';
-			case 'Proyecto':
-				return 'badge badge-primary';
-			case 'Cursando':
-				return 'badge badge-info text-white';
-			case 'Finalizado':
-				return 'badge badge-secondary';
-		}
-	}
-
 
 }

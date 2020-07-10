@@ -8,10 +8,8 @@ import { CtrabajosComponent } from './ctrabajo/ctrabajos.component';
 import { UnidadAdminComponent } from './unidadesAdmin/unidadAdmin.component';
 import { UnidadesAdminComponent } from './unidadesAdmin/unidadesAdmin.component';
 import { CcostoAdminComponent } from './ccosto/ccostoAdmin.component';
-import { CambiarResponsableComponent } from "src/app/pages/client/unidadesInternas/ccosto/cambiarResponsable.component";
+import { CambiarResponsableComponent } from "../unidadesInternas/ccosto/cambiarResponsable.component";
 import { NivelesComponent } from './niveles/niveles.component';
-import { AreasComponent } from './areas/areas.component';
-import { AreaComponent } from './areas/area.component';
 
 const admin_routes: Routes = [
 	{
@@ -27,8 +25,6 @@ const admin_routes: Routes = [
 			{ path: 'unidadAdmin/:id', component: UnidadAdminComponent },
 			{ path: 'cambiarResponsable', component: CambiarResponsableComponent },
 			{ path: 'niveles', component: NivelesComponent },
-			{ path: 'areas', component: AreasComponent },
-			{ path: 'area/:id', component: AreaComponent },
 			{ path: '', pathMatch: 'full', redirectTo: 'escritorio' }
 		]
 	}

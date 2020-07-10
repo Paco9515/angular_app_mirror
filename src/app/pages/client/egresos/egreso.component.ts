@@ -167,7 +167,7 @@ export class EgresoComponent {
 			this.router.navigate([`/panel-adm/modificar_egreso`]);
 		} else {
 			this.router.navigate([`/panel-adm/pres_egresos`]);
-		}		
+		}
 	}
 
 	public buscarPresupuestoPorClasificacion(clasificacion: string, titleClasf: string = null) {

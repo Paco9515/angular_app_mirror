@@ -4,6 +4,7 @@ import { Fases } from 'src/app/common/interfaces/pe.interface';
 import { MensajesService } from '../../../../common/services/shared/mensajes.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ProyectoService } from '../../../../common/services/proyecto/proyecto.service';
+import { EstadosEgresos } from '../../../../constants/estadosEgresos';
 
 @Component({
 	selector: 'app-fases',
@@ -18,6 +19,7 @@ export class FasesComponent implements OnInit {
 	detalle: Fases;
 	partidas: any[];
 	bandera: boolean;
+	estado = EstadosEgresos;
 
 	total = 0;
 
@@ -58,7 +60,7 @@ export class FasesComponent implements OnInit {
 
 		this.activatedRoute.params
 			.subscribe( params => {
-				(typeof params['bandera'] !== 'undefined')? this.bandera = params['bandera'] : this.bandera =  false;
+				(typeof params['bandera'] !== 'undefined') ? this.bandera = params['bandera'] : this.bandera =  false;
 
 				this.proyecto = params['id_proyecto'];
 				this.presupuesto = params['id_presupuesto'];
@@ -80,9 +82,9 @@ export class FasesComponent implements OnInit {
 	getFases(id_proyecto) {
 		this.fase_service.getFases(id_proyecto)
 			.subscribe((data: any) => {
-				this.fases = data;
+				this.fases = data.data;
 				// Se consulta el estado del proyecto de la primera fase
-				// this.estadoProyecto = this.fases[0].estado_proyecto
+				this.estadoProyecto = this.fases[0].estado_proyecto;
 			});
 	}
 
@@ -117,22 +119,18 @@ export class FasesComponent implements OnInit {
 	}
 
 	mostrarDetalle( fase ) {
-		// let data: any = {
-		// 	title: "Hola",
-		// 	message: "<ul><li>Coffee</li><li>Tea</li><li>Milk</li></ul>"
-		// };
-		// this.mensaje.success(data);
-		// console.log(data.title);
 		this.detalle = fase;
-		this.total = 0;
+		this.total = 0.00;
+		const partidas = fase.partidas;
 
-		if(this.detalle.partidas[0] == null) {
+		if (partidas) {
 			return this.detalle.partidas = null;
 		}
-		return this.total = this.detalle.partidas.reduce(( sum: number, partida: any )  => sum + (partida.importe), 0);
+
+		this.total = partidas.reduce(( sum, partida ) => sum + parseFloat(partida.importe), 0.00);
 	}
 
-	getEstadoProyecto(id){
+	getEstadoProyecto(id) {
 		this.proyectos_service.getProyecto(id)
 			.subscribe((data: any) => {
 				this.estadoProyecto = data.estado;

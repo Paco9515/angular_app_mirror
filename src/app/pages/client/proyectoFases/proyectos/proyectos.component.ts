@@ -4,21 +4,21 @@ import { Proyectos } from 'src/app/common/interfaces/pe.interface';
 import { MensajesService } from '../../../../common/services/shared/mensajes.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FaseService } from '../../../../common/services/pe/fase.service';
-import { Observable } from 'rxjs';
+import { EstadosEgresos } from '../../../../constants/estadosEgresos';
 
 @Component({
 	selector: 'app-proyectos',
 	templateUrl: './proyectos.component.html'
-	
 })
 export class ProyectosComponent implements OnInit {
 
+	estado = EstadosEgresos;
 	detalle: Proyectos;
 	proyectos: Proyectos[];
 	fases: any;
 	estadoEgreso: any = '';
 	id_presupuesto: any;
-	total = 0;
+	total: Number = 0;
 	bandera: boolean = false;
 
 	constructor(
@@ -26,7 +26,7 @@ export class ProyectosComponent implements OnInit {
 		private fase_service: FaseService,
 		private mensaje: MensajesService,
 		private activatedRoute: ActivatedRoute,
-		private router: Router
+		private router: Router,
 		) {
 			this.detalle = {
 				id: '',
@@ -45,33 +45,18 @@ export class ProyectosComponent implements OnInit {
 				deleted: false
 			};
 			this.proyectos = [];
-
-			// let obs =  new Observable( observer => {
-			// 	let contador = 1;
-
-			// 	let intervalo = setInterval(() => {
-
-			// 		accion += 1;
-			// 		observer.next(accion);
-			// 	},1000);
-
-			// });
-			
-			// obs.subscribe( accion => {
-			// 	console.log('Sub', accion);
-			// });
-
 	}
 
 	ngOnInit() {
+		// console.log(estadosPresupuestoEgresos.CAPTURANDO );
+
 		this.activatedRoute.params
 			.subscribe( params => {
-				(typeof params['bandera'] !== 'undefined')? this.bandera = params['bandera'] : this.bandera =  false;
-	
+				(typeof params['bandera'] !== 'undefined') ? this.bandera = params['bandera'] : this.bandera =  false;
+
 				this.id_presupuesto = params['id_presupuesto'];
 				this.getProyectos(this.id_presupuesto);
 			});
-		console.log(this.bandera);
 	}
 
 	createProyecto() {
@@ -79,7 +64,7 @@ export class ProyectosComponent implements OnInit {
 			this.router.navigate([`/panel-adm/pres_egresos/${this.id_presupuesto}/proyectos`, 'nuevo']);
 		} else {
 			this.router.navigate([`/panel-adm/mod_proyecto/${this.id_presupuesto}/proyectos/`, `nuevo`, this.bandera]);
-		}		
+		}
 	}
 
 	mostrarFases(id_proyecto) {
@@ -126,26 +111,67 @@ export class ProyectosComponent implements OnInit {
 		}
 	}
 
+	// mostrarDetalle(proyecto) {
+	// 	this.detalle = proyecto;
+	// 	this.total = 0;
+	// 	this.fase_service.getFases(proyecto.id)
+	// 		.subscribe( (fases: any) => {
+	// 			this.fases = fases.data;
+	// 			// console.log(this.fases);
+	// 			if (this.fases !== []) {
+	// 				this.fases.forEach(function(fase) {
+	// 					fase.importe = 0;
+	// 					if(fase.partidas[0] != null){
+	// 						fase.importe = fase.partidas.reduce((sum, partida) => sum + parseFloat(partida.importe), 0);
+	// 						// fase.partidas.forEach(function(partida) {
+	// 						// 	fase.importe += Number(partida.importe);
+	// 						// 	console.log('partida.importe: ' + partida.importe);
+	// 						// // 	console.log(partida.importe + ' + ' +  fase.importe);
+	// 						// });
+	// 						// console.log('operacion');
+	// 						// console.log(this.total + '+' + fase.importe);
+	// 						// console.log('fase.importe: ' + fase.importe);
+	// 						console.log(this.total + fase.importe);
+	// 						this.total = this.total + Number(fase.importe);
+	// 						// console.log('=' + this.total);
+	// 					}
+
+	// 				}, this);
+	// 			}
+	// 		});
+	// }
+
+	// mostrarDetalle(proyecto) {
+	// 	this.detalle = proyecto;
+	// 	this.total = 0;
+	// 	this.fase_service.getFases(proyecto.id)
+	// 		.subscribe( (fases: any) => {
+	// 			this.fases = fases.data;
+	// 			// console.log(this.fases);
+	// 			if (this.fases) {
+	// 				this.fases.forEach(function(fase) {
+	// 				fase.importe = 0;
+	// 				fase.importe = fase.partidas.reduce((sum, partida) => sum + Number(partida.importe), 0);
+	// 				console.log(this.total + fase.importe);
+	// 				this.total = this.total + Number(fase.importe);
+	// 				}, this);
+	// 			}
+	// 		});
+	// }
+
+
 	mostrarDetalle(proyecto) {
 		this.detalle = proyecto;
 		this.total = 0;
 		this.fase_service.getFases(proyecto.id)
-			.subscribe( (data: any) => {
-				this.fases = data;
-				console.log(this.fases)
-				
-				if (this.fases !== []) {
+			.subscribe( (fases: any) => {
+				this.fases = fases.data;
+				// console.log(this.fases);
+				if (this.fases) {
 					this.fases.forEach(function(fase) {
-						
 						fase.importe = 0;
-						if(fase.partidas[0] != null){
-							fase.partidas.forEach(function(partida) {
-								fase.importe += partida.importe;
-							});
-							this.total += fase.importe;
-
-						}
-						
+						fase.importe = fase.partidas.reduce((sum, partida) => sum + Number(partida.importe), fase.importe);
+						this.total = this.total + Number(fase.importe);
 					}, this);
 				}
 			});

@@ -20,57 +20,65 @@
                                 <button type="button" class="btn btn-success btn-sm mb-2 pull" [routerLink]="['/panel-adm/programa', 'nuevo']">
 									<i class="fa fa-plus-circle"></i>
 									Agregar nuevo programa
-								</button>
+                                </button>
+
+                                <a type="button" class="btn btn-success btn-sm m-2 pull" [href]="fileUrl" download="export.csv">
+                                    <!--  -->
+                                    <i class="fa fa-plus-circle "></i> CSV
+                                </a>
+                                <a [href]="fileUrl" download="file.csv">DownloadFileCSV</a>
+                                <a [href]="fileUrlpdf" download="file.pdf">DownloadFilePDF</a>
+
                             </div>
                         </div>
                     </div>
-                    <div class="card-body">
-                        <div class="table-responsive">
-                            <table class="table table-striped table-sm">
-                                <thead class="thead-dark">
+                    <div class="card-body ">
+                        <div class="table-responsive ">
+                            <table class="table table-striped table-sm ">
+                                <thead class="thead-dark ">
                                     <tr>
-                                        <th scope="col">#</th>
-                                        <th scope="col">Código</th>
-                                        <th scope="col">Nombre</th>
-                                        <th class="text-center" scope="col">Estado</th>
-                                        <th class="text-center" scope="col">Opciones</th>
+                                        <th scope="col ">#</th>
+                                        <th scope="col ">Código</th>
+                                        <th scope="col ">Nombre</th>
+                                        <th class="text-center " scope="col ">Estado</th>
+                                        <th class="text-center " scope="col ">Opciones</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr *ngIf="programas.length==0; else tableBlock">
-                                        <td colspan="5" class="text-center">
-                                            <span class="badge badge-info">
+                                    <tr *ngIf="programas.length==0; else tableBlock ">
+                                        <td colspan="5 " class="text-center ">
+                                            <span class="badge badge-info ">
 												<h5>
-													<i class="far fa-frown"></i>
+													<i class="far fa-frown "></i>
 													No hay elementos para mostrar.
 												</h5>
 											</span>
                                         </td>
                                     </tr>
                                     <ng-template #tableBlock>
-                                        <tr *ngFor="let programa of programas; let i = index">
+                                        <tr *ngFor="let programa of programas; let i=i ndex ">
                                             <td>{{ i+1 }}</td>
                                             <td>{{ programa.codigo }}</td>
                                             <td>{{ programa.nombre }}</td>
-                                            <td class="text-center">
-                                                <span *ngIf="programa.status; else inactiveBlock" class="badge badge-success">
+                                            <td class="text-center ">
+                                                <span *ngIf="programa.status; else inactiveBlock " class="badge badge-success ">
 													Activo
 												</span>
                                                 <ng-template #inactiveBlock>
-                                                    <span class="badge badge-secondary">Inactivo</span>
+                                                    <span class="badge badge-secondary ">Inactivo</span>
                                                 </ng-template>
                                             </td>
-                                            <td class="text-center" nowrap>
-                                                <button type="button" class="btn btn-primary btn-sm" [routerLink]="['/panel-adm/programa', programa.id]" [disabled]="!programa.status">
-													<i class="fa fa-edit"></i>
+                                            <td class="text-center " nowrap>
+                                                <button type="button " class="btn btn-primary btn-sm " [routerLink]="[ '/panel-adm/programa', programa.id] " [disabled]="!programa.status ">
+													<i class="fa fa-edit "></i>
 													Editar
 												</button>
-                                                <button *ngIf="programa.status" type="button" class="btn btn-danger btn-sm ml-3" (click)="eliminarActivar(programa.id, false)">
-													<i class="fa fa-trash"></i>
+                                                <button *ngIf="programa.status " type="button " class="btn btn-danger btn-sm ml-3 " (click)="eliminarActivar(programa.id, false) ">
+													<i class="fa fa-trash "></i>
 													Eliminar
 												</button>
-                                                <button *ngIf="!programa.status" type="button" class="btn btn-success btn-sm ml-3" (click)="eliminarActivar(programa.id, true)">
-													<i class="fa fa-arrow-circle-up"></i>
+                                                <button *ngIf="!programa.status " type="button " class="btn btn-success btn-sm ml-3 " (click)="eliminarActivar(programa.id, true) ">
+													<i class="fa fa-arrow-circle-up "></i>
 													Activar
 												</button>
                                             </td>
@@ -80,7 +88,7 @@
                             </table>
                         </div>
                     </div>
-                    <div class="card-footer">
+                    <div class="card-footer ">
                     </div>
                 </div>
                 <!-- /.card-->

@@ -47,9 +47,9 @@ export class ProyectoComponent {
 		private router: Router,
 		private egresos: PresupuestoEgresoService
 	) {
-		
+
 		this.activatedRoute.params.subscribe((params: any) => {
-			
+
 			// Comprobar la existencia del parametro bandera
 			(typeof params['bandera'] !== 'undefined')? this.bandera = params['bandera'] : this.bandera =  false;
 
@@ -80,7 +80,7 @@ export class ProyectoComponent {
 		this.proyecto_original = [];
 			this.proyectoService.getProyecto(id)
 			.subscribe((data: any) => {
-				
+
 				this.proyecto_original = data.data;
 				// console.log(this.proyecto_original);
 			});

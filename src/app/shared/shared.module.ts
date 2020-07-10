@@ -10,6 +10,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TableClasificacionComponent } from './tables/tableClasificacion/tableClasificacion.component';
 import { LoadingComponent } from './loading/loading.component';
+import { BadgeEstadoComponent } from './badge-estado/badge-estado.component';
+import { TableEgresoComponent } from './table-egreso/table-egreso.component';
 
 
 @NgModule({
@@ -20,7 +22,9 @@ import { LoadingComponent } from './loading/loading.component';
 		NopagefoundComponent,
 		BreadcrumbsComponent,
 		TableClasificacionComponent,
-		LoadingComponent
+		LoadingComponent,
+		BadgeEstadoComponent,
+		TableEgresoComponent
 	],
 	exports: [
 		HeaderComponent,
@@ -29,7 +33,9 @@ import { LoadingComponent } from './loading/loading.component';
 		NopagefoundComponent,
 		BreadcrumbsComponent,
 		TableClasificacionComponent,
-		LoadingComponent
+		LoadingComponent,
+		BadgeEstadoComponent,
+		TableEgresoComponent
 	],
 	imports: [
 		RouterModule,

@@ -60,15 +60,7 @@
                                             <td>{{ proyecto.codigo }}</td>
                                             <td>{{ proyecto.nombre }}</td>
                                             <td class="text-center">
-                                                <span *ngIf="proyecto.estado == 'Finalizado';" class="badge badge-danger">
-                                                    Finalizado
-                                                </span>
-                                                <span *ngIf="proyecto.estado == 'En curso';" class="badge badge-info text-white ">
-                                                    En curso
-                                                </span>
-                                                <span *ngIf="proyecto.estado == 'Creando';" class="badge badge-success">
-                                                    Creando
-                                                </span>
+                                                <app-badge-estado [estado]="proyecto.estado"></app-badge-estado>
                                             </td>
                                             <td class="text-center" nowrap>
                                                 <!-- boton ver detalles del proyecto -->
@@ -76,15 +68,15 @@
                                                     <i class="fa fa-eye"></i>
                                                 </button>
                                                 <!-- boton para modificar el proyecto -->
-                                                <button *ngIf="estadoEgreso != 'Finalizado' && proyecto.estado == 'Creando' && !bandera" title="Editar" type="button" class="btn btn-primary btn-sm ml-3" (click)="editar(proyecto.id)" [disabled]="proyecto.deleted">
+                                                <button *ngIf="estadoEgreso != estado.FINALIZADO && proyecto.estado == estado.CAPTURANDO && !bandera" title="Editar" type="button" class="btn btn-primary btn-sm ml-3" (click)="editar(proyecto.id)" [disabled]="proyecto.deleted">
                                                 <!-- <button title="Editar" type="button" class="btn btn-primary btn-sm ml-3" (click)="editar(proyecto.id)" [disabled]="!proyecto.status"> -->
 													<i class="fa fa-edit"></i>
                                                 </button>
                                                 <!-- botones normales Eliminar-Activar-->
-                                                <button *ngIf="!proyecto.deleted && estadoEgreso != 'Finalizado' && proyecto.estado == 'Creando' && !bandera" title="Eliminar" type="button" class="btn btn-danger btn-sm ml-3" (click)="eliminarActivar(proyecto.id, false)">
+                                                <button *ngIf="!proyecto.deleted && estadoEgreso != estado.FINALIZADO && proyecto.estado == estado.CAPTURANDO && !bandera" title="Eliminar" type="button" class="btn btn-danger btn-sm ml-3" (click)="eliminarActivar(proyecto.id, false)">
                                                     <i class="fa fa-trash"></i>
 												</button>
-                                                <button *ngIf="proyecto.deleted && estadoEgreso != 'Finalizado' && proyecto.estado == 'Creando' && !bandera" title="Activar" type="button" class="btn btn-success btn-sm ml-3" (click)="eliminarActivar(proyecto.id, true)">
+                                                <button *ngIf="proyecto.deleted && estadoEgreso != estado.FINALIZADO && proyecto.estado == estado.CAPTURANDO && !bandera" title="Activar" type="button" class="btn btn-success btn-sm ml-3" (click)="eliminarActivar(proyecto.id, true)">
                                                     <i class="fa fa-arrow-circle-up"></i>
                                                 </button>
                                                 <!-- boton normal para la creacion de fases -->
@@ -140,15 +132,7 @@
                     <div class="col-sm-2 border bg-light font-weight-bold p-1 d-none d-sm-block text-right">Estado</div>
                     <div class="col border bg-light font-weight-bold p-1 d-sm-none">Estado</div>
                     <div class="col-sm-4 border p-1 text-center">
-                        <span *ngIf="detalle.estado == 'Finalizado';" class="badge badge-danger">
-                            Finalizado
-                        </span>
-                        <span *ngIf="detalle.estado == 'En curso';" class="badge badge-info text-white ">
-                            En curso
-                        </span>
-                        <span *ngIf="detalle.estado == 'Creando';" class="badge badge-success">
-                            Creando
-                        </span>
+                        <app-badge-estado [estado]="detalle.estado"></app-badge-estado>
                     </div>
 
                     <div class="col-sm-2 border bg-light font-weight-bold p-1 d-none d-sm-block text-center">Total</div>
@@ -178,19 +162,9 @@
                             <div class="col-sm-2 border p-1 text-sm-center">{{ fase.codigo_tipo_financ }}</div>
                             <div class="col border bg-light font-weight-bold p-1 d-sm-none">Financiamiento</div>
                             <div class="col-sm-8 border p-1">{{ fase.nombre_tipo_financ }}</div>
-
-                            <!-- <div class="col-sm-2 border bg-light font-weight-bold p-1 d-none d-sm-block text-right">Estado</div>
-                            <div class="col border bg-light font-weight-bold p-1 d-sm-none">Estado</div>
-                            <div class="col-sm-4 border p-1 text-center text-sm-center">
-                                <span *ngIf="fase.status; else inactiveBlock" class="badge badge-success">Activo</span>
-                                <ng-template #inactiveBlock>
-                                    <span class="badge badge-secondary">Inactivo</span>
-                                </ng-template>
-                            </div> -->
-
                             <div class="col-sm-8 border bg-light font-weight-bold p-1 d-none d-sm-block text-right">Importe</div>
                             <div class="col border bg-light font-weight-bold p-1 d-sm-none">Importe</div>
-                            <div class="col-sm-4 border p-1 text-center"> {{ fase.importe | currency }}</div>
+                            <div class="col-sm-4 border p-1 text-center">{{ fase.importe | currency }}</div>
                         </div>
                     </div>
                 </ng-template>

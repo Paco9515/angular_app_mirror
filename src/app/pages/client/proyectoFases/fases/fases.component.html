@@ -26,7 +26,7 @@
                                     Regresar
                                 </button>
                             </div>
-                            <div *ngIf="estadoProyecto != 'Finalizado'" class="col-12 col-md-3 text-center text-sm-right">
+                            <div *ngIf="estadoProyecto != 'Finalizado' " class="col-12 col-md-3 text-center text-sm-right">
                                 <!-- Boton normal para crear una fase -->
                                 <button type="button" class="btn btn-success btn-sm" (click)="createFase()">
 									<i class="fa fa-plus-circle"></i>
@@ -67,27 +67,19 @@
                                             <td>{{ i+1 }}</td>
                                             <td>{{ fase.nombre }}</td>
                                             <td class="text-center">
-                                                <span *ngIf="fase.estado_proyecto == 'Finalizado';" class="badge badge-danger">
-                                                    Finalizado
-                                                </span>
-                                                <span *ngIf="fase.estado_proyecto == 'En curso';" class="badge badge-info text-white ">
-                                                    En curso
-                                                </span>
-                                                <span *ngIf="fase.estado_proyecto == 'Creando';" class="badge badge-success">
-                                                    Creando
-                                                </span>
+                                                <app-badge-estado [estado]="fase.estado_proyecto"></app-badge-estado>
                                             </td>
                                             <td class="text-center" nowrap>
                                                 <button type="button" title="Detalles de la fase" class="btn btn-info btn-sm text-white ml-3" data-toggle="modal" data-target="#FaseModal" (click)="mostrarDetalle(fase)">
                                                     <i class="fa fa-eye"></i>
                                                 </button>
-                                                <button *ngIf="fase.estado_proyecto == 'Creando'" type="button" title="editar" class="btn btn-primary btn-sm ml-3" (click)="editar(fase.id)" [disabled]="fase.deleted">
+                                                <button *ngIf="fase.estado_proyecto != estado.CAPTURANDO" type="button" title="editar" class="btn btn-primary btn-sm ml-3" (click)="editar(fase.id)" [disabled]="fase.deleted">
 													<i class="fa fa-edit"></i>
 												</button>
-                                                <button *ngIf="!fase.deleted && fase.estado_proyecto == 'Creando'" title="Eliminar" type="button" class="btn btn-danger btn-sm ml-3" (click)="eliminarActivar(fase.id, false)">
+                                                <button *ngIf="!fase.deleted && fase.estado_proyecto == estado.CAPTURANDO" title="Eliminar" type="button" class="btn btn-danger btn-sm ml-3" (click)="eliminarActivar(fase.id, false)">
                                                     <i class="fa fa-trash"></i>
                                                     </button>
-                                                <button *ngIf="fase.deleted && fase.estado_proyecto == 'Creando'" title="Activar" type="button" class="btn btn-success btn-sm ml-3" (click)="eliminarActivar(fase.id, true)">
+                                                <button *ngIf="fase.deleted && fase.estado_proyecto == estado.CAPTURANDO" title="Activar" type="button" class="btn btn-success btn-sm ml-3" (click)="eliminarActivar(fase.id, true)">
 													<i class="fa fa-arrow-circle-up"></i>
 												</button>
                                             </td>
@@ -139,17 +131,6 @@
                     <div class="col-sm-2 border p-1 text-sm-center">{{ detalle.codigo_tipo_financ }}</div>
                     <div class="col border bg-light font-weight-bold p-1 d-sm-none">Financiamiento</div>
                     <div class="col-sm-8 border p-1">{{ detalle.nombre_tipo_financ }}</div>
-
-                    <!-- <div class="col-sm-2 border bg-light font-weight-bold p-1 d-none d-sm-block text-center">Estado</div>
-                    <div class="col border bg-light font-weight-bold p-1 d-sm-none">Estado</div> -->
-                    <!-- <div class="col-sm-4 border p-1 text-center text-sm-center">
-                        <span *ngIf="detalle.status; else inactiveBlock" class="badge badge-success">
-                            Activo
-                        </span>
-                        <ng-template #inactiveBlock>
-                            <span class="badge badge-secondary">Inactivo</span>
-                        </ng-template>
-                    </div> -->
 
                     <div class="col-sm-2 border bg-light font-weight-bold p-1 d-none d-sm-block text-center">Ubicacion</div>
                     <div class="col border bg-light font-weight-bold p-1 d-sm-none">Ubicacion</div>
@@ -206,11 +187,11 @@
                                 <div class="col-12 border bg-light font-weight-bold p-1 d-sm-none">Partida</div>
                                 <div class="col-sm-1 border p-1 text-sm-center">{{ i+1 }}</div>
                                 <div class="col-sm-9 border p-1 ">{{ partida.nombre_partida }}</div>
-                                <div class="col-sm-2 border p-1 text-sm-right">{{ partida.importe | currency }}</div>
+                                <div class="col-sm-2 border p-1 text-sm-right">$ {{ partida.importe  }}</div>
                             </div>
                         </span>
                         <div class="col-sm-10 border bg-light font-weight-bold p-1 d-none d-sm-block text-right">Total</div>
-                        <div class="col-sm-2 border bg-light font-weight-bold p-1 d-none d-sm-block text-right">{{ total | currency }}</div>
+                        <div class="col-sm-2 border bg-light font-weight-bold p-1 d-none d-sm-block text-right">$ {{ total }}</div>
                     </ng-template>
                 </div>
             </div>
