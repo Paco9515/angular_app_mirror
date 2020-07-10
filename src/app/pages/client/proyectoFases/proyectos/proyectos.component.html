@@ -63,7 +63,7 @@
                                                 <span *ngIf="proyecto.estado == 'Finalizado';" class="badge badge-danger">
                                                     Finalizado
                                                 </span>
-                                                <span *ngIf="proyecto.estado == 'En curso';" class="badge badge-info text-white ">
+                                                <span *ngIf="proyecto.estado == 'Cursando';" class="badge badge-info text-white ">
                                                     En curso
                                                 </span>
                                                 <span *ngIf="proyecto.estado == 'Creando';" class="badge badge-success">
@@ -76,7 +76,7 @@
                                                     <i class="fa fa-eye"></i>
                                                 </button>
                                                 <!-- boton para modificar el proyecto -->
-                                                <button *ngIf="estadoEgreso != 'Finalizado' && proyecto.estado == 'Creando' && !bandera" title="Editar" type="button" class="btn btn-primary btn-sm ml-3" (click)="editar(proyecto.id)" [disabled]="proyecto.deleted">
+                                                <button *ngIf="estadoEgreso != 'Finalizado' && proyecto.estado == 'Cursando'" title="Editar" type="button" class="btn btn-primary btn-sm ml-3" (click)="editar(proyecto.id)" [disabled]="proyecto.deleted">
                                                 <!-- <button title="Editar" type="button" class="btn btn-primary btn-sm ml-3" (click)="editar(proyecto.id)" [disabled]="!proyecto.status"> -->
 													<i class="fa fa-edit"></i>
                                                 </button>
@@ -153,7 +153,7 @@
 
                     <div class="col-sm-2 border bg-light font-weight-bold p-1 d-none d-sm-block text-center">Total</div>
                     <div class="col border bg-light font-weight-bold p-1 d-sm-none">Total</div>
-                    <div class="col-sm-4 border p-1 text-center">{{ total | currency }}</div>
+                    <div class="col-sm-4 border p-1 text-center">{{ total | currency}}</div>
                 </div>
                 <div *ngIf="fases==0; else fasesBlock">
                     <div class="alert alert-warning text-center" role="alert">
@@ -190,7 +190,7 @@
 
                             <div class="col-sm-8 border bg-light font-weight-bold p-1 d-none d-sm-block text-right">Importe</div>
                             <div class="col border bg-light font-weight-bold p-1 d-sm-none">Importe</div>
-                            <div class="col-sm-4 border p-1 text-center"> {{ fase.importe | currency }}</div>
+                            <div class="col-sm-4 border p-1 text-center"> {{ fase.importe | currency}}</div>
                         </div>
                     </div>
                 </ng-template>

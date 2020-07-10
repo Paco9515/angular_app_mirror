@@ -16,6 +16,7 @@ export class MenuComponent {
   banderaMostrarUnidades: boolean;
   banderaMostrarCentros: boolean;
   banderaMostrarUi: boolean;
+  soyOfiUnidad: boolean;
 
 
   constructor(
@@ -28,6 +29,12 @@ export class MenuComponent {
       this.banderaMostrarEmpresas = true;
     } else {
       this.banderaMostrarEmpresas = false;
+    }
+
+    if(user.oficina_unidad == true) {
+      this.soyOfiUnidad = true;
+    } else {
+      this.soyOfiUnidad = false;
     }
 
     if(user.id_nivel == null || user.id_nivel == 1) {

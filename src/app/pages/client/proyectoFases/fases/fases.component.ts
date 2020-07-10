@@ -61,7 +61,7 @@ export class FasesComponent implements OnInit {
 				(typeof params['bandera'] !== 'undefined')? this.bandera = params['bandera'] : this.bandera =  false;
 
 				this.proyecto = params['id_proyecto'];
-				this.presupuesto = params['id_presupuesto'];
+				this.presupuesto = params['id_presupuesto'];				
 				this.getEstadoProyecto(this.proyecto);
 			});
 			// console.log(this.bandera);
@@ -129,7 +129,7 @@ export class FasesComponent implements OnInit {
 		if(this.detalle.partidas[0] == null) {
 			return this.detalle.partidas = null;
 		}
-		return this.total = this.detalle.partidas.reduce(( sum: number, partida: any )  => sum + (partida.importe), 0);
+		return this.total = this.detalle.partidas.reduce(( sum: number, partida: any )  => Number(sum) + (Number(partida.importe)), 0);
 	}
 
 	getEstadoProyecto(id){

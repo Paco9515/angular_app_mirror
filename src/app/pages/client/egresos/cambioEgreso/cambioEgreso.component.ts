@@ -41,6 +41,8 @@ export class CambioEgresoComponent {
 
 	banderaMovs: boolean = false;
 	banderaSoloImprimir: boolean;
+
+	soyTitFinanzas: boolean;
 	
 	
 
@@ -52,6 +54,12 @@ export class CambioEgresoComponent {
 
 		this.id_pres = null;
 		this.info_user = JSON.parse(localStorage.getItem('currentUser'));
+		if(this.info_user.responsable_ley == true) {
+			this.soyTitFinanzas = true;
+		} else {
+			this.soyTitFinanzas = false;
+		}
+
 		// console.log('user', this.info_user);
 		
 		this.presupuestoPropio = '';
@@ -71,6 +79,7 @@ export class CambioEgresoComponent {
 
 		this.cambioEgresos.get_presupuestosActualesHijosCc(this.info_user.id_cc)
 		.subscribe((presupuestosHijos: any) => {
+			// console.log('Centros hijos', presupuestosHijos);
 			if(presupuestosHijos.length > 0) {
 				this.presupuestosHijos = presupuestosHijos;
 				this.banderaPresupuestosHijos = true;

@@ -86,14 +86,14 @@ export class UnidadAdminComponent  {
 		if (f.valid) {
 			this.unidad.id_empresa = this.usuario.id_empresa;
 			console.log('info a enviar', this.unidad);
-			/* this.unidadesService.createUnidad(this.unidad)
+			this.unidadesService.createUnidad(this.unidad)
 			.subscribe((response: any) => {
 				// console.log(response);
 				this.mensajes.success(response, 'panel-adm/unidadesAdmin');
 			}, error => {
 				// console.log(error);
 				this.mensajes.warning(error.error);
-			}); */
+			});
 		}
 	}
 }

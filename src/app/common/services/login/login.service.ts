@@ -28,7 +28,9 @@ export class LoginService {
 			id_nivel: userInfo.nivel_user,
 			id_cc: userInfo.id_cc,
       img_name: userInfo.img_name,
-      id_empresa: userInfo.id_empresa      
+      id_empresa: userInfo.id_empresa,
+      oficina_unidad: userInfo.oficina_unidad,
+      responsable_ley: userInfo.responsable_ley     
 		};
 	  const user_string = JSON.stringify(user);
 	  localStorage.setItem('currentUser', user_string);

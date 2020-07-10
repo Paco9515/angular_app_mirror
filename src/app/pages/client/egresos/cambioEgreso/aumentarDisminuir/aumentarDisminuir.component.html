@@ -28,8 +28,8 @@
                         <h4>¿Qué Desea Realizar?</h4>
                         <select class="form-control" name="opcion" id="opcion" [(ngModel)]="tipoMov" (change)="seleccionTipo();">
                             <option value="">Seleccione una opción.</option>
-                            <option value="A">Aumeto.</option>
-                            <option value="D">Disminucion.</option>
+                            <option value="A">Ampliación.</option>
+                            <option value="D">Reducción.</option>
                         </select>
                     </div>
                     <br>
@@ -37,8 +37,8 @@
                         <div class="row">
                             <div class="border rounded " style="width: 50%; margin-right: auto; margin-left: auto;">
                                 <div class="col-sm-12 text-center mt-2">
-                                    <h4 *ngIf="tipoMov == 'A'" class="text-success"><i class="fas fa-arrow-up"></i> <b>Aumentar</b> <i class="fas fa-arrow-up"></i></h4>
-                                    <h4 *ngIf="tipoMov == 'D'" class="text-danger"><i class="fas fa-arrow-down"></i> <b>Disminuir</b> <i class="fas fa-arrow-down"></i></h4>
+                                    <h4 *ngIf="tipoMov == 'A'" class="text-success"><i class="fas fa-arrow-up"></i> <b>Amplear</b> <i class="fas fa-arrow-up"></i></h4>
+                                    <h4 *ngIf="tipoMov == 'D'" class="text-danger"><i class="fas fa-arrow-down"></i> <b>Reducir</b> <i class="fas fa-arrow-down"></i></h4>
                                 </div>
                                 <div class="col-sm-12  mt-3">
                                     <label for="">Centro de Costo:</label>

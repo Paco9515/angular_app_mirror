@@ -11,7 +11,7 @@ import { CffComponent } from '../../../../components/classification/clasfFuenteF
 	selector: 'app-fase',
 	templateUrl: './fase.component.html'
 })
-export class FaseComponent implements OnInit {
+export class FaseComponent { //implements OnInit {
 	@ViewChild(CogComponent, { static: true }) cog_component: CogComponent;
 	@ViewChild(CffComponent, { static: true }) cff_component: CffComponent;
 
@@ -35,6 +35,9 @@ export class FaseComponent implements OnInit {
 	tipo_asentamiento = '';
 	zona_asentamiento = '';
 
+	originalTipo: any = '';
+	nuevoTipo: any = '';
+
 	bandera: boolean;
 
 	envioInformacion: any = {
@@ -54,10 +57,9 @@ export class FaseComponent implements OnInit {
 		private mensaje: MensajesService,
 		private router: Router
 	) {
+		
 		this.resetVariable();
-	}
-
-	ngOnInit() {
+		// console.log('cff_component', this.cff_component);
 		this.bandera = false;
 		this.activatedRoute.params.subscribe((data: any) => {
 			this.proyecto = data['id_proyecto'];
@@ -72,9 +74,8 @@ export class FaseComponent implements OnInit {
 		});
 	}
 
-
 	eliminarPartida(id: any, partida: PartidaFase) {
-		this.total -= partida.importe;
+		this.total -= Number(partida.importe);		
 		this.partidas.splice(id, 1);
 		if (this.editar && partida.id) {
 			this.partidasEliminadasAlEditar.push(partida.id);
@@ -90,7 +91,12 @@ export class FaseComponent implements OnInit {
 			fase: null
 		};
 	}
+	
 	public resetVariable() {
+		this.cog_keys = ['0', '0', '0'];
+		// cog_data: any;
+		this.cff_keys = ['0', '0', '0'];
+		// cff_data: any;
 		this.fase = {
 			id: '',
 			id_proyecto: '',
@@ -146,6 +152,7 @@ export class FaseComponent implements OnInit {
 
 	getDataCFF(data: any) {
 		this.cff_data = data;
+		// console.log('data', data);
 	}
 
 	getFase(id: string) {
@@ -173,10 +180,10 @@ export class FaseComponent implements OnInit {
 				this.cff_component.onChangeSubfuente(this.fase.id_subfuente);
 				this.cff_component.onChangeTipo(this.fase.id_tipo_financ);
 
-				this.total = this.partidas.reduce(( sum, partida )  => sum + (partida.importe), 0);
+				this.total = this.partidas.reduce(( sum, partida )  => sum + (Number(partida.importe)), 0);
 
 				// console.log('fase: ', this.fase);
-				// console.log('partidas: ', this.partidas);
+				// console.log('total: ', this.total);
 			});
 
 		// console.log('id_fase:', this.fase.id);
@@ -206,13 +213,13 @@ export class FaseComponent implements OnInit {
 
 	agregarPartida() {
 		if (this.importe >= 0) {
-			this.total += this.importe;
+			this.total += Number(this.importe);
 			this.partidas.push({
 				id_partida: this.cog_data.id_partida,
 				id_fase: this.id_fase,
 				codigo_partida: this.cog_data.codigo_partida,
 				nombre_partida: this.cog_data.nombre_partida,
-				importe: this.importe
+				importe: Number(this.importe)
 			});
 			this.importe = null;
 			this.cog_component.restartVariables();
@@ -242,27 +249,61 @@ export class FaseComponent implements OnInit {
 		this.fase.partidas = this.partidas;
 		this.envioInformacion.fase = this.fase;
 		this.envioInformacion.partidasEliminadas = this.partidasEliminadasAlEditar;
+		
+		if(!f.invalid && this.envioInformacion.fase.id_tipo_financ != '') {
+			/* if(this.envioInfoHistorial.fase != null) {
+				if(Number(this.envioInformacion.fase.id_tipo_financ) == Number(this.envioInfoHistorial.fase.id_tipo_financ)) {
+					if(!f.dirty) {
+						console.log('no se toco algo');
+						this.banderaHistorial = false;
+					} else {
+						console.log('si se toco el form pero no la fuente');
+						if (this.bandera && this.fase.id !== '') {
+							this.faseService.guardarHistorial(this.envioInfoHistorial)
+								.subscribe((data: any) => { }, error => { });
+						}
+					}			
+				} else {
+					if(f.dirty){
+						console.log('si se toco la fuente y el form');
+						if (this.bandera && this.fase.id !== '') {
+							this.banderaHistorial = true;
+							this.faseService.guardarHistorial(this.envioInfoHistorial)
+								.subscribe((data: any) => { }, error => { });
+						}
+					} else {
+						console.log('si se toco la fuente y no form');
+						if (this.bandera && this.fase.id !== '') {
+							this.banderaHistorial = true;
+							this.faseService.guardarHistorial(this.envioInfoHistorial)
+								.subscribe((data: any) => { }, error => { });
+						}
+					}
+				}
+			} */
 
-		if (this.bandera && this.fase.id !== '') {
-			this.faseService.guardarHistorial(this.envioInfoHistorial)
+			console.log('proyecto', this.proyecto);
+			console.log('presupuesto', this.presupuesto);
+			console.log('bandera_modEgreso', this.bandera);
+			console.log('editar', this.editar);
+			
+
+			/* this.faseService.createUpdateFase(this.envioInformacion)
 				.subscribe((data: any) => {
-
+					// console.log(data);
+					this.resetVariableEnvio();
+					this.partidasEliminadasAlEditar = [];
+					this.mensaje.success(data, 'panel-adm/mod_proyectos/1/proyectos/true');					
+					
 				}, error => {
-
-				});
+					// console.log(error);
+					this.mensaje.danger(error.error);
+					// this.inicio();
+				}); */
 		}
-		this.faseService.createUpdateFase(this.envioInformacion)
-			.subscribe((data: any) => {
-				// console.log(data);
-				this.resetVariableEnvio();
-				this.partidasEliminadasAlEditar = [];
-				return this.mensaje.success(data);
-			}, error => {
-				// console.log(error);
-				return this.mensaje.danger(error.error);
-			});
 
-		// console.log(this.envioInfoHistorial);
+		// console.log('info', this.envioInformacion);
+		// console.log('historial', this.envioInfoHistorial);
 
 	}
 

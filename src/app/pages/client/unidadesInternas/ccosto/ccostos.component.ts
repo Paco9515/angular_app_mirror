@@ -61,9 +61,13 @@ export class CcostosComponent {
 			// console.log('responsable', centro);
 			this.responsable = centro;
 		});
-
-		this.ccosto_service.getUnidadCcClient(this.user.id_cc).subscribe((unidad: any) => {
-			// console.log('unidad', unidad);
+		
+		let info = {
+			id_cc_seleccionado: 'nuevo',
+			id_cc_seleccionador: this.user.id_cc
+		}
+		this.ccosto_service.getUnidadesCcClient(info).subscribe((unidad: any) => {
+			console.log('unidad', unidad);
 
 			if(unidad.length < 1) {
 				this.disCrear = true;
