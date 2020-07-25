@@ -31,11 +31,13 @@ export class MenuComponent {
       this.banderaMostrarEmpresas = false;
     }
 
-    if(user.oficina_unidad == true) {
+    // console.log('info user: '+user.oficina_unidad);
+    if(user.oficina_unidad == true) {      
       this.soyOfiUnidad = true;
-    } else {
+    } else {      
       this.soyOfiUnidad = false;
     }
+    // console.log('soy unidad: '+this.soyOfiUnidad);
 
     if(user.id_nivel == null || user.id_nivel == 1) {
       // console.log('admin');      

@@ -76,5 +76,22 @@ export class CambioEgresoService {
     getFasePartidaById(id_fase_partida: string) {
         return this.constants.getRequest(`/get_fase_partida_by_id/${id_fase_partida}`, 'get', false);
     }
+
+    //  SERVICIOS PARA TRAER LA INFO DE CADA APARTADO EN UN CAMBIO DE EGRESO
+    getInfoCc(id_cc: string) {
+        return this.constants.getRequest(`/get_info_cc_movimiento/${id_cc}`, 'get', false);
+    }
+
+    getInfoProyecto(id_proyecto: string) {
+        return this.constants.getRequest(`/get_info_proyecto_movimiento/${id_proyecto}`, 'get', false);
+    }
+
+    getInfoFase(id_fase: string) {
+        return this.constants.getRequest(`/get_info_fase_movimiento/${id_fase}`, 'get', false);
+    }
+
+    getinfoPartida(id_partida: string) {
+        return this.constants.getRequest(`/get_info_partida_movimiento/${id_partida}`, 'get', false);
+    }
         
 }

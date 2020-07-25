@@ -73,8 +73,8 @@ export class CambioEgresoComponent {
 
 		this.cambioEgresos.get_presupuestoActualByCc(this.info_user.id_cc)
 		.subscribe((pres: any) => {
-			this.presupuestoPropio = pres; 
-			// console.log('pres', pres);
+			this.presupuestoPropio = pres[0]; 
+			console.log('pres', pres);
 		});
 
 		this.cambioEgresos.get_presupuestosActualesHijosCc(this.info_user.id_cc)
