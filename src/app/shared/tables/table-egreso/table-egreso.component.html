@@ -5,51 +5,51 @@
                 <th class="align-middle text-center h2 font-weight-bold" colspan="24">Presupuesto de egresos {{ anio }}</th>
             </tr>
             <tr>
-                <th class="align-middle text-center " rowspan="5">#</th>
-                <th class="align-middle text-center " rowspan="5">Año</th>
-                <th class="align-middle text-center " colspan="22">Centro Costo</th>
+                <th class="align-middle text-center" rowspan="5">#</th>
+                <th class="align-middle text-center" rowspan="5">Año</th>
+                <th class="align-middle text-center" colspan="22">Centro Costo</th>
             </tr>
 
             <tr>
-                <th class="align-middle text-center " rowspan="4">Código</th>
-                <th class="align-middle text-center " rowspan="4">Nombre</th>
-                <th class="align-middle text-center " colspan="20">Proyectos</th>
+                <th class="align-middle text-center" rowspan="4">Código</th>
+                <th class="align-middle text-center" rowspan="4">Nombre</th>
+                <th class="align-middle text-center" colspan="20">Proyectos</th>
             </tr>
 
             <tr>
-                <th class="align-middle text-center " rowspan="3">Código</th>
-                <th class="align-middle text-center " rowspan="3">Nombre</th>
-                <th class="align-middle text-center " rowspan="3">Fecha Inicio</th>
-                <th class="align-middle text-center " rowspan="3">Fecha Final</th>
-                <th class="align-middle text-center " colspan="2">Subprograma</th>
-                <th class="align-middle text-center " colspan="14">Fase</th>
+                <th class="align-middle text-center" rowspan="3">Código</th>
+                <th class="align-middle text-center" rowspan="3">Nombre</th>
+                <th class="align-middle text-center" rowspan="3">Fecha Inicio</th>
+                <th class="align-middle text-center" rowspan="3">Fecha Final</th>
+                <th class="align-middle text-center" colspan="2">Subprograma</th>
+                <th class="align-middle text-center" colspan="14">Fase</th>
             </tr>
             <tr>
-                <th class="align-middle text-center " rowspan="2">Código</th>
-                <th class="align-middle text-center " rowspan="2">Nombre</th>
+                <th class="align-middle text-center" rowspan="2">Código</th>
+                <th class="align-middle text-center" rowspan="2">Nombre</th>
 
-                <th class="align-middle text-center " rowspan="2">Código</th>
-                <th class="align-middle text-center " rowspan="2">Nombre</th>
-                <th class="align-middle text-center " rowspan="2">Descripción</th>
+                <th class="align-middle text-center" rowspan="2">Código</th>
+                <th class="align-middle text-center" rowspan="2">Nombre</th>
+                <th class="align-middle text-center" rowspan="2">Descripción</th>
 
-                <th class="align-middle text-center " colspan="2">Tipo FF</th>
-                <th class="align-middle text-center " colspan="6">Ubicación Geográfica</th>
-                <th class="align-middle text-center " colspan="3">Partida</th>
+                <th class="align-middle text-center" colspan="2">Tipo FF</th>
+                <th class="align-middle text-center" colspan="6">Ubicación Geográfica</th>
+                <th class="align-middle text-center" colspan="3">Partida</th>
 
             </tr>
             <tr>
-                <th class="align-middle text-center ">Código</th>
-                <th class="align-middle text-center ">Nombre</th>
+                <th class="align-middle text-center">Código</th>
+                <th class="align-middle text-center">Nombre</th>
 
-                <th class="align-middle text-center ">Estado</th>
-                <th class="align-middle text-center ">Municipio</th>
-                <th class="align-middle text-center ">Código Postal</th>
-                <th class="align-middle text-center ">Asentamiento</th>
-                <th class="align-middle text-center ">Tipo Asentamiento</th>
-                <th class="align-middle text-center ">Domicilio</th>
-                <th class="align-middle text-center ">Código</th>
-                <th class="align-middle text-center ">Nombre</th>
-                <th class="align-middle text-center ">Importe</th>
+                <th class="align-middle text-center">Estado</th>
+                <th class="align-middle text-center">Municipio</th>
+                <th class="align-middle text-center">Código Postal</th>
+                <th class="align-middle text-center">Asentamiento</th>
+                <th class="align-middle text-center">Tipo Asentamiento</th>
+                <th class="align-middle text-center">Domicilio</th>
+                <th class="align-middle text-center">Código</th>
+                <th class="align-middle text-center">Nombre</th>
+                <th class="align-middle text-center">Importe</th>
             </tr>
         </thead>
 
@@ -79,12 +79,12 @@
                 <td class="align-middle">{{ dato.domicilio }}</td>
                 <td class="align-middle text-center">{{ dato.codigo_partida }}</td>
                 <td class="align-middle">{{ dato.nombre_partida }}</td>
-                <td class="align-middle text-right" nowrap>$ {{ dato.importe }}</td>
+                <td class="align-middle text-right" nowrap>{{ dato.importe | currency }}</td>
             </tr>
         </tbody>
         <tfoot>
             <th class="align-middle text-right font-weight-bold " colspan="23">Total</th>
-            <th class="align-middle text-right" nowrap>$ {{ total }}</th>
+            <th class="align-middle text-right" nowrap>{{ total | currency}}</th>
         </tfoot>
     </table>
 </div>

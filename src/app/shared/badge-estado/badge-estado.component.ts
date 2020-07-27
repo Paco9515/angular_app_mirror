@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
-import { EstadosEgresos } from '../../constants/estadosEgresos';
+import { estadosEgresos } from '../../constants/estadosEgresos';
+import { estadosProyecto } from 'src/app/constants/estadoProyecto';
 
 
 @Component({
@@ -18,17 +19,17 @@ export class BadgeEstadoComponent {
 
 	getBadgeFormatEstado() {
 		switch (this.estado) {
-			case EstadosEgresos.CAPTURANDO:
+			case estadosEgresos.CAPTURANDO:
 				return 'badge badge-success';
-			case EstadosEgresos.REVISION:
+			case estadosEgresos.REVISION:
 				return 'badge badge-warning text-white';
-			case EstadosEgresos.PROYECTO:
+			case estadosEgresos.PROYECTO:
 				return 'badge badge-primary';
-			case EstadosEgresos.ESPERANDO:
+			case estadosProyecto.ESPERANDO:
 				return 'badge badge-warning text-white';
-			case EstadosEgresos.CURSANDO:
+			case estadosEgresos.CURSANDO:
 				return 'badge badge-info text-white';
-			case EstadosEgresos.FINALIZADO:
+			case estadosEgresos.FINALIZADO:
 				return 'badge badge-secondary';
 		}
 	}

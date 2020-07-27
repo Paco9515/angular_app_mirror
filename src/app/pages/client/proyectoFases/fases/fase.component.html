@@ -56,10 +56,10 @@
                                 <div class="col-sm-6">
                                     <div class="form-check form-check-inline">
                                         <div class="form-check form-check-inline">
-                                            <input class="form-check-input" name="externo" [(ngModel)]="fase.externo" type="radio" [value]="true" [checked]="fase.externo" /> Si
+                                            <input class="form-check-input" name="externo" [(ngModel)]="fase.externo" type="radio" [value]=1 [checked]="fase.externo" /> Si
                                         </div>
                                         <div class="form-check form-check-inline">
-                                            <input class="form-check-input" name="externo" [(ngModel)]="fase.externo" type="radio" [value]="false" [checked]="!fase.externo" /> No
+                                            <input class="form-check-input" name="externo" [(ngModel)]="fase.externo" type="radio" [value]=0 [checked]="!fase.externo" /> No
                                         </div>
                                     </div>
                                 </div>
@@ -147,7 +147,7 @@
                                             <th *ngIf="!bandera" class="text-center" scope="col">Opciones</th>
                                         </tr>
                                     </thead>
-                                    <tbody *ngIf="partidas.length>0; else tableEmpty">
+                                    <tbody *ngIf="partidas; else tableEmpty">
                                         <tr *ngFor="let partida of partidas; let i = index">
                                             <td>{{ i + 1 }}</td>
                                             <td class="text-center">{{ partida.codigo_partida }}</td>
@@ -180,7 +180,7 @@
                                     </ng-template>
                                 </table>
                             </div>
-                            <pre>{{ envioInformacion | json }}</pre>
+                            <!-- <pre>{{ envio | json }}</pre> -->
                         </div>
                         <div class="card-footer">
                             <div class="form-group row">

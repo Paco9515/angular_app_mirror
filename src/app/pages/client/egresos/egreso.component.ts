@@ -17,29 +17,25 @@ export class EgresoComponent {
 
 	mensajeAlert = '';
 	mensajeAlertHijo = '';
-	id_egreso: string;
 	centrosCostos: any = [];
 	egresoPropioPrincipal: any = '';
 
 	/* PRESUPUESTO PROPIO */
 	datosEgreso: any[];
-	totalPropio = 0;
 
 	/* PRESUPUESTO GENERAL */
 	datosEgresoGeneral: any[] = null;
-	totalGeneral: number;
 
 	/* PRESUPUESTO HIJO */
 	datosEgresoGeneralHijo: any = [];
-	totalGeneralHijo = 0;
 
 	mostrarOpciones = false;
 	clasificaciones: any[] = [];
 	titleClasf = 'Clasificación Objeto de Gasto';
 
-	infoModEgreso: boolean = false;
+	infoModEgreso = false;
 
-	datosEmpresa:any;
+	datosEmpresa: any;
 	// totalClasificacion: number;
 	// loading: boolean = false;
 
@@ -51,11 +47,12 @@ export class EgresoComponent {
 		private router: Router
 	) {
 		this.activateRoute.params.subscribe(params => {
-			this.id_egreso = params['id_presupuesto'];
-			this.infoModEgreso = params['bandera'];
+			const id_egreso = params.id_presupuesto;
+			this.infoModEgreso = params.bandera;
+
 			console.log('infoModEgreso', this.infoModEgreso);
-			this.get_presupuestoId(this.id_egreso);
-			this.getDatosPresupuesto(this.id_egreso);
+			this.get_presupuestoId(id_egreso);
+			this.getDatosPresupuesto(id_egreso);
 		});
 		this.datosEmpresaPorIdCentroCosto();
 	}
@@ -64,7 +61,6 @@ export class EgresoComponent {
 		this.presupuestoEgresos.get_presupuesto($id_presupuesto)
 			.subscribe((data: any) => {
 				this.datosEgreso = data.data;
-				this.totalPropio = this.datosEgreso.reduce((contador, egreso) => contador + parseFloat(egreso.importe), 0);
 			}, error => {
 				this.mensajeAlert = error.error.message;
 			});
@@ -98,7 +94,6 @@ export class EgresoComponent {
 			.subscribe((egresos: any) => {
 				// console.log(egresos.data);
 				this.datosEgresoGeneral = egresos.data;
-				this.totalGeneral = this.datosEgresoGeneral.reduce(( contador, egreso )  => contador + parseFloat(egreso.importe), 0);
 			}, error => {
 				this.mensaje.danger(error.error);
 			});
@@ -115,7 +110,6 @@ export class EgresoComponent {
 					this.presupuestoEgresos.get_presupuesto_egresos_general(id_centro_costo, anio)
 						.subscribe((egresos: any) => {
 							this.datosEgresoGeneralHijo = egresos.data;
-							this.totalGeneralHijo = this.datosEgresoGeneralHijo.reduce((contador, data) => contador + parseFloat(data.importe), 0);
 
 							if ((egreso.estado === 'Revisión' )) {
 								this.mostrarOpciones = true;
@@ -163,7 +157,7 @@ export class EgresoComponent {
 	}
 
 	regresar() {
-		if(this.infoModEgreso) {
+		if (this.infoModEgreso) {
 			this.router.navigate([`/panel-adm/modificar_egreso`]);
 		} else {
 			this.router.navigate([`/panel-adm/pres_egresos`]);

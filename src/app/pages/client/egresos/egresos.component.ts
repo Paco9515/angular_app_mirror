@@ -53,6 +53,11 @@ export class EgresosComponent {
 					}
 				});
 			}
+		}, error => {
+			const errors = error.error;
+			if (errors.code === 404) {
+				this.mensaje.warning(errors);
+			}
 		});
 	}
 
@@ -67,7 +72,13 @@ export class EgresosComponent {
 				this.mensaje.success(data);
 				this.getPresupuestos();
 			}, error => {
-				this.mensaje.danger(error.error);
+				console.error(error.error);
+				// const capturarError: any = error.error;
+				// if (capturarError.code === 422) {
+				// 	console.error(capturarError);
+				// 	return;
+				// }
+				// this.mensaje.danger(error.error);
 			});
 	}
 
@@ -88,14 +99,14 @@ export class EgresosComponent {
 				}
 			});
 
-			if(anioActualExiste){
+			if (anioActualExiste){
 				this.crearPresupuesto(anio + 1);
 			} else {
 				this.showModal = true;
 				this.anioSiguiente = anio + 1;
 			}
 		}
-		this.getPresupuestos();
+		// this.getPresupuestos();
 	}
 
 	enviarAEvaluar(id_egreso){

@@ -3,7 +3,7 @@ import { Component, OnInit, Input } from '@angular/core';
 @Component({
 	selector: 'app-table-egreso',
 	templateUrl: './table-egreso.component.html',
-	styleUrls: ['./table-egreso.component.css']
+	styles: []
 })
 export class TableEgresoComponent implements OnInit {
 
@@ -14,6 +14,8 @@ export class TableEgresoComponent implements OnInit {
 	constructor() { }
 
 	ngOnInit() {
+		this.total = this.datos.reduce((contador, data) => contador + parseFloat(data.importe), 0);
+
 	}
 
 }

@@ -17,7 +17,7 @@ export interface Proyectos {
 	nombre_programa?: string;
 }
 
-export interface Fases {
+export interface Fase {
 	id?: string;
 	id_proyecto?: string;
 	codigo_proyecto?: string;
@@ -41,9 +41,9 @@ export interface Fases {
 	zona_asentamiento?: string;
 	calle?: string;
 	num_exterior?: number;
-	num_interior?: number;
+	num_interior?: string;
 	deleted: boolean;
-	partidas: any;
+	partidas: PartidaFase[];
 }
 
 export interface PartidaFase {

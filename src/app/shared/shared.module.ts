@@ -11,8 +11,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TableClasificacionComponent } from './tables/tableClasificacion/tableClasificacion.component';
 import { LoadingComponent } from './loading/loading.component';
 import { BadgeEstadoComponent } from './badge-estado/badge-estado.component';
-import { TableEgresoComponent } from './table-egreso/table-egreso.component';
-
+import { TableEgresoComponent } from './tables/table-egreso/table-egreso.component';
+import { DetalleFaseComponent } from './detalle-fase/detalle-fase.component';
 
 @NgModule({
 	declarations: [
@@ -24,7 +24,8 @@ import { TableEgresoComponent } from './table-egreso/table-egreso.component';
 		TableClasificacionComponent,
 		LoadingComponent,
 		BadgeEstadoComponent,
-		TableEgresoComponent
+		TableEgresoComponent,
+		DetalleFaseComponent
 	],
 	exports: [
 		HeaderComponent,
@@ -35,7 +36,8 @@ import { TableEgresoComponent } from './table-egreso/table-egreso.component';
 		TableClasificacionComponent,
 		LoadingComponent,
 		BadgeEstadoComponent,
-		TableEgresoComponent
+		TableEgresoComponent,
+		DetalleFaseComponent
 	],
 	imports: [
 		RouterModule,

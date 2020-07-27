@@ -1,8 +1,7 @@
-export const estadosEgresos = {
+export const estadosProyecto = {
+	ESPERANDO: 'Esperando',
 	CAPTURANDO: 'Capturando',
 	REVISION: 'Revisión',
-	PROYECTO: 'Proyecto',
-	LEY: 'Ley',
 	FINALIZADO: 'Finalizado',
 	CURSANDO: 'Cursando',
 };

@@ -4,7 +4,7 @@ import { Proyectos } from 'src/app/common/interfaces/pe.interface';
 import { MensajesService } from '../../../../common/services/shared/mensajes.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FaseService } from '../../../../common/services/pe/fase.service';
-import { EstadosEgresos } from '../../../../constants/estadosEgresos';
+import { estadosEgresos } from '../../../../constants/estadosEgresos';
 
 @Component({
 	selector: 'app-proyectos',
@@ -12,14 +12,14 @@ import { EstadosEgresos } from '../../../../constants/estadosEgresos';
 })
 export class ProyectosComponent implements OnInit {
 
-	estado = EstadosEgresos;
+	estado = estadosEgresos;
 	detalle: Proyectos;
 	proyectos: Proyectos[];
 	fases: any;
 	estadoEgreso: any = '';
 	id_presupuesto: any;
-	total: Number = 0;
-	bandera: boolean = false;
+	total = 0;
+	bandera = false;
 
 	constructor(
 		private proyecto_service: ProyectoService,
@@ -52,9 +52,9 @@ export class ProyectosComponent implements OnInit {
 
 		this.activatedRoute.params
 			.subscribe( params => {
-				(typeof params['bandera'] !== 'undefined') ? this.bandera = params['bandera'] : this.bandera =  false;
+				(typeof params.bandera !== 'undefined') ? this.bandera = params.bandera : this.bandera =  false;
 
-				this.id_presupuesto = params['id_presupuesto'];
+				this.id_presupuesto = params.id_presupuesto;
 				this.getProyectos(this.id_presupuesto);
 			});
 	}
@@ -75,8 +75,8 @@ export class ProyectosComponent implements OnInit {
 		}
 	}
 
-	getProyectos($id_presupuesto) {
-		this.proyecto_service.getProyectos($id_presupuesto)
+	getProyectos(id_presupuesto) {
+		this.proyecto_service.getProyectos(id_presupuesto)
 		.subscribe((data: any) => {
 			this.proyectos = data[0];
 			this.estadoEgreso = data[1];
@@ -111,55 +111,6 @@ export class ProyectosComponent implements OnInit {
 		}
 	}
 
-	// mostrarDetalle(proyecto) {
-	// 	this.detalle = proyecto;
-	// 	this.total = 0;
-	// 	this.fase_service.getFases(proyecto.id)
-	// 		.subscribe( (fases: any) => {
-	// 			this.fases = fases.data;
-	// 			// console.log(this.fases);
-	// 			if (this.fases !== []) {
-	// 				this.fases.forEach(function(fase) {
-	// 					fase.importe = 0;
-	// 					if(fase.partidas[0] != null){
-	// 						fase.importe = fase.partidas.reduce((sum, partida) => sum + parseFloat(partida.importe), 0);
-	// 						// fase.partidas.forEach(function(partida) {
-	// 						// 	fase.importe += Number(partida.importe);
-	// 						// 	console.log('partida.importe: ' + partida.importe);
-	// 						// // 	console.log(partida.importe + ' + ' +  fase.importe);
-	// 						// });
-	// 						// console.log('operacion');
-	// 						// console.log(this.total + '+' + fase.importe);
-	// 						// console.log('fase.importe: ' + fase.importe);
-	// 						console.log(this.total + fase.importe);
-	// 						this.total = this.total + Number(fase.importe);
-	// 						// console.log('=' + this.total);
-	// 					}
-
-	// 				}, this);
-	// 			}
-	// 		});
-	// }
-
-	// mostrarDetalle(proyecto) {
-	// 	this.detalle = proyecto;
-	// 	this.total = 0;
-	// 	this.fase_service.getFases(proyecto.id)
-	// 		.subscribe( (fases: any) => {
-	// 			this.fases = fases.data;
-	// 			// console.log(this.fases);
-	// 			if (this.fases) {
-	// 				this.fases.forEach(function(fase) {
-	// 				fase.importe = 0;
-	// 				fase.importe = fase.partidas.reduce((sum, partida) => sum + Number(partida.importe), 0);
-	// 				console.log(this.total + fase.importe);
-	// 				this.total = this.total + Number(fase.importe);
-	// 				}, this);
-	// 			}
-	// 		});
-	// }
-
-
 	mostrarDetalle(proyecto) {
 		this.detalle = proyecto;
 		this.total = 0;
@@ -168,7 +119,7 @@ export class ProyectosComponent implements OnInit {
 				this.fases = fases.data;
 				// console.log(this.fases);
 				if (this.fases) {
-					this.fases.forEach(function(fase) {
+					this.fases.forEach(function(fase: any) {
 						fase.importe = 0;
 						fase.importe = fase.partidas.reduce((sum, partida) => sum + Number(partida.importe), fase.importe);
 						this.total = this.total + Number(fase.importe);

@@ -26,7 +26,7 @@
                                     Regresar
                                 </button>
                             </div>
-                            <div *ngIf="estadoProyecto != 'Finalizado' " class="col-12 col-md-3 text-center text-sm-right">
+                            <div *ngIf="estadoProyecto != estado.FINALIZADO " class="col-12 col-md-3 text-center text-sm-right">
                                 <!-- Boton normal para crear una fase -->
                                 <button type="button" class="btn btn-success btn-sm" (click)="createFase()">
 									<i class="fa fa-plus-circle"></i>
@@ -73,7 +73,7 @@
                                                 <button type="button" title="Detalles de la fase" class="btn btn-info btn-sm text-white ml-3" data-toggle="modal" data-target="#FaseModal" (click)="mostrarDetalle(fase)">
                                                     <i class="fa fa-eye"></i>
                                                 </button>
-                                                <button *ngIf="fase.estado_proyecto != estado.CAPTURANDO" type="button" title="editar" class="btn btn-primary btn-sm ml-3" (click)="editar(fase.id)" [disabled]="fase.deleted">
+                                                <button *ngIf="fase.estado_proyecto != estado.CAPTURANDO && fase.estado_proyecto != estado.FINALIZADO" type="button" title="editar" class="btn btn-primary btn-sm ml-3" (click)="editar(fase.id)" [disabled]="fase.deleted">
 													<i class="fa fa-edit"></i>
 												</button>
                                                 <button *ngIf="!fase.deleted && fase.estado_proyecto == estado.CAPTURANDO" title="Eliminar" type="button" class="btn btn-danger btn-sm ml-3" (click)="eliminarActivar(fase.id, false)">
@@ -98,109 +98,4 @@
     </div>
 </div>
 
-<div class="modal fade" id="FaseModal" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
-    <div class="modal-dialog modal_class" role="document">
-        <div class="modal-content ">
-            <div class="modal-header">
-                <h5 class="modal-title">
-                    Información de fase
-                </h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-
-                <div class="row p-3">
-                    <div class="col-sm-2 border bg-light font-weight-bold p-1 d-none d-sm-block text-center">Fase</div>
-                    <div class="col border bg-light font-weight-bold p-1 d-sm-none">Fase</div>
-                    <div class="col-sm-2 border p-1 text-sm-center">{{ detalle.codigo }}</div>
-                    <div class="col border bg-light font-weight-bold p-1 d-sm-none">Nombre</div>
-                    <div class="col-sm-8 border p-1">{{ detalle.nombre }}</div>
-
-                    <div class="col-sm-2 border bg-light font-weight-bold p-1 d-none d-sm-block text-center">Descripcion</div>
-                    <div class="col border bg-light font-weight-bold p-1 d-sm-none">Descripcion</div>
-                    <div class="col-sm-10 border p-1">{{ detalle.descripcion }}</div>
-
-                    <div class="col-sm-2 border bg-light font-weight-bold p-1 d-none d-sm-block text-center">Proyecto</div>
-                    <div class="col-sm-2 border p-1 text-sm-center">{{ detalle.codigo_proyecto }}</div>
-                    <div class="col border bg-light font-weight-bold p-1 d-sm-none">Proyecto</div>
-                    <div class="col-sm-8 border p-1">{{ detalle.nombre_proyecto }}</div>
-
-                    <div class="col-sm-2 border bg-light font-weight-bold p-1 d-none d-sm-block text-center">Financiamiento</div>
-                    <div class="col-sm-2 border p-1 text-sm-center">{{ detalle.codigo_tipo_financ }}</div>
-                    <div class="col border bg-light font-weight-bold p-1 d-sm-none">Financiamiento</div>
-                    <div class="col-sm-8 border p-1">{{ detalle.nombre_tipo_financ }}</div>
-
-                    <div class="col-sm-2 border bg-light font-weight-bold p-1 d-none d-sm-block text-center">Ubicacion</div>
-                    <div class="col border bg-light font-weight-bold p-1 d-sm-none">Ubicacion</div>
-                    <div class="col-sm-10 border p-1 text-center text-sm-left">
-                        <span *ngIf="detalle.externo; else outBlock">
-                            Externo
-                        </span>
-                        <ng-template #outBlock> Interno </ng-template>
-                    </div>
-                </div>
-
-                <div class="row p-3">
-                    <div class="col-sm-2 border bg-light font-weight-bold p-1 d-none d-sm-block text-center">Codigo Postal</div>
-                    <div class="col border bg-light font-weight-bold p-1 d-sm-none">Codigo Postal</div>
-                    <div class="col-sm-4 border p-1">{{ detalle.codigo_postal }}</div>
-
-                    <div class="col-sm-2 border bg-light font-weight-bold p-1 d-none d-sm-block text-center">Estado</div>
-                    <div class="col border bg-light font-weight-bold p-1 d-sm-none">Estado</div>
-                    <div class="col-sm-4 border p-1">{{ detalle.estado }}</div>
-
-                    <div class="col-sm-2 border bg-light font-weight-bold p-1 d-none d-sm-block text-center">Municipio</div>
-                    <div class="col border bg-light font-weight-bold p-1 d-sm-none">Municipio</div>
-                    <div class="col-sm-4 border p-1">{{ detalle.municipio }}</div>
-
-                    <div class="col-sm-2 border bg-light font-weight-bold p-1 d-none d-sm-block text-center">Asentamiento / Colonia</div>
-                    <div class="col border bg-light font-weight-bold p-1 d-sm-none">Colonia</div>
-                    <div class="col-sm-4 border p-1">{{ detalle.asentamiento }}</div>
-
-                    <div class="col-sm-2 border bg-light font-weight-bold p-1 d-none d-sm-block text-center">Domicilio</div>
-                    <div class="col border bg-light font-weight-bold p-1 d-sm-none">Domicilio</div>
-                    <div class="col-sm-10 border p-1">{{ detalle.calle }}</div>
-
-                    <div class="col-sm-2 border bg-light font-weight-bold p-1 d-none d-sm-block text-center">Num. Exterior</div>
-                    <div class="col border bg-light font-weight-bold p-1 d-sm-none">Num. Exterior</div>
-                    <div class="col-sm-4 border p-1">{{ detalle.num_exterior }}</div>
-
-                    <div class="col-sm-2 border bg-light font-weight-bold p-1 d-none d-sm-block text-center">Num. Interior</div>
-                    <div class="col border bg-light font-weight-bold p-1 d-sm-none">Num. Interior</div>
-                    <div class="col-sm-4 border p-1">{{ detalle.num_interior }}</div>
-                </div>
-
-                <div class="row p-3">
-
-                    <div class="alert alert-warning text-center col-12" *ngIf="detalle.partidas == null; else tablePartidas">
-                        <i class="fa fa-exclamation-triangle fa-lg"></i> Sin partidas
-                    </div>
-
-                    <ng-template #tablePartidas>
-                        <div class="col-1 border bg-light font-weight-bold p-1 d-none d-sm-block text-center">#</div>
-                        <div class="col-11 col-sm-9 border bg-light font-weight-bold p-1 d-none d-sm-block">Partidas</div>
-                        <div class="col-sm-2 border bg-light font-weight-bold p-1 d-none d-sm-block text-center">Importe</div>
-                        <span class="col-12" *ngFor="let partida of detalle.partidas; let i = index">
-                            <div class="row">
-                                <div class="col-12 border bg-light font-weight-bold p-1 d-sm-none">Partida</div>
-                                <div class="col-sm-1 border p-1 text-sm-center">{{ i+1 }}</div>
-                                <div class="col-sm-9 border p-1 ">{{ partida.nombre_partida }}</div>
-                                <div class="col-sm-2 border p-1 text-sm-right">$ {{ partida.importe  }}</div>
-                            </div>
-                        </span>
-                        <div class="col-sm-10 border bg-light font-weight-bold p-1 d-none d-sm-block text-right">Total</div>
-                        <div class="col-sm-2 border bg-light font-weight-bold p-1 d-none d-sm-block text-right">$ {{ total }}</div>
-                    </ng-template>
-                </div>
-            </div>
-
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">
-                    Cerrar
-                </button>
-            </div>
-        </div>
-    </div>
-</div>
+<app-detalle-fase class="modal fade" id="FaseModal" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true" [fase]="fase"></app-detalle-fase>
