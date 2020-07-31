@@ -76,10 +76,14 @@
                                                     <i class="fa fa-eye"></i>
                                                 </button>
                                                 <!-- boton para modificar el proyecto -->
-                                                <button *ngIf="estadoEgreso != 'Finalizado' && proyecto.estado == 'Cursando'" title="Editar" type="button" class="btn btn-primary btn-sm ml-3" (click)="editar(proyecto.id)" [disabled]="proyecto.deleted">
+                                                <button *ngIf="bandera && estadoEgreso != 'Finalizado' && proyecto.estado == 'Cursando'" title="Editar" type="button" class="btn btn-primary btn-sm ml-3" (click)="editar(proyecto.id)" [disabled]="proyecto.deleted">
                                                 <!-- <button title="Editar" type="button" class="btn btn-primary btn-sm ml-3" (click)="editar(proyecto.id)" [disabled]="!proyecto.status"> -->
 													<i class="fa fa-edit"></i>
                                                 </button>
+                                                <!-- boton para modificar el proyecto -->
+                                                <!-- <button *ngIf="!bandera && estadoEgreso != 'Finalizado' && proyecto.estado == 'Cursando'" title="Editar" type="button" class="btn btn-primary btn-sm ml-3" (click)="editar(proyecto.id)" [disabled]="proyecto.deleted">                                                
+                                                    <i class="fa fa-edit"></i>
+                                                </button> -->
                                                 <!-- botones normales Eliminar-Activar-->
                                                 <button *ngIf="!proyecto.deleted && estadoEgreso != 'Finalizado' && proyecto.estado == 'Creando' && !bandera" title="Eliminar" type="button" class="btn btn-danger btn-sm ml-3" (click)="eliminarActivar(proyecto.id, false)">
                                                     <i class="fa fa-trash"></i>

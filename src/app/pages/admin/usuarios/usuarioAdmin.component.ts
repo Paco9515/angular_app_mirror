@@ -36,7 +36,6 @@ export class UsuarioAdminComponent {
 	      	api_token: '',
 	      	id_nivel: '',
 	    	nivel: '',
-	    	id_cc: '',
 			nombre_cc: '',
 			id_emp: '',
 			img_name: '',			
@@ -95,8 +94,7 @@ export class UsuarioAdminComponent {
 			// console.log('centros', data);            
             if (data.length != 0) {
 				this.hayCentrosAdmin = true;
-				this.centros = data; 
-				this.usuario.id_cc = '';				               
+				this.centros = data; 				               
             } else {
                 this.hayCentrosAdmin = false;
             }			

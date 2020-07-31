@@ -93,8 +93,8 @@ export class CcostoService {
 		return this.constants.getRequest(`/validate_responsable/${id_cc}`, 'get', false);
 	}
 
-	establecerReponsable(id_cc: string) {
-		return this.constants.getRequest(`/establecer_responsable/${id_cc}`, 'get', false);
+	establecerReponsable(datos: any) {
+		return this.constants.getRequest(`/establecer_responsable`, 'post', datos);
 	}
 
 	// ** ////////////////////////// ** //

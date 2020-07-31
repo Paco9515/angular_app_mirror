@@ -6,14 +6,22 @@
     </ol>
 </div>
 
-<div class="container-fluid p-3">
+<div class="container-fluid ">
     <div class="animated fadeIn">
         <div class="row justify-content-center">
             <div class="mb-2" *ngIf="disCrear">
                 <span class="badge badge-warning" style="padding-top: 10px;">
                     <h5>
                     <i class="far fa-frown"></i>
-                        No hay unidades disponibles a las cuales asignar el centro de costo encargado.
+                        No hay unidades administrativas disponibles a las cuales asignar algún centro nuevo.
+                    </h5>
+                </span>
+            </div>
+            <div class="mb-2" *ngIf="disCrear2">
+                <span class="badge badge-warning" style="padding-top: 10px;">
+                    <h5>
+                    <i class="far fa-frown"></i>
+                        No hay usuarios disponibles para asignar a un centro nuevo.
                     </h5>
                 </span>
             </div>
@@ -29,7 +37,7 @@
                                     <i class="fa fa-plus-circle"></i>
                                     Agregar Nuevo Centro
                                 </button> -->
-                                <button *ngIf="!banderaAdmin" type="button" class="btn btn-success btn-sm mb-2" [routerLink]="['/panel-adm/ccosto', 'nuevo']" [disabled]="disCrear">
+                                <button *ngIf="!banderaAdmin" type="button" class="btn btn-success btn-sm mb-2" [routerLink]="['/panel-adm/ccosto', 'nuevo']" [disabled]="disCrear || disCrear2">
                                     <i class="fa fa-plus-circle"></i>
                                     Agregar nuevo centro
                                 </button>

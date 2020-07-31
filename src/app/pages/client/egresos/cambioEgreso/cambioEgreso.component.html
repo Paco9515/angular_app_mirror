@@ -71,16 +71,16 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr *ngIf="presupuestoPropio.length == 0; else contPres">
+                                        <tr *ngIf="!siTiene; else contPres">
                                             <td colspan="5" class="text-center">
                                                 <span class="badge badge-info">
                                                     <h5>
                                                         <i class="far fa-frown"></i>
-                                                        No hay elementos para mostrar.
+                                                        Aún no se ha creado un presupuesto para este centro de costo.
                                                     </h5>
                                                 </span>
                                             </td>
-                                        </tr> 
+                                        </tr>
                                         <ng-template #contPres>
                                             <tr>
                                                 <td class="text-center">{{ presupuestoPropio.codigo_cc }}</td>

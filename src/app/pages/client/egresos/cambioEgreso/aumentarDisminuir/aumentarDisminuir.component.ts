@@ -117,7 +117,7 @@ export class AumentarDisminuirComponent {
 
 	seleccionTipo() {
 		if(this.tipoMov != '') {
-			console.log('TipoMov', this.tipoMov);
+			// console.log('TipoMov', this.tipoMov);
 			this.banderaContent = true;
 		} else {
 			this.banderaContent = false;

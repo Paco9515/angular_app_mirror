@@ -3,8 +3,7 @@ import { CcostoService } from 'src/app/common/services/ui/ccosto.service';
 import { Ccosto } from 'src/app/common/interfaces/ui.interface';
 import { EmpresaService } from 'src/app/common/services/ui/empresa.service';
 import { MensajesService } from 'src/app/common/services/shared/mensajes.service';
-import { DomSanitizer } from '@angular/platform-browser';
-import { HttpClient } from '@angular/common/http';
+import { UsuariosService } from '../../../../common/services/usuario/usuarios.service';
 
 
 @Component({
@@ -25,10 +24,13 @@ export class CcostosComponent {
 	banderaResp: boolean = false;
 	banderaMostrarTitular: boolean;
 	disCrear: boolean;
+	disCrear2: boolean;
+	// boton: boolean; // Bandera para bloqueael boton que permite cambiar al responsable de hacer ley si el usuario logueado no es el responsable
 
   	constructor(
 		private ccosto_service: CcostoService,
 		private empresaService: EmpresaService,
+		private usuarioService: UsuariosService,
 		private mensaje: MensajesService
 	) {
 		this.ccostos = [];
@@ -58,8 +60,22 @@ export class CcostosComponent {
 
 	inicio() {
 		this.ccosto_service.getResponsable().subscribe((centro: any) => {
-			// console.log('responsable', centro);
+			console.log('1', centro.id);
+			console.log('2', this.user.id_cc);
 			this.responsable = centro;
+
+			if(this.nivel == null || this.nivel == 1 ) {//centro.id != this.user.id_cc) {
+				this.banderaResp = true;
+				this.banderaMostrarTitular = true;				
+			} else {
+				this.banderaResp = false;
+				this.banderaMostrarTitular = false;
+			}
+			/* if(centro.id != this.user.id_cc) {
+				this.boton = true;
+			} else {
+				this.boton = false;
+			} */
 		});
 		
 		let info = {
@@ -67,9 +83,8 @@ export class CcostosComponent {
 			id_cc_seleccionador: this.user.id_cc
 		}
 		this.ccosto_service.getUnidadesCcClient(info).subscribe((unidad: any) => {
-			console.log('unidad', unidad);
-
-			if(unidad.length < 1) {
+			// console.log('unidad', unidad);
+			if(unidad.length == 0) {
 				this.disCrear = true;
 			} else {
 				this.disCrear = false;
@@ -77,13 +92,27 @@ export class CcostosComponent {
 			// this.ccosto.id_unidad_adm = unidad[0].id;
 		});
 
-		if(this.nivel == null || this.nivel == 1) {
+		let info2 = {
+			id_cc_a_modificar: 'nuevo',
+			id_cc_modificador: this.user.id_cc
+		}
+		this.usuarioService.getUsersDisponiblesByEmpresa(info2).subscribe((usuarios: any) => {
+			// console.log('usuarios', usuarios);
+			if(usuarios.length == 0) {
+				this.disCrear2 = true;
+			} else {
+				this.disCrear2 = false;
+			}
+			// this.ccosto.id_unidad_adm = unidad[0].id;
+		});
+
+		/* if(this.nivel == null || this.nivel == 1) {
 			this.banderaResp = true;
 			this.banderaMostrarTitular = true;
 		} else {
 			this.banderaResp = false;
 			this.banderaMostrarTitular = false;
-		}
+		} */
 
 
 		if (this.nivel != null) {

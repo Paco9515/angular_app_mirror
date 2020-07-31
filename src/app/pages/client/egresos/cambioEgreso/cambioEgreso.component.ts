@@ -5,6 +5,7 @@ import { MensajesService } from '../../../../common/services/shared/mensajes.ser
 // import { distinct } from 'rxjs/operators';
 // import { ActivatedRoute } from '@angular/router';
 // import { NgForm } from '@angular/forms';
+import { CcostoService } from '../../../../common/services/ui/ccosto.service';
 
 
 @Component({
@@ -43,26 +44,33 @@ export class CambioEgresoComponent {
 	banderaSoloImprimir: boolean;
 
 	soyTitFinanzas: boolean;
+	siTiene: boolean;
 	
 	
 
 	constructor(
 		private cambioEgresos: CambioEgresoService,
+		private ccosto_service: CcostoService,
 		private router: Router,
 		private mensaje: MensajesService
 	) {
 
 		this.id_pres = null;
 		this.info_user = JSON.parse(localStorage.getItem('currentUser'));
-		if(this.info_user.responsable_ley == true) {
-			this.soyTitFinanzas = true;
-		} else {
-			this.soyTitFinanzas = false;
-		}
+
+		this.ccosto_service.getResponsable().subscribe((centro: any) => {
+			// console.log(centro);
+			if(this.info_user.id_cc == centro[0].id) {
+				this.soyTitFinanzas = true;
+			} else {
+				this.soyTitFinanzas = false;
+			}
+		});
+		
 
 		// console.log('user', this.info_user);
 		
-		this.presupuestoPropio = '';
+		this.presupuestoPropio = [];
 		this.presupuestosHijos = '';
 		this.centrosAumentosPendientes = '';
 		this.centrosDisminPendientes = '';
@@ -73,8 +81,13 @@ export class CambioEgresoComponent {
 
 		this.cambioEgresos.get_presupuestoActualByCc(this.info_user.id_cc)
 		.subscribe((pres: any) => {
-			this.presupuestoPropio = pres[0]; 
-			console.log('pres', pres);
+			// console.log('pres', pres);
+			if(pres.length != 0) {
+				this.siTiene = true;
+				this.presupuestoPropio = pres[0]; 				
+			} else {
+				this.siTiene = false;		
+			}			
 		});
 
 		this.cambioEgresos.get_presupuestosActualesHijosCc(this.info_user.id_cc)

@@ -133,10 +133,10 @@
                         </div>
                     </form>
                     <div class="card-body">
-                        <button class="btn btn-success m-2" data-toggle="modal" data-target="#partidaModal">
-                                    <i class="fa fa-plus-circle"></i>
-                                    Agregar partida
-                                </button>
+                        <button *ngIf="!bandera" class="btn btn-success m-2" data-toggle="modal" data-target="#partidaModal">
+                            <i class="fa fa-plus-circle"></i>
+                            Agregar partida
+                        </button>
                         <div class="table-responsive m-2">
                             <table class="table table-striped table-sm">
                                 <thead class="thead-dark">

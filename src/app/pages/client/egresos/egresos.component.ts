@@ -17,7 +17,7 @@ export class EgresosComponent {
 	ui_keys = ['0', '0'];
 	ui_data: any;
 	presupuestos: any = [];
-	usuario: Usuario;
+	usuario: any;
 
 	presupuesto: PresupuestoEgreso = {
 		id_centro_costo: '',

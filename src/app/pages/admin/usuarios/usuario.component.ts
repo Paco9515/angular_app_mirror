@@ -35,7 +35,6 @@ export class UsuarioComponent {
 	      	api_token: '',
 	      	id_nivel: '',
 	    	nivel: '',
-	    	id_cc: '',
 			nombre_cc: '',
 			id_emp: '',
 			img_name: '',
@@ -62,7 +61,7 @@ export class UsuarioComponent {
 				this.cargarUsuario(data.id);
 			} else {				
 				this.banderaCreate = true;
-				this.cargarCcsUserNuevo();
+				// this.cargarCcsUserNuevo();
 			}
 		});
 
@@ -87,7 +86,7 @@ export class UsuarioComponent {
 		});	
 	}
 
-	cargarCcsUserNuevo() {
+	/* cargarCcsUserNuevo() {
 		let datos = {
 			id_cc: this.id_cc,
 			id_empresa: this.id_empresa
@@ -104,7 +103,7 @@ export class UsuarioComponent {
 				this.hayCentros = false;
 			}
 		});
-	};
+	}; */
 
 	cargarCcsUserUpdate(usuario: any) {
 		let datos = {

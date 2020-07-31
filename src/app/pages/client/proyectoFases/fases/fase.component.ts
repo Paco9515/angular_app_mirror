@@ -64,7 +64,11 @@ export class FaseComponent { //implements OnInit {
 		this.activatedRoute.params.subscribe((data: any) => {
 			this.proyecto = data['id_proyecto'];
 			this.presupuesto = data['id_presupuesto'];
-			this.bandera = data['bandera'];
+			if(data['bandera'] != null) {
+				this.bandera = true;
+			} else {
+				this.bandera = false;
+			}
 			this.editar = false;
 			if (data.id_fase !== 'nuevo') {
 				this.id_fase =  data.id_fase;
@@ -251,11 +255,11 @@ export class FaseComponent { //implements OnInit {
 		this.envioInformacion.partidasEliminadas = this.partidasEliminadasAlEditar;
 		
 		if(!f.invalid && this.envioInformacion.fase.id_tipo_financ != '') {
-			/* if(this.envioInfoHistorial.fase != null) {
+			if(this.envioInfoHistorial.fase != null) {
 				if(Number(this.envioInformacion.fase.id_tipo_financ) == Number(this.envioInfoHistorial.fase.id_tipo_financ)) {
 					if(!f.dirty) {
 						console.log('no se toco algo');
-						this.banderaHistorial = false;
+						// this.banderaHistorial = false;
 					} else {
 						console.log('si se toco el form pero no la fuente');
 						if (this.bandera && this.fase.id !== '') {
@@ -267,39 +271,43 @@ export class FaseComponent { //implements OnInit {
 					if(f.dirty){
 						console.log('si se toco la fuente y el form');
 						if (this.bandera && this.fase.id !== '') {
-							this.banderaHistorial = true;
+							// this.banderaHistorial = true;
 							this.faseService.guardarHistorial(this.envioInfoHistorial)
 								.subscribe((data: any) => { }, error => { });
 						}
 					} else {
 						console.log('si se toco la fuente y no form');
 						if (this.bandera && this.fase.id !== '') {
-							this.banderaHistorial = true;
+							// this.banderaHistorial = true;
 							this.faseService.guardarHistorial(this.envioInfoHistorial)
 								.subscribe((data: any) => { }, error => { });
 						}
 					}
 				}
-			} */
+			}
 
-			console.log('proyecto', this.proyecto);
+			/* console.log('proyecto', this.proyecto);
 			console.log('presupuesto', this.presupuesto);
 			console.log('bandera_modEgreso', this.bandera);
-			console.log('editar', this.editar);
+			console.log('editar', this.editar); */
 			
 
-			/* this.faseService.createUpdateFase(this.envioInformacion)
+			this.faseService.createUpdateFase(this.envioInformacion)
 				.subscribe((data: any) => {
 					// console.log(data);
 					this.resetVariableEnvio();
 					this.partidasEliminadasAlEditar = [];
-					this.mensaje.success(data, 'panel-adm/mod_proyectos/1/proyectos/true');					
+					if(this.bandera) {
+						this.mensaje.success(data, 'panel-adm/mod_fases/'+this.presupuesto+'/proyectos/'+this.proyecto+'/fases/true');					
+					} else {
+						this.mensaje.success(data, 'panel-adm/pres_egresos/'+this.presupuesto+'/proyectos/'+this.proyecto+'/fases');					
+					}
 					
 				}, error => {
 					// console.log(error);
 					this.mensaje.danger(error.error);
 					// this.inicio();
-				}); */
+				});
 		}
 
 		// console.log('info', this.envioInformacion);
