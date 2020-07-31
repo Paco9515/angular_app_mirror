@@ -101,7 +101,13 @@ export class CambiarResponsableComponent {
     }
 
     guardar() {
-        this.ccostoService.establecerReponsable(this.centro).subscribe((resp: any) => {
+        let datos = {
+            id_cc_a_establecer: this.centro,
+            id_cc_establecedor: this.user.id_cc
+        };
+
+        // console.log(datos);
+        this.ccostoService.establecerReponsable(datos).subscribe((resp: any) => {
             return this.mensaje.success(resp, '/panel-adm/ccostos');
         }, error => {
             return this.mensaje.danger(error.error);

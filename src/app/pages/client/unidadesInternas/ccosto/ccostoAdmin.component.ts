@@ -52,6 +52,7 @@ export class CcostoAdminComponent {
 			id_subfuncion: '',
 			id_nivel: '',
 			id_padre: '',
+			id_usuario: '',
 			codigo: '',
 			nombre: '',
 			calle: '',

@@ -72,6 +72,10 @@
                                                 <!-- <button title="Editar" type="button" class="btn btn-primary btn-sm ml-3" (click)="editar(proyecto.id)" [disabled]="!proyecto.status"> -->
 													<i class="fa fa-edit"></i>
                                                 </button>
+                                                <!-- boton para modificar el proyecto -->
+                                                <!-- <button *ngIf="!bandera && estadoEgreso != 'Finalizado' && proyecto.estado == 'Cursando'" title="Editar" type="button" class="btn btn-primary btn-sm ml-3" (click)="editar(proyecto.id)" [disabled]="proyecto.deleted">                                                
+                                                    <i class="fa fa-edit"></i>
+                                                </button> -->
                                                 <!-- botones normales Eliminar-Activar-->
                                                 <button *ngIf="!proyecto.deleted && estadoEgreso != estado.FINALIZADO && proyecto.estado == estado.CAPTURANDO && !bandera" title="Eliminar" type="button" class="btn btn-danger btn-sm ml-3" (click)="eliminarActivar(proyecto.id, false)">
                                                     <i class="fa fa-trash"></i>
@@ -137,7 +141,7 @@
 
                     <div class="col-sm-2 border bg-light font-weight-bold p-1 d-none d-sm-block text-center">Total</div>
                     <div class="col border bg-light font-weight-bold p-1 d-sm-none">Total</div>
-                    <div class="col-sm-4 border p-1 text-center">{{ total | currency }}</div>
+                    <div class="col-sm-4 border p-1 text-center">{{ total | currency}}</div>
                 </div>
                 <div *ngIf="fases==0; else fasesBlock">
                     <div class="alert alert-warning text-center" role="alert">

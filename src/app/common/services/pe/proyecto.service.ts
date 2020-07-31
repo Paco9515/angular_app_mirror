@@ -19,8 +19,8 @@ export class ProyectoService {
 		}
 	}
 
-	// ** fUNCION QUE GUARDA UN HISTORIAL DE PROYECTOS **
-	createUpdateProyecto2(proyectoHistorial: any) {
+	// ** FUNCION QUE GUARDA UN HISTORIAL DE PROYECTOS **
+	createProyectoHistorial(proyectoHistorial: any) {
 		return this.constants.getRequest(`/create_proyecto_historial`, 'post', proyectoHistorial);
 	}
 
@@ -35,6 +35,10 @@ export class ProyectoService {
 
 	getProyectos(id_presupuesto: string) {
 		return this.constants.getRequest(`/get_proyectos/${id_presupuesto}`, 'get', false);
+	}
+
+	getProyectosCursando(id_presupuesto: string) {
+		return this.constants.getRequest(`/get_proyectos_cursando/${id_presupuesto}`, 'get', false);
 	}
 
 	activarEliminarProyecto(id: string, opcion: boolean) {

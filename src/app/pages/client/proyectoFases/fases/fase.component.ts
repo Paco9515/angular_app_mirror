@@ -11,7 +11,7 @@ import { CffComponent } from '../../../../components/classification/clasfFuenteF
 	selector: 'app-fase',
 	templateUrl: './fase.component.html'
 })
-export class FaseComponent implements OnInit {
+export class FaseComponent { //implements OnInit {
 	@ViewChild(CogComponent, { static: true }) cog_component: CogComponent;
 	@ViewChild(CffComponent, { static: true }) cff_component: CffComponent;
 
@@ -35,8 +35,11 @@ export class FaseComponent implements OnInit {
 	tipo_asentamiento = '';
 	zona_asentamiento = '';
 
-	bandera: boolean;
+	originalTipo: any = '';
+	nuevoTipo: any = '';
 
+	bandera: boolean;
+	envioInformacion: any;
 	faseHistorial: Fase;
 	envioInfoHistorial = {
 		fase: null
@@ -48,10 +51,9 @@ export class FaseComponent implements OnInit {
 		private mensaje: MensajesService,
 		private router: Router
 	) {
+		
 		this.resetVariable();
-	}
-
-	ngOnInit() {
+		// console.log('cff_component', this.cff_component);
 		this.bandera = false;
 		this.activatedRoute.params.subscribe((params: any) => {
 			this.proyecto = params.id_proyecto;
@@ -72,6 +74,7 @@ export class FaseComponent implements OnInit {
 
 	getDataCFF(data: any) {
 		this.cff_data = data;
+		// console.log('data', data);
 	}
 
 	getFase(id: string) {
@@ -112,13 +115,13 @@ export class FaseComponent implements OnInit {
 
 	agregarPartida() {
 		if (this.importe >= 0) {
-			this.total += this.importe;
+			this.total += Number(this.importe);
 			this.partidas.push({
 				id_partida: this.cog_data.id_partida,
 				id_fase: this.id_fase,
 				codigo_partida: this.cog_data.codigo_partida,
 				nombre_partida: this.cog_data.nombre_partida,
-				importe: this.importe
+				importe: Number(this.importe)
 			});
 			this.importe = null;
 			this.cog_component.restartVariables();
@@ -146,27 +149,68 @@ export class FaseComponent implements OnInit {
 		this.fase.id_proyecto = this.proyecto;
 		this.fase.id_tipo_financ = this.cff_data.id_tipo_financ;
 		this.fase.partidas = this.partidas;
-		const envio: any = { fase: null , partidasEliminadas: null} ;
-		envio.fase = this.fase;
-		envio.partidasEliminadas = this.partidasEliminadasAlEditar;
+		this.envioInformacion.fase = this.fase;
+		this.envioInformacion.partidasEliminadas = this.partidasEliminadasAlEditar;
+		
+		if(!f.invalid && this.envioInformacion.fase.id_tipo_financ != '') {
+			if(this.envioInfoHistorial.fase != null) {
+				if(Number(this.envioInformacion.fase.id_tipo_financ) == Number(this.envioInfoHistorial.fase.id_tipo_financ)) {
+					if(!f.dirty) {
+						console.log('no se toco algo');
+						// this.banderaHistorial = false;
+					} else {
+						console.log('si se toco el form pero no la fuente');
+						if (this.bandera && this.fase.id !== '') {
+							this.faseService.guardarHistorial(this.envioInfoHistorial)
+								.subscribe((data: any) => { }, error => { });
+						}
+					}			
+				} else {
+					if(f.dirty){
+						console.log('si se toco la fuente y el form');
+						if (this.bandera && this.fase.id !== '') {
+							// this.banderaHistorial = true;
+							this.faseService.guardarHistorial(this.envioInfoHistorial)
+								.subscribe((data: any) => { }, error => { });
+						}
+					} else {
+						console.log('si se toco la fuente y no form');
+						if (this.bandera && this.fase.id !== '') {
+							// this.banderaHistorial = true;
+							this.faseService.guardarHistorial(this.envioInfoHistorial)
+								.subscribe((data: any) => { }, error => { });
+						}
+					}
+				}
+			}
 
-		// if (this.bandera && this.fase.id !== '') {
-		// 	this.faseService.guardarHistorial(this.envioInfoHistorial)
-		// 		.subscribe((data: any) => {
+			/* console.log('proyecto', this.proyecto);
+			console.log('presupuesto', this.presupuesto);
+			console.log('bandera_modEgreso', this.bandera);
+			console.log('editar', this.editar); */
+			
 
-		// 		}, error => {
+			this.faseService.createUpdateFase(this.envioInformacion)
+				.subscribe((data: any) => {
+					// console.log(data);
+					this.resetVariableEnvio();
+					this.partidasEliminadasAlEditar = [];
+					if(this.bandera) {
+						this.mensaje.success(data, 'panel-adm/mod_fases/'+this.presupuesto+'/proyectos/'+this.proyecto+'/fases/true');					
+					} else {
+						this.mensaje.success(data, 'panel-adm/pres_egresos/'+this.presupuesto+'/proyectos/'+this.proyecto+'/fases');					
+					}
+					
+				}, error => {
+					// console.log(error);
+					this.mensaje.danger(error.error);
+					// this.inicio();
+				});
+		}
 
-		// 		});
-		// }
+		// console.log('info', this.envioInformacion);
+		// console.log('historial', this.envioInfoHistorial);
 
-		this.faseService.createUpdateFase(envio)
-			.subscribe((data: any) => {
-				this.resetVariableEnvio();
-				this.partidasEliminadasAlEditar = [];
-				return this.mensaje.success(data);
-			}, error => {
-				return this.mensaje.danger(error.error);
-			});
 	}
 
 	regresar() {

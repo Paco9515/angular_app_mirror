@@ -38,6 +38,7 @@ export class ProyectoComponent {
 	subprogramas: any[];
 	bandera: boolean = false;
 	id_proyecto: string ;
+	id_egreso: string;
 
 	constructor(
 		private proyectoService: ProyectoService,
@@ -47,9 +48,14 @@ export class ProyectoComponent {
 		private router: Router,
 		private egresos: PresupuestoEgresoService
 	) {
-
+		
+		this.inicio();
+	}
+	
+	inicio() {
 		this.activatedRoute.params.subscribe((params: any) => {
-
+			this.id_egreso = params.id_presupuesto;
+			
 			// Comprobar la existencia del parametro bandera
 			(typeof params['bandera'] !== 'undefined')? this.bandera = params['bandera'] : this.bandera =  false;
 
@@ -58,6 +64,7 @@ export class ProyectoComponent {
 				this.id_proyecto = params.id_proyecto;
 				this.cargarProyecto(this.id_proyecto);
 			} else {
+				// console.log('params', params);
 				// Iniciar variables para creacion de proyecto nuevo
 				this.proyecto.id_presupuesto = params['id_presupuesto'];
 				// console.log(params['id_presupuesto']);
@@ -87,6 +94,7 @@ export class ProyectoComponent {
 
 		this.proyectoService.getProyecto(id)
 			.subscribe((data: any) => {
+				// console.log('proyecto', data);
 				this.proyecto = data.data;
 
 				const PROGRAMA = this.proyecto.id_programa;
@@ -127,26 +135,18 @@ export class ProyectoComponent {
 		this.proyecto.anio = this.anioEgreso;
 		// console.log(this.proyecto.id);
 		if (f.valid) {
-			if (this.bandera && this.proyecto.id !== '') {
-				// console.log('entro en la bandera');
-				this.proyectoService.createUpdateProyecto2(this.proyecto_original)
-					.subscribe((data: any) => {
-						// console.log(data);
-					}, error => {
-						this.mensaje.danger(error.error);
-					});
-			}
-
 			this.proyectoService.createUpdateProyecto(this.proyecto)
-				.subscribe((data: any) => {
-					this.mensaje.success(data);
-				}, error => {
-					this.mensaje.danger(error.error);
-				});
-
-
-			// this.resetVariable();
-
+			.subscribe((data: any) => {				
+				if (this.bandera && this.proyecto.id !== '') {
+					// console.log('entro en la bandera');
+					this.proyectoService.createProyectoHistorial(this.proyecto_original)
+					.subscribe((data: any) => {	}, error => { });
+				}
+				this.mensaje.success(data, 'panel-adm/pres_egresos/'+this.id_egreso+'/proyectos');
+				this.inicio();
+			}, error => {
+				this.mensaje.danger(error.error);
+			});
 		}
 	}
 

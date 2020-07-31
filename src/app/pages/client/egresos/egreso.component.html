@@ -57,7 +57,7 @@
                                         <a type="button" class="btn btn-sm text-white m-1" [ngStyle]="{'background-color':'red'}" (click)="seePresupuestoEgresoPDF()">
                                             <i class="fa fa-eye"></i> Mostrar PDF
                                         </a>
-                                        <a type="button" class="btn btn-sm text-white m-1" [ngStyle]="{'background-color':'green'}" [href]="fileUrl" download="file.csv">
+                                        <a type="button" class="btn btn-sm text-white m-1" ng-hide="seeCsv" [ngStyle]="{'background-color':'green'}" [href]="fileUrl" download="file.csv">
                                             <i class="fa fa-file-excel" aria-hidden="true"></i> Descargar excel
                                         </a>
                                     </div>

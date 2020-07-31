@@ -7,7 +7,6 @@ export interface Usuario {
     api_token: string;
     id_nivel: string;
 	nivel: string;
-	id_cc: string;
 	nombre_cc: string;
 	id_emp: string;
 	img_name: string;

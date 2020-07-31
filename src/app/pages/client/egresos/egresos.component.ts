@@ -13,7 +13,7 @@ import { Usuario } from 'src/app/common/interfaces/usuario.interface';
 export class EgresosComponent {
 
 	presupuestos: any = [];
-	usuario: Usuario;
+	usuario: any;
 
 	presupuesto: PresupuestoEgreso = {
 		id_centro_costo: '',

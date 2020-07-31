@@ -38,6 +38,7 @@ export class EgresoComponent implements OnInit{
 	titleClasf = 'Clasificación Objeto de Gasto';
 
 	infoModEgreso = false;
+	seeCsv = false;
 
 	datosEmpresa: any;
 
@@ -90,7 +91,7 @@ export class EgresoComponent implements OnInit{
 	private getCCentroHijos(id_centro_costo) {
 		this.ccosto_service.getCentrosCostoHijos(id_centro_costo)
 			.subscribe((centroCostos: any) => {
-				// console.log(centroCostos);
+				console.log('centros: ', centroCostos);
 				this.centrosCostos = centroCostos.data;
 			}, error => {
 				this.mensaje.danger(error.error);
@@ -125,12 +126,13 @@ export class EgresoComponent implements OnInit{
 		this.datosEgresoGeneralHijo = [];
 		this.presupuestoEgresos.get_presupuestoEgreso_por_centro_anio(id_centro_costo, anio)
 			.subscribe((egreso: any) => {
-				// console.log(egreso);
+				// console.log('egreso: ', egreso);
 				this.mostrarOpciones = false;
 				egreso = egreso.data;
 				if (egreso.estado !== 'Capturando') {
 					this.presupuestoEgresos.get_presupuesto_egresos_general(id_centro_costo, anio)
 						.subscribe((egresos: any) => {
+							// console.log('egresos: ', egresos);
 							this.datosEgresoGeneralHijo = egresos.data;
 
 							if ((egreso.estado === 'Revisión' )) {
@@ -236,14 +238,20 @@ export class EgresoComponent implements OnInit{
 	public getRequest(url: string, tipo: string, data: any) {
 
 
-		return this.http.get(this._url + url, {responseType: 'text'})
-		.pipe(
-		  tap( // Log the result or error
-			data => data,
+		return this.http.get(this._url + url, {responseType: 'text'});
+		// .pipe(
+		//   tap( // Log the result or error
+		// 	data => data,
 
-			error => this.mensaje.danger(JSON.parse(error.error))
-		  )
-		);
+		// 	error => {
+		// 		const errors = error.error;
+		// 		if(errors.code == 404) {
+		// 			this.seeCsv = false;
+		// 		}
+		// 		this.mensaje.danger(JSON.parse(error.error))
+		// 	}
+		//   )
+		// );
 
 	}
 
@@ -263,12 +271,18 @@ export class EgresoComponent implements OnInit{
 
 	csv(id_centro_costo: number, anio: number) {
 
-	this.getRequest(`/get_csv_presupuesto_egresos_general/${id_centro_costo}/${anio}`, 'get', false)
-		.subscribe( results => {
-
-			const blob = new Blob([results], { type: 'application/csv' });
-			this.fileUrl = this.sanitizer.bypassSecurityTrustResourceUrl(window.URL.createObjectURL(blob));
-		});
+		this.getRequest(`/get_csv_presupuesto_egresos_general/${id_centro_costo}/${anio}`, 'get', false)
+			.subscribe( results => {
+				const blob = new Blob([results], { type: 'application/csv' });
+				this.fileUrl = this.sanitizer.bypassSecurityTrustResourceUrl(window.URL.createObjectURL(blob));
+				this.seeCsv = true;
+			}, error => {
+				const errors = JSON.parse(error.error);
+				if (errors.code === 404) {
+					return this.seeCsv = false;
+				}
+				return this.mensaje.danger(errors);
+			});
 	}
 
 	pdf(id_centro_costo: string, anio: number) {
@@ -279,19 +293,7 @@ export class EgresoComponent implements OnInit{
 
 			this.fileUrlpdf = this.sanitizer.bypassSecurityTrustResourceUrl(window.URL.createObjectURL(blob));
 
-		  });
+		});
 	}
-
-
-
-	// /* OBTIENE EL PRESUPUESTO DE EGRESOS DEL CENTRO DE COSTO PADRE E HIJOS FORMANDO UN PREUSPUETSO GENERAL */
-	// get_pdf_presupuesto_egresos_general(id_centro_costo: string, anio: number) {
-	// 	return this.constants.getRequest(`/get_pdf_presupuesto_egresos_general/${id_centro_costo}/${anio}`, 'get', false);
-	// }
-
-	// /* OBTIENE EL PRESUPUESTO DE EGRESOS DEL CENTRO DE COSTO PADRE E HIJOS FORMANDO UN PREUSPUETSO GENERAL */
-	// get_excel_presupuesto_egresos_general(id_centro_costo: string, anio: number) {
-	// 	return this.constants.getRequest(`/get_excel_presupuesto_egresos_general/${id_centro_costo}/${anio}`, 'get', false);
-	// }
 
 }
