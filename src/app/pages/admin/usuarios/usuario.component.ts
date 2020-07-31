@@ -10,22 +10,22 @@ import { MensajesService } from '../../../common/services/shared/mensajes.servic
   templateUrl: './usuario.component.html'
 })
 export class UsuarioComponent {
-  id_nivel_user: string;
-  id_empresa: string;  
-  id_cc: string;
-  usuario: Usuario;
-  niveles: Nivel;
-  nivel: Nivel;
-  centros: any;
-  banderaCreate: boolean;
-  hayCentros: boolean;
-  // hayCentrosAdmin: boolean;
-  banderaGuardar: boolean = true;
-  constructor(
-    private usuariosService: UsuariosService,
-    private activatedRoute: ActivatedRoute,
-    private mensaje: MensajesService
-  ) { 
+	id_nivel_user: string;
+	id_empresa: string;  
+	id_cc: string;
+	usuario: Usuario;
+	niveles: Nivel;
+	nivel: Nivel;
+	centros: any;
+	banderaCreate: boolean;
+	hayCentros: boolean;
+	// hayCentrosAdmin: boolean;
+	banderaGuardar: boolean = true;
+	constructor(
+	private usuariosService: UsuariosService,
+	private activatedRoute: ActivatedRoute,
+	private mensaje: MensajesService
+	) { 
 	  	this.usuario = {
 	    	id: '',
 	    	nombre: '',
@@ -35,7 +35,6 @@ export class UsuarioComponent {
 	      	api_token: '',
 	      	id_nivel: '',
 	    	nivel: '',
-	    	id_cc: '',
 			nombre_cc: '',
 			id_emp: '',
 			img_name: '',
@@ -62,7 +61,7 @@ export class UsuarioComponent {
 				this.cargarUsuario(data.id);
 			} else {				
 				this.banderaCreate = true;
-				this.cargarCcsUserNuevo();
+				// this.cargarCcsUserNuevo();
 			}
 		});
 
@@ -87,7 +86,7 @@ export class UsuarioComponent {
 		});	
 	}
 
-	cargarCcsUserNuevo() {
+	/* cargarCcsUserNuevo() {
 		let datos = {
 			id_cc: this.id_cc,
 			id_empresa: this.id_empresa
@@ -99,12 +98,12 @@ export class UsuarioComponent {
 			if(data.length != 0) {
 				this.hayCentros = true;
 				this.centros = data;
-				// console.log(this.centros);
+				console.log(this.centros);
 			} else {
 				this.hayCentros = false;
 			}
 		});
-	};
+	}; */
 
 	cargarCcsUserUpdate(usuario: any) {
 		let datos = {

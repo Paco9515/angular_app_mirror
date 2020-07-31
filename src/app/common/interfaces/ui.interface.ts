@@ -79,6 +79,7 @@ export interface Ccosto {
 	id_subfuncion: string;
 	id_nivel: string;
 	id_padre: string;
+	id_usuario: string;
 	codigo: string;
 	nombre: string;
 	calle: string;

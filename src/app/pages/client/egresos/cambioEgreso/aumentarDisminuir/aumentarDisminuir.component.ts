@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { MensajesService } from '../../../../../common/services/shared/mensajes.service';
 import { CambioEgresoService } from 'src/app/common/services/presupuesto/cambioEgreso';
+import { subscribeOn } from 'rxjs/operators';
 
 
 @Component({
@@ -28,6 +29,28 @@ export class AumentarDisminuirComponent {
 	partidas1: any;
 	saldo1: string;
 	importe: string;
+
+	// INFO DEL CENTRO DE COSTO	SELECCIONADO
+	finalidad: string;
+	funcion: string;
+	subfuncion: string;
+	
+	// INFO DEL PROYECTO SELECCIONADO
+	programa: string;
+	subprograma: string;
+
+	//INFO DE LA FASE SELECCIONADA
+	fuente: string;
+	subfuente: string;
+	tipo: string;
+
+	//INFO DE LA PARTIDA SELECCIONADA
+	capitulo: string;
+	concepto: string;
+	clas_contable: string;
+	clas_tipo_gasto: string;
+
+
 
 	banderaContent: boolean;
 	banderaProyecto1: boolean;
@@ -73,6 +96,19 @@ export class AumentarDisminuirComponent {
 			id_cc: ''			
 		};
 
+		this.finalidad = '';
+		this.funcion = '';
+		this.subfuncion = '';
+		this.programa = '';
+		this.subprograma = '';
+		this.fuente = '';
+		this.subfuente ='';
+		this.tipo = '';
+		this.capitulo = '';
+		this.concepto = '';
+		this.clas_contable = '',
+		this.clas_tipo_gasto = '';
+
 		this.cambioEgresos.get_arbol(this.id_cc).subscribe((cc: any) => {			
 			this.centros1 = cc;			
 		});
@@ -81,7 +117,7 @@ export class AumentarDisminuirComponent {
 
 	seleccionTipo() {
 		if(this.tipoMov != '') {
-			console.log('TipoMov', this.tipoMov);
+			// console.log('TipoMov', this.tipoMov);
 			this.banderaContent = true;
 		} else {
 			this.banderaContent = false;
@@ -93,7 +129,7 @@ export class AumentarDisminuirComponent {
 		}
 	}
 
-	cargarProyectos1(id_cc: string) {
+	cargarProyectos(id_cc: string) {
 		if(id_cc === '') {
 			this.banderaProyecto1 = true;	
 			this.proyecto1 = '';	
@@ -106,6 +142,19 @@ export class AumentarDisminuirComponent {
 			this.banderaImporte = true;			
 			this.importe = '';
 			this.banderaGuardar = true;
+
+			this.finalidad = '';
+			this.funcion = '';
+			this.subfuncion = '';
+			this.programa = '';
+			this.subprograma = '';
+			this.fuente = '';
+			this.subfuente ='';
+			this.tipo = '';
+			this.capitulo = '';
+			this.concepto = '';
+			this.clas_contable = '',
+			this.clas_tipo_gasto = '';
 			return;
 		}
 		
@@ -120,6 +169,19 @@ export class AumentarDisminuirComponent {
 		this.importe = '';
 		this.banderaGuardar = true;
 
+		this.finalidad = "";
+		this.funcion = '';
+		this.subfuncion = '';
+		this.programa = '';
+		this.subprograma = '';
+		this.fuente = '';
+		this.subfuente ='';
+		this.tipo = '';
+		this.capitulo = '';
+		this.concepto = '';
+		this.clas_contable = '',
+		this.clas_tipo_gasto = '';
+
 		this.cambioEgresos.get_cc(id_cc).subscribe((info_cc: any) => {
 			// console.log('info_cc', info_cc);
 			this.info_cc = info_cc;
@@ -132,9 +194,17 @@ export class AumentarDisminuirComponent {
 			console.log(error);
 			this.mensaje.danger(error);
 		});
+
+		this.cambioEgresos.getInfoCc(id_cc).subscribe((info_cc: any) => {
+			// console.log(info_cc.data);
+			this.finalidad = info_cc.data.cod_fina+" - "+info_cc.data.nom_fina;
+			this.funcion = info_cc.data.cod_func+" - "+info_cc.data.nom_func;
+			this.subfuncion = info_cc.data.cod_subf+" - "+info_cc.data.nom_subf;
+			
+		});
 	}
 
-	cargarFases1(id_proyecto: string) {
+	cargarFases(id_proyecto: string) {
 		if(id_proyecto == '') {
 			this.banderaFase1 = true;		
 			this.fase1 = '';
@@ -145,6 +215,16 @@ export class AumentarDisminuirComponent {
 			this.banderaImporte = true;
 			this.importe = '';
 			this.banderaGuardar = true;
+
+			this.programa = '';
+			this.subprograma = '';
+			this.fuente = '';
+			this.subfuente ='';
+			this.tipo = '';
+			this.capitulo = '';
+			this.concepto = '';
+			this.clas_contable = '',
+			this.clas_tipo_gasto = '';
 			return;
 		}
 		this.banderaFase1 = false;		
@@ -156,15 +236,33 @@ export class AumentarDisminuirComponent {
 		this.importe = '';
 		this.banderaGuardar = true;
 
+		this.programa = '';
+		this.subprograma = '';
+		this.fuente = '';
+		this.subfuente ='';
+		this.tipo = '';
+		this.capitulo = '';
+		this.concepto = '';
+		this.clas_contable = '',
+		this.clas_tipo_gasto = '';
+
+		this.cambioEgresos.getInfoProyecto(id_proyecto).subscribe((info_proyecto: any) => {
+			// console.log(info_proyecto.data);
+			this.programa = info_proyecto.data.cod_pro+' - '+info_proyecto.data.nom_pro;
+			this.subprograma = info_proyecto.data.cod_sub+' - '+info_proyecto.data.nom_sub
+		});
+
 		this.cambioEgresos.get_fasesActuales(id_proyecto).subscribe((fases: any) => {
 			// console.log('fases', fases);
 			this.fases1 = fases.data;
 		}, error => {
 			this.mensaje.danger(error);
 		});
+
+
 	}
 
-	cargarPartidas1(id_fase: string) {
+	cargarPartidas(id_fase: string) {
 		if(id_fase == '') {
 			this.banderaPartida1 = true;
 			this.partida1 = '';
@@ -173,6 +271,14 @@ export class AumentarDisminuirComponent {
 			this.banderaImporte = true;
 			this.importe = '';
 			this.banderaGuardar = true;
+
+			this.fuente = '';
+			this.subfuente ='';
+			this.tipo = '';
+			this.capitulo = '';
+			this.concepto = '';
+			this.clas_tipo_gasto = '',
+			this.clas_contable = '';
 			return;
 		}
 		this.banderaPartida1 = false;
@@ -182,6 +288,21 @@ export class AumentarDisminuirComponent {
 		this.importe = '';
 		this.banderaGuardar = true;
 
+		this.fuente = '';
+		this.subfuente ='';
+		this.tipo = '';
+		this.capitulo = '';
+		this.concepto = '';
+		this.clas_tipo_gasto = '',
+		this.clas_contable = '';
+
+		this.cambioEgresos.getInfoFase(id_fase).subscribe((info_fase: any) => {
+			// console.log(info_fase.data);
+			this.fuente = info_fase.data.cod_fue+' - '+info_fase.data.nom_fue; 
+			this.subfuente = info_fase.data.cod_sub+' - '+info_fase.data.nom_sub; 
+			this.tipo = info_fase.data.cod_tipo+' - '+info_fase.data.nom_tipo; 
+		});
+
 		this.cambioEgresos.get_partidasActuales(id_fase).subscribe((partidas: any) => {
 			// console.log('partidas', partidas);
 			this.partidas1 = partidas.data;
@@ -190,8 +311,30 @@ export class AumentarDisminuirComponent {
 		});
 	}
 
-	cargarInfoPartida1(id_partida: string) {
+	cargarInfoPartida(id_partida: string) {		
 		if(id_partida != '') {
+			this.capitulo = '';
+			this.concepto = '';
+			this.clas_tipo_gasto = '',
+			this.clas_contable = '';
+
+			this.cambioEgresos.getinfoPartida(id_partida).subscribe((info_partida: any) => {
+				// console.log(info_partida.data);
+				this.capitulo = info_partida.data.cod_capitulo+' - '+info_partida.data.nom_capitulo;
+				this.concepto = info_partida.data.cod_concepto+' - '+info_partida.data.nom_concepto;
+				this.clas_tipo_gasto = info_partida.data.cod_gasto+' - '+info_partida.data.nom_gasto;
+				
+				if(info_partida.data.cod_subcuenta === null) {
+					// console.log('es nulo');
+					this.clas_contable = info_partida.data.cod_cuenta+' - '+info_partida.data.nom_cuenta;
+				} else {
+					// console.log('no es nulo');
+					this.clas_contable = info_partida.data.cod_subcuenta+' - '+info_partida.data.nom_subcuenta;
+				}
+				
+				
+			});
+
 			this.banderaSaldo1 = true;
 			// CARGAR LA INFO DE LA PARTIDA SELECCIONADA
 			this.cambioEgresos.getFasePartidaById(id_partida).subscribe((fase_partida: any) => {

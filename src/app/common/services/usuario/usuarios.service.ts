@@ -82,6 +82,11 @@ export class UsuariosService {
 		// let user = JSON.parse(localStorage.getItem('currentUser'));
 		return this.constants.getRequest(`/get_CcsUserClientNuevo`, 'post', datos);
 	}
+
+	//** FUNCION PARA TRAER LOS USUARIOS DISPONIBLES DE UNA EMPRESA **//
+	getUsersDisponiblesByEmpresa(datos: any) {		
+		return this.constants.getRequest(`/get_users_disponibles_by_empresa`, 'post', datos);
+	}
 	
 	// ** FUNCION PARA TRAER LOS CENTROS DE COSTOS HIJOS AL CLIENTE EN LA VISTA UPDATE ** // 
 	getCcsClientUpdate(datos: any) {

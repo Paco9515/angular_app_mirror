@@ -70,7 +70,7 @@
                                                 <span *ngIf="fase.estado_proyecto == 'Finalizado';" class="badge badge-danger">
                                                     Finalizado
                                                 </span>
-                                                <span *ngIf="fase.estado_proyecto == 'En curso';" class="badge badge-info text-white ">
+                                                <span *ngIf="fase.estado_proyecto == 'Cursando';" class="badge badge-info text-white ">
                                                     En curso
                                                 </span>
                                                 <span *ngIf="fase.estado_proyecto == 'Creando';" class="badge badge-success">
@@ -81,13 +81,13 @@
                                                 <button type="button" title="Detalles de la fase" class="btn btn-info btn-sm text-white ml-3" data-toggle="modal" data-target="#FaseModal" (click)="mostrarDetalle(fase)">
                                                     <i class="fa fa-eye"></i>
                                                 </button>
-                                                <button *ngIf="fase.estado_proyecto == 'Creando'" type="button" title="editar" class="btn btn-primary btn-sm ml-3" (click)="editar(fase.id)" [disabled]="fase.deleted">
+                                                <button *ngIf="fase.estado_proyecto == 'Cursando'" type="button" title="editar" class="btn btn-primary btn-sm ml-3" (click)="editar(fase.id)" [disabled]="fase.deleted">
 													<i class="fa fa-edit"></i>
 												</button>
-                                                <button *ngIf="!fase.deleted && fase.estado_proyecto == 'Creando'" title="Eliminar" type="button" class="btn btn-danger btn-sm ml-3" (click)="eliminarActivar(fase.id, false)">
+                                                <button *ngIf="!fase.deleted && fase.estado_proyecto == 'Cursando' && !bandera" title="Eliminar" type="button" class="btn btn-danger btn-sm ml-3" (click)="eliminarActivar(fase.id, false)">
                                                     <i class="fa fa-trash"></i>
                                                     </button>
-                                                <button *ngIf="fase.deleted && fase.estado_proyecto == 'Creando'" title="Activar" type="button" class="btn btn-success btn-sm ml-3" (click)="eliminarActivar(fase.id, true)">
+                                                <button *ngIf="fase.deleted && fase.estado_proyecto == 'Cursando'" title="Activar" type="button" class="btn btn-success btn-sm ml-3" (click)="eliminarActivar(fase.id, true)">
 													<i class="fa fa-arrow-circle-up"></i>
 												</button>
                                             </td>

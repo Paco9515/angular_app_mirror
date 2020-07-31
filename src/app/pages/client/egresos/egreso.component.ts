@@ -73,7 +73,7 @@ export class EgresoComponent {
 	private getCCentroHijos(id_centro_costo) {
 		this.ccosto_service.getCentrosCostoHijos(id_centro_costo)
 			.subscribe((centroCostos: any) => {
-				// console.log(centroCostos);
+				console.log('centros: ', centroCostos);
 				this.centrosCostos = centroCostos.data;
 			}, error => {
 				this.mensaje.danger(error.error);
@@ -108,12 +108,13 @@ export class EgresoComponent {
 		this.datosEgresoGeneralHijo = [];
 		this.presupuestoEgresos.get_presupuestoEgreso_por_centro_anio(id_centro_costo, anio)
 			.subscribe((egreso: any) => {
-				// console.log(egreso);
+				// console.log('egreso: ', egreso);
 				this.mostrarOpciones = false;
 				egreso = egreso.data;
 				if (egreso.estado !== 'Capturando') {
 					this.presupuestoEgresos.get_presupuesto_egresos_general(id_centro_costo, anio)
 						.subscribe((egresos: any) => {
+							// console.log('egresos: ', egresos);
 							this.datosEgresoGeneralHijo = egresos.data;
 							this.totalGeneralHijo = this.datosEgresoGeneralHijo.reduce((contador, data) => contador + parseFloat(data.importe), 0);
 
