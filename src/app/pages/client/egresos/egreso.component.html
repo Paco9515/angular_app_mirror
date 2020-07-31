@@ -51,14 +51,17 @@
 
                                 <div *ngIf="datosEgresoGeneral.length != 0; else alertPresupuestoPropio">
                                     <div class="col-12 m-2 text-right">
-                                        <button type="button" class="btn btn-sm text-white m-1" [ngStyle]="{'background-color':'orange'}" (click)="downloadPresupuestoEgresoPDF()">
+                                        <a type="button" class="btn btn-sm text-white m-1" [ngStyle]="{'background-color':'orange'}" (click)="downloadPresupuestoEgresoPDF()">
                                             <i class="fa fa-print"></i> Imprimir
-                                        </button>
-                                        <button type="button" class="btn btn-sm text-white m-1" [ngStyle]="{'background-color':'red'}" (click)="seePresupuestoEgresoPDF()">
+                                        </a>
+                                        <a type="button" class="btn btn-sm text-white m-1" [ngStyle]="{'background-color':'red'}" (click)="seePresupuestoEgresoPDF()">
                                             <i class="fa fa-eye"></i> Mostrar PDF
-                                        </button>
+                                        </a>
+                                        <a type="button" class="btn btn-sm text-white m-1" [ngStyle]="{'background-color':'green'}" [href]="fileUrl" download="file.csv">
+                                            <i class="fa fa-file-excel" aria-hidden="true"></i> Descargar excel
+                                        </a>
                                     </div>
-                                    <app-table-egreso [datos]="datosEgresoGeneral"  [anio]="egresoPropioPrincipal.anio"></app-table-egreso>
+                                    <app-table-egreso [datos]="datosEgresoGeneral" [anio]="egresoPropioPrincipal.anio"></app-table-egreso>
                                 </div>
                             </div>
 
@@ -68,7 +71,7 @@
                                         <i class="fa fa-exclamation-triangle fa-lg"></i> {{ mensajeAlert }}
                                     </div>
                                 </ng-template>
-                                <app-table-egreso *ngIf="datosEgreso != null; else alertEgresoPropio" [datos]="datosEgreso"  [anio]="egresoPropioPrincipal.anio"></app-table-egreso>
+                                <app-table-egreso *ngIf="datosEgreso != null; else alertEgresoPropio" [datos]="datosEgreso" [anio]="egresoPropioPrincipal.anio"></app-table-egreso>
                             </div>
 
                             <div class="tab-pane" id="egresoACargos" role="tabpanel" *ngIf="centrosCostos.length != 0 ">
@@ -91,7 +94,7 @@
                                                     </div>
                                                 </ng-template>
 
-                                                 <app-table-egreso *ngIf="datosEgresoGeneralHijo.length != 0; else alertEgresoHijo"  [datos]="datosEgresoGeneralHijo" [anio]="egresoPropioPrincipal.anio"></app-table-egreso>
+                                                <app-table-egreso *ngIf="datosEgresoGeneralHijo.length != 0; else alertEgresoHijo" [datos]="datosEgresoGeneralHijo" [anio]="egresoPropioPrincipal.anio"></app-table-egreso>
 
                                                 <div class="row col-12 text-center" *ngIf="mostrarOpciones">
                                                     <button class="btn btn-success mr-2" (click)="autorizarPresupuesto(centro.id)">
@@ -116,6 +119,8 @@
                                             <a class="nav-link" id="v-pills-clasf-administrativa-tab" data-toggle="pill" href="#v-pills-clasf-administrativa" role="tab" aria-controls="v-pills-clasf-administrativa" aria-selected="false" (click)="buscarPresupuestoPorClasificacion('ClasfAdministrativa', $event.target.text)">Clasificación Administrativa</a>
                                             <a class="nav-link" id="v-pills-clasf-programatica-tab" data-toggle="pill" href="#v-pills-clasf-programatica" role="tab" aria-controls="v-pills-clasf-programatica" aria-selected="false" (click)="buscarPresupuestoPorClasificacion('ClasfProgramatica', $event.target.text)">Clasificación Programatica</a>
                                             <a class="nav-link" id="v-pills-clasf-fuente-financiamiento-tab" data-toggle="pill" href="#v-pills-clasf-fuente-financiamiento" role="tab" aria-controls="v-pills-clasf-fuente-financiamiento" aria-selected="false" (click)="buscarPresupuestoPorClasificacion('ClasfFuenteFinanciamiento', $event.target.text)">Clasificación Por fuente de financiamiento</a>
+                                            <a class="nav-link" id="v-pills-clasf-unidades-administrativa-tab" data-toggle="pill" href="#v-pills-clasf-unidades-administrativa" role="tab" aria-controls="v-pills-clasf-unidades-administrativa" aria-selected="false" (click)="buscarPresupuestoPorClasificacion('ClasfUnidadesAdministrativa', $event.target.text)">Clasificación Unidades Administrativa</a>
+                                            <a class="nav-link" id="v-pills-clasf-centros-costos-tab" data-toggle="pill" href="#v-pills-clasf-centros-costos" role="tab" aria-controls="v-pills-clasf-centros-costos" aria-selected="false" (click)="buscarPresupuestoPorClasificacion('ClasfCentrosCostos', $event.target.text)">Clasificación Centros Costos</a>
                                         </div>
                                         <div class="text-center m-3">
                                             <button type="button" class="btn btn-sm text-white m-1" [ngStyle]="{'background-color':'orange'}" (click)="downloadClasificacionPDF()">
@@ -144,7 +149,7 @@
                                             </div>
                                             <div class="tab-pane animeted fadeIn" id="v-pills-clasf-administrativa" role="tabpanel" aria-labelledby="v-pills-clasf-administrativa-tab">
                                                 <div class="align-middle text-center h3 font-weight-bold">
-                                                    Clasificación Unidad Administrativa {{ egresoPropioPrincipal.anio }}
+                                                    Clasificación Administrativa {{ egresoPropioPrincipal.anio }}
                                                     <p><small>({{ egresoPropioPrincipal.nombre_centro_costo }})</small></p>
                                                 </div>
                                                 <app-table-clasificacion [datosClasificacion]="clasificaciones"></app-table-clasificacion>
@@ -159,6 +164,20 @@
                                             <div class="tab-pane animeted fadeIn" id="v-pills-clasf-fuente-financiamiento" role="tabpanel" aria-labelledby="v-pills-clasf-fuente-financiamiento-tab">
                                                 <div class="align-middle text-center h3 font-weight-bold">
                                                     Clasificación Por Fuente Financiamiento {{ egresoPropioPrincipal.anio }}
+                                                    <p><small>({{ egresoPropioPrincipal.nombre_centro_costo }})</small></p>
+                                                </div>
+                                                <app-table-clasificacion [datosClasificacion]="clasificaciones"></app-table-clasificacion>
+                                            </div>
+                                            <div class="tab-pane animeted fadeIn" id="v-pills-clasf-unidades-administrativa" role="tabpanel" aria-labelledby="v-pills-clasf-unidades-administrativa-tab">
+                                                <div class="align-middle text-center h3 font-weight-bold">
+                                                    Clasificación Unidades Administrativa {{ egresoPropioPrincipal.anio }}
+                                                    <p><small>({{ egresoPropioPrincipal.nombre_centro_costo }})</small></p>
+                                                </div>
+                                                <app-table-clasificacion [datosClasificacion]="clasificaciones"></app-table-clasificacion>
+                                            </div>
+                                            <div class="tab-pane animeted fadeIn" id="v-pills-clasf-unidades-centros-costos" role="tabpanel" aria-labelledby="v-pills-clasf-centros-costos-tab">
+                                                <div class="align-middle text-center h3 font-weight-bold">
+                                                    Clasificación Centros Costos {{ egresoPropioPrincipal.anio }}
                                                     <p><small>({{ egresoPropioPrincipal.nombre_centro_costo }})</small></p>
                                                 </div>
                                                 <app-table-clasificacion [datosClasificacion]="clasificaciones"></app-table-clasificacion>

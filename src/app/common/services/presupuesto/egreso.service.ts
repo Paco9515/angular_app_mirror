@@ -48,6 +48,8 @@ export class PresupuestoEgresoService {
 		return this.constants.getRequest(`/get_presupuesto_egresos_general/${id_centro_costo}/${anio}`, 'get', false);
 	}
 
+	
+
 	// ** SERVICIOS PARA LA MODIFICACION DEL EGRESO ** //
 	get_egreso(id: string) {
 		return this.constants.getRequest(`/get_presupuestoEgresos/${id}`, 'get', false);
