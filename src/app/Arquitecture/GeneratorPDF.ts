@@ -69,7 +69,7 @@ export class GeneratorPDF {
 		const totalPages = this.doc.internal.getNumberOfPages();
 
 		const img = new Image();
-		img.src = String(`assets/img/${ datos.url_img }`);
+		// img.src = String(`assets/images/${ datos.url_img }`);
 
 		// For each page, print the footer and header in all page
 		for (let i = 1; i <= totalPages; i++) {
@@ -77,7 +77,7 @@ export class GeneratorPDF {
 			this.doc.setFontSize(this.fontSize - 2);
 			this.doc.text(String(datosEmpresa), xAxisText, 20);
 			this.doc.text(String(direccion), xAxisText, 24);
-			this.doc.addImage(img, 'JPG', xAxisImagen, yAxisImagen, 35, 35);
+			// this.doc.addImage(img, 'PNG', xAxisImagen, yAxisImagen, 35, 35);
 			// Go to page i
 			this.doc.setPage(i);
 			// Print Page 1 of 4 for example

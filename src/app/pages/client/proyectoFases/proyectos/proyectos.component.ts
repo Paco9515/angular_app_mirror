@@ -4,15 +4,15 @@ import { Proyectos } from 'src/app/common/interfaces/pe.interface';
 import { MensajesService } from '../../../../common/services/shared/mensajes.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FaseService } from '../../../../common/services/pe/fase.service';
-import { Observable } from 'rxjs';
+import { estadosEgresos } from '../../../../constants/estadosEgresos';
 
 @Component({
 	selector: 'app-proyectos',
 	templateUrl: './proyectos.component.html'
-	
 })
 export class ProyectosComponent implements OnInit {
 
+	estado = estadosEgresos;
 	detalle: Proyectos;
 	proyectos: Proyectos[];
 	fases: any;
@@ -26,7 +26,7 @@ export class ProyectosComponent implements OnInit {
 		private fase_service: FaseService,
 		private mensaje: MensajesService,
 		private activatedRoute: ActivatedRoute,
-		private router: Router
+		private router: Router,
 		) {
 			this.detalle = {
 				id: '',
@@ -45,25 +45,11 @@ export class ProyectosComponent implements OnInit {
 				deleted: false
 			};
 			this.proyectos = [];
-
-			// let obs =  new Observable( observer => {
-			// 	let contador = 1;
-
-			// 	let intervalo = setInterval(() => {
-
-			// 		accion += 1;
-			// 		observer.next(accion);
-			// 	},1000);
-
-			// });
-			
-			// obs.subscribe( accion => {
-			// 	console.log('Sub', accion);
-			// });
-
 	}
 
 	ngOnInit() {
+		// console.log(estadosPresupuestoEgresos.CAPTURANDO );
+
 		this.activatedRoute.params
 			.subscribe( params => {
 				(typeof params['bandera'] !== 'undefined')? this.bandera = true : this.bandera =  false;
@@ -79,7 +65,7 @@ export class ProyectosComponent implements OnInit {
 			this.router.navigate([`/panel-adm/pres_egresos/${this.id_presupuesto}/proyectos`, 'nuevo']);
 		} else {
 			this.router.navigate([`/panel-adm/mod_proyecto/${this.id_presupuesto}/proyectos/`, `nuevo`, this.bandera]);
-		}		
+		}
 	}
 
 	mostrarFases(id_proyecto) {
@@ -146,21 +132,14 @@ export class ProyectosComponent implements OnInit {
 		this.detalle = proyecto;
 		this.total = 0;
 		this.fase_service.getFases(proyecto.id)
-			.subscribe( (data: any) => {
-				this.fases = data;
-				
-				if (this.fases !== []) {
-					this.fases.forEach(function(fase) {
-						
+			.subscribe( (fases: any) => {
+				this.fases = fases.data;
+				// console.log(this.fases);
+				if (this.fases) {
+					this.fases.forEach(function(fase: any) {
 						fase.importe = 0;
-						if(fase.partidas[0] != null){
-							fase.partidas.forEach(function(partida) {
-								fase.importe += Number(partida.importe);								
-							});
-							this.total += Number(fase.importe);
-
-						}
-						
+						fase.importe = fase.partidas.reduce((sum, partida) => sum + Number(partida.importe), fase.importe);
+						this.total = this.total + Number(fase.importe);
 					}, this);
 				}
 			});

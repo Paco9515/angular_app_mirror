@@ -1,11 +1,14 @@
 
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MensajesService } from '../../../common/services/shared/mensajes.service';
 import { CcostoService } from 'src/app/common/services/ui/ccosto.service';
 import { PresupuestoEgresoService } from '../../../common/services/presupuesto/egreso.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { JspdfPresupuestoEgresoGeneral } from '../../../Arquitecture/pdfs/JspdfPresupuestoEgresoGeneral';
 import { JspdfClasificacionPresupuestoEgreso } from '../../../Arquitecture/pdfs/jsPDFClasificacionPresupuestoegreso';
+import { HttpClient } from '@angular/common/http';
+import { tap } from 'rxjs/operators';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component ({
 	selector: 'app-egreso',
@@ -13,33 +16,34 @@ import { JspdfClasificacionPresupuestoEgreso } from '../../../Arquitecture/pdfs/
 	styles: []
 })
 
-export class EgresoComponent {
+export class EgresoComponent implements OnInit{
+	readonly _url = 'http://localhost:8000';
 
 	mensajeAlert = '';
 	mensajeAlertHijo = '';
-	id_egreso: string;
 	centrosCostos: any = [];
 	egresoPropioPrincipal: any = '';
 
 	/* PRESUPUESTO PROPIO */
 	datosEgreso: any[];
-	totalPropio = 0;
 
 	/* PRESUPUESTO GENERAL */
 	datosEgresoGeneral: any[] = null;
-	totalGeneral: number;
 
 	/* PRESUPUESTO HIJO */
 	datosEgresoGeneralHijo: any = [];
-	totalGeneralHijo = 0;
 
 	mostrarOpciones = false;
 	clasificaciones: any[] = [];
 	titleClasf = 'Clasificación Objeto de Gasto';
 
-	infoModEgreso: boolean = false;
+	infoModEgreso = false;
+	seeCsv = false;
 
-	datosEmpresa:any;
+	datosEmpresa: any;
+
+	fileUrl;
+	fileUrlpdf;
 	// totalClasificacion: number;
 	// loading: boolean = false;
 
@@ -48,23 +52,37 @@ export class EgresoComponent {
 		private ccosto_service: CcostoService,
 		private presupuestoEgresos: PresupuestoEgresoService,
 		private activateRoute: ActivatedRoute,
-		private router: Router
+		private router: Router,
+		private http: HttpClient,
+		private sanitizer: DomSanitizer
 	) {
 		this.activateRoute.params.subscribe(params => {
-			this.id_egreso = params['id_presupuesto'];
-			this.infoModEgreso = params['bandera'];
-			console.log('infoModEgreso', this.infoModEgreso);
-			this.get_presupuestoId(this.id_egreso);
-			this.getDatosPresupuesto(this.id_egreso);
+			const id_egreso = params.id_presupuesto;
+			this.infoModEgreso = params.bandera;
+
+			// console.log('infoModEgreso', this.infoModEgreso);
+			this.get_presupuestoId(id_egreso);
+			this.getDatosPresupuesto(id_egreso);
 		});
 		this.datosEmpresaPorIdCentroCosto();
+		
+
+
+	}
+
+	ngOnInit() {
+		/*const data = 'some text';
+    	const blob = new Blob([data], { type: 'application/octet-stream' });
+
+		this.fileUrl = this.sanitizer.bypassSecurityTrustResourceUrl(window.URL.createObjectURL(blob));*/
+	
+		// this.pdf();
 	}
 
 	private getDatosPresupuesto($id_presupuesto: string) {
 		this.presupuestoEgresos.get_presupuesto($id_presupuesto)
 			.subscribe((data: any) => {
 				this.datosEgreso = data.data;
-				this.totalPropio = this.datosEgreso.reduce((contador, egreso) => contador + parseFloat(egreso.importe), 0);
 			}, error => {
 				this.mensajeAlert = error.error.message;
 			});
@@ -85,6 +103,8 @@ export class EgresoComponent {
 			.subscribe((egreso: any) => {
 				// console.log(egreso.data);
 				this.egresoPropioPrincipal = egreso.data;
+				const user = JSON.parse(localStorage.getItem('currentUser'));
+				this.csv(user.id_cc, this.egresoPropioPrincipal.anio);
 				this.get_presupuesto_egresos_general(this.egresoPropioPrincipal.id_centro_costo, this.egresoPropioPrincipal.anio);
 				this.getCCentroHijos(this.egresoPropioPrincipal.id_centro_costo);
 				this.buscarPresupuestoPorClasificacion('ClasfObjGasto');
@@ -96,9 +116,7 @@ export class EgresoComponent {
 	private get_presupuesto_egresos_general(id_centro_costo, anio) {
 		this.presupuestoEgresos.get_presupuesto_egresos_general(id_centro_costo, anio)
 			.subscribe((egresos: any) => {
-				// console.log(egresos.data);
 				this.datosEgresoGeneral = egresos.data;
-				this.totalGeneral = this.datosEgresoGeneral.reduce(( contador, egreso )  => contador + parseFloat(egreso.importe), 0);
 			}, error => {
 				this.mensaje.danger(error.error);
 			});
@@ -116,7 +134,6 @@ export class EgresoComponent {
 						.subscribe((egresos: any) => {
 							// console.log('egresos: ', egresos);
 							this.datosEgresoGeneralHijo = egresos.data;
-							this.totalGeneralHijo = this.datosEgresoGeneralHijo.reduce((contador, data) => contador + parseFloat(data.importe), 0);
 
 							if ((egreso.estado === 'Revisión' )) {
 								this.mostrarOpciones = true;
@@ -164,11 +181,11 @@ export class EgresoComponent {
 	}
 
 	regresar() {
-		if(this.infoModEgreso) {
+		if (this.infoModEgreso) {
 			this.router.navigate([`/panel-adm/modificar_egreso`]);
 		} else {
 			this.router.navigate([`/panel-adm/pres_egresos`]);
-		}		
+		}
 	}
 
 	public buscarPresupuestoPorClasificacion(clasificacion: string, titleClasf: string = null) {
@@ -216,6 +233,67 @@ export class EgresoComponent {
 			}, error => {
 				this.mensaje.danger(error.error);
 			});
+	}
+
+	public getRequest(url: string, tipo: string, data: any) {
+
+
+		return this.http.get(this._url + url, {responseType: 'text'});
+		// .pipe(
+		//   tap( // Log the result or error
+		// 	data => data,
+
+		// 	error => {
+		// 		const errors = error.error;
+		// 		if(errors.code == 404) {
+		// 			this.seeCsv = false;
+		// 		}
+		// 		this.mensaje.danger(JSON.parse(error.error))
+		// 	}
+		//   )
+		// );
+
+	}
+
+	getPdf(id_centro_costo: string, anio: number) {
+
+		// this.authKey = localStorage.getItem('jwt_token');
+
+		const httpOptions = {
+		  responseType: 'blob' as 'json',
+		//   headers: new HttpHeaders({
+			// 'Authorization': this.authKey,
+		//   })
+		};
+
+		return this.http.get(this._url + `/get_pdf_presupuesto_egresos_general/${id_centro_costo}/${anio}`, httpOptions);
+	  }
+
+	csv(id_centro_costo: number, anio: number) {
+
+		this.getRequest(`/get_csv_presupuesto_egresos_general/${id_centro_costo}/${anio}`, 'get', false)
+			.subscribe( results => {
+				const blob = new Blob([results], { type: 'application/csv' });
+				this.fileUrl = this.sanitizer.bypassSecurityTrustResourceUrl(window.URL.createObjectURL(blob));
+				this.seeCsv = true;
+			}, error => {
+				const errors = JSON.parse(error.error);
+				if (errors.code === 404) {
+					return this.seeCsv = false;
+				}
+				return this.mensaje.danger(errors);
+			});
+	}
+
+	pdf(id_centro_costo: string, anio: number) {
+
+		this.getPdf(id_centro_costo, anio).subscribe((data: any) => {
+
+			const blob = new Blob([data], {type: 'application/pdf'});
+
+			this.fileUrlpdf = this.sanitizer.bypassSecurityTrustResourceUrl(window.URL.createObjectURL(blob));
+
+		});
 	}
 
 }

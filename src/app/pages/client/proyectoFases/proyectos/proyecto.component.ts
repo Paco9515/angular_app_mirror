@@ -87,7 +87,7 @@ export class ProyectoComponent {
 		this.proyecto_original = [];
 			this.proyectoService.getProyecto(id)
 			.subscribe((data: any) => {
-				
+
 				this.proyecto_original = data.data;
 				// console.log(this.proyecto_original);
 			});

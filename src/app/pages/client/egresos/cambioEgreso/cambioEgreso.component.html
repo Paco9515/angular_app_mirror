@@ -85,7 +85,7 @@
                                             <tr>
                                                 <td class="text-center">{{ presupuestoPropio.codigo_cc }}</td>
                                                 <td>{{ presupuestoPropio.nombre_centro_costo }}</td>
-                                                <td>{{ presupuestoPropio.nombre }}</td>
+                                                <td>Presupuesto de egresos {{ presupuestoPropio.anio }}</td>
                                                 <td class="text-center">
                                                     <button type="button" class="btn btn-info btn-sm text-white ml-3" (click)="mostrarInfo(presupuestoPropio.id);">
                                                         <i class="fa fa-eye"></i>
@@ -128,7 +128,7 @@
                                             <tr *ngFor="let presupuesto of presupuestosHijos; let i = index">
                                                 <td class="text-center">{{ presupuesto.codigo_cc }}</td>
                                                 <td>{{ presupuesto.nombre_cc }}</td>
-                                                <td>{{ presupuesto.nombre_pres }}</td>
+                                                <td class="text-center">{{ presupuesto.anio }}</td>
                                                 <!--<td class="text-center">
                                                      <span [class]="getBadgeFormatEstado(presupuesto.estado)">
                                                         {{ presupuesto.estado }}

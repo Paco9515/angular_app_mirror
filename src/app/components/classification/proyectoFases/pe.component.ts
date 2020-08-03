@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { Proyectos, Fases } from 'src/app/common/interfaces/pe.interface';
+import { Proyectos, Fase } from 'src/app/common/interfaces/pe.interface';
 import { PeService } from 'src/app/common/services/pe/pe.service';
 
 @Component({
@@ -12,7 +12,7 @@ export class PeComponent implements OnInit {
   	@Output() pe = new EventEmitter<any>();
 
 	proyectos: Proyectos[];
-   	fases: Fases[];
+   	fases: Fase[];
 
 	data: any;
 	fase =  true;

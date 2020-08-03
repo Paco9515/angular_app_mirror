@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FaseService } from 'src/app/common/services/pe/fase.service';
-import { Fases } from 'src/app/common/interfaces/pe.interface';
+import { Fase } from 'src/app/common/interfaces/pe.interface';
 import { MensajesService } from '../../../../common/services/shared/mensajes.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ProyectoService } from '../../../../common/services/proyecto/proyecto.service';
+import { estadosProyecto } from 'src/app/constants/estadoProyecto';
 
 @Component({
 	selector: 'app-fases',
@@ -11,13 +12,14 @@ import { ProyectoService } from '../../../../common/services/proyecto/proyecto.s
 })
 export class FasesComponent implements OnInit {
 
-	fases: Fases[];
+	fases: Fase[];
+	fase: Fase;
 	proyecto: string;
 	presupuesto: any[];
-	estadoProyecto: string = '';
-	detalle: Fases;
+	estadoProyecto = '';
 	partidas: any[];
 	bandera: boolean;
+	estado = estadosProyecto;
 
 	total = 0;
 
@@ -29,7 +31,7 @@ export class FasesComponent implements OnInit {
 		private router: Router
 	) {
 		this.fases = [];
-		this.detalle = {
+		this.fase = {
 			id: '',
 			id_proyecto: '',
 			estado_proyecto: '',
@@ -49,8 +51,9 @@ export class FasesComponent implements OnInit {
 			num_exterior: null,
 			num_interior: null,
 			deleted: false,
-			partidas: null
-		};
+			partidas: []
+		}
+
 		this.bandera = false;
 	}
 
@@ -58,10 +61,10 @@ export class FasesComponent implements OnInit {
 
 		this.activatedRoute.params
 			.subscribe( params => {
-				(typeof params['bandera'] !== 'undefined')? this.bandera = params['bandera'] : this.bandera =  false;
+				(typeof params.bandera !== 'undefined') ? this.bandera = params.bandera : this.bandera =  false;
 
-				this.proyecto = params['id_proyecto'];
-				this.presupuesto = params['id_presupuesto'];				
+				this.proyecto = params.id_proyecto;
+				this.presupuesto = params.id_presupuesto;
 				this.getEstadoProyecto(this.proyecto);
 			});
 			// console.log(this.bandera);
@@ -80,9 +83,9 @@ export class FasesComponent implements OnInit {
 	getFases(id_proyecto) {
 		this.fase_service.getFases(id_proyecto)
 			.subscribe((data: any) => {
-				this.fases = data;
+				this.fases = data.data;
 				// Se consulta el estado del proyecto de la primera fase
-				// this.estadoProyecto = this.fases[0].estado_proyecto
+				this.estadoProyecto = this.fases[0].estado_proyecto;
 			});
 	}
 
@@ -116,23 +119,11 @@ export class FasesComponent implements OnInit {
 		}
 	}
 
-	mostrarDetalle( fase ) {
-		// let data: any = {
-		// 	title: "Hola",
-		// 	message: "<ul><li>Coffee</li><li>Tea</li><li>Milk</li></ul>"
-		// };
-		// this.mensaje.success(data);
-		// console.log(data.title);
-		this.detalle = fase;
-		this.total = 0;
-
-		if(this.detalle.partidas[0] == null) {
-			return this.detalle.partidas = null;
-		}
-		return this.total = this.detalle.partidas.reduce(( sum: number, partida: any )  => Number(sum) + (Number(partida.importe)), 0);
+	mostrarDetalle(fase) {
+		this.fase = fase;
 	}
 
-	getEstadoProyecto(id){
+	getEstadoProyecto(id) {
 		this.proyectos_service.getProyecto(id)
 			.subscribe((data: any) => {
 				this.estadoProyecto = data.estado;
@@ -142,3 +133,4 @@ export class FasesComponent implements OnInit {
 	}
 
 }
+

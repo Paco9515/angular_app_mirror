@@ -51,103 +51,17 @@
 
                                 <div *ngIf="datosEgresoGeneral.length != 0; else alertPresupuestoPropio">
                                     <div class="col-12 m-2 text-right">
-                                        <button type="button" class="btn btn-sm text-white m-1" [ngStyle]="{'background-color':'orange'}" (click)="downloadPresupuestoEgresoPDF()">
+                                        <a type="button" class="btn btn-sm text-white m-1" [ngStyle]="{'background-color':'orange'}" (click)="downloadPresupuestoEgresoPDF()">
                                             <i class="fa fa-print"></i> Imprimir
-                                        </button>
-                                        <button type="button" class="btn btn-sm text-white m-1" [ngStyle]="{'background-color':'red'}" (click)="seePresupuestoEgresoPDF()">
+                                        </a>
+                                        <a type="button" class="btn btn-sm text-white m-1" [ngStyle]="{'background-color':'red'}" (click)="seePresupuestoEgresoPDF()">
                                             <i class="fa fa-eye"></i> Mostrar PDF
-                                        </button>
+                                        </a>
+                                        <a type="button" class="btn btn-sm text-white m-1" ng-hide="seeCsv" [ngStyle]="{'background-color':'green'}" [href]="fileUrl" download="file.csv">
+                                            <i class="fa fa-file-excel" aria-hidden="true"></i> Descargar excel
+                                        </a>
                                     </div>
-                                    <div class="table-responsive ">
-                                        <table class="table table-striped table-bordered table-sm " id="presupuestoEgresoGeneral">
-                                            <thead>
-                                                <tr>
-                                                    <th class="align-middle text-center h2 font-weight-bold" colspan="24">Presupuesto de egresos {{ egresoPropioPrincipal.anio }}</th>
-                                                </tr>
-                                                <tr>
-                                                    <th class="align-middle text-center " rowspan="5">#</th>
-                                                    <th class="align-middle text-center " rowspan="5">Año</th>
-                                                    <th class="align-middle text-center " colspan="22">Centro Costo</th>
-                                                </tr>
-
-                                                <tr>
-                                                    <th class="align-middle text-center " rowspan="4">Código</th>
-                                                    <th class="align-middle text-center " rowspan="4">Nombre</th>
-                                                    <th class="align-middle text-center " colspan="20">Proyectos</th>
-                                                </tr>
-
-                                                <tr>
-                                                    <th class="align-middle text-center " rowspan="3">Código</th>
-                                                    <th class="align-middle text-center " rowspan="3">Nombre</th>
-                                                    <th class="align-middle text-center " rowspan="3">Fecha Inicio</th>
-                                                    <th class="align-middle text-center " rowspan="3">Fecha Final</th>
-                                                    <th class="align-middle text-center " colspan="2">Subprograma</th>
-                                                    <th class="align-middle text-center " colspan="14">Fase</th>
-                                                </tr>
-                                                <tr>
-                                                    <th class="align-middle text-center " rowspan="2">Código</th>
-                                                    <th class="align-middle text-center " rowspan="2">Nombre</th>
-
-                                                    <th class="align-middle text-center " rowspan="2">Código</th>
-                                                    <th class="align-middle text-center " rowspan="2">Nombre</th>
-                                                    <th class="align-middle text-center " rowspan="2">Descripción</th>
-
-                                                    <th class="align-middle text-center " colspan="2">Tipo FF</th>
-                                                    <th class="align-middle text-center " colspan="6">Ubicación Geográfica</th>
-                                                    <th class="align-middle text-center " colspan="3">Partida</th>
-
-                                                </tr>
-                                                <tr>
-                                                    <th class="align-middle text-center ">Código</th>
-                                                    <th class="align-middle text-center ">Nombre</th>
-
-                                                    <th class="align-middle text-center ">Estado</th>
-                                                    <th class="align-middle text-center ">Municipio</th>
-                                                    <th class="align-middle text-center ">Código Postal</th>
-                                                    <th class="align-middle text-center ">Asentamiento</th>
-                                                    <th class="align-middle text-center ">Tipo Asentamiento</th>
-                                                    <th class="align-middle text-center ">Domicilio</th>
-                                                    <th class="align-middle text-center ">Código</th>
-                                                    <th class="align-middle text-center ">Nombre</th>
-                                                    <th class="align-middle text-center ">Importe</th>
-                                                </tr>
-                                            </thead>
-
-                                            <tbody>
-                                                <tr *ngFor="let datoEgresoGeneral of datosEgresoGeneral; let i=index ">
-                                                    <!-- 19 columnas -->
-                                                    <td class="align-middle text-center" scope="row ">{{ i + 1 }}</td>
-                                                    <td class="align-middle text-center">{{ datoEgresoGeneral.anio }}</td>
-                                                    <td class="align-middle text-center">{{ datoEgresoGeneral.codigo_centro }}</td>
-                                                    <td class="align-middle">{{ datoEgresoGeneral.nombre_centro }}</td>
-                                                    <td class="align-middle text-center">{{ datoEgresoGeneral.codigo_proyecto }}</td>
-                                                    <td class="align-middle">{{ datoEgresoGeneral.nombre_proyecto }}</td>
-                                                    <td class="align-middle text-center" nowrap>{{ datoEgresoGeneral.fecha_inicio_proyecto }}</td>
-                                                    <td class="align-middle text-center" nowrap>{{ datoEgresoGeneral.fecha_final_proyecto }}</td>
-                                                    <td class="align-middle text-center">{{ datoEgresoGeneral.codigo_subprograma }}</td>
-                                                    <td class="align-middle">{{ datoEgresoGeneral.nombre_subprograma }}</td>
-                                                    <td class="align-middle text-center">{{ datoEgresoGeneral.codigo_fase }}</td>
-                                                    <td class="align-middle">{{ datoEgresoGeneral.nombre_fase }}</td>
-                                                    <td class="align-middle">{{ datoEgresoGeneral.descripcion_fase }}</td>
-                                                    <td class="align-middle text-center">{{ datoEgresoGeneral.codigo_tipo_financ }}</td>
-                                                    <td class="align-middle">{{ datoEgresoGeneral.nombre_tipo_financ }}</td>
-                                                    <td class="align-middle text-center">{{ datoEgresoGeneral.estado }}</td>
-                                                    <td class="align-middle text-center">{{ datoEgresoGeneral.municipio }}</td>
-                                                    <td class="align-middle text-center">{{ datoEgresoGeneral.codigo_postal }}</td>
-                                                    <td class="align-middle text-center">{{ datoEgresoGeneral.asentamiento }}</td>
-                                                    <td class="align-middle text-center">{{ datoEgresoGeneral.tipo_asentamiento }}</td>
-                                                    <td class="align-middle">{{ datoEgresoGeneral.domicilio }}</td>
-                                                    <td class="align-middle text-center">{{ datoEgresoGeneral.codigo_partida }}</td>
-                                                    <td class="align-middle">{{ datoEgresoGeneral.nombre_partida }}</td>
-                                                    <td class="align-middle text-right" nowrap>$ {{ datoEgresoGeneral.importe }}</td>
-                                                </tr>
-                                            </tbody>
-                                            <tfoot>
-                                                <th class="align-middle text-right font-weight-bold " colspan="23">Total</th>
-                                                <th class="align-middle text-right" nowrap>$ {{ totalGeneral.toFixed(2) }}</th>
-                                            </tfoot>
-                                        </table>
-                                    </div>
+                                    <app-table-egreso [datos]="datosEgresoGeneral" [anio]="egresoPropioPrincipal.anio"></app-table-egreso>
                                 </div>
                             </div>
 
@@ -157,85 +71,7 @@
                                         <i class="fa fa-exclamation-triangle fa-lg"></i> {{ mensajeAlert }}
                                     </div>
                                 </ng-template>
-                                <div *ngIf="datosEgreso != null; else alertEgresoPropio" class="table-responsive ">
-                                    <table class="table table-striped table-bordered table-sm ">
-                                        <thead>
-                                            <tr>
-                                                <th class="align-middle text-center h2 font-weight-bold" colspan="22">Presupuesto de egreso {{ egresoPropioPrincipal.anio }} ({{ egresoPropioPrincipal.nombre_centro_costo }})</th>
-                                            </tr>
-                                            <tr>
-                                                <th class="align-middle text-center " rowspan="4">#</th>
-                                                <th class="align-middle text-center " rowspan="4">Año</th>
-                                                <th class="align-middle text-center " colspan="20">Proyectos</th>
-                                            </tr>
-                                            <tr>
-                                                <th class="align-middle text-center " rowspan="3">Código</th>
-                                                <th class="align-middle text-center " rowspan="3">Nombre</th>
-                                                <th class="align-middle text-center " rowspan="3">Fecha Inicio</th>
-                                                <th class="align-middle text-center " rowspan="3">Fecha Final</th>
-                                                <th class="align-middle text-center " colspan="2">Subprograma</th>
-                                                <th class="align-middle text-center " colspan="14">Fase</th>
-                                            </tr>
-                                            <tr>
-                                                <th class="align-middle text-center " rowspan="2">Código</th>
-                                                <th class="align-middle text-center " rowspan="2">Nombre</th>
-                                                <th class="align-middle text-center " rowspan="2">Código</th>
-                                                <th class="align-middle text-center " rowspan="2">Nombre</th>
-                                                <th class="align-middle text-center " rowspan="2">Descripción</th>
-                                                <th class="align-middle text-center " colspan="2">Tipo FF</th>
-                                                <th class="align-middle text-center " colspan="6">Ubicación Geográfica</th>
-                                                <th class="align-middle text-center " colspan="3">Partida</th>
-
-                                            </tr>
-                                            <tr>
-                                                <th class="align-middle text-center ">Código</th>
-                                                <th class="align-middle text-center ">Nombre</th>
-                                                <th class="align-middle text-center ">Estado</th>
-                                                <th class="align-middle text-center ">Municipio</th>
-                                                <th class="align-middle text-center ">Codigo Postal</th>
-                                                <th class="align-middle text-center ">Asentamiento</th>
-                                                <th class="align-middle text-center ">Tipo Asentamiento</th>
-                                                <th class="align-middle text-center ">Domicilio</th>
-                                                <th class="align-middle text-center ">Código</th>
-                                                <th class="align-middle text-center ">Nombre</th>
-                                                <th class="align-middle text-center ">Importe</th>
-                                            </tr>
-                                        </thead>
-
-                                        <tbody>
-                                            <tr *ngFor="let datoEgreso of datosEgreso; let i=index ">
-                                                <!-- 19 columnas -->
-                                                <td class="align-middle text-center" scope="row ">{{ i + 1 }}</td>
-                                                <td class="align-middle text-center">{{ datoEgreso.anio }}</td>
-                                                <td [ngClass]="getFormatFont(datoEgreso.codigo_proyecto)" class="align-middle text-center">{{ datoEgreso.codigo_proyecto }}</td>
-                                                <td [ngClass]="getFormatFont(datoEgreso.nombre_proyecto)" class="align-middle">{{ datoEgreso.nombre_proyecto }}</td>
-                                                <td [ngClass]="getFormatFont(datoEgreso.fecha_inicio)" class="align-middle text-center" nowrap>{{ datoEgreso.fecha_inicio }}</td>
-                                                <td [ngClass]="getFormatFont(datoEgreso.fecha_final)" class="align-middle text-center" nowrap>{{ datoEgreso.fecha_final }}</td>
-                                                <td [ngClass]="getFormatFont(datoEgreso.codigo_subprograma)" class="align-middle text-center">{{ datoEgreso.codigo_subprograma }}</td>
-                                                <td [ngClass]="getFormatFont(datoEgreso.nombre_subprograma)" class="align-middle">{{ datoEgreso.nombre_subprograma }}</td>
-                                                <td [ngClass]="getFormatFont(datoEgreso.codigo_fase)" class="align-middle text-center">{{ datoEgreso.codigo_fase }}</td>
-                                                <td [ngClass]="getFormatFont(datoEgreso.nombre_fase)" class="align-middle">{{ datoEgreso.nombre_fase }}</td>
-                                                <td [ngClass]="getFormatFont(datoEgreso.descripcion_fase)" class="align-middle">{{ datoEgreso.descripcion_fase }}</td>
-                                                <td [ngClass]="getFormatFont(datoEgreso.codigo_tipo_financ)" class="align-middle text-center">{{ datoEgreso.codigo_tipo_financ }}</td>
-                                                <td [ngClass]="getFormatFont(datoEgreso.nombre_tipo_financ)" class="align-middle">{{ datoEgreso.nombre_tipo_financ }}</td>
-                                                <td [ngClass]="getFormatFont(datoEgreso.estado)" class="align-middle text-center">{{ datoEgreso.estado }}</td>
-                                                <td [ngClass]="getFormatFont(datoEgreso.municipio)" class="align-middle text-center">{{ datoEgreso.municipio }}</td>
-                                                <td [ngClass]="getFormatFont(datoEgreso.codigo_postal)" class="align-middle text-center">{{ datoEgreso.codigo_postal }}</td>
-                                                <td [ngClass]="getFormatFont(datoEgreso.asentamiento)" class="align-middle text-center">{{ datoEgreso.asentamiento }}</td>
-                                                <td [ngClass]="getFormatFont(datoEgreso.tipo_asentamiento)" class="align-middle text-center">{{ datoEgreso.tipo_asentamiento }}</td>
-                                                <td [ngClass]="getFormatFont(datoEgreso.domicilio)" class="align-middle">{{ datoEgreso.domicilio }}</td>
-                                                <td [ngClass]="getFormatFont(datoEgreso.codigo_partida)" class="align-middle text-center">{{ datoEgreso.codigo_partida }}</td>
-                                                <td [ngClass]="getFormatFont(datoEgreso.nombre_partida)" class="align-middle">{{ datoEgreso.nombre_partida }}</td>
-                                                <td class="align-middle text-right" nowrap>$ {{ datoEgreso.importe }}</td>
-                                            </tr>
-                                        </tbody>
-                                        <tfoot>
-                                            <th class="align-middle text-right font-weight-bold " colspan="21">Total</th>
-                                            <th class="align-middle text-right" nowrap>$ {{ totalPropio.toFixed(2) }}</th>
-                                        </tfoot>
-                                    </table>
-                                </div>
-
+                                <app-table-egreso *ngIf="datosEgreso != null; else alertEgresoPropio" [datos]="datosEgreso" [anio]="egresoPropioPrincipal.anio"></app-table-egreso>
                             </div>
 
                             <div class="tab-pane" id="egresoACargos" role="tabpanel" *ngIf="centrosCostos.length != 0 ">
@@ -258,89 +94,7 @@
                                                     </div>
                                                 </ng-template>
 
-                                                <div *ngIf="datosEgresoGeneralHijo.length != 0; else alertEgresoHijo" class="table-responsive ">
-                                                    <table class="table table-striped table-bordered table-sm ">
-                                                        <thead>
-                                                            <tr>
-                                                                <th class="align-middle text-center h2 font-weight-bold" colspan="24">Presupuesto de egreso {{ egresoPropioPrincipal.anio }} ({{ centro.nombre }})</th>
-                                                            </tr>
-                                                            <tr>
-                                                                <th class="align-middle text-center " rowspan="5">#</th>
-                                                                <th class="align-middle text-center " rowspan="5">Año</th>
-                                                                <th class="align-middle text-center " colspan="22">Centro Costo</th>
-                                                            </tr>
-                                                            <tr>
-                                                                <th class="align-middle text-center " rowspan="4">Código</th>
-                                                                <th class="align-middle text-center " rowspan="4">Nombre</th>
-                                                                <th class="align-middle text-center " colspan="20">Proyectos</th>
-                                                            </tr>
-                                                            <tr>
-                                                                <th class="align-middle text-center " rowspan="3">Código</th>
-                                                                <th class="align-middle text-center " rowspan="3">Nombre</th>
-                                                                <th class="align-middle text-center " rowspan="3">Fecha Inicio</th>
-                                                                <th class="align-middle text-center " rowspan="3">Fecha Final</th>
-                                                                <th class="align-middle text-center " colspan="2">Subprograma</th>
-                                                                <th class="align-middle text-center " colspan="14">Fase</th>
-                                                            </tr>
-                                                            <tr>
-                                                                <th class="align-middle text-center " rowspan="2">Código</th>
-                                                                <th class="align-middle text-center " rowspan="2">Nombre</th>
-                                                                <th class="align-middle text-center " rowspan="2">Código</th>
-                                                                <th class="align-middle text-center " rowspan="2">Nombre</th>
-                                                                <th class="align-middle text-center " rowspan="2">Descripción</th>
-                                                                <th class="align-middle text-center " colspan="2">Tipo FF</th>
-                                                                <th class="align-middle text-center " colspan="6">Ubicación Geográfica</th>
-                                                                <th class="align-middle text-center " colspan="3">Partida</th>
-                                                            </tr>
-                                                            <tr>
-                                                                <th class="align-middle text-center ">Código</th>
-                                                                <th class="align-middle text-center ">Nombre</th>
-                                                                <th class="align-middle text-center ">Estado</th>
-                                                                <th class="align-middle text-center ">Municipio</th>
-                                                                <th class="align-middle text-center ">Codigo Postal</th>
-                                                                <th class="align-middle text-center ">Asentamiento</th>
-                                                                <th class="align-middle text-center ">Tipo Asentamiento</th>
-                                                                <th class="align-middle text-center ">Domicilio</th>
-                                                                <th class="align-middle text-center ">Código</th>
-                                                                <th class="align-middle text-center ">Nombre</th>
-                                                                <th class="align-middle text-center ">Importe</th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                            <tr *ngFor="let datoEgresoGeneral of datosEgresoGeneralHijo; let i=index ">
-                                                                <!-- 19 columnas -->
-                                                                <td class="align-middle text-center" scope="row ">{{ i + 1 }}</td>
-                                                                <td class="align-middle text-center">{{ datoEgresoGeneral.anio }}</td>
-                                                                <td class="align-middle text-center">{{ datoEgresoGeneral.codigo_centro }}</td>
-                                                                <td class="align-middle">{{ datoEgresoGeneral.nombre_centro }}</td>
-                                                                <td class="align-middle text-center">{{ datoEgresoGeneral.codigo_proyecto }}</td>
-                                                                <td class="align-middle">{{ datoEgresoGeneral.nombre_proyecto }}</td>
-                                                                <td class="align-middle text-center" nowrap>{{ datoEgresoGeneral.fecha_inicio_proyecto }}</td>
-                                                                <td class="align-middle text-center" nowrap>{{ datoEgresoGeneral.fecha_final_proyecto }}</td>
-                                                                <td class="align-middle text-center">{{ datoEgresoGeneral.codigo_subprograma }}</td>
-                                                                <td class="align-middle">{{ datoEgresoGeneral.nombre_subprograma }}</td>
-                                                                <td class="align-middle text-center">{{ datoEgresoGeneral.codigo_fase }}</td>
-                                                                <td class="align-middle">{{ datoEgresoGeneral.nombre_fase }}</td>
-                                                                <td class="align-middle">{{ datoEgresoGeneral.descripcion_fase }}</td>
-                                                                <td class="align-middle text-center">{{ datoEgresoGeneral.codigo_tipo_financ }}</td>
-                                                                <td class="align-middle">{{ datoEgresoGeneral.nombre_tipo_financ }}</td>
-                                                                <td class="align-middle text-center">{{ datoEgresoGeneral.estado }}</td>
-                                                                <td class="align-middle text-center">{{ datoEgresoGeneral.municipio }}</td>
-                                                                <td class="align-middle text-center">{{ datoEgresoGeneral.codigo_postal }}</td>
-                                                                <td class="align-middle text-center">{{ datoEgresoGeneral.asentamiento }}</td>
-                                                                <td class="align-middle text-center">{{ datoEgresoGeneral.tipo_asentamiento }}</td>
-                                                                <td class="align-middle">{{ datoEgresoGeneral.domicilio }}</td>
-                                                                <td class="align-middle text-center">{{ datoEgresoGeneral.codigo_partida }}</td>
-                                                                <td class="align-middle">{{ datoEgresoGeneral.nombre_partida }}</td>
-                                                                <td class="align-middle text-right" nowrap>$ {{ datoEgresoGeneral.importe }}</td>
-                                                            </tr>
-                                                        </tbody>
-                                                        <tfoot>
-                                                            <th class="align-middle text-right font-weight-bold " colspan="23">Total</th>
-                                                            <th class="align-middle text-right" nowrap>$ {{ totalGeneralHijo.toFixed(2) }}</th>
-                                                        </tfoot>
-                                                    </table>
-                                                </div>
+                                                <app-table-egreso *ngIf="datosEgresoGeneralHijo.length != 0; else alertEgresoHijo" [datos]="datosEgresoGeneralHijo" [anio]="egresoPropioPrincipal.anio"></app-table-egreso>
 
                                                 <div class="row col-12 text-center" *ngIf="mostrarOpciones">
                                                     <button class="btn btn-success mr-2" (click)="autorizarPresupuesto(centro.id)">
@@ -365,6 +119,8 @@
                                             <a class="nav-link" id="v-pills-clasf-administrativa-tab" data-toggle="pill" href="#v-pills-clasf-administrativa" role="tab" aria-controls="v-pills-clasf-administrativa" aria-selected="false" (click)="buscarPresupuestoPorClasificacion('ClasfAdministrativa', $event.target.text)">Clasificación Administrativa</a>
                                             <a class="nav-link" id="v-pills-clasf-programatica-tab" data-toggle="pill" href="#v-pills-clasf-programatica" role="tab" aria-controls="v-pills-clasf-programatica" aria-selected="false" (click)="buscarPresupuestoPorClasificacion('ClasfProgramatica', $event.target.text)">Clasificación Programatica</a>
                                             <a class="nav-link" id="v-pills-clasf-fuente-financiamiento-tab" data-toggle="pill" href="#v-pills-clasf-fuente-financiamiento" role="tab" aria-controls="v-pills-clasf-fuente-financiamiento" aria-selected="false" (click)="buscarPresupuestoPorClasificacion('ClasfFuenteFinanciamiento', $event.target.text)">Clasificación Por fuente de financiamiento</a>
+                                            <a class="nav-link" id="v-pills-clasf-unidades-administrativa-tab" data-toggle="pill" href="#v-pills-clasf-unidades-administrativa" role="tab" aria-controls="v-pills-clasf-unidades-administrativa" aria-selected="false" (click)="buscarPresupuestoPorClasificacion('ClasfUnidadesAdministrativa', $event.target.text)">Clasificación Unidades Administrativa</a>
+                                            <a class="nav-link" id="v-pills-clasf-centros-costos-tab" data-toggle="pill" href="#v-pills-clasf-centros-costos" role="tab" aria-controls="v-pills-clasf-centros-costos" aria-selected="false" (click)="buscarPresupuestoPorClasificacion('ClasfCentrosCostos', $event.target.text)">Clasificación Centros Costos</a>
                                         </div>
                                         <div class="text-center m-3">
                                             <button type="button" class="btn btn-sm text-white m-1" [ngStyle]="{'background-color':'orange'}" (click)="downloadClasificacionPDF()">
@@ -393,7 +149,7 @@
                                             </div>
                                             <div class="tab-pane animeted fadeIn" id="v-pills-clasf-administrativa" role="tabpanel" aria-labelledby="v-pills-clasf-administrativa-tab">
                                                 <div class="align-middle text-center h3 font-weight-bold">
-                                                    Clasificación Unidad Administrativa {{ egresoPropioPrincipal.anio }}
+                                                    Clasificación Administrativa {{ egresoPropioPrincipal.anio }}
                                                     <p><small>({{ egresoPropioPrincipal.nombre_centro_costo }})</small></p>
                                                 </div>
                                                 <app-table-clasificacion [datosClasificacion]="clasificaciones"></app-table-clasificacion>
@@ -408,6 +164,20 @@
                                             <div class="tab-pane animeted fadeIn" id="v-pills-clasf-fuente-financiamiento" role="tabpanel" aria-labelledby="v-pills-clasf-fuente-financiamiento-tab">
                                                 <div class="align-middle text-center h3 font-weight-bold">
                                                     Clasificación Por Fuente Financiamiento {{ egresoPropioPrincipal.anio }}
+                                                    <p><small>({{ egresoPropioPrincipal.nombre_centro_costo }})</small></p>
+                                                </div>
+                                                <app-table-clasificacion [datosClasificacion]="clasificaciones"></app-table-clasificacion>
+                                            </div>
+                                            <div class="tab-pane animeted fadeIn" id="v-pills-clasf-unidades-administrativa" role="tabpanel" aria-labelledby="v-pills-clasf-unidades-administrativa-tab">
+                                                <div class="align-middle text-center h3 font-weight-bold">
+                                                    Clasificación Unidades Administrativa {{ egresoPropioPrincipal.anio }}
+                                                    <p><small>({{ egresoPropioPrincipal.nombre_centro_costo }})</small></p>
+                                                </div>
+                                                <app-table-clasificacion [datosClasificacion]="clasificaciones"></app-table-clasificacion>
+                                            </div>
+                                            <div class="tab-pane animeted fadeIn" id="v-pills-clasf-unidades-centros-costos" role="tabpanel" aria-labelledby="v-pills-clasf-centros-costos-tab">
+                                                <div class="align-middle text-center h3 font-weight-bold">
+                                                    Clasificación Centros Costos {{ egresoPropioPrincipal.anio }}
                                                     <p><small>({{ egresoPropioPrincipal.nombre_centro_costo }})</small></p>
                                                 </div>
                                                 <app-table-clasificacion [datosClasificacion]="clasificaciones"></app-table-clasificacion>

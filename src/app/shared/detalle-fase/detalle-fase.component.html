@@ -1,0 +1,107 @@
+    <div class="modal-dialog modal_class" role="document">
+        <div class="modal-content ">
+            <div class="modal-header">
+                <h5 class="modal-title">
+                    Información de fase
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row p-3">
+                    <div class="col-sm-2 border bg-light font-weight-bold p-1 d-none d-sm-block text-center">Fase</div>
+                    <div class="col border bg-light font-weight-bold p-1 d-sm-none">Fase</div>
+                    <div class="col-sm-2 border p-1 text-sm-center">{{ fase.codigo }}</div>
+                    <div class="col border bg-light font-weight-bold p-1 d-sm-none">Nombre</div>
+                    <div class="col-sm-8 border p-1">{{ fase.nombre }}</div>
+
+                    <div class="col-sm-2 border bg-light font-weight-bold p-1 d-none d-sm-block text-center">Descripcion</div>
+                    <div class="col border bg-light font-weight-bold p-1 d-sm-none">Descripcion</div>
+                    <div class="col-sm-10 border p-1">{{ fase.descripcion }}</div>
+
+                    <div class="col-sm-2 border bg-light font-weight-bold p-1 d-none d-sm-block text-center">Proyecto</div>
+                    <div class="col-sm-2 border p-1 text-sm-center">{{ fase.codigo_proyecto }}</div>
+                    <div class="col border bg-light font-weight-bold p-1 d-sm-none">Proyecto</div>
+                    <div class="col-sm-8 border p-1">{{ fase.nombre_proyecto }}</div>
+
+                    <div class="col-sm-2 border bg-light font-weight-bold p-1 d-none d-sm-block text-center">Financiamiento</div>
+                    <div class="col-sm-2 border p-1 text-sm-center">{{ fase.codigo_tipo_financ }}</div>
+                    <div class="col border bg-light font-weight-bold p-1 d-sm-none">Financiamiento</div>
+                    <div class="col-sm-8 border p-1">{{ fase.nombre_tipo_financ }}</div>
+
+                    <div class="col-sm-2 border bg-light font-weight-bold p-1 d-none d-sm-block text-center">Ubicacion</div>
+                    <div class="col border bg-light font-weight-bold p-1 d-sm-none">Ubicacion</div>
+                    <div class="col-sm-10 border p-1 text-center text-sm-left">
+                        <span *ngIf="fase.externo; else outBlock">
+                            Externo
+                        </span>
+                        <ng-template #outBlock> Interno </ng-template>
+                    </div>
+                </div>
+
+                <div class="row p-3">
+                    <div class="col-sm-2 border bg-light font-weight-bold p-1 d-none d-sm-block text-center">Codigo Postal</div>
+                    <div class="col border bg-light font-weight-bold p-1 d-sm-none">Codigo Postal</div>
+                    <div class="col-sm-4 border p-1">{{ fase.codigo_postal }}</div>
+
+                    <div class="col-sm-2 border bg-light font-weight-bold p-1 d-none d-sm-block text-center">Estado</div>
+                    <div class="col border bg-light font-weight-bold p-1 d-sm-none">Estado</div>
+                    <div class="col-sm-4 border p-1">{{ fase.estado }}</div>
+
+                    <div class="col-sm-2 border bg-light font-weight-bold p-1 d-none d-sm-block text-center">Municipio</div>
+                    <div class="col border bg-light font-weight-bold p-1 d-sm-none">Municipio</div>
+                    <div class="col-sm-4 border p-1">{{ fase.municipio }}</div>
+
+                    <div class="col-sm-2 border bg-light font-weight-bold p-1 d-none d-sm-block text-center">Asentamiento / Colonia</div>
+                    <div class="col border bg-light font-weight-bold p-1 d-sm-none">Colonia</div>
+                    <div class="col-sm-4 border p-1">{{ fase.asentamiento }}</div>
+
+                    <div class="col-sm-2 border bg-light font-weight-bold p-1 d-none d-sm-block text-center">Domicilio</div>
+                    <div class="col border bg-light font-weight-bold p-1 d-sm-none">Domicilio</div>
+                    <div class="col-sm-10 border p-1">{{ fase.calle }}</div>
+
+                    <div class="col-sm-2 border bg-light font-weight-bold p-1 d-none d-sm-block text-center">Num. Exterior</div>
+                    <div class="col border bg-light font-weight-bold p-1 d-sm-none">Num. Exterior</div>
+                    <div class="col-sm-4 border p-1">{{ fase.num_exterior }}</div>
+
+                    <div class="col-sm-2 border bg-light font-weight-bold p-1 d-none d-sm-block text-center">Num. Interior</div>
+                    <div class="col border bg-light font-weight-bold p-1 d-sm-none">Num. Interior</div>
+                    <div class="col-sm-4 border p-1" *ngIf= "fase.num_interior">{{ (fase.num_interior)  }}</div>
+                    <div class="col-sm-4 border p-1" *ngIf= "!fase.num_interior">{{ (fase.num_interior)  }}</div>
+                </div>
+
+                <div class="row p-3">
+
+                    <div class="alert alert-warning text-center col-12" *ngIf="fase.partidas.length === 0; else tablePartidas">
+                        <i class="fa fa-exclamation-triangle fa-lg"></i> Sin partidas
+                    </div>
+
+                    <ng-template #tablePartidas>
+
+                        <div class="col-1 border bg-light font-weight-bold p-1 d-none d-sm-block text-center">#</div>
+                        <div class="col-11 col-sm-9 border bg-light font-weight-bold p-1 d-none d-sm-block">Partidas</div>
+                        <div class="col-sm-2 border bg-light font-weight-bold p-1 d-none d-sm-block text-center">Importe</div>
+                        <span class="col-12" *ngFor="let partida of fase.partidas; let i = index">
+                            <div class="row">
+                                <div class="col-12 border bg-light font-weight-bold p-1 d-sm-none">Partida</div>
+                                <div class="col-sm-1 border p-1 text-sm-center">{{ i+1 }}</div>
+                                <div class="col-sm-9 border p-1 ">{{ partida.nombre_partida }}</div>
+                                <div class="col-sm-2 border p-1 text-sm-right">{{ partida.importe | currency  }}</div>
+                            </div>
+                        </span>
+                        <div class="col-sm-10 border bg-light font-weight-bold p-1 d-none d-sm-block text-right">Total</div>
+                        <div class="col-sm-2 border bg-light font-weight-bold p-1 d-none d-sm-block text-right">{{ total | currency }}</div>
+                    </ng-template>
+                </div>
+
+                <pre>{{ fase | json }}</pre>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                    Cerrar
+                </button>
+            </div>
+        </div>
+    </div>

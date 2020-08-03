@@ -8,7 +8,7 @@ import { CtrabajosComponent } from './ctrabajo/ctrabajos.component';
 import { UnidadAdminComponent } from './unidadesAdmin/unidadAdmin.component';
 import { UnidadesAdminComponent } from './unidadesAdmin/unidadesAdmin.component';
 import { CcostoAdminComponent } from './ccosto/ccostoAdmin.component';
-import { CambiarResponsableComponent } from "src/app/pages/client/unidadesInternas/ccosto/cambiarResponsable.component";
+import { CambiarResponsableComponent } from "../unidadesInternas/ccosto/cambiarResponsable.component";
 import { NivelesComponent } from './niveles/niveles.component';
 
 const admin_routes: Routes = [
